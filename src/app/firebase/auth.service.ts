@@ -7,9 +7,19 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
+  authState: any = null;
 
   constructor(private firebaseAuth: AngularFireAuth) {
     this.user = firebaseAuth.authState;
+    this.user.subscribe(auth => {
+      console.log("user subscribe: ", auth);
+      this.authState = auth;
+    });
+  }
+
+  get authenticated(): boolean {
+    console.log("get authenticated", this.authState);
+    return this.authState !== null;
   }
 
   signup(email: string, password: string) {
@@ -28,7 +38,9 @@ export class AuthService {
     return this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(value => {
+      .then(auth => {
+        console.log(auth);
+        this.authState = auth;
         return;
       })
       .catch(err => {

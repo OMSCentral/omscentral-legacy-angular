@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'oms-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
   error = '';
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.email.setValue('');
         this.error = '';
+        this.router.navigate(['reviews']);
       }
     });
   }

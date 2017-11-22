@@ -6,11 +6,21 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { ClarityModule } from 'clarity-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { CoreModule } from './core/core.module';
+import { AboutModule } from './about/about.module';
+import { GradesModule } from './grades/grades.module';
+import { DonateModule } from './donate/donate.module';
+import { ProfileModule } from './profile/profile.module';
+
+import { AuthGuard } from './firebase/auth.guard';
+import { AuthService } from './firebase/auth.service';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
 import 'clarity-icons';
@@ -28,9 +38,15 @@ import 'clarity-icons';
     ClarityModule.forRoot(),
     LoginModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ReviewsModule,
+    AboutModule,
+    CoreModule,
+    GradesModule,
+    DonateModule,
+    ProfileModule
   ],
-  providers: [],
+  providers: [ AuthGuard, AuthService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
