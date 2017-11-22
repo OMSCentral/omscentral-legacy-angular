@@ -5,6 +5,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { ClarityModule } from 'clarity-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -25,7 +26,9 @@ import 'clarity-icons';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     ClarityModule.forRoot(),
-    LoginModule
+    LoginModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

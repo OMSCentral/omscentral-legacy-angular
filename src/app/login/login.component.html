@@ -6,12 +6,12 @@
       <h5 class="hint">Share your OMSCS experience with your classmates.</h5>
     </label>
     <div class="login-group">
-      <input class="username" type="text" id="login_username" placeholder="Username">
-      <input class="password" type="password" id="login_password" placeholder="Password">
-      <div class="error active">
-        Invalid user name or password
+      <input class="username" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
+      <input class="password" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
+      <div *ngIf="error" class="error active">
+        {{error}}
       </div>
-      <button type="submit" class="btn btn-primary">LOGIN</button>
+      <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="!email || !password">LOGIN</button>
       <div class="signup">
         <span>Don't have an account?</span>
         <a href="javascript://" class="signup">Register</a>
