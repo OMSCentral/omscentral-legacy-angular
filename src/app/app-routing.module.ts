@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'reviews',
     component: ReviewsComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'grades',
