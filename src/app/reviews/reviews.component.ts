@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as jsonData from '../../../merged-dev.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'oms-reviews',
@@ -9,7 +10,7 @@ import * as jsonData from '../../../merged-dev.json';
 export class ReviewsComponent implements OnInit {
   courses = [];
 
-  constructor() {
+  constructor(private router: Router) {
     this.courses = Object.keys((<any>jsonData).courses).map(function (courseId) {
       const course = (<any>jsonData).courses[courseId];
       course.numReviews = Object.keys(course.reviews).length;
@@ -19,6 +20,10 @@ export class ReviewsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  goToCourse(course) {
+    this.router.navigate(['/reviews', course]);
   }
 
 }
