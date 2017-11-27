@@ -1,9 +1,13 @@
 ### Todo list...
 
 - [ ] View Grades
-- [ ] Profile Page
+- [ ] View Profile Page
+- [ ] Review Sorting
+- [ ] Course Sorting
+- [ ] Pagination
+- [ ] Hookup to Firebase
+- [ ] Edit Profile Page
 - [ ] New Review
 - [ ] Edit Review
 - [ ] Remove Review
-- [ ] Review Sorting
 - [ ] Firebase Functions
