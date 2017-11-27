@@ -2,7 +2,7 @@
 
 - [ ] View Grades
 - [ ] View Profile Page
-- [ ] Review Sorting
+- [x] Review Sorting
 - [ ] Course Sorting
 - [ ] Pagination
 - [ ] Hookup to Firebase

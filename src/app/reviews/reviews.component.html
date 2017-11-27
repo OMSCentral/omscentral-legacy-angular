@@ -1,139 +1,27 @@
-<div class="container">
-  <!-- <table class="table">
-    <thead>
-      <tr>
-        <th>Department</th>
-        <th>Number</th>
-        <th>Name</th>
-        <th>Reviews</th>
-        <th>Avg. Work</th>
-        <th>Avg. Dif.</th>
-        <th>Avg. Rating</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let course of courses">
-        <td>{{course.department}}</td>
-        <td>{{course.number}}</td>
-        <td>{{course.name}}</td>
-        <td>{{course.numReviews}}</td>
-        <td>{{course.average.workload}}</td>
-        <td>{{course.average.difficulty}}</td>
-        <td>{{course.average.rating}}</td>
-      </tr>
-    </tbody>
-  </table> -->
+<clr-main-container>
+  <div class="content-container">
+    <div class="content-area">
+      <clr-datagrid>
+        <clr-dg-column [clrDgField]="'department'">Department</clr-dg-column>
+        <clr-dg-column [clrDgField]="'id'">Number</clr-dg-column>
+        <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+        <clr-dg-column [clrDgField]="'numReviews'">Reviews</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.workload'">Avg. Work</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.difficulty'">Avg. Dif.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.rating'">Avg. Rating</clr-dg-column>
 
-  <clr-datagrid class="datagrid-host">
-    <div class="datagrid-overlay-wrapper">
-      <div class="datagrid-scroll-wrapper">
-        <div class="datagrid">
-          <clr-dg-table-wrapper class="datagrid-table-wrapper">
-            <div class="datagrid-head" clrdghead="" style="padding-right: 0px;">
-              <div class="datagrid-row datagrid-row-flex">
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Department</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Number</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Name</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Reviews</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Avg. Work</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Avg. Dif.</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-                <clr-dg-column class="datagrid-column" style="width: 96px;">
-                  <div class="datagrid-column-flex">
-                    <span class="datagrid-column-title">Avg. Rating</span>
-                    <div class="datagrid-column-separator">
-                      <button class="datagrid-column-handle" tabindex="-1" type="button"></button>
-                      <div class="datagrid-column-handle-tracker"></div>
-                    </div>
-                  </div>
-                </clr-dg-column>
-              </div>
-            </div>
-            <div class="datagrid-body" clrdgbody="">
-              <clr-dg-row style="cursor: pointer" class="datagrid-row" *ngFor="let course of courses$ | async" (click)="goToCourse(course.id)">
-                <div class="datagrid-row-master datagrid-row-flex">
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.department}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.id}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.name}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.numReviews | number}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.average.workload | number}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.average.difficulty | number}}
-                  </clr-dg-cell>
-                  <clr-dg-cell class="datagrid-cell" style="width: 96px;">
-                    {{course.average.rating | number}}
-                  </clr-dg-cell>
-                </div>
-              </clr-dg-row>
-              <clr-dg-placeholder class="datagrid-placeholder-container">
-                <div class="datagrid-placeholder"></div>
-              </clr-dg-placeholder>
-            </div>
-          </clr-dg-table-wrapper>
-          <clr-dg-footer class="datagrid-foot">
-            <div class="datagrid-foot-description">
-              {{(courses$ | async).length}} courses
-            </div>
-          </clr-dg-footer>
-        </div>
-      </div>
+        <clr-dg-row *clrDgItems="let course of courses$ | async" (click)="goToCourse(course.id)">
+          <clr-dg-cell>{{course.department}}</clr-dg-cell>
+          <clr-dg-cell>{{course.id}}</clr-dg-cell>
+          <clr-dg-cell>{{course.name}}</clr-dg-cell>
+          <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.workload | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.difficulty | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.rating | number}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{(courses$ | async).length}} courses</clr-dg-footer>
+      </clr-datagrid>
     </div>
-  </clr-datagrid>
-</div>
+  </div>
+</clr-main-container>

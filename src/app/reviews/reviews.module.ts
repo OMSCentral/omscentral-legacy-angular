@@ -6,10 +6,12 @@ import { DifficultyPipe } from '../pipes/difficulty.pipe';
 import { SemesterPipe } from '../pipes/semester.pipe';
 import { RatingPipe } from '../pipes/rating.pipe';
 import { WorkloadPipe } from '../pipes/workload.pipe';
+import { ClarityModule } from 'clarity-angular';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    ClarityModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

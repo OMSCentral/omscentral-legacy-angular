@@ -11,6 +11,16 @@ import { CourseService } from '../core/course.service';
 })
 export class ReviewsComponent implements OnInit {
   courses$: Observable<any[]>;
+  users = [
+    {
+      id: 'safd',
+      name: 'asdf',
+      creation: new Date(),
+      pokemon: {
+        name: 'qwerty'
+      },
+      color: 'blue'
+    }];
 
   constructor(private courseService: CourseService, private router: Router) {}
 
