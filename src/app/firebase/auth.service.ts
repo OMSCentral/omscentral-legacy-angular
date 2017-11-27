@@ -12,13 +12,11 @@ export class AuthService {
   constructor(private firebaseAuth: AngularFireAuth) {
     this.user = firebaseAuth.authState;
     this.user.subscribe(auth => {
-      console.log("user subscribe: ", auth);
       this.authState = auth;
     });
   }
 
   get authenticated(): boolean {
-    console.log("get authenticated", this.authState);
     return this.authState !== null;
   }
 
@@ -30,8 +28,8 @@ export class AuthService {
         console.log('Success!', value);
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
-      });    
+        console.log('Something went wrong:', err.message);
+      });
   }
 
   login(email: string, password: string) {
@@ -44,7 +42,7 @@ export class AuthService {
         return;
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
+        console.log('Something went wrong:', err.message);
         return err.message;
       });
   }

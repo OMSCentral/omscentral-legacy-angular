@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as jsonData from '../../../merged-dev.json';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { CourseService } from '../core/course.service';
 
 @Component({
   selector: 'oms-reviews',
@@ -8,18 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./reviews.component.scss']
 })
 export class ReviewsComponent implements OnInit {
-  courses = [];
+  courses$: Observable<any[]>;
 
-  constructor(private router: Router) {
-    this.courses = Object.keys((<any>jsonData).courses).map(function (courseId) {
-      const course = (<any>jsonData).courses[courseId];
-      course.numReviews = Object.keys(course.reviews).length;
-      course.id = courseId;
-      return course;
-    });
-  }
+  constructor(private courseService: CourseService, private router: Router) {}
 
   ngOnInit() {
+    this.courses$ = this.courseService.getCourses();
   }
 
   goToCourse(course) {
