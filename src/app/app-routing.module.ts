@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { GradesComponent } from './grades/grades.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DonateComponent } from './donate/donate.component';
+import { CourseReviewsComponent } from './reviews/course-reviews/course-reviews.component';
 
 const routes: Routes = [
   {
@@ -23,9 +24,14 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
+    path: 'reviews/:courseId',
+    component: CourseReviewsComponent,
+    // canActivate: [AuthGuard]
+  },
+  {
     path: 'grades',
     component: GradesComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'donate',
@@ -34,12 +40,12 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
