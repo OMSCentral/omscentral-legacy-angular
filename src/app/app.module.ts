@@ -19,6 +19,9 @@ import { GradesModule } from './grades/grades.module';
 import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
 
+import { CourseService } from './core/course.service';
+import { ReviewService } from './reviews/review.service';
+
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
@@ -46,7 +49,7 @@ import 'clarity-icons';
     DonateModule,
     ProfileModule
   ],
-  providers: [ AuthGuard, AuthService ],
+  providers: [ AuthGuard, AuthService, CourseService, ReviewService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

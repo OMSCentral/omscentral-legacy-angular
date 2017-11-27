@@ -16,7 +16,7 @@ export class NavComponent implements OnInit {
       } else {
         this.authenticated = false;
       }
-    })
+    });
   }
 
   ngOnInit() {

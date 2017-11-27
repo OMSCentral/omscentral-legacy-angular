@@ -97,7 +97,7 @@
               </div>
             </div>
             <div class="datagrid-body" clrdgbody="">
-              <clr-dg-row style="cursor: pointer" class="datagrid-row" *ngFor="let course of courses" (click)="goToCourse(course.id)" [routerLink]="['/reviews', course.id]">
+              <clr-dg-row style="cursor: pointer" class="datagrid-row" *ngFor="let course of courses$ | async" (click)="goToCourse(course.id)">
                 <div class="datagrid-row-master datagrid-row-flex">
                   <clr-dg-cell class="datagrid-cell" style="width: 96px;">
                     {{course.department}}
@@ -129,7 +129,7 @@
           </clr-dg-table-wrapper>
           <clr-dg-footer class="datagrid-foot">
             <div class="datagrid-foot-description">
-              {{courses.length}} courses
+              {{(courses$ | async).length}} courses
             </div>
           </clr-dg-footer>
         </div>
