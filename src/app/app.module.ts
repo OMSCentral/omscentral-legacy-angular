@@ -18,6 +18,7 @@ import { AboutModule } from './about/about.module';
 import { GradesModule } from './grades/grades.module';
 import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
+import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './core/course.service';
 import { ReviewService } from './reviews/review.service';
