@@ -11,11 +11,38 @@ export class CourseService {
 
   constructor() {}
 
+  processGrades(grades) {
+    const totals = {};
+    if (grades) {
+      Object.keys(grades).forEach(grade => {
+        Object.keys(grades[grade]).forEach(letter => {
+          if (Object.keys(totals).indexOf(letter) !== -1) {
+            totals[letter] += grades[grade][letter];
+          } else {
+            totals[letter] = grades[grade][letter];
+          }
+        });
+      });
+    }
+    return totals;
+  }
+
   downloadCourses() {
     const courses = (<any>jsonData).courses;
     Object.keys(courses).forEach(courseId => {
       courses[courseId].numReviews = Object.keys(courses[courseId].reviews).length;
       courses[courseId].id = courseId;
+      if (courses[courseId].grades) {
+        courses[courseId].totals = this.processGrades(courses[courseId].grades);
+        courses[courseId].semesterGrades = Object.keys(courses[courseId].grades).map(semGrade => {
+          const grade = courses[courseId].grades[semGrade];
+          grade.semester = semGrade;
+          return grade;
+        });
+      } else {
+        courses[courseId].semesterGrades = [];
+        courses[courseId].totals = {};
+      }
     });
     this.cached = Object.assign(this.cached, courses);
     return this.courseList();
