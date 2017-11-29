@@ -15,6 +15,10 @@ import { Rating } from '../../enums/rating.enum';
 export class ReviewComponent {
   @Input() review: Review;
   @Output() cancelNew = new EventEmitter<boolean>();
+  @Output() saveNew = new EventEmitter<Review>();
+  @Output() update = new EventEmitter<Review>();
+  @Output() remove = new EventEmitter<Review>();
+
   reviewForm: FormGroup;
   authId: string;
   semesters = Object.keys(Semester).filter(sem => {
@@ -47,8 +51,18 @@ export class ReviewComponent {
     this.reviewForm.setValue(this.review.edit());
   }
 
+  delete() {
+    this.remove.emit(this.review);
+  }
+
   save() {
-    this.review.save(this.reviewForm.value);
+    if (this.review.isNew) {
+      this.review.save(this.reviewForm.value);
+      this.saveNew.emit(this.review);
+    } else {
+      this.review.save(this.reviewForm.value);
+      this.update.emit(this.review);
+    }
   }
 
   cancel() {

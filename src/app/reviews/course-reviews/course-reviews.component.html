@@ -51,13 +51,13 @@
       </div>
       <div class="row" *ngIf="newReview">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <oms-review [review]="review" (cancelNew)="cancelNew($evt)"></oms-review>
+          <oms-review [review]="review" (saveNew)="saveNew($event)" (cancelNew)="cancelNew($event)"></oms-review>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card-columns card-columns-2">
-            <oms-review [review]="review" *ngFor="let review of reviews$ | async"></oms-review>
+            <oms-review [review]="review" (remove)="remove($event)" (update)="update($event)" *ngFor="let review of reviews$ | async"></oms-review>
           </div>
         </div>
       </div>

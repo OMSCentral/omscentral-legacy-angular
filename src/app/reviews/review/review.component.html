@@ -1,6 +1,6 @@
 <form [formGroup]="reviewForm" novalidate>
   <div class="card" *ngIf="review">
-    <div class="card-header" *ngIf="review.semester || review.difficulty || review.rating || review.workload">
+    <div class="card-header">
       <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
       <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
       <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
@@ -58,7 +58,7 @@
     </div>
     <div class="card-footer" *ngIf="authId == review.author && !(review.isNew || review.isEdit)">
       <button class="btn btn-sm btn-link" (click)="edit()">Edit</button>
-      <button class="btn btn-sm btn-danger-outline">Delete</button>
+      <button class="btn btn-sm btn-danger-outline" (click)="delete()">Delete</button>
     </div>
 
     <div class="card-footer" *ngIf="review.isNew || review.isEdit">

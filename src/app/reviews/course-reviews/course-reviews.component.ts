@@ -14,6 +14,7 @@ import { Review } from '../../models/review';
 export class CourseReviewsComponent implements OnInit {
   authId: string = null;
   course$: Observable<any>;
+  course: any;
   reviews$: Observable<any>;
   review: Review = null;
   newReview: boolean = false;
@@ -24,7 +25,6 @@ export class CourseReviewsComponent implements OnInit {
     private auth: AuthService) {
         auth.user.subscribe(user => {
           this.authId = user.uid;
-          this.review = new Review({author: user.uid});
         });
     }
 
@@ -34,13 +34,30 @@ export class CourseReviewsComponent implements OnInit {
         this.courseService.getCourse(params.get('courseId')));
 
     this.course$.subscribe(course => {
+      this.course = course;
       this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews));
+      this.review = new Review({course: course.courseId});
     });
   }
 
-  cancelNew(evt) {
+  saveNew(evt) {
     console.log(evt);
+    evt.course = this.course.id;
+    evt.author = this.authId;
+    this.reviewService.push(evt);
     this.newReview = false;
+  }
+
+  cancelNew(evt) {
+    this.newReview = false;
+  }
+
+  remove(evt) {
+    this.reviewService.remove(evt.id);
+  }
+
+  update(evt) {
+    this.reviewService.update(evt);
   }
 
 }
