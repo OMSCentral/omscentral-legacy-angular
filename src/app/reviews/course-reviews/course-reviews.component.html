@@ -1,71 +1,66 @@
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-        {{(course$ | async).id}}: {{(course$ | async).name}}
-      </div>
-      <div class="card-block">
-        <div class="row">
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="card card-block">
-              <h3 class="card-title">{{(course$ | async).numReviews}}</h3>
-              <p class="card-text">
-                Reviews
-              </p>
+<clr-main-container>
+  <div class="content-container">
+    <div class="content-area">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              {{(course$ | async).id}}: {{(course$ | async).name}}
             </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="card card-block">
-              <h3 class="card-title">{{(course$ | async).average.workload | number}}</h3>
-              <p class="card-text">
-                Avg. Work (Hours / Week)
-              </p>
+            <div class="card-block">
+              <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="card card-block">
+                    <h3 class="card-title">{{(course$ | async).numReviews}}</h3>
+                    <p class="card-text">
+                      Reviews
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="card card-block">
+                    <h3 class="card-title">{{(course$ | async).average.workload | number}}</h3>
+                    <p class="card-text">
+                      Avg. Work (Hours / Week)
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="card card-block">
+                    <h3 class="card-title">{{(course$ | async).average.difficulty | number}}</h3>
+                    <p class="card-text">
+                      Avg. Diff. (1-5 Hardest)
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                  <div class="card card-block">
+                    <h3 class="card-title">{{(course$ | async).average.rating | number}}</h3>
+                    <p class="card-text">
+                      Avg. Rating (1-5 Best)
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="card card-block">
-              <h3 class="card-title">{{(course$ | async).average.difficulty | number}}</h3>
-              <p class="card-text">
-                Avg. Diff. (1-5 Hardest)
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="card card-block">
-              <h3 class="card-title">{{(course$ | async).average.rating | number}}</h3>
-              <p class="card-text">
-                Avg. Rating (1-5 Best)
-              </p>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-link">Write a Review</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-footer">
-        <button class="btn btn-sm btn-link">Write a Review</button>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <oms-review [review]="newReview"></oms-review>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card-columns card-columns-2">
-      <div class="card" *ngFor="let review of reviews$ | async">
-        <div class="card-header">
-          <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
-          <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
-          <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
-          <span class="label label-light-blue" *ngIf="review.workload">{{review.workload | workload}}</span>
-        </div>
-        <div class="card-block">
-          <p class="card-text">
-            {{review.text}}
-          </p>
-        </div>
-        <div class="card-footer" *ngIf="authId == review.author">
-          <button class="btn btn-sm btn-link">Edit Review</button>
-          <button class="btn btn-sm btn-danger-outline">Remove Review</button>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card-columns card-columns-2">
+            <oms-review [review]="review" *ngFor="let review of reviews$ | async"></oms-review>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</clr-main-container>

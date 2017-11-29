@@ -7,6 +7,9 @@ var archive = JSON.parse(rawArchive);
 
 current.RVW = Object.assign(current.RVW, archive.RVW);
 
+var grades = {};
+var specializations = current.SPC;
+
 var merged = {};
 merged.reviews = current.RVW;
 merged.users = {};
@@ -22,7 +25,6 @@ Object.keys(current.CRS).forEach(function (courseId) {
     var course = current.CRS[courseId];
     course.average = {};
     course.reviews = {};
-    course.grades = current.GRD[courseId];
     merged.courses[courseId] = course;
 });
 
@@ -36,10 +38,31 @@ Object.keys(merged.reviews).forEach(function (reviewId) {
     }
 });
 
-Object.keys(current.GRD).forEach(function (courseId) {
-    if (merged.courses[courseId]) {
-        merged.courses[courseId].grades = current.GRD[courseId];
+function processGrades(grades) {
+    const totals = {};
+    if (grades) {
+        Object.keys(grades).forEach(grade => {
+            Object.keys(grades[grade]).forEach(letter => {
+                if (Object.keys(totals).indexOf(letter) !== -1) {
+                    totals[letter] += grades[grade][letter];
+                } else {
+                    totals[letter] = grades[grade][letter];
+                }
+            });
+        });
     }
+    return totals;
+}
+
+var courseGrades = current.GRD;
+Object.keys(courseGrades).forEach(courseId => {
+    grades[courseId] = {};
+    grades[courseId].totals = processGrades(courseGrades[courseId]);
+    grades[courseId].semesterGrades = Object.keys(courseGrades[courseId]).map(semGrade => {
+        const grade = courseGrades[courseId][semGrade];
+        grade.semester = semGrade;
+        return grade;
+    });
 });
 
 
@@ -90,8 +113,24 @@ Object.keys(merged.courses).forEach(function (courseId) {
 });
 
 var json = JSON.stringify(merged, null, 4);
-fs.writeFile('merged-dev.json', json, 'utf8', function() {
-    console.log("written");
+fs.writeFile('merged-dev.json', json, 'utf8', function () {
+    console.log("wrote merged-dev");
+});
+
+var tempDev = Object.assign(current, merged);
+var json = JSON.stringify(tempDev);
+fs.writeFile('temp-merged-dev.json', json, 'utf8', function () {
+    console.log("wrote temp-merged-dev");
+});
+
+json = JSON.stringify(grades, null, 4);
+fs.writeFile('grades.json', json, 'utf8', function () {
+    console.log("wrote grades");
+});
+
+json = JSON.stringify(specializations, null, 4);
+fs.writeFile('specializations.json', json, 'utf8', function () {
+    console.log("wrote specializations");
 });
 /*
 {

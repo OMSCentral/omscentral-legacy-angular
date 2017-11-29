@@ -57,7 +57,7 @@ const sem = {
 
 const season = {
   '1': 'Spring',
-  '2': 'Summary',
+  '2': 'Summer',
   '3': 'Fall'
 };
 
