@@ -1,13 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-const values = [
-  '',
-  'Strongly Disliked',
-  'Disliked',
-  'Neutral',
-  'Liked',
-  'Loved!'
-];
+import { Rating } from '../enums/rating.enum';
 
 @Pipe({
   name: 'rating'
@@ -15,7 +7,7 @@ const values = [
 export class RatingPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return values[value] || '';
+    return Rating[value] || '';
   }
 
 }
