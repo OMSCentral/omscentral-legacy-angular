@@ -5,12 +5,14 @@ import { CourseReviewsComponent } from './course-reviews/course-reviews.componen
 import { ClarityModule } from 'clarity-angular';
 import { PipeModule } from '../pipes/pipe.module';
 import { ReviewComponent } from './review/review.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     ClarityModule,
-    PipeModule
+    PipeModule,
+    ReactiveFormsModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
