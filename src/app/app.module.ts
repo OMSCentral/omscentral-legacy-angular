@@ -22,6 +22,7 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './core/course.service';
 import { ReviewService } from './reviews/review.service';
+import { GradeService } from './grades/grade.service';
 
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
@@ -50,7 +51,7 @@ import 'clarity-icons';
     DonateModule,
     ProfileModule
   ],
-  providers: [ AuthGuard, AuthService, CourseService, ReviewService ],
+  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

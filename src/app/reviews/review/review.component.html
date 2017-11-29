@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">
+    <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
+    <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
+    <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
+    <span class="label label-light-blue" *ngIf="review.workload">{{review.workload | workload}}</span>
+  </div>
+  <div class="card-block">
+    <p class="card-text">
+      {{review.text}}
+    </p>
+  </div>
+  <div class="card-footer" *ngIf="authId == review.author">
+    <button class="btn btn-sm btn-link">Edit Review</button>
+    <button class="btn btn-sm btn-danger-outline">Remove Review</button>
+  </div>
+</div>
