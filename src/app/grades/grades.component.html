@@ -16,12 +16,12 @@
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
           <clr-dg-cell>{{course.name}}</clr-dg-cell>
-          <clr-dg-cell>{{course.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{course.totals.w | number}}</clr-dg-cell>
-          <clr-dg-cell>{{100 * course.totals.a / course.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{100 * course.totals.b / course.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{100 * course.totals.c / course.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{100 * course.totals.d / course.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{grades[course.id]?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{grades[course.id]?.totals.w | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * grades[course.id]?.totals.a / grades[course.id]?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * grades[course.id]?.totals.b / grades[course.id]?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * grades[course.id]?.totals.c / grades[course.id]?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * grades[course.id]?.totals.d / grades[course.id]?.totals.t | number}}</clr-dg-cell>
           <clr-dg-row-detail *clrIfExpanded>
             <div class="container">
               <clr-datagrid>
@@ -32,7 +32,7 @@
                   <clr-dg-column [clrDgField]="'b'">% B</clr-dg-column>
                   <clr-dg-column [clrDgField]="'c'">% C</clr-dg-column>
                   <clr-dg-column [clrDgField]="'d'">% D</clr-dg-column>
-                  <clr-dg-row *clrDgItems="let grade of course.semesterGrades">
+                  <clr-dg-row *clrDgItems="let grade of grades[course.id]?.semesterGrades">
                       <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
                       <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
                       <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
