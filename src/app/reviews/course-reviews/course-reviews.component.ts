@@ -4,6 +4,7 @@ import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Observable } from 'rxjs/Observable';
+import { Review } from '../../models/review';
 
 @Component({
   selector: 'oms-course-reviews',
@@ -14,13 +15,16 @@ export class CourseReviewsComponent implements OnInit {
   authId: string = null;
   course$: Observable<any>;
   reviews$: Observable<any>;
-  newReview: any = {};
+  review: Review = null;
+  newReview: boolean = false;
+  
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
     private auth: AuthService) {
         auth.user.subscribe(user => {
           this.authId = user.uid;
+          this.review = new Review({author: user.uid});
         });
     }
 
@@ -32,6 +36,11 @@ export class CourseReviewsComponent implements OnInit {
     this.course$.subscribe(course => {
       this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews));
     });
+  }
+
+  cancelNew(evt) {
+    console.log(evt);
+    this.newReview = false;
   }
 
 }

@@ -1,17 +1,69 @@
-<div class="card">
-  <div class="card-header">
-    <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
-    <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
-    <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
-    <span class="label label-light-blue" *ngIf="review.workload">{{review.workload | workload}}</span>
+<form [formGroup]="reviewForm" novalidate>
+  <div class="card" *ngIf="review">
+    <div class="card-header" *ngIf="review.semester || review.difficulty || review.rating || review.workload">
+      <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
+      <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
+      <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
+      <span class="label label-light-blue" *ngIf="review.workload">{{review.workload | workload}}</span>
+    </div>
+    <div class="card-block" *ngIf="!(review.isNew || review.isEdit)">
+      <p class="card-text">
+        {{review.text}}
+      </p>
+    </div>
+    <div class="card-block" *ngIf="(review.isNew || review.isEdit)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <label for="semester_input">Semester</label>
+            <div class="select">
+              <select id="semester_input" formControlName="semester">
+                <option *ngFor="let semester of semesters" [value]="semester">{{semester | semester}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <label for="rating_input">Rating</label>
+            <div class="select">
+              <select id="rating_input" formControlName="rating">
+                <option *ngFor="let rating of ratings" [value]="rating">{{rating | rating}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <label for="difficulty_input">Difficulty</label>
+            <div class="select">
+              <select id="difficulty_input" formControlName="difficulty">
+                <option *ngFor="let difficulty of difficulties" [value]="difficulty">{{difficulty | difficulty}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+            <label for="workload_input">Workload</label>
+            <input type="number" id="workload_input" placeholder="" size="35" formControlName="workload">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <textarea rows="5" type="text" id="review_text" placeholder="Review..." formControlName="text" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer" *ngIf="authId == review.author && !(review.isNew || review.isEdit)">
+      <button class="btn btn-sm btn-link" (click)="edit()">Edit</button>
+      <button class="btn btn-sm btn-danger-outline">Delete</button>
+    </div>
+
+    <div class="card-footer" *ngIf="review.isNew || review.isEdit">
+      <button type="submit" class="btn btn-sm btn-link" (click)="save()">Save</button>
+      <button class="btn btn-sm btn-danger-outline" (click)="cancel()">Cancel</button>
+    </div>
   </div>
-  <div class="card-block">
-    <p class="card-text">
-      {{review.text}}
-    </p>
-  </div>
-  <div class="card-footer" *ngIf="authId == review.author">
-    <button class="btn btn-sm btn-link">Edit Review</button>
-    <button class="btn btn-sm btn-danger-outline">Remove Review</button>
-  </div>
-</div>
+</form>
