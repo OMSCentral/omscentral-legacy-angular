@@ -24,8 +24,8 @@ export class ReviewComponent {
   semesters = Object.keys(Semester).filter(sem => {
     return sem !== '0000-0';
   });
-  difficulties = Array.from(new Array(5), (x,i) => i+1);
-  ratings = Array.from(new Array(5), (x,i) => i+1);
+  difficulties = Array.from(new Array(5), (x, i) => i + 1);
+  ratings = Array.from(new Array(5), (x, i) => i + 1);
 
   constructor(private auth: AuthService, private reviewService: ReviewService, private fb: FormBuilder) {
     auth.user.subscribe(user => {

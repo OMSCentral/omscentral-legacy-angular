@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { forkJoin } from "rxjs/observable/forkJoin";
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Review } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
@@ -14,22 +14,10 @@ export class ReviewService {
   cacheTime: Date = null;
   reviewIds: string[] = [];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService) {}
-
-  downloadReviews() {
-    const reviews = {};
-    Object.keys(reviews).forEach(reviewId => {
-      reviews[reviewId].id = reviewId;
-    });
-    this.cached = Object.assign(this.cached, reviews);
-    if (this.cacheTime === null) {
-      this.cacheTime = new Date();
-    }
-    return this.reviewList();
-  }
+  constructor(private db: AngularFireDatabase, private auth: AuthService) { }
 
   downloadReview(reviewId) {
-    return this.db.database.ref('/reviews/'+reviewId).once('value').then((snapshot) => {
+    return this.db.database.ref('/reviews/' + reviewId).once('value').then((snapshot) => {
       const review: Review = new Review(snapshot.val());
       review.id = reviewId;
       const temp = {};
@@ -89,14 +77,14 @@ export class ReviewService {
       workload: review.workload,
       rating: review.rating
     };
-    const postRef = this.db.database.ref('/reviews/'+review.id).set(newReview);
+    const postRef = this.db.database.ref('/reviews/' + review.id).set(newReview);
     const temp = {};
     temp[review.id] = review;
     Object.assign(this.cached, temp);
   }
 
   remove(reviewId) {
-    this.db.database.ref('/reviews/'+reviewId).remove();
+    this.db.database.ref('/reviews/' + reviewId).remove();
     delete this.cached[reviewId];
   }
 
@@ -130,7 +118,7 @@ export class ReviewService {
       if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
         this.cacheTime = null;
         return true;
-      }  else {
+      } else {
         return false;
       }
     }
