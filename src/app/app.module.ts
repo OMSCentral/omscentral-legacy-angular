@@ -21,6 +21,7 @@ import { ProfileModule } from './profile/profile.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './core/course.service';
+import { UserService } from './core/user.service';
 import { LocalStorageService } from './core/local-storage.service';
 import { ReviewService } from './reviews/review.service';
 import { GradeService } from './grades/grade.service';

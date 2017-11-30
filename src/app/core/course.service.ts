@@ -107,6 +107,8 @@ export class CourseService {
     if (this.cacheExpired()) {
       return this.downloadCourses();
     } else {
+      this.courseIds = Object.keys(this.cached);
+      this.broadcast();
       return this.courses$.asObservable();
     }
   }
