@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 shhh.md
+
+/functions/node_modules

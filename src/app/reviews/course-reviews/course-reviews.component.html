@@ -49,6 +49,7 @@
           </div>
         </div>
       </div>
+      <pre>{{reviews$ | async | json}}</pre>
       <div class="row" *ngIf="newReview">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <oms-review [review]="review" (saveNew)="saveNew($event)" (cancelNew)="cancelNew($event)"></oms-review>
