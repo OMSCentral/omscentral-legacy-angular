@@ -18,7 +18,6 @@ export class CourseReviewsComponent implements OnInit {
   reviews$: Observable<any>;
   review: Review = null;
   newReview: boolean = false;
-  
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
@@ -35,7 +34,7 @@ export class CourseReviewsComponent implements OnInit {
 
     this.course$.subscribe(course => {
       this.course = course;
-      this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews));
+      this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews || {}));
       this.review = new Review({course: course.courseId});
     });
   }
