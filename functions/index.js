@@ -9,9 +9,10 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
+console.log("Updated");
+
 // update counts
 function updateCounts(courseId) {
-    console.log("would update counts of ", courseId);
     var difficulty = 0;
     var diffNum = 0;
     var rating = 0;
@@ -26,15 +27,14 @@ function updateCounts(courseId) {
             },
             "reviews": {
     */
-    var avgRef = admin.database().ref('courses/'+courseId + '/average');
-    return admin.database().ref('courses/' + courseId + '/reviews').once('value').then(function(snapshot) {
+    var avgRef = admin.database().ref('courses/' + courseId + '/average');
+    return admin.database().ref('courses/' + courseId + '/reviews').once('value').then(function (snapshot) {
         var reads = [];
         snapshot.forEach(reviewChild => {
-            var id = reviewChild.key();
+            var id = reviewChild.key;
             if (reviewChild.val() === true) {
                 var prm = admin.database().ref('reviews/' + id).once('value').then(rev => {
                     var review = rev.val();
-                    console.log(JSON.stringify(review));
                     if (review.difficulty) {
                         difficulty += review.difficulty;
                         diffNum++;
@@ -51,14 +51,13 @@ function updateCounts(courseId) {
                 reads.push(prm);
             }
         });
-        
-        return Promise.all(reads).then(function() {
+
+        return Promise.all(reads).then(function () {
             var update = {
                 difficulty: difficulty / diffNum,
                 rating: rating / ratingNum,
                 workload: workload / workNum
             };
-            console.log("update counts", JSON.stringify(update));
             return avgRef.update(update);
         });
     });
@@ -66,12 +65,10 @@ function updateCounts(courseId) {
 
 function updateAuthorCourse(authorId, courseId, reviewId, value) {
     var update = {};
-    update[reviewId] = value || true;
-    var updates = {}
-    updates['/users/'+authorId+'/reviews'] = update;
-    update['/courses/'+courseId+'/reviews'] = update;
-    console.log("updateAuthorCourse: ",JSON.stringify(updates));
-    return admin.database().ref.update(updates);
+    update[reviewId] = value;
+    return admin.database().ref('/users/' + authorId + '/reviews/').update(update).then(() => {
+        return admin.database().ref('/courses/' + courseId + '/reviews/').update(update)
+    });
 }
 
 // when a review is created, add to author list
@@ -90,7 +87,9 @@ exports.newReview = functions.database.ref('/reviews/{pushId}/').onCreate(event 
         "workload": 1000
     */
     const originalKey = event.data.key;
-    return updateAuthorCourse(original.author, original.course, originalKey, true).then(function() {
+    console.log("new review: ", originalKey);
+    console.log(JSON.stringify(original));
+    return updateAuthorCourse(original.author, original.course, originalKey, true).then(function () {
         return updateCounts(original.course);
     });
 });
@@ -109,7 +108,8 @@ exports.modifiedReview = functions.database.ref('/reviews/{pushId}/').onUpdate(e
 exports.deletedReview = functions.database.ref('/reviews/{pushId}/').onDelete(event => {
     const original = event.data.val();
     const originalKey = event.data.key;
-    return updateFromAuthorCourse(original.author, original.course, originalKey, null).then(function() {
+    console.log(JSON.stringify(original));
+    return updateAuthorCourse(original.author, original.course, originalKey, null).then(function () {
         return updateCounts(original.course);
     });
 });
