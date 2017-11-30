@@ -47,6 +47,9 @@ export class CourseService {
 
   broadcast() {
     this.localStorageService.setObject('courses', this.cached);
+    if (this.courseIds.length == 0) {
+      this.courseIds = Object.keys(this.cached);
+    }
     if (!this.courses$) {
       this.courses$ = new BehaviorSubject([]);
     }
@@ -109,6 +112,14 @@ export class CourseService {
     return courses;
   }
 
+  getCourseName(courseId) {
+    if (this.cached[courseId]) {
+      return this.cached[courseId].name;
+    } else {
+      return '';
+    }
+  }
+
   getCourses() {
     if (this.cacheExpired()) {
       return this.downloadCourses();
@@ -124,6 +135,7 @@ export class CourseService {
     if (Object.keys(this.cached).indexOf(courseId) === -1 || this.cacheExpired()) {
       return this.downloadCourse(courseId);
     } else {
+      this.broadcast();
       return this.course$.asObservable();
     }
   }

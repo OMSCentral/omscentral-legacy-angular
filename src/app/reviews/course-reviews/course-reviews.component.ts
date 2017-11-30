@@ -40,7 +40,6 @@ export class CourseReviewsComponent implements OnInit {
   }
 
   saveNew(evt) {
-    console.log(evt);
     evt.course = this.course.id;
     evt.author = this.authId;
     this.reviewService.push(evt);
