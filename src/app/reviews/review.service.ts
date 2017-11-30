@@ -16,7 +16,7 @@ export class ReviewService {
   cached = {};
   cacheTime: Date = null;
   reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
-  reviewIds: string[] = [];
+  reviewIds: string[];
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
     private courseService: CourseService, private localStorageService: LocalStorageService) {}
@@ -125,7 +125,9 @@ export class ReviewService {
     reviewIds.forEach(reviewId => {
       reviews.push(this.getReview(reviewId));
     });
-    forkJoin(reviews).subscribe(this.broadcast);
+    forkJoin(reviews).subscribe(() => {
+      this.broadcast();
+    });
     return this.reviews$;
   }
 
@@ -134,7 +136,7 @@ export class ReviewService {
       this.reviews$ = new BehaviorSubject([]);
     }
     this.reviews$.next(this.reviewIds.map(reviewId => {
-      return this.cached[reviewId] || [];
+      return this.cached[reviewId] || {};
     }));
   }
 
@@ -142,7 +144,7 @@ export class ReviewService {
     if (Object.keys(this.cached).indexOf(reviewId) === -1 || this.cacheExpired()) {
       return this.downloadReview(reviewId);
     } else {
-      return new Review(this.cached[reviewId]);
+      return Observable.of(new Review(this.cached[reviewId]));
     }
   }
 
