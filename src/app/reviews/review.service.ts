@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { forkJoin } from "rxjs/observable/forkJoin";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Review } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
+import { CourseService } from '../core/course.service';
 
 // temporary
 // import * as jsonData from '../../../merged-dev.json';
@@ -12,9 +14,10 @@ import { AuthService } from '../firebase/auth.service';
 export class ReviewService {
   cached = {};
   cacheTime: Date = null;
+  reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
   reviewIds: string[] = [];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService) {}
+  constructor(private db: AngularFireDatabase, private auth: AuthService, private courseService: CourseService) {}
 
   downloadReviews() {
     const reviews = {};
@@ -29,7 +32,7 @@ export class ReviewService {
   }
 
   downloadReview(reviewId) {
-    return this.db.database.ref('/reviews/'+reviewId).once('value').then((snapshot) => {
+    return this.db.database.ref('/reviews/' + reviewId).once('value').then((snapshot) => {
       const review: Review = new Review(snapshot.val());
       review.id = reviewId;
       const temp = {};
@@ -68,6 +71,8 @@ export class ReviewService {
     Object.assign(this.cached, temp);
 
     // Add review to course cache
+    this.courseService.addReview(review.course, postRef.key);
+    postRef.off();
   }
 
   update(review: Review) {
@@ -89,14 +94,14 @@ export class ReviewService {
       workload: review.workload,
       rating: review.rating
     };
-    const postRef = this.db.database.ref('/reviews/'+review.id).set(newReview);
+    const postRef = this.db.database.ref('/reviews/' + review.id).set(newReview);
     const temp = {};
     temp[review.id] = review;
     Object.assign(this.cached, temp);
   }
 
   remove(reviewId) {
-    this.db.database.ref('/reviews/'+reviewId).remove();
+    this.db.database.ref('/reviews/' + reviewId).remove();
     delete this.cached[reviewId];
   }
 
@@ -108,11 +113,19 @@ export class ReviewService {
   }
 
   getReviews(reviewIds: string[]) {
+    this.reviewIds = reviewIds;
     const reviews = [];
     reviewIds.forEach(reviewId => {
       reviews.push(this.getReview(reviewId));
     });
-    return forkJoin(reviews);
+    forkJoin(reviews).subscribe(this.broadcast);
+    return this.reviews$;
+  }
+
+  broadcast() {
+    this.reviews$.next(this.reviewIds.map(reviewId => {
+      return this.cached[reviewId] || [];
+    }));
   }
 
   getReview(reviewId) {
@@ -130,7 +143,7 @@ export class ReviewService {
       if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
         this.cacheTime = null;
         return true;
-      }  else {
+      } else {
         return false;
       }
     }
