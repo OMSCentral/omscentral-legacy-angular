@@ -19,9 +19,7 @@ export class ReviewService {
   reviewIds: string[] = [];
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
-    private courseService: CourseService, private localStorageService: LocalStorageService) {
-      localStorageService.test();
-    }
+    private courseService: CourseService, private localStorageService: LocalStorageService) {}
 
   downloadReviews() {
     const reviews = {};
