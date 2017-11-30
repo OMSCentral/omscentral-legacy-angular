@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CourseService {
   cached = {};
   cacheTime: Date = null;
+  courses$: BehaviorSubject<any> = new BehaviorSubject([]);
+  course$: BehaviorSubject<any> = new BehaviorSubject({});
+  courseIds: string[] = [];
+  courseId: string;
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -23,6 +28,21 @@ export class CourseService {
       });
     }
     return totals;
+  }
+
+  addReview(courseId, reviewId) {
+    if (!this.cached[courseId].reviews) {
+      this.cached[courseId].reviews = {};
+    }
+    this.cached[courseId].reviews[reviewId] = true;
+    // broadcast
+  }
+
+  broadcast() {
+    this.courses$.next(this.courseIds.map(courseId => {
+      return this.cached[courseId] || {};
+    }));
+    this.course$.next(this.cached[this.courseId] || {});
   }
 
   downloadCourses() {
@@ -46,7 +66,8 @@ export class CourseService {
         }
       });
       this.cached = Object.assign(this.cached, courses);
-      return this.courseList();
+      this.broadcast();
+      return this.courses$.asObservable();
     });
   }
 
@@ -58,7 +79,8 @@ export class CourseService {
       const temp = {};
       temp[courseId] = course;
       this.cached = Object.assign(this.cached, temp);
-      return course;
+      this.broadcast();
+      return this.course$.asObservable();
     });
   }
 
@@ -73,15 +95,16 @@ export class CourseService {
     if (this.cacheExpired()) {
       return this.downloadCourses();
     } else {
-      return Observable.of(this.courseList());
+      return this.courses$.asObservable();
     }
   }
 
   getCourse(courseId) {
+    this.courseId = courseId;
     if (Object.keys(this.cached).indexOf(courseId) === -1 || this.cacheExpired()) {
       return this.downloadCourse(courseId);
     } else {
-      return Observable.of(this.cached[courseId]);
+      return this.course$.asObservable();
     }
   }
 
