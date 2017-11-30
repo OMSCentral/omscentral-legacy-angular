@@ -19,7 +19,10 @@ export class ReviewService {
   reviewIds: string[];
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
-    private courseService: CourseService, private localStorageService: LocalStorageService) {}
+    private courseService: CourseService, private localStorageService: LocalStorageService) {
+      this.cached = localStorageService.getObject('reviews') || {};
+      this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
+    }
 
   downloadReviews() {
     const reviews = {};
@@ -29,6 +32,7 @@ export class ReviewService {
     this.cached = Object.assign(this.cached, reviews);
     if (this.cacheTime === null) {
       this.cacheTime = new Date();
+      this.localStorageService.set('reviewsCacheTime', this.cacheTime);
     }
     return this.reviewList();
   }
@@ -132,6 +136,7 @@ export class ReviewService {
   }
 
   broadcast() {
+    this.localStorageService.setObject('reviews', this.cached);
     if (!this.reviews$) {
       this.reviews$ = new BehaviorSubject([]);
     }
@@ -154,6 +159,7 @@ export class ReviewService {
     } else {
       if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
         this.cacheTime = null;
+        this.localStorageService.set('reviewsCacheTime', null);
         return true;
       } else {
         return false;
