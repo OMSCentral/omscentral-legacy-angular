@@ -18,7 +18,7 @@
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block">
+                  <div class="card card-block" *ngIf="(course$ | async)?.average">
                     <h3 class="card-title">{{(course$ | async)?.average.workload | number}}</h3>
                     <p class="card-text">
                       Avg. Work (Hours / Week)
@@ -26,7 +26,7 @@
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block">
+                  <div class="card card-block" *ngIf="(course$ | async)?.average">
                     <h3 class="card-title">{{(course$ | async)?.average.difficulty | number}}</h3>
                     <p class="card-text">
                       Avg. Diff. (1-5 Hardest)
@@ -34,7 +34,7 @@
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block">
+                  <div class="card card-block" *ngIf="(course$ | async)?.average">
                     <h3 class="card-title">{{(course$ | async)?.average.rating | number}}</h3>
                     <p class="card-text">
                       Avg. Rating (1-5 Best)

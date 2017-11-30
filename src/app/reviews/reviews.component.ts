@@ -9,7 +9,7 @@ import { CourseService } from '../core/course.service';
   styleUrls: ['./reviews.component.scss']
 })
 export class ReviewsComponent implements OnInit {
-  courses$: Observable<any[]>;
+  courses$: Observable<any> | Promise<Observable<any>>;
 
   constructor(private courseService: CourseService, private router: Router) {}
 
@@ -20,5 +20,4 @@ export class ReviewsComponent implements OnInit {
   goToCourse(course) {
     this.router.navigate(['/reviews', course]);
   }
-
 }

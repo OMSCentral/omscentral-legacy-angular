@@ -20,13 +20,20 @@ export class ProfileComponent implements OnInit {
     this.user$ = this.userService.getUser();
     this.user$.subscribe(user => {
       if (user.reviews) {
-        console.log(user.reviews);
         const reviewIds = Object.keys(user.reviews).filter(revId => {
           return user.reviews[revId];
         });
         this.reviews$ = this.reviewService.getReviews(reviewIds);
       }
     });
+  }
+
+  remove(evt) {
+    this.reviewService.remove(evt.id);
+  }
+
+  update(evt) {
+    this.reviewService.update(evt);
   }
 
 }
