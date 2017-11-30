@@ -70,7 +70,6 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(auth => {
-        console.log(auth);
         this.authState = auth;
         return;
       })
