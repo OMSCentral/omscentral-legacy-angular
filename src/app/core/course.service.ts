@@ -37,10 +37,16 @@ export class CourseService {
       this.cached[courseId].reviews = {};
     }
     this.cached[courseId].reviews[reviewId] = true;
-    // broadcast
+    this.broadcast();
   }
 
   broadcast() {
+    if (!this.courses$) {
+      this.courses$ = new BehaviorSubject([]);
+    }
+    if (!this.course$) {
+      this.course$ = new BehaviorSubject({});
+    }
     this.courses$.next(this.courseIds.map(courseId => {
       return this.cached[courseId] || {};
     }));
