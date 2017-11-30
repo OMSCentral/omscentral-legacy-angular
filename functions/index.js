@@ -35,17 +35,19 @@ function updateCounts(courseId) {
             if (reviewChild.val() === true) {
                 var prm = admin.database().ref('reviews/' + id).once('value').then(rev => {
                     var review = rev.val();
-                    if (review.difficulty) {
-                        difficulty += review.difficulty;
-                        diffNum++;
-                    }
-                    if (review.rating) {
-                        rating += review.rating;
-                        ratingNum++;
-                    }
-                    if (review.workload) {
-                        workload += review.workload;
-                        workNum++;
+                    if (review) {
+                        if (review.difficulty) {
+                            difficulty += review.difficulty;
+                            diffNum++;
+                        }
+                        if (review.rating) {
+                            rating += review.rating;
+                            ratingNum++;
+                        }
+                        if (review.workload) {
+                            workload += review.workload;
+                            workNum++;
+                        }
                     }
                 });
                 reads.push(prm);
@@ -67,7 +69,7 @@ function updateAuthorCourse(authorId, courseId, reviewId, value) {
     var update = {};
     update[reviewId] = value;
     return admin.database().ref('/users/' + authorId + '/reviews/').update(update).then(() => {
-        return admin.database().ref('/courses/' + courseId + '/reviews/').update(update)
+        return admin.database().ref('/courses/' + courseId + '/reviews/').update(update);
     });
 }
 
@@ -106,7 +108,7 @@ exports.modifiedReview = functions.database.ref('/reviews/{pushId}/').onUpdate(e
 // when a review is removed, remove from author list
 // when a review is removed, remove from course list
 exports.deletedReview = functions.database.ref('/reviews/{pushId}/').onDelete(event => {
-    const original = event.data.val();
+    const original = event.data.previous.val();
     const originalKey = event.data.key;
     console.log(JSON.stringify(original));
     return updateAuthorCourse(original.author, original.course, originalKey, null).then(function () {
