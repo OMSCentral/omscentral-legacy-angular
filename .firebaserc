@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "gt-course-surveys-dev",
+    "staging": "gt-course-surveys-dev",
+    "production": "firebase-gt-surveyor"
+  }
+}
