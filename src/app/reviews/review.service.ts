@@ -6,6 +6,7 @@ import { Review } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
 import { CourseService } from '../core/course.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 // temporary
 // import * as jsonData from '../../../merged-dev.json';
@@ -17,7 +18,10 @@ export class ReviewService {
   reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
   reviewIds: string[] = [];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService, private courseService: CourseService) {}
+  constructor(private db: AngularFireDatabase, private auth: AuthService,
+    private courseService: CourseService, private localStorageService: LocalStorageService) {
+      localStorageService.test();
+    }
 
   downloadReviews() {
     const reviews = {};

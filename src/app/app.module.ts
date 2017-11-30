@@ -21,6 +21,7 @@ import { ProfileModule } from './profile/profile.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './core/course.service';
+import { LocalStorageService } from './core/local-storage.service';
 import { ReviewService } from './reviews/review.service';
 import { GradeService } from './grades/grade.service';
 
@@ -51,7 +52,7 @@ import 'clarity-icons';
     DonateModule,
     ProfileModule
   ],
-  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService ],
+  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
