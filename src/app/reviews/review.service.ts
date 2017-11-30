@@ -98,11 +98,16 @@ export class ReviewService {
     const temp = {};
     temp[review.id] = review;
     Object.assign(this.cached, temp);
+    this.broadcast();
   }
 
   remove(reviewId) {
     this.db.database.ref('/reviews/' + reviewId).remove();
     delete this.cached[reviewId];
+    if (this.reviewIds.indexOf(reviewId) !== -1) {
+      this.reviewIds.splice(this.reviewIds.indexOf(reviewId), 1);
+      this.broadcast();
+    }
   }
 
   reviewList() {
@@ -123,6 +128,9 @@ export class ReviewService {
   }
 
   broadcast() {
+    if (!this.reviews$) {
+      this.reviews$ = new BehaviorSubject([]);
+    }
     this.reviews$.next(this.reviewIds.map(reviewId => {
       return this.cached[reviewId] || [];
     }));
