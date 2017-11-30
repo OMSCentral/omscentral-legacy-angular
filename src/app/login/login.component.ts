@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   error = '';
+  socialError = '';
 
   constructor(public authService: AuthService, private router: Router) { }
 
@@ -25,6 +26,25 @@ export class LoginComponent implements OnInit {
         '';
   }
 
+  register() {
+    this.authService.signup(this.email.value, this.password.value).then(() => {
+      this.password.setValue('');
+      this.router.navigate(['reviews']);
+    }, (err) => {
+      this.error = err.message;
+    });
+  }
+
+  social(authProvider) {
+    const self = this;
+    this.authService.social(authProvider).then(() => {
+      this.password.setValue('');
+      this.router.navigate(['reviews']);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   login() {
     this.authService.login(this.email.value, this.password.value).then((err) => {
       this.password.setValue('');
@@ -35,6 +55,8 @@ export class LoginComponent implements OnInit {
         this.error = '';
         this.router.navigate(['reviews']);
       }
+    }, (err) => {
+      this.error = err.message;
     });
   }
 

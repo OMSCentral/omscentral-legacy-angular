@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { LocalStorageService } from './local-storage.service';
 
 // temporary
 import * as jsonData from '../../../merged-dev.json';
@@ -14,7 +15,10 @@ export class CourseService {
   courseIds: string[] = [];
   courseId: string;
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {
+    this.cached = localStorageService.getObject('courses') || {};
+    this.cacheTime = new Date(localStorageService.get('coursesCacheTime'));
+  }
 
   processGrades(grades) {
     const totals = {};
@@ -41,6 +45,7 @@ export class CourseService {
   }
 
   broadcast() {
+    this.localStorageService.setObject('courses', this.cached);
     if (!this.courses$) {
       this.courses$ = new BehaviorSubject([]);
     }
@@ -72,6 +77,10 @@ export class CourseService {
       }
     });
     this.cached = Object.assign(this.cached, courses);
+    if (this.cacheTime === null) {
+      this.cacheTime = new Date();
+      this.localStorageService.set('coursesCacheTime', this.cacheTime);
+    }
     this.broadcast();
     return this.courses$.asObservable();
   }
@@ -115,7 +124,13 @@ export class CourseService {
     if (this.cacheTime === null) {
       return true;
     } else {
-      return (new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000;
+      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
+        this.cacheTime = null;
+        this.localStorageService.set('coursesCacheTime', null);
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
