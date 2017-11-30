@@ -29,7 +29,7 @@ function updateCounts(courseId) {
     var avgRef = admin.database().ref('courses/'+courseId + '/average');
     return admin.database().ref('courses/' + courseId + '/reviews').once('value').then(function(snapshot) {
         var reads = [];
-        reviews.forEach(reviewChild => {
+        snapshot.forEach(reviewChild => {
             var id = reviewChild.key();
             if (reviewChild.val() === true) {
                 var prm = admin.database().ref('reviews/' + id).once('value').then(rev => {
