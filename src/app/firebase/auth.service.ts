@@ -21,15 +21,48 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-    this.firebaseAuth
+    const emailL = email.toLowerCase();
+    return this.firebaseAuth
       .auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(value => {
-        console.log('Success!', value);
+      .createUserWithEmailAndPassword(emailL, password)
+      .then(auth => {
+        this.authState = auth;
+        return;
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
       });
+  }
+
+  social(providerName) {
+    let provider;
+    switch (providerName) {
+      case 'google':
+        provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        break;
+
+      case 'facebook':
+        provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('email');
+        provider.addScope('public_profile');
+        break;
+
+      case 'twitter':
+        provider = new firebase.auth.TwitterAuthProvider();
+        break;
+
+      case 'github':
+        provider = new firebase.auth.GithubAuthProvider();
+        provider.addScope('user:email');
+        break;
+
+      default:
+        throw new Error('Invalid provider.');
+    }
+
+    return this.firebaseAuth.auth.signInWithPopup(provider);
   }
 
   login(email: string, password: string) {
