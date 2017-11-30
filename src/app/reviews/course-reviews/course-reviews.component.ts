@@ -18,7 +18,6 @@ export class CourseReviewsComponent implements OnInit {
   reviews$: Observable<any>;
   review: Review = null;
   newReview: boolean = false;
-  
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
