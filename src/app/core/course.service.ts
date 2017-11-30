@@ -4,9 +4,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from './local-storage.service';
 
-// temporary
-import * as jsonData from '../../../merged-dev.json';
-
 @Injectable()
 export class CourseService {
   cached = {};
