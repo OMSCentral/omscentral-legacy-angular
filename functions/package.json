@@ -5,7 +5,8 @@
     "serve": "firebase serve --only functions",
     "shell": "firebase experimental:functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
+    "deploy": "firebase use staging && firebase deploy --only functions",
+    "deploy:prod": "firebase use production && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "dependencies": {
