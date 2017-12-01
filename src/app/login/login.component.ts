@@ -18,6 +18,11 @@ export class LoginComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.authService.user.subscribe(user => {
+      if (user && user.uid) {
+        this.router.navigate(['reviews']);
+      }
+    });
   }
 
   getErrorMessage() {

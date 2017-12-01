@@ -20,18 +20,17 @@ const routes: Routes = [
   },
   {
     path: 'reviews',
-    component: ReviewsComponent,
-    // canActivate: [AuthGuard]
+    component: ReviewsComponent
   },
   {
     path: 'reviews/:courseId',
     component: CourseReviewsComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'grades',
     component: GradesComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'donate',
@@ -40,7 +39,7 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 
