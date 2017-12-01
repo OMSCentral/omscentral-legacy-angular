@@ -1,20 +1,43 @@
 machine:
   node:
-    version: 7.8.0
-  environment:
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-
-dependencies:
-  pre:
-    - npm --version
-    - npm i @angular/cli@latest -g
-    - npm i firebase-tools@latest -g
-    - npm i
+    version: 8.1
 
 test:
   override:
     - ng lint
     - ng test
+
+deployment:
+  development:
+    branch: master
+    commands:
+      - ./node_modules/.bin/ng build --prod -e=dev
+      - ./node_modules/.bin/firebase use staging
+      - ./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
+  # production:
+  #   branch: master
+  #   commands:
+  #     - ./node_modules/.bin/ng build --prod
+  #     - ./node_modules/.bin/firebase use production
+  #     - ./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
+
+# machine:
+#   node:
+#     version: 7.8.0
+#   environment:
+#     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
+# dependencies:
+#   pre:
+#     - npm --version
+#     - npm i @angular/cli@latest -g
+#     - npm i firebase-tools@latest -g
+#     - npm i
+
+# test:
+#   override:
+#     - ng lint
+#     - ng test
 # version: 2
 # jobs:
 #   test:
