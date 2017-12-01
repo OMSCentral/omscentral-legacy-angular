@@ -4,7 +4,7 @@ import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/debounceTime';
 import { Review } from '../../models/review';
 
 @Component({
@@ -18,15 +18,15 @@ export class CourseReviewsComponent implements OnInit {
   course: any;
   reviews$: Observable<any>;
   review: Review = null;
-  newReview: boolean = false;
+  newReview = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
     private auth: AuthService) {
-        auth.user.subscribe(user => {
-          this.authId = user.uid;
-        });
-    }
+    auth.user.subscribe(user => {
+      this.authId = user.uid;
+    });
+  }
 
   ngOnInit() {
     this.course$ = this.route.paramMap
@@ -41,7 +41,7 @@ export class CourseReviewsComponent implements OnInit {
       this.reviews$.subscribe(reviews => {
         this.course = this.courseService.updateCounts(this.course.id, reviews);
       });
-      this.review = new Review({course: course.courseId});
+      this.review = new Review({ course: course.courseId });
     });
   }
 
@@ -50,7 +50,7 @@ export class CourseReviewsComponent implements OnInit {
     evt.author = this.authId;
     this.reviewService.push(evt);
     this.newReview = false;
-    this.review = new Review({course: this.course.id});
+    this.review = new Review({ course: this.course.id });
   }
 
   cancelNew(evt) {

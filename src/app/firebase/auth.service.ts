@@ -39,7 +39,7 @@ export class AuthService {
           name: values.name,
           email: email
         };
-        return this.userService.updateInfo(entity, auth);;
+        return this.userService.updateInfo(entity, auth);
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
