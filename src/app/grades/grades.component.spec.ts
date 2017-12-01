@@ -1,6 +1,24 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ClarityModule } from 'clarity-angular';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { GradesComponent } from './grades.component';
+import { PipeModule } from '../pipes/pipe.module';
+
+import { CourseService } from '../core/course.service';
+class MockCourse {
+  getCourses() {
+
+  }
+}
+
+import { GradeService } from './grade.service';
+class MockGrade {
+  getGrades() {
+
+  }
+}
 
 describe('GradesComponent', () => {
   let component: GradesComponent;
@@ -8,9 +26,14 @@ describe('GradesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GradesComponent ]
+      imports: [PipeModule, ClarityModule, RouterTestingModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ],
+      providers: [{ provide: CourseService, useClass: MockCourse }, { provide: GradeService, useClass: MockGrade }],
+      declarations: [GradesComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

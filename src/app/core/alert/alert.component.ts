@@ -13,7 +13,7 @@ export class AlertComponent implements OnInit {
 
   ngOnInit() {
     this.alertService.getAlert();
-    
+
     this.alertService.alert$.subscribe(newAlert => {
       if (newAlert && newAlert.type !== 'hide') {
         this.alert = newAlert;

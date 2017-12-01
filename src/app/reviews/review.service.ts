@@ -20,9 +20,9 @@ export class ReviewService {
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
     private courseService: CourseService, private localStorageService: LocalStorageService) {
-      this.cached = localStorageService.getObject('reviews') || {};
-      this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
-    }
+    this.cached = localStorageService.getObject('reviews') || {};
+    this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
+  }
 
   downloadReviews() {
     const reviews = {};
@@ -144,14 +144,14 @@ export class ReviewService {
     }
     const reviews = this.reviewIds.map(reviewId => {
       return this.cached[reviewId] || {};
-    }).sort(function(a, b) {
+    }).sort(function (a, b) {
       const aData = a.semester.split('-');
-      const aYear = parseInt(aData[0]);
-      const aSem = parseInt(aData[1]);
+      const aYear = parseInt(aData[0], 10);
+      const aSem = parseInt(aData[1], 10);
 
       const bData = b.semester.split('-');
-      const bYear = parseInt(bData[0]);
-      const bSem = parseInt(bData[1]);
+      const bYear = parseInt(bData[0], 10);
+      const bSem = parseInt(bData[1], 10);
       if (aYear === bYear) {
         return bSem - aSem;
       } else {

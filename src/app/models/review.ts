@@ -10,7 +10,7 @@ export class Review {
     updated: Date;
     workload: number;
 
-    editReview: boolean = false;
+    editReview = false;
 
     backup: Review = null;
 
