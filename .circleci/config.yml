@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  install:
     docker:
       # specify the version you desire here
       - image: circleci/node:latest
@@ -27,8 +27,31 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+  lint:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:latest
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    steps:
       # run tests!
       - run: ./node_modules/.bin/ng lint
+
+  test:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:latest
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    steps:
       - run: ./node_modules/.bin/ng test --sourcemaps=false --single-run
 
   deploy-dev:
@@ -111,14 +134,21 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build
+      - install
+      - lint
+        requires:
+           - install
+      - test
+        requires:
+           - install
       - deploy-dev
          filters:
             branches:
               only:
                 - master
          requires:
-           - build
+           - lint
+           - test
       - hold:
          type: approval
          filters:
