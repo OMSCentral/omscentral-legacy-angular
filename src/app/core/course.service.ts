@@ -42,6 +42,11 @@ export class CourseService {
     this.broadcast();
   }
 
+  removeReview(courseId, reviewId) {
+    delete this.cached[courseId].reviews[reviewId];
+    this.broadcast();
+  }
+
   broadcast() {
     this.localStorageService.setObject('courses', this.cached);
     if (this.courseIds.length == 0) {
@@ -60,7 +65,7 @@ export class CourseService {
   }
 
   downloadCourses() {
-    return this.db.database.ref('/courses').once('value').then((snapshot) => {
+    this.db.database.ref('/courses').once('value').then((snapshot) => {
       const courses = snapshot.val();
       Object.keys(courses).forEach(courseId => {
         if (courses[courseId].reviews) {
@@ -85,7 +90,6 @@ export class CourseService {
         this.localStorageService.set('coursesCacheTime', this.cacheTime);
       }
       this.broadcast();
-      return this.courses$.asObservable();
     });
   }
 
@@ -119,12 +123,12 @@ export class CourseService {
 
   getCourses() {
     if (this.cacheExpired()) {
-      return this.downloadCourses();
+      this.downloadCourses();
     } else {
       this.courseIds = Object.keys(this.cached);
       this.broadcast();
-      return this.courses$.asObservable();
     }
+    return this.courses$.asObservable();
   }
 
   getCourse(courseId) {
@@ -138,7 +142,7 @@ export class CourseService {
   }
 
   private cacheExpired() {
-    if (this.cacheTime === null) {
+    if (!this.cacheTime || this.cacheTime === null) {
       return true;
     } else {
       if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {

@@ -35,7 +35,9 @@ export class CourseReviewsComponent implements OnInit {
 
     this.course$.debounceTime(1000).subscribe(course => {
       this.course = course;
-      this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews || {}));
+      this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews || {}).filter(revId => {
+        return course.reviews[revId];
+      }));
       this.review = new Review({course: course.courseId});
     });
   }
@@ -52,7 +54,7 @@ export class CourseReviewsComponent implements OnInit {
   }
 
   remove(evt) {
-    this.reviewService.remove(evt.id);
+    this.reviewService.remove(evt);
   }
 
   update(evt) {
