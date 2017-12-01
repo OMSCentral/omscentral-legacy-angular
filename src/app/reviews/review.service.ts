@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Review } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
+import { CourseService } from '../core/course.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 // temporary
 // import * as jsonData from '../../../merged-dev.json';
@@ -12,9 +15,27 @@ import { AuthService } from '../firebase/auth.service';
 export class ReviewService {
   cached = {};
   cacheTime: Date = null;
-  reviewIds: string[] = [];
+  reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
+  reviewIds: string[];
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService) { }
+  constructor(private db: AngularFireDatabase, private auth: AuthService,
+    private courseService: CourseService, private localStorageService: LocalStorageService) {
+      this.cached = localStorageService.getObject('reviews') || {};
+      this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
+    }
+
+  downloadReviews() {
+    const reviews = {};
+    Object.keys(reviews).forEach(reviewId => {
+      reviews[reviewId].id = reviewId;
+    });
+    this.cached = Object.assign(this.cached, reviews);
+    if (this.cacheTime === null) {
+      this.cacheTime = new Date();
+      this.localStorageService.set('reviewsCacheTime', this.cacheTime);
+    }
+    return this.reviewList();
+  }
 
   downloadReview(reviewId) {
     return this.db.database.ref('/reviews/' + reviewId).once('value').then((snapshot) => {
@@ -54,8 +75,11 @@ export class ReviewService {
     const temp = {};
     temp[postRef.key] = review;
     Object.assign(this.cached, temp);
+    this.broadcast();
 
     // Add review to course cache
+    this.courseService.addReview(review.course, postRef.key);
+    postRef.off();
   }
 
   update(review: Review) {
@@ -81,11 +105,16 @@ export class ReviewService {
     const temp = {};
     temp[review.id] = review;
     Object.assign(this.cached, temp);
+    this.broadcast();
   }
 
   remove(reviewId) {
     this.db.database.ref('/reviews/' + reviewId).remove();
     delete this.cached[reviewId];
+    if (this.reviewIds.indexOf(reviewId) !== -1) {
+      this.reviewIds.splice(this.reviewIds.indexOf(reviewId), 1);
+    }
+    this.broadcast();
   }
 
   reviewList() {
@@ -96,18 +125,46 @@ export class ReviewService {
   }
 
   getReviews(reviewIds: string[]) {
+    this.reviewIds = reviewIds;
     const reviews = [];
     reviewIds.forEach(reviewId => {
       reviews.push(this.getReview(reviewId));
     });
-    return forkJoin(reviews);
+    forkJoin(reviews).subscribe(() => {
+      this.broadcast();
+    });
+    return this.reviews$;
+  }
+
+  broadcast() {
+    this.localStorageService.setObject('reviews', this.cached);
+    if (!this.reviews$) {
+      this.reviews$ = new BehaviorSubject([]);
+    }
+    const reviews = this.reviewIds.map(reviewId => {
+      return this.cached[reviewId] || {};
+    }).sort(function(a, b) {
+      const aData = a.semester.split('-');
+      const aYear = parseInt(aData[0]);
+      const aSem = parseInt(aData[1]);
+
+      const bData = b.semester.split('-');
+      const bYear = parseInt(bData[0]);
+      const bSem = parseInt(bData[1]);
+      if (aYear === bYear) {
+        return bSem - aSem;
+      } else {
+        return bYear - aYear;
+      }
+    });
+    this.reviews$.next(reviews);
   }
 
   getReview(reviewId) {
     if (Object.keys(this.cached).indexOf(reviewId) === -1 || this.cacheExpired()) {
       return this.downloadReview(reviewId);
     } else {
-      return new Review(this.cached[reviewId]);
+      return Observable.of(new Review(this.cached[reviewId]));
     }
   }
 
@@ -117,6 +174,7 @@ export class ReviewService {
     } else {
       if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
         this.cacheTime = null;
+        this.localStorageService.set('reviewsCacheTime', null);
         return true;
       } else {
         return false;

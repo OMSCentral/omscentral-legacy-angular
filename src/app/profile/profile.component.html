@@ -1,3 +1,28 @@
-<p>
-  profile works!
-</p>
+<clr-main-container>
+  <div class="content-container">
+    <div class="content-area">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              {{(user$ | async)?.name}}
+            </div>
+            <div class="card-block">
+              {{(user$ | async)?.email}}
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card-columns card-columns-2">
+            <oms-review *ngFor="let review of reviews$ | async" [review]="review" [title]="true" (remove)="remove($event)" (update)="update($event)"></oms-review>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</clr-main-container>
