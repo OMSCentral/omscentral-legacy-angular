@@ -34,8 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'grades',
-    component: GradesComponent,
-    canActivate: [AuthGuard]
+    component: GradesComponent
   },
   {
     path: 'donate',
