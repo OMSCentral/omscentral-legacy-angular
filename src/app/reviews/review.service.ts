@@ -75,6 +75,7 @@ export class ReviewService {
     const temp = {};
     temp[postRef.key] = review;
     Object.assign(this.cached, temp);
+    this.broadcast();
 
     // Add review to course cache
     this.courseService.addReview(review.course, postRef.key);
@@ -112,8 +113,8 @@ export class ReviewService {
     delete this.cached[reviewId];
     if (this.reviewIds.indexOf(reviewId) !== -1) {
       this.reviewIds.splice(this.reviewIds.indexOf(reviewId), 1);
-      this.broadcast();
     }
+    this.broadcast();
   }
 
   reviewList() {

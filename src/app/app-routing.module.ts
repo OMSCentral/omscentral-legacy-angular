@@ -8,6 +8,7 @@ import { GradesComponent } from './grades/grades.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DonateComponent } from './donate/donate.component';
 import { CourseReviewsComponent } from './reviews/course-reviews/course-reviews.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'reviews',
