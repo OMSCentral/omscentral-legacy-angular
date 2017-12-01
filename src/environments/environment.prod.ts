@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyBEi34tJ32tvY_OZgTuwZmmSbwuCdqnqvM",
-    authDomain: "gt-course-surveys-dev.firebaseapp.com",
-    databaseURL: "https://gt-course-surveys-dev.firebaseio.com",
-    projectId: "gt-course-surveys-dev",
-    storageBucket: "gt-course-surveys-dev.appspot.com",
-    messagingSenderId: "1029912675292"
+    apiKey: "AIzaSyDJ4eSJ0d6qWSwz4J2SUWftOnP_qSg0Eco",
+    authDomain: "gt-surveyor.firebaseapp.com",
+    databaseURL: "https://gt-surveyor.firebaseio.com",
+    projectId: "firebase-gt-surveyor",
+    storageBucket: "firebase-gt-surveyor.appspot.com",
+    messagingSenderId: "138094612706"
   }
 };
