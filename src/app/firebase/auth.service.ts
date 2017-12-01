@@ -20,6 +20,10 @@ export class AuthService {
     return this.authState !== null;
   }
 
+  get currentUserObservable(): any {
+    return this.firebaseAuth.auth;
+  }
+
   signup(email: string, password: string) {
     const emailL = email.toLowerCase();
     return this.firebaseAuth

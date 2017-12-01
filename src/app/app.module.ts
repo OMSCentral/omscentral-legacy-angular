@@ -30,7 +30,7 @@ import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
-import 'clarity-icons';
+import 'clarity-icons/clarity-icons.min.js';
 
 @NgModule({
   declarations: [
