@@ -35,7 +35,7 @@ function updateCounts(courseId) {
             if (reviewChild.val() === true) {
                 var prm = admin.database().ref('reviews/' + id).once('value').then(rev => {
                     var review = rev.val();
-                    if (review) {
+                    if (review && review !== null) {
                         if (review.difficulty) {
                             difficulty += review.difficulty;
                             diffNum++;
@@ -111,7 +111,9 @@ exports.deletedReview = functions.database.ref('/reviews/{pushId}/').onDelete(ev
     const original = event.data.previous.val();
     const originalKey = event.data.key;
     console.log(JSON.stringify(original));
-    return updateAuthorCourse(original.author, original.course, originalKey, null).then(function () {
-        return updateCounts(original.course);
-    });
+    if (original && original !== null) {
+        return updateAuthorCourse(original.author, original.course, originalKey, null).then(function () {
+            return updateCounts(original.course);
+        });
+    }
 });
