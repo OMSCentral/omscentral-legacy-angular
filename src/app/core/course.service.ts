@@ -49,7 +49,7 @@ export class CourseService {
 
   broadcast() {
     this.localStorageService.setObject('courses', this.cached);
-    if (this.courseIds.length == 0) {
+    if (this.courseIds.length === 0) {
       this.courseIds = Object.keys(this.cached);
     }
     if (!this.courses$) {
@@ -104,6 +104,40 @@ export class CourseService {
       this.broadcast();
       return this.course$.asObservable();
     });
+  }
+
+  updateCounts(courseId, reviews) {
+    let difficulty = 0;
+    let diffNum = 0;
+    let rating = 0;
+    let ratingNum = 0;
+    let workload = 0;
+    let workNum = 0;
+    reviews.forEach(review => {
+        if (review && review !== null) {
+            if (review.difficulty) {
+                difficulty += review.difficulty;
+                diffNum++;
+            }
+            if (review.rating) {
+                rating += review.rating;
+                ratingNum++;
+            }
+            if (review.workload) {
+                workload += review.workload;
+                workNum++;
+            }
+        }
+    });
+    const update = {
+        difficulty: difficulty / diffNum,
+        rating: rating / ratingNum,
+        workload: workload / workNum
+    };
+    this.cached[courseId].average = update;
+    this.cached[courseId].numReviews = reviews.length;
+    this.localStorageService.setObject('courses', this.cached);
+    return this.cached[courseId];
   }
 
   courseList() {
