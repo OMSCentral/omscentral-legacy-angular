@@ -14,7 +14,6 @@
           {{error}}
         </div>
         <div class="btn-group btn-primary">
-          <button class="btn btn-success btn-block" (click)="register()" [disabled]="!email || !password">Register</button>
           <button type="submit" class="btn btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
         </div>
       </div>
@@ -24,18 +23,26 @@
     <div class="text-center">
       <div class="btn-group btn-link">
         <button class="btn" (click)="social('github')">
-            <i class="fa fa-github fa-3x" aria-hidden="true"></i>
-          </button>
+          <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+        </button>
         <button class="btn" (click)="social('twitter')">
-            <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
-          </button>
+          <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+        </button>
         <button class="btn" (click)="social('facebook')">
-            <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
-          </button>
+          <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+        </button>
         <button class="btn" (click)="social('google')">
-            <i class="fa fa-google fa-3x" aria-hidden="true"></i>
-          </button>
+          <i class="fa fa-google fa-3x" aria-hidden="true"></i>
+        </button>
       </div>
+    </div>
+    <br />
+    <br />
+    <div class="text-center">
+        <div class="signup">
+            <span>Don't have an account?</span>
+            <button class="btn btn-sm btn-link signup" (click)="register()">Register</button>
+          </div>
     </div>
   </div>
 </div>

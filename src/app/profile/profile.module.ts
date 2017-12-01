@@ -5,6 +5,7 @@ import { ClarityModule } from 'clarity-angular';
 import { ReviewsModule } from '../reviews/reviews.module';
 import { UserService } from '../core/user.service';
 import { ReviewService } from '../reviews/review.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { ReviewService } from '../reviews/review.service';
     ReviewsModule
   ],
   declarations: [ProfileComponent],
-  providers: [ UserService, ReviewService ]
+  providers: [ UserService, ReviewService, LocalStorageService ]
 })
 export class ProfileModule { }
