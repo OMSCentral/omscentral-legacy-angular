@@ -5,37 +5,37 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
             <div class="card-header">
-              {{(course$ | async)?.id}}: {{(course$ | async)?.name}}
+              {{course?.id}}: {{course?.name}}
             </div>
             <div class="card-block">
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="card card-block">
-                    <h3 class="card-title">{{(course$ | async)?.numReviews}}</h3>
+                    <h3 class="card-title">{{course?.numReviews}}</h3>
                     <p class="card-text">
                       Reviews
                     </p>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block" *ngIf="(course$ | async)?.average">
-                    <h3 class="card-title">{{(course$ | async)?.average.workload | number}}</h3>
+                  <div class="card card-block" *ngIf="course?.average">
+                    <h3 class="card-title">{{course?.average.workload | number}}</h3>
                     <p class="card-text">
                       Avg. Work (Hours / Week)
                     </p>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block" *ngIf="(course$ | async)?.average">
-                    <h3 class="card-title">{{(course$ | async)?.average.difficulty | number}}</h3>
+                  <div class="card card-block" *ngIf="course?.average">
+                    <h3 class="card-title">{{course?.average.difficulty | number}}</h3>
                     <p class="card-text">
                       Avg. Diff. (1-5 Hardest)
                     </p>
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="card card-block" *ngIf="(course$ | async)?.average">
-                    <h3 class="card-title">{{(course$ | async)?.average.rating | number}}</h3>
+                  <div class="card card-block" *ngIf="course?.average">
+                    <h3 class="card-title">{{course?.average.rating | number}}</h3>
                     <p class="card-text">
                       Avg. Rating (1-5 Best)
                     </p>
