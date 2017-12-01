@@ -76,7 +76,7 @@ jobs:
 
       # run tests!
       - run: ./node_modules/.bin/ng lint
-      - run: ./node_modules/.bin/ng test --sourcemaps=false
+      - run: ./node_modules/.bin/ng test --sourcemaps=false --single-run
 
   deploy:
     docker:
