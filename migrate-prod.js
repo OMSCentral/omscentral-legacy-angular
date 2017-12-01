@@ -1,7 +1,7 @@
 var fs = require("fs");
 var _ = require("lodash");
-var rawCurrent = fs.readFileSync("asdf.json");
-var rawArchive = fs.readFileSync("asdf-archive-export.json");
+var rawCurrent = fs.readFileSync("gt-surveyor-export.json");
+var rawArchive = fs.readFileSync("gt-course-surveys-prd-archive-export.json");
 var current = JSON.parse(rawCurrent);
 var archive = JSON.parse(rawArchive);
 
@@ -112,7 +112,7 @@ Object.keys(merged.courses).forEach(function (courseId) {
     }
 });
 
-merged.alert = {
+merged.alerts = {
     type: 'info',
     text: 'OMS Central is under new management (@martzcodes).  Talk to me on slack in #OMSCentral',
     slack: true
@@ -128,7 +128,7 @@ Object.keys(anon.users, function(userId) {
     anon.users[userId].name = userId;
     anon.users[userId].profileImageUrl = userId;
 });
-json = JSON.stringify(anon);
+json = JSON.stringify(anon, null, 4);
 fs.writeFile('anonymized-backup.json', json, 'utf8', function () {
     console.log("wrote anonymized");
 });
