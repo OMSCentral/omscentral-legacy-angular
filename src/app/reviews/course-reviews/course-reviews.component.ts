@@ -4,6 +4,7 @@ import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Observable } from 'rxjs/Observable';
+import "rxjs/add/operator/debounceTime";
 import { Review } from '../../models/review';
 
 @Component({
@@ -32,7 +33,7 @@ export class CourseReviewsComponent implements OnInit {
       .switchMap((params: ParamMap) =>
         this.courseService.getCourse(params.get('courseId')));
 
-    this.course$.subscribe(course => {
+    this.course$.debounceTime(1000).subscribe(course => {
       this.course = course;
       this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews || {}));
       this.review = new Review({course: course.courseId});
@@ -40,7 +41,6 @@ export class CourseReviewsComponent implements OnInit {
   }
 
   saveNew(evt) {
-    console.log(evt);
     evt.course = this.course.id;
     evt.author = this.authId;
     this.reviewService.push(evt);

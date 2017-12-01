@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { UserService } from '../core/user.service';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -9,10 +10,13 @@ export class AuthService {
   user: Observable<firebase.User>;
   authState: any = null;
 
-  constructor(private firebaseAuth: AngularFireAuth) {
+  constructor(private firebaseAuth: AngularFireAuth, private userService: UserService) {
     this.user = firebaseAuth.authState;
     this.user.subscribe(auth => {
-      this.authState = auth;
+      if (auth && auth.uid !== null) {
+        this.authState = auth;
+        this.userService.retrieveUser(auth.uid);
+      }
     });
   }
 
@@ -20,16 +24,57 @@ export class AuthService {
     return this.authState !== null;
   }
 
-  signup(email: string, password: string) {
-    this.firebaseAuth
+  get currentUserObservable(): any {
+    return this.firebaseAuth.auth;
+  }
+
+  signup(values) {
+    const email = values.email.toLowerCase();
+    return this.firebaseAuth
       .auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(value => {
-        console.log('Success!', value);
+      .createUserWithEmailAndPassword(email, values.password)
+      .then(auth => {
+        this.authState = auth;
+        const entity = {
+          name: values.name,
+          email: email
+        };
+        return this.userService.updateInfo(entity, auth);;
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
       });
+  }
+
+  social(providerName) {
+    let provider;
+    switch (providerName) {
+      case 'google':
+        provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        break;
+
+      case 'facebook':
+        provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('email');
+        provider.addScope('public_profile');
+        break;
+
+      case 'twitter':
+        provider = new firebase.auth.TwitterAuthProvider();
+        break;
+
+      case 'github':
+        provider = new firebase.auth.GithubAuthProvider();
+        provider.addScope('user:email');
+        break;
+
+      default:
+        throw new Error('Invalid provider.');
+    }
+
+    return this.firebaseAuth.auth.signInWithPopup(provider);
   }
 
   login(email: string, password: string) {
@@ -37,7 +82,6 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(auth => {
-        console.log(auth);
         this.authState = auth;
         return;
       })

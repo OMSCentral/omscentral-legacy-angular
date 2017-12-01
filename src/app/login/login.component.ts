@@ -13,16 +13,35 @@ export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   error = '';
+  socialError = '';
 
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.authService.user.subscribe(user => {
+      if (user && user.uid) {
+        this.router.navigate(['reviews']);
+      }
+    });
   }
 
   getErrorMessage() {
     return this.email.hasError('required') ? 'You must enter a value' :
       this.email.hasError('email') ? 'Not a valid email' :
         '';
+  }
+
+  register() {
+    this.router.navigate(['register']);
+  }
+
+  social(authProvider) {
+    const self = this;
+    this.authService.social(authProvider).then(() => {
+      this.router.navigate(['reviews']);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   login() {
@@ -35,6 +54,8 @@ export class LoginComponent implements OnInit {
         this.error = '';
         this.router.navigate(['reviews']);
       }
+    }, (err) => {
+      this.error = err.message;
     });
   }
 
