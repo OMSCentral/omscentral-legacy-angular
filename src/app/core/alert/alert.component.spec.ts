@@ -1,6 +1,21 @@
+import { AlertService } from './alert.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AlertComponent } from './alert.component';
+
+class MockAlert {
+  alert$ = new BehaviorSubject({});
+  getAlert() {
+    return {};
+  }
+
+  setAlert() {
+
+  }
+}
 
 describe('AlertComponent', () => {
   let component: AlertComponent;
@@ -8,9 +23,13 @@ describe('AlertComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlertComponent ]
+      declarations: [AlertComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ],
+      providers: [{ provide: AlertService, useClass: MockAlert }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

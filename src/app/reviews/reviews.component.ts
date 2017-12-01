@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/debounceTime';
 import { CourseService } from '../core/course.service';
 
 @Component({

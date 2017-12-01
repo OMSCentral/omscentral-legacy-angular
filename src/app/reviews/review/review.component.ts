@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
@@ -15,7 +15,7 @@ import { CourseService } from '../../core/course.service';
 })
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
-  @Input() title?: boolean = false;
+  @Input() title? = false;
   @Output() cancelNew = new EventEmitter<boolean>();
   @Output() saveNew = new EventEmitter<Review>();
   @Output() update = new EventEmitter<Review>();
