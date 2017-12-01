@@ -32,18 +32,12 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.authService.signup(this.email.value, this.password.value).then(() => {
-      this.password.setValue('');
-      this.router.navigate(['reviews']);
-    }, (err) => {
-      this.error = err.message;
-    });
+    this.router.navigate(['register']);
   }
 
   social(authProvider) {
     const self = this;
     this.authService.social(authProvider).then(() => {
-      this.password.setValue('');
       this.router.navigate(['reviews']);
     }, (err) => {
       console.log(err);

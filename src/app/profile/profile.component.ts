@@ -3,6 +3,7 @@ import { AuthService } from '../firebase/auth.service';
 import { UserService } from '../core/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ReviewService } from '../reviews/review.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 @Component({
   selector: 'oms-profile',
@@ -14,12 +15,17 @@ export class ProfileComponent implements OnInit {
   user$: Observable<any>;
   reviews$: Observable<any[]>;
 
-  constructor(private authService: AuthService, private userService: UserService, private reviewService: ReviewService) {}
+  constructor(private authService: AuthService, private userService: UserService,
+    private reviewService: ReviewService, private localStorageService: LocalStorageService) {
+    this.auth = this.authService.user.subscribe(auth => {
+      this.auth = auth;
+    });
+  }
 
   ngOnInit() {
     this.user$ = this.userService.getUser();
     this.user$.subscribe(user => {
-      if (user.reviews) {
+      if (user && user.reviews) {
         const reviewIds = Object.keys(user.reviews).filter(revId => {
           return user.reviews[revId];
         });
@@ -34,6 +40,10 @@ export class ProfileComponent implements OnInit {
 
   update(evt) {
     this.reviewService.update(evt);
+  }
+
+  clear() {
+    this.localStorageService.clear();
   }
 
 }

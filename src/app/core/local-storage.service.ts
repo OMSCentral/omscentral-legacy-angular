@@ -5,6 +5,10 @@ export class LocalStorageService {
 
   constructor() {}
 
+  clear() {
+    window.localStorage.clear();
+  }
+
   get(itemName) {
     return window.localStorage.getItem(itemName);
   }

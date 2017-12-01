@@ -16,6 +16,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { CoreModule } from './core/core.module';
 import { AboutModule } from './about/about.module';
 import { GradesModule } from './grades/grades.module';
+import { RegisterModule } from './register/register.module';
 import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
 import { PipeModule } from './pipes/pipe.module';
@@ -51,7 +52,8 @@ import 'clarity-icons/clarity-icons.min.js';
     CoreModule,
     GradesModule,
     DonateModule,
-    ProfileModule
+    ProfileModule,
+    RegisterModule
   ],
   providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService ],
   bootstrap: [AppComponent]
