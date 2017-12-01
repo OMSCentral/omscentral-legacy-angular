@@ -50,7 +50,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.2.0
+      - image: circleci/node:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -81,7 +81,7 @@ jobs:
   deploy:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.2.0
+      - image: circleci/node:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
