@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import "rxjs/add/operator/debounceTime";
 import { CourseService } from '../core/course.service';
 
 @Component({
@@ -9,12 +10,12 @@ import { CourseService } from '../core/course.service';
   styleUrls: ['./reviews.component.scss']
 })
 export class ReviewsComponent implements OnInit {
-  courses$: Observable<any> | Promise<Observable<any>>;
+  courses$: Observable<any>;
 
   constructor(private courseService: CourseService, private router: Router) {}
 
   ngOnInit() {
-    this.courses$ = this.courseService.getCourses();
+    this.courses$ = this.courseService.getCourses().debounceTime(1000);
   }
 
   goToCourse(course) {
