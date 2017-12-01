@@ -10,7 +10,7 @@
         <clr-dg-column [clrDgField]="'average.difficulty'">Avg. Dif.</clr-dg-column>
         <clr-dg-column [clrDgField]="'average.rating'">Avg. Rating</clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let course of courses$ | async" (click)="goToCourse(course.id)">
+        <clr-dg-row style="cursor: pointer" *clrDgItems="let course of courses$ | async" (click)="goToCourse(course.id)">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
           <clr-dg-cell>{{course.name}}</clr-dg-cell>
