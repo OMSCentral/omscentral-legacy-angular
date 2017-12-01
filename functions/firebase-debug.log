@@ -1,0 +1,76 @@
+[debug] [2017-12-01T04:38:09.488Z] ----------------------------------------------------------------------
+[debug] [2017-12-01T04:38:09.489Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2017-12-01T04:38:09.490Z] CLI Version:   3.15.3
+[debug] [2017-12-01T04:38:09.490Z] Platform:      darwin
+[debug] [2017-12-01T04:38:09.490Z] Node Version:  v8.2.1
+[debug] [2017-12-01T04:38:09.490Z] Time:          Thu Nov 30 2017 23:38:09 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:09.490Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-01T04:38:09.498Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-01T04:38:09.498Z] > authorizing via signed-in user
+[debug] [2017-12-01T04:38:09.499Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-01T04:38:09.499Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/Hk9TEg6vxvtj3mss4GRtfo6g8Y13GRmiX9gScbXaswQ',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Nov 30 2017 23:38:09 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:09.599Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T04:38:09.616Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/firebase-gt-surveyor  
+ Thu Nov 30 2017 23:38:09 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:09.929Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T04:38:09.929Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gt-surveyor/tokens  
+ Thu Nov 30 2017 23:38:09 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:10.596Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'firebase-gt-surveyor'...
+[info] 
+[info] i  deploying functions
+[debug] [2017-12-01T04:38:10.897Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "firebase experimental:functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "5.5.1",
+    "firebase-functions": "0.7.3"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-12-01T04:38:10.898Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:10 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:10.898Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:10 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:11.383Z] <<< HTTP RESPONSE 200
+[warn] ⚠  runtimeconfig: missing necessary APIs. Enabling now...
+[debug] [2017-12-01T04:38:11.384Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/firebase-gt-surveyor?updateMask=usageSettings { usageSettings: { consumerEnableStatus: 'ENABLED' } } 
+ Thu Nov 30 2017 23:38:11 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:11.388Z] <<< HTTP RESPONSE 200
+[warn] ⚠  functions: missing necessary APIs. Enabling now...
+[debug] [2017-12-01T04:38:11.388Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/firebase-gt-surveyor?updateMask=usageSettings { usageSettings: { consumerEnableStatus: 'ENABLED' } } 
+ Thu Nov 30 2017 23:38:11 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:12.562Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T04:38:12.563Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T04:38:22.568Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:22 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:22.568Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:22 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:23.106Z] <<< HTTP RESPONSE 200
+[info] i  functions: waiting for APIs to activate...
+[debug] [2017-12-01T04:38:23.107Z] <<< HTTP RESPONSE 200
+[info] ✔  runtimeconfig: all necessary APIs are enabled
+[debug] [2017-12-01T04:38:33.109Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:33 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:33.601Z] <<< HTTP RESPONSE 200
+[info] i  functions: waiting for APIs to activate...
+[debug] [2017-12-01T04:38:43.605Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/firebase-gt-surveyor?view=CONSUMER_VIEW  
+ Thu Nov 30 2017 23:38:43 GMT-0500 (EST)
+[debug] [2017-12-01T04:38:44.055Z] <<< HTTP RESPONSE 200
+[info] i  functions: waiting for APIs to activate...

@@ -1,242 +1,59 @@
 {
-  "rules": {
-    ".write": "false",
-    ".read": "false",
-    "LOG": {
-      ".write": "(((((!newData.exists()||newData.hasChildren())))))",
-      ".read": "false"
-    },
-    "AGG": {
+  "rules":{
+    ".write":"false",
+    ".read":"false",
+    "alerts": {
       ".write": "false",
       ".read": "true"
     },
-    "CRS": {
-      ".write": "false",
-      ".read": "true",
+    "LOG": {
+      ".write":"(((((!newData.exists()||newData.hasChildren())))))",
+      ".read":"false"
+    },
+    "courses": {
+      ".write":"false",
+      ".read":"true",
       "$crsId": {
-        ".write": "false",
-        ".read": "true",
+        ".write":"false",
+        ".read":"true",
         "department": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
         "foundational": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
         "icon": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
         "name": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
         "number": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
         "section": {
-          ".write": "false",
-          ".read": "true"
+          ".write":"false",
+          ".read":"true"
         },
-        "$other": {
-          ".validate": "false"
-        }
+        "$other":{".validate":"false"}
       }
     },
-    "SPC": {
-      ".write": "false",
-      ".read": "true"
-    },
-    "SEM": {
-      ".write": "false",
-      ".read": "true",
-      "$semId": {
-        ".write": "false",
-        ".read": "true",
-        "season": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "year": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "$other": {
-          ".validate": "false"
-        }
-      }
-    },
-    "GRD": {
-      ".write": "false",
-      ".read": "true",
-      "$grdId": {
-        ".write": "false",
-        ".read": "true",
-        "a": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "b": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "c": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "d": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "f": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "i": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "s": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "u": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "v": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "w": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "t": {
-          ".write": "false",
-          ".read": "true"
-        },
-        "$other": {
-          ".validate": "false"
-        }
-      }
-    },
-    "USR": {
-      ".write": "false",
-      ".read": "((auth.uid!==null))",
-      "$usrId": {
-        ".write": "(((newData.exists()&&(!newData.exists()||newData.hasChildren())&&(newData.val()==null||newData.child('created').exists()&&newData.child('authProvider').exists()&&newData.child('name').exists()&&newData.child('profileImageUrl').exists()&&newData.child('anonymous').exists())&&(!newData.child('created').exists()||newData.child('created').isString())&&(!newData.child('updated').exists()||newData.child('updated').isString())&&(!newData.child('authProvider').exists()||newData.child('authProvider').isString())&&(!newData.child('authProvider').exists()||newData.child('authProvider').val()==='password'||newData.child('authProvider').val()==='google'||newData.child('authProvider').val()==='facebook'||newData.child('authProvider').val()==='twitter'||newData.child('authProvider').val()==='github')&&(!newData.child('email').exists()||newData.child('email').isString())&&(!newData.child('name').exists()||newData.child('name').isString())&&(!newData.child('profileImageUrl').exists()||newData.child('profileImageUrl').isString())&&(!newData.child('anonymous').exists()||newData.child('anonymous').isBoolean())&&(!newData.child('specialization').exists()||newData.child('specialization').isNumber())&&(newData.child('specialization').val()==null||newData.child('specialization').val()>=0)&&(newData.child('specialization').val()==null||newData.child('specialization').val()<=3)&&(!newData.child('token').exists()||newData.child('token').isString())&&(!newData.child('conversations').exists()||newData.child('conversations').hasChildren())&&auth.uid===$usrId)))",
-        ".read": "(((auth.uid!==null)))",
-        "created": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "updated": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "authProvider": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&(!newData.exists()||newData.val()==='password'||newData.val()==='google'||newData.val()==='facebook'||newData.val()==='twitter'||newData.val()==='github')&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "email": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "name": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "profileImageUrl": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "anonymous": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isBoolean())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "specialization": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isNumber())&&(newData.val()==null||newData.val()>=0)&&(newData.val()==null||newData.val()<=3)&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "token": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.isString())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "conversations": {
-          ".write": "(((newData.parent().exists()&&(newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('authProvider').exists()&&newData.parent().child('name').exists()&&newData.parent().child('profileImageUrl').exists()&&newData.parent().child('anonymous').exists())&&(!newData.exists()||newData.hasChildren())&&auth.uid===$usrId)))",
-          ".read": "(((auth.uid!==null)))"
-        },
-        "$other": {
-          ".validate": "false"
-        }
-      }
-    },
-    "RVW": {
-      ".indexOn": [
-        "created",
-        "author",
-        "course"
-      ],
-      ".write": "false",
-      ".read": "true",
-      "$rvwId": {
-        ".write": "((((!newData.exists()||newData.hasChildren())&&(newData.val()==null||newData.child('created').exists()&&newData.child('author').exists()&&newData.child('semester').exists()&&newData.child('course').exists()&&newData.child('difficulty').exists()&&newData.child('workload').exists()&&newData.child('rating').exists()&&newData.child('text').exists())&&(!newData.child('created').exists()||newData.child('created').isString())&&(!newData.child('updated').exists()||newData.child('updated').isString())&&(!newData.child('author').exists()||newData.child('author').isString())&&(!newData.child('semester').exists()||newData.child('semester').isString())&&(!newData.child('course').exists()||newData.child('course').isString())&&(!newData.child('difficulty').exists()||newData.child('difficulty').isNumber())&&(newData.child('difficulty').val()==null||newData.child('difficulty').val()>=1)&&(newData.child('difficulty').val()==null||newData.child('difficulty').val()<=5)&&(!newData.child('workload').exists()||newData.child('workload').isNumber())&&(newData.child('workload').val()==null||newData.child('workload').val()>=1)&&(!newData.child('rating').exists()||newData.child('rating').isNumber())&&(newData.child('rating').val()==null||newData.child('rating').val()>=1)&&(newData.child('rating').val()==null||newData.child('rating').val()<=5)&&(!newData.child('text').exists()||newData.child('text').isString())&&(newData.exists()&&auth.uid===newData.child('author').val()||!newData.exists()&&auth.uid===data.child('author').val()))))",
-        ".read": "true",
-        "created": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "updated": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "author": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "semester": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "course": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "difficulty": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isNumber())&&(newData.val()==null||newData.val()>=1)&&(newData.val()==null||newData.val()<=5)&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "workload": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isNumber())&&(newData.val()==null||newData.val()>=1)&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "rating": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isNumber())&&(newData.val()==null||newData.val()>=1)&&(newData.val()==null||newData.val()<=5)&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "text": {
-          ".write": "((((newData.parent().val()==null||newData.parent().child('created').exists()&&newData.parent().child('author').exists()&&newData.parent().child('semester').exists()&&newData.parent().child('course').exists()&&newData.parent().child('difficulty').exists()&&newData.parent().child('workload').exists()&&newData.parent().child('rating').exists()&&newData.parent().child('text').exists())&&(!newData.exists()||newData.isString())&&(newData.parent().exists()&&auth.uid===newData.parent().child('author').val()||!newData.parent().exists()&&auth.uid===data.parent().child('author').val()))))",
-          ".read": "true"
-        },
-        "$other": {
-          ".validate": "false"
-        }
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
       }
     },
     "reviews": {
-      ".indexOn": [
-        "created",
-        "author",
-        "course"
-      ],
-      ".write": "true",
-      ".read": "true"
+      ".indexOn": ["created", "author", "course"],
+      ".write":"auth != null",
+      ".read":"auth != null"
     },
-    "$other": {
-      ".validate": "false"
-    }
+    "$other":{".validate":"false"}
   }
 }
