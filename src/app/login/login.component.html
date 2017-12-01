@@ -1,42 +1,48 @@
 <div class="login-wrapper">
-  <form class="login">
+  <div class="login">
     <label class="title">
       <h3 class="welcome">Welcome to</h3>
       OMS Central
       <h5 class="hint">Share your OMSCS experience with your classmates.</h5>
     </label>
-    <div class="login-group">
-      <input class="username" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
-      <input class="password" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
-      <div *ngIf="error" class="error active">
-        {{error}}
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="!email || !password">LOGIN</button>
-      <div class="signup">
-        <span>Don't have an account?</span>
-        <a href="javascript://" class="signup">Register</a>
-      </div>
+    <form>
+      <div class="login-group">
 
-      <br />
-      <br />
-      <div class="signup">or</div>
-
-      <div class="signup">
-        <div class="btn-group btn-link">
-          <button class="btn">
-            <i class="fa fa-github fa-3x" aria-hidden="true"></i>
-          </button>
-          <button class="btn">
-            <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
-          </button>
-          <button class="btn">
-            <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
-          </button>
-          <button class="btn">
-            <i class="fa fa-google fa-3x" aria-hidden="true"></i>
-          </button>
+        <input class="username" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
+        <input class="password" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
+        <div *ngIf="error" class="error active">
+          {{error}}
+        </div>
+        <div class="btn-group btn-primary">
+          <button type="submit" class="btn btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
         </div>
       </div>
+    </form>
+    <br />
+    <br />
+    <div class="text-center">
+      <div class="btn-group btn-link">
+        <button class="btn" (click)="social('github')">
+          <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+        </button>
+        <button class="btn" (click)="social('twitter')">
+          <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+        </button>
+        <button class="btn" (click)="social('facebook')">
+          <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+        </button>
+        <button class="btn" (click)="social('google')">
+          <i class="fa fa-google fa-3x" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
-  </form>
+    <br />
+    <br />
+    <div class="text-center">
+        <div class="signup">
+            <span>Don't have an account?</span>
+            <button class="btn btn-sm btn-link signup" (click)="register()">Register</button>
+          </div>
+    </div>
+  </div>
 </div>

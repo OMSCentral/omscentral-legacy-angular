@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { CourseService } from '../core/course.service';
 import { GradeService } from './grade.service';
+
 @Component({
   selector: 'oms-grades',
   templateUrl: './grades.component.html',
   styleUrls: ['./grades.component.scss']
 })
 export class GradesComponent implements OnInit {
-  courses$: Observable<any[]>;
+  courses$: Observable<any> | Promise<Observable<any>>;
+  percent: boolean = true;
   grades: any;
 
   constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) {
