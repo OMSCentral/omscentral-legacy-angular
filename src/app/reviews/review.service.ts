@@ -73,8 +73,8 @@ export class ReviewService {
     const postRef = this.db.database.ref('/reviews/').push(newReview);
     this.reviewIds.push(postRef.key);
     const temp = {};
-    temp[postRef.key] = review;
-    Object.assign(this.cached, temp);
+    temp[postRef.key] = new Review(review);
+    this.cached = Object.assign(this.cached, temp);
     this.broadcast();
 
     // Add review to course cache
@@ -104,16 +104,17 @@ export class ReviewService {
     const postRef = this.db.database.ref('/reviews/' + review.id).set(newReview);
     const temp = {};
     temp[review.id] = review;
-    Object.assign(this.cached, temp);
+    this.cached = Object.assign(this.cached, temp);
     this.broadcast();
   }
 
-  remove(reviewId) {
-    this.db.database.ref('/reviews/' + reviewId).remove();
-    delete this.cached[reviewId];
-    if (this.reviewIds.indexOf(reviewId) !== -1) {
-      this.reviewIds.splice(this.reviewIds.indexOf(reviewId), 1);
+  remove(review) {
+    this.db.database.ref('/reviews/' + review.id).remove();
+    delete this.cached[review.id];
+    if (this.reviewIds.indexOf(review.id) !== -1) {
+      this.reviewIds.splice(this.reviewIds.indexOf(review.id), 1);
     }
+    this.courseService.removeReview(review.course, review.id);
     this.broadcast();
   }
 
