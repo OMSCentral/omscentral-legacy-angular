@@ -1,109 +1,126 @@
-version: 2
-jobs:
-  test:
-    machine:
-      node:
-        version: 8.2.0
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.2.0
+machine:
+  node:
+    version: 7.8.0
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+dependencies:
+  pre:
+    - npm --version
+    - npm i @angular/cli@latest -g
+    - npm i firebase-tools@latest -g
+    - npm i
 
-    dependencies:
-      pre:
-        - npm --version
-        - npm i @angular/cli@latest -g
-        - npm i firebase-tools -g
+test:
+  override:
+    - ng lint
+    - ng test
+# version: 2
+# jobs:
+#   test:
+#     machine:
+#       node:
+#         version: 8.2.0
+#     docker:
+#       # specify the version you desire here
+#       - image: circleci/node:8.2.0
 
-    steps:
-      - checkout
+#       # Specify service dependencies here if necessary
+#       # CircleCI maintains a library of pre-built images
+#       # documented at https://circleci.com/docs/2.0/circleci-images/
+#       # - image: circleci/mongo:3.4.4
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+#     dependencies:
+#       pre:
+#         - npm --version
+#         - npm i @angular/cli@latest -g
+#         - npm i firebase-tools -g
 
-      - run: npm i
+#     steps:
+#       - checkout
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+#       # Download and cache dependencies
+#       - restore_cache:
+#           keys:
+#           - v1-dependencies-{{ checksum "package.json" }}
+#           # fallback to using the latest cache if no exact match is found
+#           - v1-dependencies-
 
-      # run tests!
-      - run: ng lint
-      - run: ng test
+#       - run: npm i
 
-  deploy:
-    machine:
-      node:
-        version: 8.2.0
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.2.0
+#       - save_cache:
+#           paths:
+#             - node_modules
+#           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+#       # run tests!
+#       - run: ng lint
+#       - run: ng test
 
-    dependencies:
-      pre:
-        - npm --version
-        - npm i @angular/cli@latest -g
-        - npm i firebase-tools -g
+#   deploy:
+#     machine:
+#       node:
+#         version: 8.2.0
+#     docker:
+#       # specify the version you desire here
+#       - image: circleci/node:8.2.0
 
-    steps:
-      - checkout
+#       # Specify service dependencies here if necessary
+#       # CircleCI maintains a library of pre-built images
+#       # documented at https://circleci.com/docs/2.0/circleci-images/
+#       # - image: circleci/mongo:3.4.4
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+#     dependencies:
+#       pre:
+#         - npm --version
+#         - npm i @angular/cli@latest -g
+#         - npm i firebase-tools -g
 
-    deployment:
-      # production:
-      #   branch: master
-      #   commands:
-      #     - ng build --prod
-      #     - firebase use production
-      #     - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
-      dev:
-        branch: master
-        commands:
-          - ng build --prod -e=dev
-          - firebase use staging
-          - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+#     steps:
+#       - checkout
 
-  # test:
-  #   override:
-  #     - ng lint
-  #     - ng test
+#       # Download and cache dependencies
+#       - restore_cache:
+#           keys:
+#           - v1-dependencies-{{ checksum "package.json" }}
+#           # fallback to using the latest cache if no exact match is found
+#           - v1-dependencies-
 
-  # deployment:
-  #   production:
-  #     branch: master
-  #     commands:
-  #       - ng build --prod
-  #       - firebase use production
-  #       - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
-  #   dev:
-  #     branch: master
-  #     commands:
-  #       - ng build --prod -e=dev
-  #       - firebase use staging
-  #       - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+#     deployment:
+#       # production:
+#       #   branch: master
+#       #   commands:
+#       #     - ng build --prod
+#       #     - firebase use production
+#       #     - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+#       dev:
+#         branch: master
+#         commands:
+#           - ng build --prod -e=dev
+#           - firebase use staging
+#           - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
 
-  # notify:
-    # webhooks:
-      # A list of hashes representing hooks. Only the url field is supported.
-      # - url: https://someurl.com/hooks/circle
+#   # test:
+#   #   override:
+#   #     - ng lint
+#   #     - ng test
+
+#   # deployment:
+#   #   production:
+#   #     branch: master
+#   #     commands:
+#   #       - ng build --prod
+#   #       - firebase use production
+#   #       - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+#   #   dev:
+#   #     branch: master
+#   #     commands:
+#   #       - ng build --prod -e=dev
+#   #       - firebase use staging
+#   #       - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+
+#   # notify:
+#     # webhooks:
+#       # A list of hashes representing hooks. Only the url field is supported.
+#       # - url: https://someurl.com/hooks/circle
 
