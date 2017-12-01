@@ -1,9 +1,12 @@
 version: 2
 jobs:
   test:
+    machine:
+      node:
+        version: 8.9.0
     docker:
       # specify the version you desire here
-      - image: circleci/node:latest
+      - image: circleci/node:8.9.0
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -36,6 +39,35 @@ jobs:
       # run tests!
       - run: ng lint
       - run: ng test
+
+  deploy:
+    machine:
+      node:
+        version: 8.9.0
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:8.9.0
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    dependencies:
+      pre:
+        - npm --version
+        - npm i @angular/cli@latest -g
+        - npm i firebase-tools -g
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
     deployment:
       # production:
