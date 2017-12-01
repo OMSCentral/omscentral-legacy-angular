@@ -11,6 +11,7 @@ import { GradeService } from './grade.service';
 })
 export class GradesComponent implements OnInit {
   courses$: Observable<any> | Promise<Observable<any>>;
+  percent: boolean = true;
   grades: any;
 
   constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) {

@@ -141,9 +141,23 @@ export class ReviewService {
     if (!this.reviews$) {
       this.reviews$ = new BehaviorSubject([]);
     }
-    this.reviews$.next(this.reviewIds.map(reviewId => {
+    const reviews = this.reviewIds.map(reviewId => {
       return this.cached[reviewId] || {};
-    }));
+    }).sort(function(a, b) {
+      const aData = a.semester.split('-');
+      const aYear = parseInt(aData[0]);
+      const aSem = parseInt(aData[1]);
+
+      const bData = b.semester.split('-');
+      const bYear = parseInt(bData[0]);
+      const bSem = parseInt(bData[1]);
+      if (aYear === bYear) {
+        return bSem - aSem;
+      } else {
+        return bYear - aYear;
+      }
+    });
+    this.reviews$.next(reviews);
   }
 
   getReview(reviewId) {
