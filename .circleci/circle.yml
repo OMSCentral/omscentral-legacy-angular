@@ -3,7 +3,7 @@ jobs:
   test:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:v8.2.0
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -39,7 +39,7 @@ jobs:
   deploy:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:v8.2.0
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
