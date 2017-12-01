@@ -23,6 +23,7 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './core/course.service';
 import { UserService } from './core/user.service';
+import { AlertService } from './core/alert/alert.service';
 import { LocalStorageService } from './core/local-storage.service';
 import { ReviewService } from './reviews/review.service';
 import { GradeService } from './grades/grade.service';
@@ -55,7 +56,7 @@ import 'clarity-icons/clarity-icons.min.js';
     ProfileModule,
     RegisterModule
   ],
-  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService ],
+  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService, AlertService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
