@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   }
 
   remove(evt) {
-    this.reviewService.remove(evt.id);
+    this.reviewService.remove(evt);
   }
 
   update(evt) {
