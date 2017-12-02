@@ -143,7 +143,7 @@ export class ReviewService {
       this.reviews$ = new BehaviorSubject([]);
     }
     const reviews = this.reviewIds.map(reviewId => {
-      return this.cached[reviewId] || {};
+      return new Review(this.cached[reviewId] || {});
     }).sort(function (a, b) {
       const aData = a.semester.split('-');
       const aYear = parseInt(aData[0], 10);
