@@ -116,15 +116,15 @@ export class CourseService {
     reviews.forEach(review => {
         if (review && review !== null) {
             if (review.difficulty) {
-                difficulty += review.difficulty;
+                difficulty += parseInt(review.difficulty, 10);
                 diffNum++;
             }
             if (review.rating) {
-                rating += review.rating;
+                rating += parseInt(review.rating,10);
                 ratingNum++;
             }
             if (review.workload) {
-                workload += review.workload;
+                workload += parseInt(review.workload,10);
                 workNum++;
             }
         }
