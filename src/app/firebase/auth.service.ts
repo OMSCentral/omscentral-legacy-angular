@@ -28,6 +28,14 @@ export class AuthService {
     return this.firebaseAuth.auth;
   }
 
+  sendPasswordResetEmail(email) {
+    return this.firebaseAuth.auth.sendPasswordResetEmail(email);
+  }
+
+  resetPassword(oobCode, password) {
+    return this.firebaseAuth.auth.confirmPasswordReset(oobCode, password);
+  }
+
   signup(values) {
     const email = values.email.toLowerCase();
     return this.firebaseAuth
