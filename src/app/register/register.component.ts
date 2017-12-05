@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'oms-register',
@@ -15,11 +15,13 @@ export class RegisterComponent implements OnInit {
   socialError = '';
   success = false;
   formValues: any = {};
+  oobCode: string;
+  mode: string;
 
   constructor(public authService: AuthService, private router: Router,
-    private fb: FormBuilder) {
-      this.createForm();
-    }
+    private fb: FormBuilder, private route: ActivatedRoute) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.authService.user.subscribe(user => {
@@ -27,6 +29,23 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['reviews']);
       }
     });
+    // https://omscentral.com/set-password?mode=%3Caction%3E&oobCode=%3Ccode%3E
+    // this.sessionId = this.route
+    //   .queryParamMap
+    //   .map(params => params.get('session_id') || 'None');
+    this.route.queryParamMap.subscribe(params => {
+      this.mode = params.get('mode');
+      this.oobCode = params.get('oobCode');
+    });
+  }
+
+  resetPassword() {
+    if (this.oobCode) {
+      this.authService.resetPassword(this.oobCode, this.formValues.password).then(() => {
+        this.oobCode = null;
+        this.router.navigate(['login']);
+      });
+    }
   }
 
   createForm() {
