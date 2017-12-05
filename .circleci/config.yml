@@ -81,7 +81,7 @@ jobs:
       - run: npm i
       - run: ./node_modules/.bin/ng build --prod -e=dev
       - run: ./node_modules/.bin/firebase use staging
-      - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+      - run: ./node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN --non-interactive
 
   deploy-prod:
     docker:
@@ -98,7 +98,7 @@ jobs:
       - run: npm i
       - run: ./node_modules/.bin/ng build --prod
       - run: ./node_modules/.bin/firebase use production
-      - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+      - run: ./node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN --non-interactive
 
 workflows:
   version: 2
