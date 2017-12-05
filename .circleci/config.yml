@@ -136,13 +136,13 @@ workflows:
   test_and_deploy:
     jobs:
       - build
-      - lint
+      - lint:
           requires:
             - build
-      - test
+      - test:
           requires:
             - build
-      - deploy-dev
+      - deploy-dev:
          filters:
             branches:
               only:
@@ -158,7 +158,7 @@ workflows:
                 - master
          requires:
            - deploy-dev
-      - deploy-prod
+      - deploy-prod:
          filters:
             branches:
               only:
