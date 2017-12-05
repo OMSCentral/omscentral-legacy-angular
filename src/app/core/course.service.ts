@@ -48,6 +48,7 @@ export class CourseService {
   }
 
   broadcast() {
+    console.log("broadcasting");
     this.localStorageService.setObject('courses', this.cached);
     if (this.courseIds.length === 0) {
       this.courseIds = Object.keys(this.cached);
@@ -107,6 +108,7 @@ export class CourseService {
   }
 
   updateCounts(courseId, reviews) {
+    console.log("update counts for", courseId);
     let difficulty = 0;
     let diffNum = 0;
     let rating = 0;
