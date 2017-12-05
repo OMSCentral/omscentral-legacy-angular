@@ -15,20 +15,21 @@ export class GradesComponent implements OnInit {
   grades: any;
   courses: any;
 
-  constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) {
-    this.grades = gradeService.getGrades();
-  }
+  constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) {}
 
   ngOnInit() {
+    this.grades = this.gradeService.getGrades();
     this.courses$ = this.courseService.getCourses();
     this.courses$.subscribe(courses => {
-      this.courses = courses.map(course => {
-        course.grades = this.grades[course.id];
-        return course;
-      });
-      this.courses = this.courses.filter(course => {
-        return course.grades;
-      });
+      if (courses) {
+        this.courses = courses.map(course => {
+          course.grades = this.grades[course.id];
+          return course;
+        });
+        this.courses = this.courses.filter(course => {
+          return course.grades;
+        });
+      }
     });
   }
 
