@@ -76,24 +76,15 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
     working_directory: ~/OMSCentral
+    branches:
+      only:
+        - master
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-
-    deployment:
-      # production:
-      #   branch: master
-      #   commands:
-      #     - ng build --prod
-      #     - firebase use production
-      #     - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
-      dev:
-        branch: master
-        commands:
-          - ./node_modules/.bin/ng build --prod -e=dev
-          - ./node_modules/.bin/firebase use staging
-          - ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+      - checkout
+      - run: npm i
+      - run: ./node_modules/.bin/ng build --prod -e=dev
+      - run: ./node_modules/.bin/firebase use staging
+      - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
 
   deploy-prod:
     docker:
@@ -105,18 +96,15 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
     working_directory: ~/OMSCentral
+    branches:
+      only:
+        - master
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-
-    deployment:
-      production:
-        branch: master
-        commands:
-          - ./node_modules/.bin/ng build --prod
-          - ./node_modules/.bin/firebase use production
-          - ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+      - checkout
+      - run: npm i
+      - run: ./node_modules/.bin/ng build --prod
+      - run: ./node_modules/.bin/firebase use production
+      - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --non-interactive
 
 workflows:
   version: 2
