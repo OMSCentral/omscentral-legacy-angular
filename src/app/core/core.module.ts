@@ -5,12 +5,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { AlertComponent } from './alert/alert.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ClarityModule } from 'clarity-angular';
+import {GithubButtonModule} from 'angular-github-buttons';
 
 @NgModule({
   imports: [
     CommonModule,
     AppRoutingModule,
-    ClarityModule
+    ClarityModule,
+    GithubButtonModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

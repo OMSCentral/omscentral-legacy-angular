@@ -115,6 +115,7 @@ export class ReviewService {
 
   getReviews(reviewIds: string[]) {
     this.reviewIds = reviewIds;
+    this.reviews$.next(null);
     if (reviewIds.length === 0) {
       this.broadcast();
     } else {
@@ -122,7 +123,7 @@ export class ReviewService {
       reviewIds.forEach(reviewId => {
         reviews.push(this.getReview(reviewId));
       });
-      forkJoin(reviews).subscribe((reviews) => {
+      forkJoin(reviews).subscribe((revs) => {
         this.broadcast();
       });
     }
