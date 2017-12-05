@@ -12,15 +12,17 @@ import { Review } from '../../models/review';
   templateUrl: './course-reviews.component.html',
   styleUrls: ['./course-reviews.component.scss']
 })
-export class CourseReviewsComponent implements OnInit {
+export class CourseReviewsComponent implements OnInit, OnDestroy {
   authId: string = null;
   course$: Observable<any>;
   course: any = {};
   reviews$: Observable<any>;
+  reviews: any;
   review: Review = null;
   newReview = false;
   courseSub: any;
   reviewSub: any;
+  loading = true;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
@@ -36,16 +38,23 @@ export class CourseReviewsComponent implements OnInit {
         this.courseService.getCourse(params.get('courseId')));
 
     this.courseSub = this.course$.throttleTime(1000).subscribe(course => {
+      if (course === null) {
+        this.course = null;
+      }
       if (this.course.id !== course.id) {
         const revIds = Object.keys(course.reviews || {}).filter(revId => {
           return course.reviews[revId];
         });
         this.reviews$ = this.reviewService.getReviews(revIds);
         this.reviewSub = this.reviews$.throttleTime(1000).subscribe(reviews => {
-          const courseReviews = reviews.filter(rev => {
-            return rev.courseId === course.id;
-          });
-          this.course = this.courseService.updateCounts(course.id, reviews);
+          if (reviews !== null) {
+            const courseReviews = reviews.filter(rev => {
+              return rev.course === course.id;
+            });
+            this.reviews = courseReviews;
+            this.course = this.courseService.updateCounts(course.id, courseReviews);
+            this.loading = false;
+          }
         });
         this.review = new Review({ course: course.courseId });
       }
@@ -53,8 +62,16 @@ export class CourseReviewsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.courseSub.unsubscribe();
-    this.reviewSub.unsubscribe();
+    if (this.courseSub) {
+      this.courseSub.unsubscribe();
+    }
+    if (this.reviewSub) {
+      this.reviewSub.unsubscribe();
+    }
+    this.reviews$ = null;
+    this.review = null;
+    this.course$ = null;
+    this.course = {};
   }
 
   saveNew(evt) {
