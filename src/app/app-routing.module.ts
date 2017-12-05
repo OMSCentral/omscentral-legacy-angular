@@ -24,6 +24,10 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'set-password',
+    component: RegisterComponent
+  },
+  {
     path: 'reviews',
     component: ReviewsComponent
   },

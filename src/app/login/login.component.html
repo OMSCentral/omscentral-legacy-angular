@@ -11,8 +11,18 @@
         <input class="username" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
         <input class="password" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
         <div *ngIf="error" class="error active">
-          {{error}}
+          {{error}}.  <a style="cursor: pointer" *ngIf="email" (click)="resetPassword()">Reset Password?</a>
         </div>
+        <div *ngIf="reset" class="alert alert-success">
+          <div class="alert-items">
+              <div class="alert-item static">
+                  <div class="alert-icon-wrapper">
+                      <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                  </div>
+                  <span class="alert-text">A password reset email has been sent.</span>
+              </div>
+          </div>
+      </div>
         <div class="btn-group btn-primary">
           <button type="submit" class="btn btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
         </div>

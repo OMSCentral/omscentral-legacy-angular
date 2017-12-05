@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'oms-register',
@@ -11,15 +11,19 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  resetForm: FormGroup;
   error = '';
   socialError = '';
   success = false;
   formValues: any = {};
+  oobCode: string;
+  mode: string;
+  password: string;
 
   constructor(public authService: AuthService, private router: Router,
-    private fb: FormBuilder) {
-      this.createForm();
-    }
+    private fb: FormBuilder, private route: ActivatedRoute) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.authService.user.subscribe(user => {
@@ -27,6 +31,23 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['reviews']);
       }
     });
+    // https://omscentral.com/set-password?mode=%3Caction%3E&oobCode=%3Ccode%3E
+    // this.sessionId = this.route
+    //   .queryParamMap
+    //   .map(params => params.get('session_id') || 'None');
+    this.route.queryParamMap.subscribe(params => {
+      this.mode = params.get('mode');
+      this.oobCode = params.get('oobCode');
+    });
+  }
+
+  resetPassword() {
+    if (this.oobCode) {
+      this.authService.resetPassword(this.oobCode, this.password).then(() => {
+        this.oobCode = null;
+        this.router.navigate(['login']);
+      });
+    }
   }
 
   createForm() {
@@ -37,6 +58,12 @@ export class RegisterComponent implements OnInit {
     });
     this.registerForm.valueChanges.subscribe(changes => {
       this.formValues = changes;
+    });
+    this.resetForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+    this.resetForm.valueChanges.subscribe(changes => {
+      this.password = changes.password;
     });
   }
 
