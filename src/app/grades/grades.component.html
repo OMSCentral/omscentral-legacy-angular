@@ -16,27 +16,27 @@
         <clr-dg-column [clrDgField]="'department'">Department</clr-dg-column>
         <clr-dg-column [clrDgField]="'id'">Number</clr-dg-column>
         <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.t'">Enrolled</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.w'">Withdrew</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.a'"><span *ngIf="percent">% </span>A</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.b'"><span *ngIf="percent">% </span>B</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.c'"><span *ngIf="percent">% </span>C</clr-dg-column>
-        <clr-dg-column [clrDgField]="'totals.d'"><span *ngIf="percent">% </span>D</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.t'">Enrolled</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.a'"><span *ngIf="percent">% </span>A</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.b'"><span *ngIf="percent">% </span>B</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.c'"><span *ngIf="percent">% </span>C</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.d'"><span *ngIf="percent">% </span>D</clr-dg-column>
 
         <clr-dg-row *clrDgItems="let course of courses$ | async">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
           <clr-dg-cell>{{course.name}}</clr-dg-cell>
-          <clr-dg-cell>{{grades[course.id]?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{grades[course.id]?.totals.w | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * grades[course.id]?.totals.a / grades[course.id]?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * grades[course.id]?.totals.b / grades[course.id]?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * grades[course.id]?.totals.c / grades[course.id]?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * grades[course.id]?.totals.d / grades[course.id]?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{grades[course.id]?.totals.a | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{grades[course.id]?.totals.b | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{grades[course.id]?.totals.c | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{grades[course.id]?.totals.d | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.w | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.totals.a / course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.totals.b / course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.totals.c / course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.totals.d / course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.a | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.b | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.c | number}}</clr-dg-cell>
+          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.d | number}}</clr-dg-cell>
           <clr-dg-row-detail *clrIfExpanded>
             <div class="container">
               <clr-datagrid>
@@ -47,7 +47,7 @@
                   <clr-dg-column [clrDgField]="'b'"><span *ngIf="percent">% </span>B</clr-dg-column>
                   <clr-dg-column [clrDgField]="'c'"><span *ngIf="percent">% </span>C</clr-dg-column>
                   <clr-dg-column [clrDgField]="'d'"><span *ngIf="percent">% </span>D</clr-dg-column>
-                  <clr-dg-row *clrDgItems="let grade of grades[course.id]?.semesterGrades">
+                  <clr-dg-row *clrDgItems="let grade of course.grades?.semesterGrades">
                       <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
                       <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
                       <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
