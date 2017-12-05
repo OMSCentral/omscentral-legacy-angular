@@ -1,17 +1,18 @@
 <clr-main-container>
   <div class="content-container">
     <div class="content-area">
-        <div class="card">
-            <div class="card-header">
-              Grades
-            </div>
-            <div class="card-block">
-                Percentages are based off of total students
-              </div>
-            <div class="card-footer">
-                <button class="btn btn-sm btn-primary" (click)="percent = !percent">Toggle to <span *ngIf="percent">Counts</span><span *ngIf="!percent">Percent</span></button>
-              </div>
-          </div>
+      <div class="card">
+        <div class="card-header">
+          Grades
+        </div>
+        <div class="card-block">
+          If a course is not listed, grade information is not available.
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-primary" (click)="percent = !percent">Toggle to <span *ngIf="percent">Counts</span><span *ngIf="!percent">Percent</span></button>
+          <span *ngIf="percent">Percentages are based off of total students and sorting is based on totals.</span>
+        </div>
+      </div>
       <clr-datagrid>
         <clr-dg-column [clrDgField]="'department'">Department</clr-dg-column>
         <clr-dg-column [clrDgField]="'id'">Number</clr-dg-column>
@@ -23,7 +24,7 @@
         <clr-dg-column [clrDgField]="'grades.totals.c'"><span *ngIf="percent">% </span>C</clr-dg-column>
         <clr-dg-column [clrDgField]="'grades.totals.d'"><span *ngIf="percent">% </span>D</clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let course of courses$ | async">
+        <clr-dg-row *clrDgItems="let course of courses">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
           <clr-dg-cell>{{course.name}}</clr-dg-cell>
@@ -40,28 +41,28 @@
           <clr-dg-row-detail *clrIfExpanded>
             <div class="container">
               <clr-datagrid>
-                  <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'w'">Withdrew</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'a'"><span *ngIf="percent">% </span>A</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'b'"><span *ngIf="percent">% </span>B</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'c'"><span *ngIf="percent">% </span>C</clr-dg-column>
-                  <clr-dg-column [clrDgField]="'d'"><span *ngIf="percent">% </span>D</clr-dg-column>
-                  <clr-dg-row *clrDgItems="let grade of course.grades?.semesterGrades">
-                      <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
-                      <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
-                      <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="percent">{{100 * grade.a / grade.t | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="percent">{{100 * grade.b / grade.t | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="percent">{{100 * grade.c / grade.t | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="percent">{{100 * grade.d / grade.t | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="!percent">{{grade.a | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="!percent">{{grade.b | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="!percent">{{grade.c | number}}</clr-dg-cell>
-                      <clr-dg-cell *ngIf="!percent">{{grade.d | number}}</clr-dg-cell>
-                    </clr-dg-row>
-                  </clr-datagrid>
-                </div>
+                <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+                <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
+                <clr-dg-column [clrDgField]="'w'">Withdrew</clr-dg-column>
+                <clr-dg-column [clrDgField]="'a'"><span *ngIf="percent">% </span>A</clr-dg-column>
+                <clr-dg-column [clrDgField]="'b'"><span *ngIf="percent">% </span>B</clr-dg-column>
+                <clr-dg-column [clrDgField]="'c'"><span *ngIf="percent">% </span>C</clr-dg-column>
+                <clr-dg-column [clrDgField]="'d'"><span *ngIf="percent">% </span>D</clr-dg-column>
+                <clr-dg-row *clrDgItems="let grade of course.grades?.semesterGrades">
+                  <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="percent">{{100 * grade.a / grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="percent">{{100 * grade.b / grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="percent">{{100 * grade.c / grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="percent">{{100 * grade.d / grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="!percent">{{grade.a | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="!percent">{{grade.b | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="!percent">{{grade.c | number}}</clr-dg-cell>
+                  <clr-dg-cell *ngIf="!percent">{{grade.d | number}}</clr-dg-cell>
+                </clr-dg-row>
+              </clr-datagrid>
+            </div>
           </clr-dg-row-detail>
         </clr-dg-row>
 
