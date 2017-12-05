@@ -10,7 +10,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - checkout
 
@@ -42,7 +42,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - restore_cache:
           keys:
@@ -59,7 +59,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - restore_cache:
           keys:
@@ -75,7 +75,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - restore_cache:
           keys:
@@ -104,7 +104,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - restore_cache:
           keys:
