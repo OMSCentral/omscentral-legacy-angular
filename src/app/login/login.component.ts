@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
   error = '';
   socialError = '';
+  reset = false;
 
   constructor(public authService: AuthService, private router: Router) { }
 
@@ -22,6 +23,13 @@ export class LoginComponent implements OnInit {
       if (user && user.uid) {
         this.router.navigate(['reviews']);
       }
+    });
+  }
+
+  resetPassword() {
+    return this.authService.sendPasswordResetEmail(this.email.value).then(() => {
+      this.error = '';
+      this.reset = true;
     });
   }
 
@@ -61,7 +69,7 @@ export class LoginComponent implements OnInit {
 
   forgotEmail() {
     if (this.email) {
-      this.authService.sendPasswordResetEmail(this.email).then(() => {
+      this.authService.sendPasswordResetEmail(this.email.value).then(() => {
         this.error = 'A password reset email has been sent';
       });
     }
