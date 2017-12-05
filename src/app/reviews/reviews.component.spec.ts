@@ -16,7 +16,7 @@ class MockAuth {
 import { CourseService } from '../core/course.service';
 class MockCourse {
   getCourses() {
-    return new BehaviorSubject({});
+    return new BehaviorSubject(null);
   }
 }
 
