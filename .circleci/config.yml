@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  install:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/node:latest
@@ -135,13 +135,13 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - install
+      - build
       - lint
           requires:
-            - install
+            - build
       - test
           requires:
-            - install
+            - build
       - deploy-dev
          filters:
             branches:
