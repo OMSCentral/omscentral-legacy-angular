@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
 import { Review } from '../../models/review';
 
 @Component({
@@ -15,10 +15,12 @@ import { Review } from '../../models/review';
 export class CourseReviewsComponent implements OnInit {
   authId: string = null;
   course$: Observable<any>;
-  course: any;
+  course: any = {};
   reviews$: Observable<any>;
   review: Review = null;
   newReview = false;
+  courseSub: any;
+  reviewSub: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
@@ -29,20 +31,30 @@ export class CourseReviewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.course$ = this.route.paramMap
+    this.course$ = this.route.paramMap.throttleTime(1000)
       .switchMap((params: ParamMap) =>
         this.courseService.getCourse(params.get('courseId')));
 
-    this.course$.debounceTime(1000).subscribe(course => {
-      this.course = course;
-      this.reviews$ = this.reviewService.getReviews(Object.keys(course.reviews || {}).filter(revId => {
-        return course.reviews[revId];
-      }));
-      this.reviews$.subscribe(reviews => {
-        this.course = this.courseService.updateCounts(this.course.id, reviews);
-      });
-      this.review = new Review({ course: course.courseId });
+    this.courseSub = this.course$.throttleTime(1000).subscribe(course => {
+      if (this.course.id !== course.id) {
+        const revIds = Object.keys(course.reviews || {}).filter(revId => {
+          return course.reviews[revId];
+        });
+        this.reviews$ = this.reviewService.getReviews(revIds);
+        this.reviewSub = this.reviews$.throttleTime(1000).subscribe(reviews => {
+          const courseReviews = reviews.filter(rev => {
+            return rev.courseId === course.id;
+          });
+          this.course = this.courseService.updateCounts(course.id, reviews);
+        });
+        this.review = new Review({ course: course.courseId });
+      }
     });
+  }
+
+  ngOnDestroy() {
+    this.courseSub.unsubscribe();
+    this.reviewSub.unsubscribe();
   }
 
   saveNew(evt) {
