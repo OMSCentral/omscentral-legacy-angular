@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   install:
     docker:
@@ -136,11 +137,11 @@ workflows:
     jobs:
       - install
       - lint
-        requires:
-           - install
+          requires:
+            - install
       - test
-        requires:
-           - install
+          requires:
+            - install
       - deploy-dev
          filters:
             branches:
