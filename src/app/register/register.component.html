@@ -6,16 +6,26 @@
       <h5 *ngIf="!oobCode" class="hint">Share your OMSCS experience with your classmates.</h5>
       <h5 *ngIf="oobCode" class="hint">Please enter your new password below.</h5>
     </label>
-    <form *ngIf="!success" [formGroup]="registerForm" novalidate>
+    <form *ngIf="!oobCode && !success" [formGroup]="registerForm" novalidate>
       <div class="login-group">
 
-        <input *ngIf="!oobCode" class="username" type="text" id="register_name" placeholder="Name" formControlName="name" required>
-        <input *ngIf="!oobCode" class="username" type="text" id="register_email" placeholder="Email" formControlName="email" required>
+        <input class="username" type="text" id="register_name" placeholder="Name" formControlName="name" required>
+        <input class="username" type="text" id="register_email" placeholder="Email" formControlName="email" required>
         <input class="password" type="password" id="register_password" placeholder="Password" formControlName="password" required>
 
         <div class="btn-group btn-primary">
-          <button *ngIf="!oobCode" type="submit" class="btn btn-block" (click)="register()" [disabled]="!registerForm.valid">Create My Account!</button>
-          <button *ngIf="oobCode" type="submit" class="btn btn-block" (click)="resetPassword()" [disabled]="!registerForm.valid">Reset Password</button>
+          <button type="submit" class="btn btn-block" (click)="register()" [disabled]="!registerForm.valid">Create My Account!</button>
+          <button type="submit" class="btn btn-block" (click)="resetPassword()" [disabled]="!registerForm.valid">Reset Password</button>
+        </div>
+      </div>
+    </form>
+    <form *ngIf="oobCode && !success" [formGroup]="resetForm" novalidate>
+      <div class="login-group">
+
+        <input class="password" type="password" id="reset_password" placeholder="Password" formControlName="password" required>
+
+        <div class="btn-group btn-primary">
+          <button type="submit" class="btn btn-block" (click)="resetPassword()" [disabled]="!resetForm.valid">Reset Password</button>
         </div>
       </div>
     </form>

@@ -11,12 +11,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  resetForm: FormGroup;
   error = '';
   socialError = '';
   success = false;
   formValues: any = {};
   oobCode: string;
   mode: string;
+  password: string;
 
   constructor(public authService: AuthService, private router: Router,
     private fb: FormBuilder, private route: ActivatedRoute) {
@@ -56,6 +58,12 @@ export class RegisterComponent implements OnInit {
     });
     this.registerForm.valueChanges.subscribe(changes => {
       this.formValues = changes;
+    });
+    this.resetForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+    this.resetForm.valueChanges.subscribe(changes => {
+      this.password = changes.password;
     });
   }
 
