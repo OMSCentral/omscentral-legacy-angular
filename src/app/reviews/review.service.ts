@@ -24,19 +24,6 @@ export class ReviewService {
     this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
   }
 
-  downloadReviews() {
-    const reviews = {};
-    Object.keys(reviews).forEach(reviewId => {
-      reviews[reviewId].id = reviewId;
-    });
-    this.cached = Object.assign(this.cached, reviews);
-    if (this.cacheTime === null) {
-      this.cacheTime = new Date();
-      this.localStorageService.set('reviewsCacheTime', this.cacheTime);
-    }
-    return this.reviewList();
-  }
-
   downloadReview(reviewId) {
     return this.db.database.ref('/reviews/' + reviewId).once('value').then((snapshot) => {
       const review: Review = new Review(snapshot.val());
@@ -73,7 +60,8 @@ export class ReviewService {
     const postRef = this.db.database.ref('/reviews/').push(newReview);
     this.reviewIds.push(postRef.key);
     const temp = {};
-    temp[postRef.key] = new Review(review);
+    newReview['id'] = postRef.key;
+    temp[postRef.key] = new Review(newReview);
     this.cached = Object.assign(this.cached, temp);
     this.broadcast();
 
@@ -127,13 +115,17 @@ export class ReviewService {
 
   getReviews(reviewIds: string[]) {
     this.reviewIds = reviewIds;
-    const reviews = [];
-    reviewIds.forEach(reviewId => {
-      reviews.push(this.getReview(reviewId));
-    });
-    forkJoin(reviews).subscribe(() => {
+    if (reviewIds.length === 0) {
       this.broadcast();
-    });
+    } else {
+      const reviews = [];
+      reviewIds.forEach(reviewId => {
+        reviews.push(this.getReview(reviewId));
+      });
+      forkJoin(reviews).subscribe((reviews) => {
+        this.broadcast();
+      });
+    }
     return this.reviews$;
   }
 
@@ -143,7 +135,13 @@ export class ReviewService {
       this.reviews$ = new BehaviorSubject([]);
     }
     const reviews = this.reviewIds.map(reviewId => {
-      return new Review(this.cached[reviewId] || {});
+      if (this.cached[reviewId]) {
+        return new Review(this.cached[reviewId]);
+      } else {
+        return null;
+      }
+    }).filter(rev => {
+      return rev !== null && rev.semester;
     }).sort(function (a, b) {
       const aData = a.semester.split('-');
       const aYear = parseInt(aData[0], 10);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
 import { CourseService } from '../core/course.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ReviewsComponent implements OnInit {
   constructor(private courseService: CourseService, private router: Router) {}
 
   ngOnInit() {
-    this.courses$ = this.courseService.getCourses().debounceTime(1000);
+    this.courses$ = this.courseService.getCourses().throttleTime(1000);
   }
 
   goToCourse(course) {
