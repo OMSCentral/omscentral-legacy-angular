@@ -11,8 +11,9 @@ import { GradeService } from './grade.service';
 })
 export class GradesComponent implements OnInit {
   courses$: Observable<any> | Promise<Observable<any>>;
-  percent = true;
+  percent = false;
   grades: any;
+  courses: any;
 
   constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) {
     this.grades = gradeService.getGrades();
@@ -20,6 +21,12 @@ export class GradesComponent implements OnInit {
 
   ngOnInit() {
     this.courses$ = this.courseService.getCourses();
+    this.courses$.subscribe(courses => {
+      this.courses = courses.map(course => {
+        course.grades = this.grades[course.id];
+        return course;
+      });
+    });
   }
 
   goToCourse(course) {
