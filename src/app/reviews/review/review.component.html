@@ -11,7 +11,7 @@
       <p class="card-text">
         {{review.text}}
       </p>
-      <p class="card-text text-right">{{review.updated | date:'short'}}</p>
+      <p class="card-text text-right"><span *ngIf="review.updated">{{review.updated | date:'short'}}</span><span *ngIf="!review.updated">{{review.created | date:'short'}}</span></p>
     </div>
     <div class="card-block" *ngIf="(review.isNew || review.isEdit)">
       <div class="row">
