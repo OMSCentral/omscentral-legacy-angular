@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
 
   resetPassword() {
     if (this.oobCode) {
-      this.authService.resetPassword(this.oobCode, this.formValues.password).then(() => {
+      this.authService.resetPassword(this.oobCode, this.password).then(() => {
         this.oobCode = null;
         this.router.navigate(['login']);
       });
