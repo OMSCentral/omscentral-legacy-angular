@@ -59,4 +59,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  forgotEmail() {
+    if (this.email) {
+      this.authService.sendPasswordResetEmail(this.email).then(() => {
+        this.error = 'A password reset email has been sent';
+      });
+    }
+  }
+
 }
