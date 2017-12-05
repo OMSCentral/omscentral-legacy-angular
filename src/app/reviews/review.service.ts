@@ -49,6 +49,8 @@ export class ReviewService {
       // "text": "Very interesting topics. Very interesting programming assignments. ",
       // "updated": "2016-08-05T14:01:38Z",
       // "workload": 18
+      created: new Date(),
+      updated: new Date(),
       author: this.auth.authState.uid,
       course: review.course,
       difficulty: review.difficulty,
@@ -81,6 +83,8 @@ export class ReviewService {
       // "text": "Very interesting topics. Very interesting programming assignments. ",
       // "updated": "2016-08-05T14:01:38Z",
       // "workload": 18
+      created: review.created,
+      updated: new Date(),
       author: this.auth.authState.uid,
       course: review.course,
       difficulty: review.difficulty,
