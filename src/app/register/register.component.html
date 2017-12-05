@@ -1,11 +1,12 @@
 <div class="login-wrapper">
   <div class="login">
     <label class="title">
-      <h3 class="welcome">Register for</h3>
+      <h3 *ngIf="!oobCode" class="welcome">Register for</h3>
       OMS Central
-      <h5 class="hint">Share your OMSCS experience with your classmates.</h5>
+      <h5 *ngIf="!oobCode" class="hint">Share your OMSCS experience with your classmates.</h5>
+      <h5 *ngIf="oobCode" class="hint">Please enter your new password below.</h5>
     </label>
-    <form *ngIf="!success" [formGroup]="registerForm" novalidate>
+    <form *ngIf="!oobCode && !success" [formGroup]="registerForm" novalidate>
       <div class="login-group">
 
         <input class="username" type="text" id="register_name" placeholder="Name" formControlName="name" required>
@@ -14,6 +15,17 @@
 
         <div class="btn-group btn-primary">
           <button type="submit" class="btn btn-block" (click)="register()" [disabled]="!registerForm.valid">Create My Account!</button>
+          <button type="submit" class="btn btn-block" (click)="resetPassword()" [disabled]="!registerForm.valid">Reset Password</button>
+        </div>
+      </div>
+    </form>
+    <form *ngIf="oobCode && !success" [formGroup]="resetForm" novalidate>
+      <div class="login-group">
+
+        <input class="password" type="password" id="reset_password" placeholder="Password" formControlName="password" required>
+
+        <div class="btn-group btn-primary">
+          <button type="submit" class="btn btn-block" (click)="resetPassword()" [disabled]="!resetForm.valid">Reset Password</button>
         </div>
       </div>
     </form>
@@ -31,7 +43,7 @@
     </div>
     <br />
     <br />
-    <div class="text-center">
+    <div class="text-center" *ngIf="!oobCode">
       <div class="btn-group btn-link">
         <button class="btn" (click)="social('github')">
           <i class="fa fa-github fa-3x" aria-hidden="true"></i>
@@ -49,7 +61,7 @@
     </div>
     <br />
     <br />
-    <div class="text-center">
+    <div class="text-center" *ngIf="!oobCode">
         <div class="signup">
             <span>Already have an account?</span>
             <button class="btn btn-sm btn-link signup" (click)="login()">Login</button>
