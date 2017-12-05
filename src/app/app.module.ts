@@ -31,6 +31,8 @@ import { GradeService } from './grades/grade.service';
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
+import {GithubButtonModule} from 'angular-github-buttons';
+
 import '@webcomponents/custom-elements/custom-elements.min.js';
 import 'clarity-icons/clarity-icons.min.js';
 
@@ -54,7 +56,8 @@ import 'clarity-icons/clarity-icons.min.js';
     GradesModule,
     DonateModule,
     ProfileModule,
-    RegisterModule
+    RegisterModule,
+    GithubButtonModule
   ],
   providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService, AlertService ],
   bootstrap: [AppComponent]

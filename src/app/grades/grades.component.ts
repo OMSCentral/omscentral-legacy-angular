@@ -26,6 +26,9 @@ export class GradesComponent implements OnInit {
         course.grades = this.grades[course.id];
         return course;
       });
+      this.courses = this.courses.filter(course => {
+        return course.grades;
+      });
     });
   }
 

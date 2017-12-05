@@ -48,7 +48,6 @@ export class CourseService {
   }
 
   broadcast() {
-    console.log("broadcasting");
     this.localStorageService.setObject('courses', this.cached);
     if (this.courseIds.length === 0) {
       this.courseIds = Object.keys(this.cached);
@@ -70,7 +69,12 @@ export class CourseService {
       const courses = snapshot.val();
       Object.keys(courses).forEach(courseId => {
         if (courses[courseId].reviews) {
-          courses[courseId].numReviews = Object.keys(courses[courseId].reviews).length;
+          const revs = Object.keys(courses[courseId].reviews).filter(rev => {
+            return courses[courseId].reviews[rev] && courses[courseId].reviews[rev] !== null;
+          });
+          courses[courseId].numReviews = revs.length;
+        } else {
+          courses[courseId].numReviews = 0;
         }
         courses[courseId].id = courseId;
         if (courses[courseId].grades) {
@@ -108,36 +112,36 @@ export class CourseService {
   }
 
   updateCounts(courseId, reviews) {
-    console.log("update counts for", courseId);
     let difficulty = 0;
     let diffNum = 0;
     let rating = 0;
     let ratingNum = 0;
     let workload = 0;
     let workNum = 0;
-    reviews.forEach(review => {
-        if (review && review !== null) {
-            if (review.difficulty) {
-                difficulty += parseInt(review.difficulty, 10);
-                diffNum++;
-            }
-            if (review.rating) {
-                rating += parseInt(review.rating,10);
-                ratingNum++;
-            }
-            if (review.workload) {
-                workload += parseInt(review.workload,10);
-                workNum++;
-            }
-        }
+    const updateReviews = reviews.filter(rev => {
+      return rev && rev !== null;
+    });
+    updateReviews.forEach(review => {
+      if (review.difficulty) {
+        difficulty += parseInt(review.difficulty, 10);
+        diffNum++;
+      }
+      if (review.rating) {
+        rating += parseInt(review.rating, 10);
+        ratingNum++;
+      }
+      if (review.workload) {
+        workload += parseInt(review.workload, 10);
+        workNum++;
+      }
     });
     const update = {
-        difficulty: difficulty / diffNum,
-        rating: rating / ratingNum,
-        workload: workload / workNum
+      difficulty: difficulty / diffNum,
+      rating: rating / ratingNum,
+      workload: workload / workNum
     };
     this.cached[courseId].average = update;
-    this.cached[courseId].numReviews = reviews.length;
+    this.cached[courseId].numReviews = updateReviews.length;
     this.localStorageService.setObject('courses', this.cached);
     return this.cached[courseId];
   }
@@ -168,6 +172,7 @@ export class CourseService {
   }
 
   getCourse(courseId) {
+    this.course$.next(null);
     this.courseId = courseId;
     if (Object.keys(this.cached).indexOf(courseId) === -1 || this.cacheExpired()) {
       return this.downloadCourse(courseId);
