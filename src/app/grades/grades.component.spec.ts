@@ -6,10 +6,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GradesComponent } from './grades.component';
 import { PipeModule } from '../pipes/pipe.module';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CourseService } from '../core/course.service';
 class MockCourse {
   getCourses() {
-
+    return new BehaviorSubject(null);
   }
 }
 

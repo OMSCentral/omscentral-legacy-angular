@@ -1,6 +1,7 @@
 version: 2
+
 jobs:
-  install:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/node:latest
@@ -9,7 +10,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
       - checkout
 
@@ -27,6 +28,11 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/OMSCentral
+
   lint:
     docker:
       # specify the version you desire here
@@ -36,8 +42,11 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       # run tests!
       - run: ./node_modules/.bin/ng lint
 
@@ -50,8 +59,11 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run: ./node_modules/.bin/ng test --sourcemaps=false --single-run
 
   deploy-dev:
@@ -63,23 +75,11 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
-      - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: npm i
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
     deployment:
       # production:
@@ -104,23 +104,11 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-
+    working_directory: ~/OMSCentral
     steps:
-      - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: npm i
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
     deployment:
       production:
@@ -134,14 +122,14 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - install
-      - lint
-        requires:
-           - install
-      - test
-        requires:
-           - install
-      - deploy-dev
+      - build
+      - lint:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - deploy-dev:
          filters:
             branches:
               only:
@@ -157,7 +145,7 @@ workflows:
                 - master
          requires:
            - deploy-dev
-      - deploy-prod
+      - deploy-prod:
          filters:
             branches:
               only:
