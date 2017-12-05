@@ -62,8 +62,12 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.courseSub.unsubscribe();
-    this.reviewSub.unsubscribe();
+    if (this.courseSub) {
+      this.courseSub.unsubscribe();
+    }
+    if (this.reviewSub) {
+      this.reviewSub.unsubscribe();
+    }
     this.reviews$ = null;
     this.review = null;
     this.course$ = null;
