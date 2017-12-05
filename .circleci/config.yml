@@ -76,9 +76,6 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
     working_directory: ~/OMSCentral
-    branches:
-      only:
-        - master
     steps:
       - checkout
       - run: npm i
@@ -96,9 +93,6 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
     working_directory: ~/OMSCentral
-    branches:
-      only:
-        - master
     steps:
       - checkout
       - run: npm i
