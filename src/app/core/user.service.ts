@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { AuthService } from '../firebase/auth.service';
 
 @Injectable()
 export class UserService {
   userId: string = null;
-  user$: BehaviorSubject<any> = new BehaviorSubject({});
+  user$: ReplaySubject<any> = new ReplaySubject();
   user: any = null;
 
   constructor(private db: AngularFireDatabase) {}
@@ -24,8 +24,8 @@ export class UserService {
       email: entity.email,
       name: entity.name,
       profileImageUrl: (entity.profileImageUrl || '').replace(/http:/i, 'https:'),
-      anonymous: !!entity.anonymous || true,
-      specialization: entity.specialization || null,
+      anonymous: entity.anonymous,
+      specialization: entity.specialization,
       reviews: {}
     });
   }
@@ -47,9 +47,10 @@ export class UserService {
   updateInfo(entity, authInfo) {
     const id = authInfo.uid;
     const formatted = this._format(entity);
+    const updatedUser = Object.assign(this.user, formatted);
     this.retrieveUser(id).then(() => {
       if (this.user) {
-        this.db.database.ref('users').child(id).update(Object.assign(this.user, formatted)).then(() => {
+        this.db.database.ref('users').child(id).update(updatedUser).then(() => {
           this.retrieveUser(id);
         });
       } else {
