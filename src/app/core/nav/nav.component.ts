@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   authenticated = false;
+  user: any;
 
   constructor(private auth: AuthService, private router: Router) {
     auth.user.subscribe(user => {
+      this.user = user;
       if (user) {
         this.authenticated = true;
       } else {
