@@ -82,7 +82,16 @@ export class AuthService {
         throw new Error('Invalid provider.');
     }
 
-    return this.firebaseAuth.auth.signInWithPopup(provider);
+    return this.firebaseAuth.auth.signInWithPopup(provider).then(auth => {
+      const entity = {
+        name: auth.user.providerData[0].displayName,
+        email: auth.user.providerData[0].email,
+        anonymous: true,
+        profileImageUrl: auth.user.providerData[0].photoURL,
+        authProvider: providerName
+      };
+      return this.userService.updateInfo(entity, auth.user);
+    });
   }
 
   login(email: string, password: string) {

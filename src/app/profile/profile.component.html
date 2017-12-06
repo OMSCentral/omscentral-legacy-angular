@@ -10,9 +10,26 @@
             <div class="card-block">
               {{(user$ | async)?.email}}
             </div>
+            <!-- <div class="card-block">
+              <form [formGroup]="profileForm" novalidate>
+                <div class="form-group">
+                  <label for="specialization_input">Specializations</label>
+                  <div class="select">
+                    <select id="specialization_input" formControlName="specialization">
+                      <option *ngFor="let spec of specializations" [value]="spec">{{spec}}</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-block">
+              <clr-checkbox [clrChecked]="anonymous" (click)="changeAnonymous()">
+                Hide Reviews
+              </clr-checkbox>
+            </div> -->
             <div class="card-footer">
-                <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
-              </div>
+              <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
+            </div>
           </div>
         </div>
       </div>

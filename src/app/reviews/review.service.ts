@@ -49,8 +49,8 @@ export class ReviewService {
       // "text": "Very interesting topics. Very interesting programming assignments. ",
       // "updated": "2016-08-05T14:01:38Z",
       // "workload": 18
-      created: new Date(),
-      updated: new Date(),
+      created: new Date().getTime(),
+      updated: new Date().getTime(),
       author: this.auth.authState.uid,
       course: review.course,
       difficulty: review.difficulty,
@@ -59,7 +59,11 @@ export class ReviewService {
       workload: review.workload,
       rating: review.rating
     };
-    const postRef = this.db.database.ref('/reviews/').push(newReview);
+    const postRef: any = this.db.database.ref('/reviews/').push(newReview).then((res) => {
+      return res;
+    }, (err) => {
+      console.log(err);
+    });
     this.reviewIds.push(postRef.key);
     const temp = {};
     newReview['id'] = postRef.key;
@@ -69,11 +73,10 @@ export class ReviewService {
 
     // Add review to course cache
     this.courseService.addReview(review.course, postRef.key);
-    postRef.off();
   }
 
   update(review: Review) {
-    const newReview = {
+    const updatedReview: any = {
       // "author": "JCLHCu3hGhelwrRCG3fPsDdGKcK2",
       // "course": "8803-002",
       // "created": "2016-08-05T14:01:38Z",
@@ -83,8 +86,8 @@ export class ReviewService {
       // "text": "Very interesting topics. Very interesting programming assignments. ",
       // "updated": "2016-08-05T14:01:38Z",
       // "workload": 18
-      created: review.created,
-      updated: new Date(),
+      created: review.created || new Date().getTime(),
+      updated: new Date().getTime(),
       author: this.auth.authState.uid,
       course: review.course,
       difficulty: review.difficulty,
@@ -93,9 +96,10 @@ export class ReviewService {
       workload: review.workload,
       rating: review.rating
     };
-    const postRef = this.db.database.ref('/reviews/' + review.id).set(newReview);
+    const postRef = this.db.database.ref('/reviews/' + review.id).set(updatedReview);
     const temp = {};
-    temp[review.id] = review;
+    updatedReview.id = review.id;
+    temp[review.id] = new Review(updatedReview);
     this.cached = Object.assign(this.cached, temp);
     this.broadcast();
   }
@@ -147,18 +151,26 @@ export class ReviewService {
       }
     }).filter(rev => {
       return rev !== null && rev.semester;
-    }).sort(function (a, b) {
-      const aData = a.semester.split('-');
-      const aYear = parseInt(aData[0], 10);
-      const aSem = parseInt(aData[1], 10);
-
-      const bData = b.semester.split('-');
-      const bYear = parseInt(bData[0], 10);
-      const bSem = parseInt(bData[1], 10);
-      if (aYear === bYear) {
-        return bSem - aSem;
+    }).sort((a, b) => {
+      if (a.author === this.auth.authState.uid) {
+        return 1;
       } else {
-        return bYear - aYear;
+        if (b.author === this.auth.authState.uid) {
+          return 1;
+        } else {
+          const aData = a.semester.split('-');
+          const aYear = parseInt(aData[0], 10);
+          const aSem = parseInt(aData[1], 10);
+    
+          const bData = b.semester.split('-');
+          const bYear = parseInt(bData[0], 10);
+          const bSem = parseInt(bData[1], 10);
+          if (aYear === bYear) {
+            return bSem - aSem;
+          } else {
+            return bYear - aYear;
+          }
+        }
       }
     });
     this.reviews$.next(reviews);
