@@ -10,7 +10,7 @@
             <div class="card-block">
               {{(user$ | async)?.email}}
             </div>
-            <div class="card-block">
+            <!-- <div class="card-block">
               <form [formGroup]="profileForm" novalidate>
                 <div class="form-group">
                   <label for="specialization_input">Specializations</label>
@@ -26,7 +26,7 @@
               <clr-checkbox [clrChecked]="anonymous" (click)="changeAnonymous()">
                 Hide Reviews
               </clr-checkbox>
-            </div>
+            </div> -->
             <div class="card-footer">
               <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
             </div>
