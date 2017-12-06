@@ -4,7 +4,7 @@ import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/debounceTime';
 import { Review } from '../../models/review';
 
 @Component({
@@ -33,11 +33,11 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.course$ = this.route.paramMap.throttleTime(1000)
+    this.course$ = this.route.paramMap
       .switchMap((params: ParamMap) =>
         this.courseService.getCourse(params.get('courseId')));
 
-    this.courseSub = this.course$.throttleTime(1000).subscribe(course => {
+    this.courseSub = this.course$.debounceTime(1000).subscribe(course => {
       if (course === null) {
         this.course = null;
       }
@@ -46,7 +46,7 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
           return course.reviews[revId];
         });
         this.reviews$ = this.reviewService.getReviews(revIds);
-        this.reviewSub = this.reviews$.throttleTime(1000).subscribe(reviews => {
+        this.reviewSub = this.reviews$.debounceTime(1000).subscribe(reviews => {
           if (reviews !== null) {
             const courseReviews = reviews.filter(rev => {
               return rev.course === course.id;

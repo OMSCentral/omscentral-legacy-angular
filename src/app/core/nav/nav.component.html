@@ -9,13 +9,19 @@
             <input id="search_input" type="text" placeholder="Search for keywords...">
         </label>
     </form> -->
-  <div class="header-actions">
+  <div class="settings">
     <ng-gh-btn class="github-btn" username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
-    <a href="/login" class="nav-link nav-text" *ngIf="!(authenticated)">
-      Login
+    <a class="active nav-link nav-icon" *ngIf="user">
+      <img [src]="user.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
     </a>
-    <a (click)="logout()" class="nav-link nav-text" *ngIf="(authenticated)">
-      Log Out
+    <a class="active nav-link nav-text" *ngIf="user">
+      <span class="nav-text">{{ user.displayName }}</span>
+    </a>
+    <a class="active nav-link nav-text" *ngIf="!(user)" href="/login">
+      <span class="nav-text">Login</span>
+    </a>
+    <a class="active nav-link nav-text" *ngIf="(user)" (click)="logout()">
+      <span class="nav-text">Logout</span>
     </a>
   </div>
 </header>
