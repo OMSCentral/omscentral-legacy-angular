@@ -161,7 +161,7 @@ export class ReviewService {
           const aData = a.semester.split('-');
           const aYear = parseInt(aData[0], 10);
           const aSem = parseInt(aData[1], 10);
-    
+
           const bData = b.semester.split('-');
           const bYear = parseInt(bData[0], 10);
           const bSem = parseInt(bData[1], 10);
