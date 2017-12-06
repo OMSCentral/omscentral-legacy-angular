@@ -27,6 +27,7 @@ import { AlertService } from './core/alert/alert.service';
 import { LocalStorageService } from './core/local-storage.service';
 import { ReviewService } from './reviews/review.service';
 import { GradeService } from './grades/grade.service';
+import { AuthorService } from './core/author.service';
 
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
@@ -59,7 +60,16 @@ import 'clarity-icons/clarity-icons.min.js';
     RegisterModule,
     GithubButtonModule
   ],
-  providers: [ AuthGuard, AuthService, CourseService, ReviewService, GradeService, LocalStorageService, AlertService ],
+  providers: [
+    AuthGuard,
+    AuthService,
+    CourseService,
+    ReviewService,
+    GradeService,
+    LocalStorageService,
+    AlertService,
+    AuthorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
