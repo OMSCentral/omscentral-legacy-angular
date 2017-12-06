@@ -1,5 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ClarityModule } from 'clarity-angular';
 
 import { ProfileComponent } from './profile.component';
 
@@ -32,18 +35,19 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ClarityModule, ReactiveFormsModule, FormsModule, RouterTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
       providers: [
-        {provide: AuthService, useClass: MockAuth},
-        {provide: UserService, useClass: MockUser},
-        {provide: ReviewService, useClass: MockReview},
-        {provide: LocalStorageService, useClass: MockLocalStorage}
+        { provide: AuthService, useClass: MockAuth },
+        { provide: UserService, useClass: MockUser },
+        { provide: ReviewService, useClass: MockReview },
+        { provide: LocalStorageService, useClass: MockLocalStorage }
       ],
-      declarations: [ ProfileComponent ]
+      declarations: [ProfileComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
