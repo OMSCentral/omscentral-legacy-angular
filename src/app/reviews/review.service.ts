@@ -151,12 +151,17 @@ export class ReviewService {
       }
     }).filter(rev => {
       return rev !== null && rev.semester;
-    }).sort((a, b) => {
+    });
+    this.reviews$.next(this.sortBySemester(reviews, true));
+  }
+
+  sortBySemester(reviews, rev = false) {
+    let sorted = reviews.sort((a, b) => {
       if (a.author === this.auth.authState.uid) {
-        return -1;
+        return rev ? 1 : -1;
       } else {
         if (b.author === this.auth.authState.uid) {
-          return 1;
+          return rev ? -1 : 1;
         } else {
           const aData = a.semester.split('-');
           const aYear = parseInt(aData[0], 10);
@@ -173,7 +178,45 @@ export class ReviewService {
         }
       }
     });
-    this.reviews$.next(reviews);
+
+    if (rev) {
+      sorted = sorted.reverse();
+    }
+
+    return sorted;
+  }
+
+  sortByDate(reviews, rev = false) {
+    let sorted = reviews.sort((a, b) => {
+      if (a.author === this.auth.authState.uid) {
+        return rev ? 1 : -1;
+      } else {
+        if (b.author === this.auth.authState.uid) {
+          return rev ? -1 : 1;
+        } else {
+          let aDate, bDate;
+          if (a.updated) {
+            aDate = new Date(a.updated);
+          } else {
+            aDate = new Date(a.created);
+          }
+
+          if (b.updated) {
+            bDate = new Date(b.updated);
+          } else {
+            bDate = new Date(b.created);
+          }
+
+          return aDate - bDate;
+        }
+      }
+    });
+
+    if (rev) {
+      sorted = sorted.reverse();
+    }
+
+    return sorted;
   }
 
   getReview(reviewId) {

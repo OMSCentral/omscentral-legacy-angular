@@ -23,6 +23,8 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
   courseSub: any;
   reviewSub: any;
   loading = true;
+  sortType = 'semester';
+  sortDir = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
@@ -92,6 +94,26 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
 
   update(evt) {
     this.reviewService.update(evt);
+  }
+
+  sortByDate() {
+    if (this.sortType === 'date') {
+      this.sortDir = !this.sortDir;
+    } else {
+      this.sortType = 'date';
+      this.sortDir = false;
+    }
+    this.reviews = this.reviewService.sortByDate(this.reviews, this.sortDir);
+  }
+
+  sortBySemester() {
+    if (this.sortType === 'semester') {
+      this.sortDir = !this.sortDir;
+    } else {
+      this.sortType = 'semester';
+      this.sortDir = false;
+    }
+    this.reviews = this.reviewService.sortBySemester(this.reviews, this.sortDir);
   }
 
 }
