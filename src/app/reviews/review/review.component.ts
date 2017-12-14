@@ -6,7 +6,7 @@ import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
 import { Difficulty } from '../../enums/difficulty.enum';
 import { Rating } from '../../enums/rating.enum';
-import { CourseService } from '../../core/course.service';
+import { CourseService } from '../../courses/course.service';
 
 @Component({
   selector: 'oms-review',

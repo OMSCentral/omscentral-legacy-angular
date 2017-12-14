@@ -6,13 +6,15 @@ import { ClarityModule } from 'clarity-angular';
 import { PipeModule } from '../pipes/pipe.module';
 import { ReviewComponent } from './review/review.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ClarityModule,
     PipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

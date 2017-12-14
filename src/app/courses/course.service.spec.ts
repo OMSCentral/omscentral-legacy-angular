@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { CourseService } from './course.service';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 class MockLocal {
   getObject(asdf) {

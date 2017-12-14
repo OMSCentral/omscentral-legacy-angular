@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Review } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
-import { CourseService } from '../core/course.service';
+import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
 
 // temporary

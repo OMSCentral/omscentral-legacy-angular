@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.user.subscribe(user => {
       if (user && user.uid) {
-        this.router.navigate(['reviews']);
+        this.router.navigate(['courses']);
       }
     });
   }
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   social(authProvider) {
     const self = this;
     this.authService.social(authProvider).then(() => {
-      this.router.navigate(['reviews']);
+      this.router.navigate(['courses']);
     }, (err) => {
       console.log(err);
     });
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.email.setValue('');
         this.error = '';
-        this.router.navigate(['reviews']);
+        this.router.navigate(['courses']);
       }
     }, (err) => {
       this.error = err.message;

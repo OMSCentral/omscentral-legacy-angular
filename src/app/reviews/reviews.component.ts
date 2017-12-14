@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
-import { CourseService } from '../core/course.service';
+import { CourseService } from '../courses/course.service';
 
 @Component({
   selector: 'oms-reviews',
