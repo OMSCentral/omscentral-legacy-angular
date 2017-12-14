@@ -49,19 +49,42 @@ function processGrades(grades) {
                     totals[letter] = grades[grade][letter];
                 }
             });
+            totals.ab = totals.a + totals.b;
+            totals.cdf = totals.c + totals.d + totals.f;
+            totals.total = totals.ab + totals.cdf;
         });
     }
     return totals;
+}
+
+function processPercents(totals) {
+    const percents = {};
+    Object.keys(totals).forEach(grade => {
+        if (grade !== 't' && grade !== 'w' && grade !== 'semester') {
+            percents[grade] = totals[grade] / totals.total;
+        } else {
+            percents[grade] = totals[grade];
+        }
+    });
+    return percents;
 }
 
 var courseGrades = current.GRD;
 Object.keys(courseGrades).forEach(courseId => {
     grades[courseId] = {};
     grades[courseId].totals = processGrades(courseGrades[courseId]);
+    grades[courseId].percents = processPercents(grades[courseId].totals);
     grades[courseId].semesterGrades = Object.keys(courseGrades[courseId]).map(semGrade => {
         const grade = courseGrades[courseId][semGrade];
+        grade.ab = grade.a + grade.b;
+        grade.cdf = grade.c + grade.d + grade.f;
+        grade.total = grade.ab + grade.cdf;
         grade.semester = semGrade;
         return grade;
+    });
+    grades[courseId].semesterPercents = grades[courseId].semesterGrades.map(semGrade => {
+        console.log(semGrade);
+        return processPercents(semGrade);
     });
 });
 
@@ -186,7 +209,7 @@ fs.writeFile('specializations.json', json, 'utf8', function () {
 /*
     Remove Specializations from firebase, hard code them (they don't change)
     specializations: {
-        
+
     }
     Remove semesters from firebase (easy to do with a code change)
 */

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CourseService } from '../../core/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
+import { GradeService } from '../../grades/grade.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import { Review } from '../../models/review';
@@ -19,16 +20,18 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
   reviews$: Observable<any>;
   reviews: any;
   review: Review = null;
+  grades: any;
   newReview = false;
   courseSub: any;
   reviewSub: any;
   loading = true;
   sortType = 'semester';
   sortDir = false;
+  percent = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
-    private auth: AuthService) {
+    private auth: AuthService, private gradeService: GradeService) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
@@ -40,6 +43,7 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
         this.courseService.getCourse(params.get('courseId')));
 
     this.courseSub = this.course$.debounceTime(1000).subscribe(course => {
+      this.grades = this.gradeService.getCourseGrades(course.id);
       if (course === null) {
         this.course = null;
       }
