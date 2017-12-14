@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CourseReviewsComponent } from './course-reviews.component';
+import { PipeModule } from '../../pipes/pipe.module';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
@@ -21,6 +22,13 @@ class MockReview {
 
 }
 
+import { GradeService } from '../../grades/grade.service';
+class MockGrade {
+  getCourses() {
+
+  }
+}
+
 import { ClarityModule } from 'clarity-angular';
 
 describe('CourseReviewsComponent', () => {
@@ -29,14 +37,15 @@ describe('CourseReviewsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ClarityModule],
+      imports: [RouterTestingModule, ClarityModule, PipeModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
       providers: [
         { provide: CourseService, useClass: MockCourse },
         { provide: ReviewService, useClass: MockReview },
-        { provide: AuthService, useClass: MockAuth }
+        { provide: AuthService, useClass: MockAuth },
+        { provide: GradeService, useClass: MockGrade }
       ],
       declarations: [CourseReviewsComponent]
     })
