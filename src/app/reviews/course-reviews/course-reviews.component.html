@@ -50,14 +50,59 @@
                 </div>
               </div>
             </div>
+            <div class="card-block">
+              <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent}" (click)="percent = !percent">Counts</button>
+              <button class="btn btn-sm" [ngClass]="{'btn-primary': percent}" (click)="percent = !percent">Percentage</button>
+              <span *ngIf="percent">Percentages are based off of A-F grade counts.</span>
+              <clr-datagrid *ngIf="percent">
+                <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+                <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
+                <clr-dg-column [clrDgField]="'a'">% A</clr-dg-column>
+                <clr-dg-column [clrDgField]="'b'">% B</clr-dg-column>
+                <clr-dg-column [clrDgField]="'c'">% C</clr-dg-column>
+                <clr-dg-column [clrDgField]="'d'">% D</clr-dg-column>
+                <clr-dg-column [clrDgField]="'f'">% F</clr-dg-column>
+                <clr-dg-column [clrDgField]="'w'">% Withdrew</clr-dg-column>
+                <clr-dg-row *clrDgItems="let grade of grades?.semesterPercents">
+                  <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.a * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.b * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.c * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.d * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.f * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
+                </clr-dg-row>
+              </clr-datagrid>
+              <clr-datagrid *ngIf="!percent">
+                <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+                <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
+                <clr-dg-column [clrDgField]="'a'">A</clr-dg-column>
+                <clr-dg-column [clrDgField]="'b'">B</clr-dg-column>
+                <clr-dg-column [clrDgField]="'c'">C</clr-dg-column>
+                <clr-dg-column [clrDgField]="'d'">D</clr-dg-column>
+                <clr-dg-column [clrDgField]="'f'">F</clr-dg-column>
+                <clr-dg-column [clrDgField]="'w'">Withdrew</clr-dg-column>
+                <clr-dg-row *clrDgItems="let grade of grades?.semesterGrades">
+                  <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.a | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.b | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.c | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.d | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.f | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
+                </clr-dg-row>
+              </clr-datagrid>
+            </div>
             <div class="card-footer" *ngIf="!newReview">
               <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'semester'}" (click)="sortBySemester()">Sort by Semester
-                <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-up" aria-hidden="true"></i>
-                <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-down" aria-hidden="true"></i>
+                <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+                <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
               </button>
               <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'date'}" (click)="sortByDate()">Sort by Date
-                <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-up" aria-hidden="true"></i>
-                <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-down" aria-hidden="true"></i>
+                <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+                <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
               </button>
               <button class="btn btn-sm btn-link" (click)="newReview = true">Write a Review</button>
             </div>
