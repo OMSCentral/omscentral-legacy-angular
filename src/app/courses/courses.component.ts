@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { CourseService } from '../core/course.service';
+import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
 
 @Component({

@@ -27,10 +27,10 @@
         <clr-dg-column [clrDgField]="'grades.totals.b'">% &le; C</clr-dg-column>
         <clr-dg-column [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
 
-        <clr-dg-row style="cursor: pointer" *clrDgItems="let course of courses" (click)="goToCourse(course.id)">
+        <clr-dg-row *clrDgItems="let course of courses">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
-          <clr-dg-cell>{{course.name}}</clr-dg-cell>
+          <clr-dg-cell><a [routerLink]="['/courses', course.id]">{{course.name}}</a></clr-dg-cell>
           <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
           <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
           <clr-dg-cell>{{course.average.workload | number}}</clr-dg-cell>
@@ -80,10 +80,10 @@
         <clr-dg-column [clrDgField]="'grades.totals.b'">&le; C</clr-dg-column>
         <clr-dg-column [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
 
-        <clr-dg-row style="cursor: pointer" *clrDgItems="let course of courses" (click)="goToCourse(course.id)">
+        <clr-dg-row *clrDgItems="let course of courses">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
           <clr-dg-cell>{{course.id}}</clr-dg-cell>
-          <clr-dg-cell>{{course.name}}</clr-dg-cell>
+          <clr-dg-cell><a [routerLink]="['/courses', course.id]">{{course.name}}</a></clr-dg-cell>
           <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
           <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
           <clr-dg-cell>{{course.average.workload | number}}</clr-dg-cell>

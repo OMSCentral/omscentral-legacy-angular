@@ -1,7 +1,7 @@
 <form [formGroup]="reviewForm" novalidate>
   <div class="card" *ngIf="review">
     <div class="card-header">
-      <h3 class="card-title" *ngIf="title && courseName">{{review.course}}: {{courseName}}</h3>
+      <h3 class="card-title" *ngIf="title && courseName"><a [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</a></h3>
       <span class="label" *ngIf="review.semester">{{review.semester | semester}}</span>
       <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
       <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
