@@ -152,7 +152,7 @@ export class ReviewService {
     }).filter(rev => {
       return rev !== null && rev.semester;
     });
-    this.reviews$.next(this.sortBySemester(reviews, true));
+    this.reviews$.next(this.sortBySemester(reviews, false));
   }
 
   sortBySemester(reviews, rev = false) {

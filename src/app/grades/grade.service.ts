@@ -6,12 +6,18 @@ import * as jsonData from '../../../grades.json';
 export class GradeService {
   courseGrades: any;
 
-  constructor() { }
+  constructor() {
+    this.getGrades();
+  }
 
   getGrades() {
     const courseGrades = (<any>jsonData);
     this.courseGrades = courseGrades;
     return this.courseGrades;
+  }
+
+  getCourseGrades(courseId) {
+    return this.courseGrades[courseId];
   }
 
 }

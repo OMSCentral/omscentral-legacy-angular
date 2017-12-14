@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DonateComponent } from './donate/donate.component';
 import { CourseReviewsComponent } from './reviews/course-reviews/course-reviews.component';
 import { RegisterComponent } from './register/register.component';
+import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
   {
@@ -28,18 +29,27 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'reviews',
-    component: ReviewsComponent
+    path: 'courses',
+    component: CoursesComponent
   },
+  // {
+  //   path: 'reviews',
+  //   component: ReviewsComponent
+  // },
+  // {
+  //   path: 'reviews/:courseId',
+  //   component: CourseReviewsComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
-    path: 'reviews/:courseId',
+    path: 'courses/:courseId',
     component: CourseReviewsComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'grades',
-    component: GradesComponent
-  },
+  // {
+  //   path: 'grades',
+  //   component: GradesComponent
+  // },
   {
     path: 'donate',
     component: DonateComponent

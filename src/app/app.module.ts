@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { CoursesModule } from './courses/courses.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { CoreModule } from './core/core.module';
 import { AboutModule } from './about/about.module';
@@ -32,7 +33,7 @@ import { AuthorService } from './core/author.service';
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
-import {GithubButtonModule} from 'angular-github-buttons';
+import { GithubButtonModule } from 'angular-github-buttons';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
 import 'clarity-icons/clarity-icons.min.js';
@@ -58,7 +59,8 @@ import 'clarity-icons/clarity-icons.min.js';
     DonateModule,
     ProfileModule,
     RegisterModule,
-    GithubButtonModule
+    GithubButtonModule,
+    CoursesModule
   ],
   providers: [
     AuthGuard,

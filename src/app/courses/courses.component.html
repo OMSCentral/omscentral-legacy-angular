@@ -1,0 +1,125 @@
+<clr-main-container>
+  <div class="content-container">
+    <div class="content-area">
+      <div class="card">
+        <div class="card-header">
+          Courses
+        </div>
+        <div class="card-block">
+          Some courses don't have grade information.
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent}" (click)="percent = !percent">Counts</button>
+          <button class="btn btn-sm" [ngClass]="{'btn-primary': percent}" (click)="percent = !percent">Percentage</button>
+          <span *ngIf="percent">Percentages are based off of A-F grade counts.</span>
+        </div>
+      </div>
+      <clr-datagrid *ngIf="percent">
+        <clr-dg-column [clrDgField]="'department'">Dept.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'id'">#</clr-dg-column>
+        <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.t'">Enrolled</clr-dg-column>
+        <clr-dg-column [clrDgField]="'numReviews'">Reviews</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.workload'">Avg. Work</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.difficulty'">Avg. Dif.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.rating'">Avg. Rating</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.a'">% &ge; B</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.b'">% &le; C</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
+
+        <clr-dg-row style="cursor: pointer" *clrDgItems="let course of courses" (click)="goToCourse(course.id)">
+          <clr-dg-cell>{{course.department}}</clr-dg-cell>
+          <clr-dg-cell>{{course.id}}</clr-dg-cell>
+          <clr-dg-cell>{{course.name}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.workload | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.difficulty | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.rating | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * course.grades?.percents.ab | number}}</clr-dg-cell>
+          <clr-dg-cell>{{100 * course.grades?.percents.cdf | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.w | number}}</clr-dg-cell>
+          <!-- <clr-dg-row-detail *clrIfExpanded>
+            <div class="container">
+              <clr-datagrid>
+                <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+                <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
+                <clr-dg-column [clrDgField]="'a'">% A</clr-dg-column>
+                <clr-dg-column [clrDgField]="'b'">% B</clr-dg-column>
+                <clr-dg-column [clrDgField]="'c'">% C</clr-dg-column>
+                <clr-dg-column [clrDgField]="'d'">% D</clr-dg-column>
+                <clr-dg-column [clrDgField]="'f'">% F</clr-dg-column>
+                <clr-dg-column [clrDgField]="'w'">% Withdrew</clr-dg-column>
+                <clr-dg-row *clrDgItems="let grade of course.grades?.semesterPercents">
+                  <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.a * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.b * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.c * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.d * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.f * 100 | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
+                </clr-dg-row>
+              </clr-datagrid>
+            </div>
+          </clr-dg-row-detail> -->
+        </clr-dg-row>
+
+        <!-- <clr-dg-footer>{{(courses | async)?.length}} courses</clr-dg-footer> -->
+      </clr-datagrid>
+      <clr-datagrid *ngIf="!percent">
+        <clr-dg-column [clrDgField]="'department'">Dept.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'id'">#</clr-dg-column>
+        <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.t'">Enrolled</clr-dg-column>
+        <clr-dg-column [clrDgField]="'numReviews'">Reviews</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.workload'">Avg. Work</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.difficulty'">Avg. Dif.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'average.rating'">Avg. Rating</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.a'">&ge; B</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.b'">&le; C</clr-dg-column>
+        <clr-dg-column [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
+
+        <clr-dg-row style="cursor: pointer" *clrDgItems="let course of courses" (click)="goToCourse(course.id)">
+          <clr-dg-cell>{{course.department}}</clr-dg-cell>
+          <clr-dg-cell>{{course.id}}</clr-dg-cell>
+          <clr-dg-cell>{{course.name}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.workload | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.difficulty | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.average.rating | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.ab | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.cdf | number}}</clr-dg-cell>
+          <clr-dg-cell>{{course.grades?.totals.w | number}}</clr-dg-cell>
+          <!-- <clr-dg-row-detail *clrIfExpanded>
+            <div class="container">
+              <clr-datagrid>
+                <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+                <clr-dg-column [clrDgField]="'t'">Enrolled</clr-dg-column>
+                <clr-dg-column [clrDgField]="'a'">A</clr-dg-column>
+                <clr-dg-column [clrDgField]="'b'">B</clr-dg-column>
+                <clr-dg-column [clrDgField]="'c'">C</clr-dg-column>
+                <clr-dg-column [clrDgField]="'d'">D</clr-dg-column>
+                <clr-dg-column [clrDgField]="'f'">F</clr-dg-column>
+                <clr-dg-column [clrDgField]="'w'">Withdrew</clr-dg-column>
+                <clr-dg-row *clrDgItems="let grade of course.grades?.semesterGrades">
+                  <clr-dg-cell>{{grade.semester | semester}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.t | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.a | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.b | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.c | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.d | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.f | number}}</clr-dg-cell>
+                  <clr-dg-cell>{{grade.w | number}}</clr-dg-cell>
+                </clr-dg-row>
+              </clr-datagrid>
+            </div>
+          </clr-dg-row-detail> -->
+        </clr-dg-row>
+
+        <!-- <clr-dg-footer>{{(courses | async)?.length}} courses</clr-dg-footer> -->
+      </clr-datagrid>
+    </div>
+  </div>
+</clr-main-container>
