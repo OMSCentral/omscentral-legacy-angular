@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from '../core/local-storage.service';
 
 @Injectable()
 export class CourseService {

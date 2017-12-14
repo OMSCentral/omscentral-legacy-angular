@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.authService.user.subscribe(user => {
       if (user && user.uid) {
-        this.router.navigate(['reviews']);
+        this.router.navigate(['courses']);
       }
     });
     // https://omscentral.com/set-password?mode=%3Caction%3E&oobCode=%3Ccode%3E
@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
   social(authProvider) {
     const self = this;
     this.authService.social(authProvider).then(() => {
-      this.router.navigate(['reviews']);
+      this.router.navigate(['courses']);
     }, (err) => {
       console.log(err);
     });

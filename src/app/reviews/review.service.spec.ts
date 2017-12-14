@@ -23,7 +23,7 @@ class MockAFDB {
 
 }
 
-import { CourseService } from '../core/course.service';
+import { CourseService } from '../courses/course.service';
 class MockCourse {
   getCourse() {
     return new BehaviorSubject({});
