@@ -153,7 +153,7 @@ export class ReviewService {
       return rev !== null && rev.semester;
     }).sort((a, b) => {
       if (a.author === this.auth.authState.uid) {
-        return 1;
+        return -1;
       } else {
         if (b.author === this.auth.authState.uid) {
           return 1;
