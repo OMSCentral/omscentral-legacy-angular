@@ -57,7 +57,8 @@ export class ReviewService {
       semester: review.semester,
       text: review.text,
       workload: review.workload,
-      rating: review.rating
+      rating: review.rating,
+      program: review.program
     };
     const postRef: any = this.db.database.ref('/reviews/').push(newReview).then((res) => {
       return res;
@@ -94,7 +95,8 @@ export class ReviewService {
       semester: review.semester,
       text: review.text,
       workload: review.workload,
-      rating: review.rating
+      rating: review.rating,
+      program: review.program
     };
     const postRef = this.db.database.ref('/reviews/' + review.id).set(updatedReview);
     const temp = {};

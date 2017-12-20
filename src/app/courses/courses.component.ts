@@ -5,10 +5,10 @@ import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
 
 const specializations = {
-  cpr: ['6505', '6601', '7641', '8803', '6475', '6476', '8803-O01'],
-  cs: ['6506', '8803', '6210', '6250', '6290', '6300', '6400', '6035', '6200', '6262', '6291', '6310', '6340', '6220'],
-  ii: ['6300', '6505', '8803', '6601', '7637', '7641', '6440', '6460'],
-  ml: ['6505', '8803', '7641', '7642', '7646', '6242', '6250']
+  cpr: ['6505', '6601', '7641', '8803-GA', '6475', '6476', '8803-001'],
+  cs: ['6035', '6210', '6220', '8803-GA', '6250', '6290', '6300', '6400', '6262', '6310', '6340', '6506', '6200', '6291'],
+  ii: ['6300', '6505', '8803-GA', '6601', '7637', '7641', '6440', '6460'],
+  ml: ['6505', '8803-GA', '7641', '7642', '7646', '6242', '6250']
 };
 
 @Component({
@@ -53,6 +53,8 @@ export class CoursesComponent implements OnInit {
       this.courses = this.original;
     } else {
       this.courses = this.original.filter(course => {
+        console.log(course.id);
+        console.log(specializations[type].indexOf(course.id));
         return specializations[type].indexOf(course.id) !== -1;
       });
     }
