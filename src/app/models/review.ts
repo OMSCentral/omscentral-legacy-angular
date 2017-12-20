@@ -9,6 +9,7 @@ export class Review {
     text: string;
     updated: Date;
     workload: number;
+    program: string;
 
     editReview = false;
 
@@ -34,7 +35,8 @@ export class Review {
             rating: this.rating,
             text: this.text,
             workload: this.workload,
-            difficulty: this.difficulty
+            difficulty: this.difficulty,
+            program: this.program || ''
         };
     }
 
