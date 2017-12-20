@@ -4,8 +4,6 @@ import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
-import { Difficulty } from '../../enums/difficulty.enum';
-import { Rating } from '../../enums/rating.enum';
 import { CourseService } from '../../courses/course.service';
 
 @Component({
@@ -15,7 +13,7 @@ import { CourseService } from '../../courses/course.service';
 })
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
-  @Input() title? = false;
+  @Input() title?= false;
   @Output() cancelNew = new EventEmitter<boolean>();
   @Output() saveNew = new EventEmitter<Review>();
   @Output() update = new EventEmitter<Review>();
@@ -28,6 +26,7 @@ export class ReviewComponent implements OnInit {
     return sem !== '0000-0';
   });
   difficulties = Array.from(new Array(5), (x, i) => i + 1);
+  programs = Array.from(new Array(2), (x, i) => i + 1);
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
   constructor(private auth: AuthService, private reviewService: ReviewService,
@@ -50,6 +49,7 @@ export class ReviewComponent implements OnInit {
       rating: '',
       workload: '',
       difficulty: '',
+      program: '',
       semester: ['', Validators.required]
     });
     this.reviewForm.valueChanges.subscribe(changes => {
@@ -58,7 +58,9 @@ export class ReviewComponent implements OnInit {
   }
 
   edit() {
-    this.reviewForm.setValue(this.review.edit());
+    const editReview = this.review.edit();
+    console.log(editReview);
+    this.reviewForm.setValue(editReview);
   }
 
   delete() {
