@@ -39,5 +39,8 @@
     <li class="nav-item">
       <a href class="nav-link" routerLink="/donate" routerLinkActive="active">Donate</a>
     </li>
+    <li class="nav-item" *ngIf="(authenticated && user.admin)">
+      <a href class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+    </li>
   </ul>
 </nav>

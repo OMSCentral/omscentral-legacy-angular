@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../firebase/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'oms-nav',
@@ -9,11 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   authenticated = false;
-  user: any;
+  user: any = {};
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private userService: UserService) {
+    userService.user$.subscribe(storedUser => {
+      this.user.admin = storedUser.admin;
+    });
     auth.user.subscribe(user => {
-      this.user = user;
+      this.user = Object.assign(this.user, user);
       if (user) {
         this.authenticated = true;
       } else {

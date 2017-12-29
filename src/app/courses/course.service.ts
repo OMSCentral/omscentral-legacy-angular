@@ -182,6 +182,34 @@ export class CourseService {
     }
   }
 
+  push(course: any) {
+    const newCourse = {
+      average: {
+        difficulty: null,
+        rating: null,
+        workload: null
+      },
+      department: course.department,
+      foundational: course.foundational,
+      icon: '',
+      name: course.name,
+      number: Number(course.number),
+      program: course.program,
+      reviews: {}
+    };
+    const postRef: any = this.db.database.ref('/courses/' + course.number).set(newCourse).then((res) => {
+      return res;
+    }, (err) => {
+      console.log(err);
+    });
+    this.courseIds.push(course.number);
+    const temp = {};
+    newCourse['id'] = course.number;
+    temp[course.number] = newCourse;
+    this.cached = Object.assign(this.cached, temp);
+    this.broadcast();
+  }
+
   private cacheExpired() {
     if (!this.cacheTime || this.cacheTime === null) {
       return true;
