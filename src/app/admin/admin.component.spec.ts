@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ClarityModule } from 'clarity-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminComponent } from './admin.component';
+
+import { CourseService } from '../courses/course.service';
+class MockCourse { }
+
+import { AlertService } from '../core/alert/alert.service';
+class MockAlert { }
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -8,9 +16,14 @@ describe('AdminComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminComponent ]
+      imports: [ClarityModule, FormsModule, ReactiveFormsModule],
+      providers: [
+        { provide: CourseService, useClass: MockCourse },
+        { provide: AlertService, useClass: MockAlert }
+      ],
+      declarations: [AdminComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
