@@ -3,14 +3,15 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { AuthService } from '../firebase/auth.service';
+import { User } from '../models/user';
 
 @Injectable()
 export class UserService {
   userId: string = null;
-  user$: ReplaySubject<any> = new ReplaySubject();
+  user$: ReplaySubject<User> = new ReplaySubject();
   user: any = null;
 
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase) { }
 
   getUser() {
     return this.user$.asObservable();
