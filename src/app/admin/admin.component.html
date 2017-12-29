@@ -33,7 +33,7 @@
               </form>
             </div>
             <div class="card-footer">
-              <button type="submit" class="btn btn-sm btn-link" (click)="save()">Save</button>
+              <button type="submit" class="btn btn-sm btn-link" (click)="saveAlert()">Save</button>
             </div>
           </div>
         </div>
@@ -46,10 +46,7 @@
             </div>
             <div class="card-block" *ngFor="let alert of alerts$ | async">
               {{alert.text}}
-              <div class="toggle-switch">
-                <input type="checkbox" id="active">
-                <label for="active">Active</label>
-              </div>
+              <button class="btn btn-sm btn-danger-outline" (click)="removeAlert(alert)">Remove</button>
             </div>
           </div>
         </div>
@@ -61,7 +58,43 @@
               Add Course
             </div>
             <div class="card-block">
-              asdf
+              <form [formGroup]="courseForm" novalidate>
+                <div class="form-group row">
+                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <label for="gForm_4">Department</label>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                    <input id="gForm_4" rows="5" class="form-control" formControlName="department">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <label for="gForm_4">Number</label>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                    <input id="gForm_4" rows="5" class="form-control" formControlName="number">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <label for="gForm_4">Name</label>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                    <input id="gForm_4" rows="5" class="form-control" formControlName="name">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <label for="gForm_4">Program</label>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                    <input id="gForm_4" rows="5" class="form-control" formControlName="program">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-link" (click)="saveCourse()">Save</button>
             </div>
           </div>
         </div>
