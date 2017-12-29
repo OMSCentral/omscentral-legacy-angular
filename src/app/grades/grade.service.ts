@@ -4,15 +4,17 @@ import * as jsonData from '../../../grades.json';
 
 @Injectable()
 export class GradeService {
-  courseGrades: any;
+  courseGrades: any = null;
 
   constructor() {
     this.getGrades();
   }
 
   getGrades() {
-    const courseGrades = (<any>jsonData);
-    this.courseGrades = courseGrades;
+    if (this.courseGrades === null) {
+      const courseGrades = (<any>jsonData);
+      this.courseGrades = courseGrades;
+    }
     return this.courseGrades;
   }
 

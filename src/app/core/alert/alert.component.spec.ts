@@ -8,11 +8,7 @@ import { AlertComponent } from './alert.component';
 
 class MockAlert {
   alert$ = new BehaviorSubject({});
-  getAlert() {
-    return {};
-  }
-
-  setAlert() {
+  getAlerts() {
 
   }
 }

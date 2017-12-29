@@ -11,6 +11,23 @@ const specializations = {
   ml: ['6505', '8803-GA', '7641', '7642', '7646', '6242', '6250']
 };
 
+const defaultGrades = {
+  a: 0,
+  b: 0,
+  c: 0,
+  d: 0,
+  f: 0,
+  i: 0,
+  s: 0,
+  t: 0,
+  u: 0,
+  v: 0,
+  w: 0,
+  ab: 0,
+  cdf: 0,
+  total: 0
+};
+
 @Component({
   selector: 'oms-courses',
   templateUrl: './courses.component.html',
@@ -32,11 +49,25 @@ export class CoursesComponent implements OnInit {
     this.courses$.subscribe(courses => {
       if (courses) {
         this.courses = courses.map(course => {
-          course.grades = this.grades[course.id];
+          if (this.grades[course.id]) {
+            course.grades = this.grades[course.id];
+          } else {
+            course.grades = {
+              totals: defaultGrades,
+              percents: defaultGrades
+            };
+          }
           return course;
         });
         this.original = courses.map(course => {
-          course.grades = this.grades[course.id];
+          if (this.grades[course.id]) {
+            course.grades = this.grades[course.id];
+          } else {
+            course.grades = {
+              totals: defaultGrades,
+              percents: defaultGrades
+            };
+          }
           return course;
         });
       }
@@ -53,8 +84,6 @@ export class CoursesComponent implements OnInit {
       this.courses = this.original;
     } else {
       this.courses = this.original.filter(course => {
-        console.log(course.id);
-        console.log(specializations[type].indexOf(course.id));
         return specializations[type].indexOf(course.id) !== -1;
       });
     }
