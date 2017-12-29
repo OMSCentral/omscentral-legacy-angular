@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { AuthGuard } from './firebase/auth.guard';
+import { AdminGuard } from './firebase/admin.guard';
 import { AboutComponent } from './about/about.component';
 import { GradesComponent } from './grades/grades.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
 import { DonateComponent } from './donate/donate.component';
 import { CourseReviewsComponent } from './reviews/course-reviews/course-reviews.component';
 import { RegisterComponent } from './register/register.component';
@@ -58,6 +60,11 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuard]
   }
 ];
 
