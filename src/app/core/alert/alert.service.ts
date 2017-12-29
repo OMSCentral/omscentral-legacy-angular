@@ -4,21 +4,28 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AlertService {
+  alerts: any = null;
   alerts$: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(private db: AngularFireDatabase) {
-    this.db.database.ref('/alerts').orderByChild('active').equalTo(1).on('value', snapshot => {
-      const alertObj = snapshot.val();
-      if (alertObj !== null) {
-        this.alerts$.next(Object.keys(alertObj).map(alertId => {
-          const alert = alertObj[alertId];
-          alert.id = alertId;
-          return alert;
-        }));
-      } else {
-        this.alerts$.next([]);
-      }
-    });
+  constructor(private db: AngularFireDatabase) { }
+
+  getAlerts() {
+    if (this.alerts === null) {
+      this.db.database.ref('/alerts').orderByChild('active').equalTo(1).on('value', snapshot => {
+        const alertObj = snapshot.val();
+        if (alertObj !== null) {
+          this.alerts = Object.keys(alertObj).map(alertId => {
+            const alert = alertObj[alertId];
+            alert.id = alertId;
+            return alert;
+          });
+          this.alerts$.next(this.alerts);
+        } else {
+          this.alerts = [];
+          this.alerts$.next([]);
+        }
+      });
+    }
   }
 
   addAlert(alert: any) {

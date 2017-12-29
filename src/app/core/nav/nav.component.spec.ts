@@ -4,10 +4,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavComponent } from './nav.component';
 
-import { AuthService } from '../../firebase/auth.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
   user = new BehaviorSubject({});
+}
+import { UserService } from '../user.service';
+class MockUser {
+  user$ = new BehaviorSubject({});
 }
 
 describe('NavComponent', () => {
@@ -20,10 +25,13 @@ describe('NavComponent', () => {
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
-      providers: [{provide: AuthService, useClass: MockAuth }],
-      declarations: [ NavComponent ]
+      providers: [
+        { provide: AuthService, useClass: MockAuth },
+        { provide: UserService, useClass: MockUser }
+      ],
+      declarations: [NavComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

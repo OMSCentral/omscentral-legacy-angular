@@ -59,7 +59,6 @@ export class ReviewComponent implements OnInit {
 
   edit() {
     const editReview = this.review.edit();
-    console.log(editReview);
     this.reviewForm.setValue(editReview);
   }
 
