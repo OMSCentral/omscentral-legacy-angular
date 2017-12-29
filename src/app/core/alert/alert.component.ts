@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from './alert.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'oms-alert',
@@ -7,7 +8,7 @@ import { AlertService } from './alert.service';
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent implements OnInit {
-  alerts$: any = null;
+  alerts$: BehaviorSubject<any>;
 
   constructor(private alertService: AlertService) { }
 

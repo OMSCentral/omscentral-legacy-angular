@@ -1,59 +1,40 @@
 {
-  "rules":{
-    ".write":"false",
-    ".read":"false",
+  "rules": {
+    ".write": "false",
+    ".read": "false",
     "alerts": {
-      ".write": "false",
+      ".indexOn": [
+        "active",
+        "created"
+      ],
+      ".write": "auth.uid == 'IoEyvOStggUiM8ueeeTKqF8wuSA3'",
       ".read": "true"
     },
-    "LOG": {
-      ".write":"(((((!newData.exists()||newData.hasChildren())))))",
-      ".read":"false"
-    },
     "courses": {
-      ".write":"false",
-      ".read":"true",
-      "$crsId": {
-        ".write":"false",
-        ".read":"true",
-        "department": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "foundational": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "icon": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "name": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "number": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "section": {
-          ".write":"false",
-          ".read":"true"
-        },
-        "$other":{".validate":"false"}
-      }
+      ".write": "auth.uid == 'IoEyvOStggUiM8ueeeTKqF8wuSA3'",
+      ".read": "true"
     },
     "users": {
       "$uid": {
         ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
+        ".write": "auth != null && auth.uid == $uid",
+        "admin": {
+          ".write": "false",
+          ".read": "true"
+        }
       }
     },
     "reviews": {
-      ".indexOn": ["created", "author", "course"],
-      ".write":"auth != null",
-      ".read":"auth != null"
+      ".indexOn": [
+        "created",
+        "author",
+        "course"
+      ],
+      ".write": "auth != null",
+      ".read": "auth != null"
     },
-    "$other":{".validate":"false"}
+    "$other": {
+      ".validate": "false"
+    }
   }
 }
