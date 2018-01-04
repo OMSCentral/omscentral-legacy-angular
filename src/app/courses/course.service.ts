@@ -126,17 +126,19 @@ export class CourseService {
       return rev && rev !== null;
     });
     updateReviews.forEach(review => {
-      if (review.difficulty) {
-        difficulty += parseInt(review.difficulty, 10);
-        diffNum++;
-      }
-      if (review.rating) {
-        rating += parseInt(review.rating, 10);
-        ratingNum++;
-      }
-      if (review.workload) {
-        workload += parseInt(review.workload, 10);
-        workNum++;
+      if (review) {
+        if (review.difficulty) {
+          difficulty += parseInt(review.difficulty, 10);
+          diffNum++;
+        }
+        if (review.rating) {
+          rating += parseInt(review.rating, 10);
+          ratingNum++;
+        }
+        if (review.workload) {
+          workload += parseInt(review.workload, 10);
+          workNum++;
+        }
       }
     });
     const update = {
