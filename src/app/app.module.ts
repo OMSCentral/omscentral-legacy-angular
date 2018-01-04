@@ -18,6 +18,7 @@ import { AdminModule } from './admin/admin.module';
 import { CoreModule } from './core/core.module';
 import { AboutModule } from './about/about.module';
 import { GradesModule } from './grades/grades.module';
+import { RecentModule } from './recent/recent.module';
 import { RegisterModule } from './register/register.module';
 import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
@@ -40,6 +41,8 @@ import { GithubButtonModule } from 'angular-github-buttons';
 import '@webcomponents/custom-elements/custom-elements.min.js';
 import 'clarity-icons/clarity-icons.min.js';
 
+import { MarkdownModule } from 'angular2-markdown';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -55,6 +58,7 @@ import 'clarity-icons/clarity-icons.min.js';
     LoginModule,
     ReactiveFormsModule,
     ReviewsModule,
+    RecentModule,
     AboutModule,
     CoreModule,
     GradesModule,
@@ -63,7 +67,8 @@ import 'clarity-icons/clarity-icons.min.js';
     RegisterModule,
     GithubButtonModule,
     CoursesModule,
-    AdminModule
+    AdminModule,
+    MarkdownModule.forRoot()
   ],
   providers: [
     AuthGuard,

@@ -12,7 +12,7 @@
     </div>
     <div class="card-block" *ngIf="!(review.isNew || review.isEdit)">
       <p class="card-text">
-        {{review.text}}
+        <markdown [data]="review.text"></markdown>
       </p>
       <p class="card-text text-right">
         <span *ngIf="review.updated">{{review.updated | date:'short'}}</span>
@@ -69,8 +69,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6">
           <textarea rows="5" type="text" id="review_text" placeholder="Review..." formControlName="text" required></textarea>
+        </div>
+        <div class="col-xs-6">
+          <markdown [data]="review.text"></markdown>
         </div>
       </div>
     </div>
