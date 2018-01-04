@@ -1,40 +1,40 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PipeModule } from '../../pipes/pipe.module';
+import { RecentComponent } from './recent.component';
 
-import { ReviewComponent } from './review.component';
+import { PipeModule } from '../pipes/pipe.module';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AuthService } from '../../firebase/auth.service';
+import { AuthService } from '../firebase/auth.service';
 class MockAuth {
   user = new BehaviorSubject({});
 }
 
-import { CourseService } from '../../courses/course.service';
+import { CourseService } from '../courses/course.service';
 class MockCourse {
-  getCourse() {
-    return new BehaviorSubject({});
+  getCourses() {
+    return new BehaviorSubject(null);
   }
 }
 
-import { ReviewService } from '../review.service';
+import { ReviewService } from '../reviews/review.service';
 class MockReview {
 
 }
 
 import { ClarityModule } from 'clarity-angular';
 
-describe('ReviewComponent', () => {
-  let component: ReviewComponent;
-  let fixture: ComponentFixture<ReviewComponent>;
+describe('RecentComponent', () => {
+  let component: RecentComponent;
+  let fixture: ComponentFixture<RecentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [PipeModule, RouterTestingModule, ClarityModule, FormsModule, ReactiveFormsModule],
       schemas: [
-        NO_ERRORS_SCHEMA,
         CUSTOM_ELEMENTS_SCHEMA
       ],
       providers: [
@@ -42,13 +42,13 @@ describe('ReviewComponent', () => {
         { provide: ReviewService, useClass: MockReview },
         { provide: AuthService, useClass: MockAuth }
       ],
-      declarations: [ReviewComponent]
+      declarations: [RecentComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReviewComponent);
+    fixture = TestBed.createComponent(RecentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

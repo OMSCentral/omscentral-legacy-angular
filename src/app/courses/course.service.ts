@@ -35,10 +35,14 @@ export class CourseService {
   }
 
   addReview(courseId, reviewId) {
-    if (!this.cached[courseId].reviews) {
-      this.cached[courseId].reviews = {};
+    const course = this.cached[courseId];
+    if (!course.reviews) {
+      course.reviews = {};
     }
-    this.cached[courseId].reviews[reviewId] = true;
+    course.reviews[reviewId] = true;
+    const temp = {};
+    temp[courseId] = course;
+    this.cached = Object.assign(this.cached, temp);
     this.broadcast();
   }
 
