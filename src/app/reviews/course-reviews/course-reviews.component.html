@@ -50,7 +50,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-block">
+            <div class="card-block" *ngIf="grades">
               <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent}" (click)="percent = !percent">Counts</button>
               <button class="btn btn-sm" [ngClass]="{'btn-primary': percent}" (click)="percent = !percent">Percentage</button>
               <span *ngIf="percent">Percentages are based off of A-F grade counts.</span>
