@@ -60,15 +60,12 @@ export class ReviewService {
       rating: review.rating,
       program: review.program
     };
-    const postRef: any = this.db.database.ref('/reviews/').push(newReview).then((res) => {
-      return res;
-    }, (err) => {
-      console.log(err);
-    });
-    this.reviewIds.push(postRef.key);
+    const postRef: any = this.db.database.ref('/reviews/').push(newReview);
+    const refKey = postRef.key;
+    this.reviewIds.push(refKey);
     const temp = {};
-    newReview['id'] = postRef.key;
-    temp[postRef.key] = new Review(newReview);
+    newReview['id'] = refKey;
+    temp[refKey] = new Review(newReview);
     this.cached = Object.assign(this.cached, temp);
     this.broadcast();
 
@@ -152,7 +149,7 @@ export class ReviewService {
         return null;
       }
     }).filter(rev => {
-      return rev !== null && rev.semester;
+      return rev !== null;
     });
     this.reviews$.next(this.sortBySemester(reviews, false));
   }
