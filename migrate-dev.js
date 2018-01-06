@@ -143,7 +143,7 @@ fs.writeFile('merged-dev.json', json, 'utf8', function () {
 var tempDev = Object.assign(current, merged);
 tempDev.alert = {
     type: 'info',
-    text: 'OMS Central is under new management (@martzcodes).  Talk to me on slack in #OMSCentral',
+    text: 'OMSCentral is under new management (@martzcodes).  Talk to me on slack in #OMSCentral',
     slack: true
 };
 var json = JSON.stringify(tempDev);

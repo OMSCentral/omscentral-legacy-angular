@@ -26,7 +26,7 @@ class MockLocalStorage {
 
 import { ReviewService } from '../reviews/review.service';
 class MockReview {
-
+  getReviewsByAuthor() { }
 }
 
 describe('ProfileComponent', () => {

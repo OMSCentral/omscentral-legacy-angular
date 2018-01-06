@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../firebase/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'oms-nav',
@@ -12,7 +13,8 @@ export class NavComponent implements OnInit {
   authenticated = false;
   user: any = {};
 
-  constructor(private auth: AuthService, private router: Router, private userService: UserService) {
+  constructor(private auth: AuthService, private router: Router,
+    private userService: UserService, private settingsService: SettingsService) {
     userService.user$.subscribe(storedUser => {
       this.user.admin = storedUser.admin;
     });
@@ -24,6 +26,7 @@ export class NavComponent implements OnInit {
         this.authenticated = false;
       }
     });
+    settingsService.getSettings();
   }
 
   ngOnInit() {

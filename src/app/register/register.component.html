@@ -2,7 +2,7 @@
   <div class="login">
     <label class="title">
       <h3 *ngIf="!oobCode" class="welcome">Register for</h3>
-      OMS Central
+      OMSCentral
       <h5 *ngIf="!oobCode" class="hint">Share your OMSCS experience with your classmates.</h5>
       <h5 *ngIf="oobCode" class="hint">Please enter your new password below.</h5>
     </label>
@@ -36,7 +36,8 @@
             <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
           </div>
           <span class="alert-text">
-            Account created. Click <button class="btn btn-sm btn-link signup" (click)="login()">here</button> to login
+            Account created. Click
+            <button class="btn btn-sm btn-link signup" (click)="login()">here</button> to login
           </span>
         </div>
       </div>
@@ -62,10 +63,10 @@
     <br />
     <br />
     <div class="text-center" *ngIf="!oobCode">
-        <div class="signup">
-            <span>Already have an account?</span>
-            <button class="btn btn-sm btn-link signup" (click)="login()">Login</button>
-          </div>
+      <div class="signup">
+        <span>Already have an account?</span>
+        <button class="btn btn-sm btn-link signup" (click)="login()">Login</button>
+      </div>
     </div>
   </div>
 </div>

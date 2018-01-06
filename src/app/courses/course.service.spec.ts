@@ -12,6 +12,11 @@ class MockLocal {
   }
 }
 
+import { SettingsService } from '../core/settings.service';
+class MockSettings {
+
+}
+
 import { AngularFireDatabase } from 'angularfire2/database';
 class MockAFDB {
 
@@ -23,6 +28,7 @@ describe('CourseService', () => {
       providers: [
         CourseService,
         { provide: AngularFireDatabase, useClass: MockAFDB },
+        { provide: SettingsService, useClass: MockSettings },
         { provide: LocalStorageService, useClass: MockLocal }
       ]
     });

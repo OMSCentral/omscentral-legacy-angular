@@ -3,6 +3,7 @@ import { AlertService } from '../core/alert/alert.service';
 import { CourseService } from '../courses/course.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SettingsService } from '../core/settings.service';
 
 @Component({
   selector: 'oms-admin',
@@ -12,13 +13,17 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AdminComponent implements OnInit {
   alertForm: FormGroup;
   courseForm: FormGroup;
+  settingsForm: FormGroup;
   alerts$: BehaviorSubject<any>;
   alert: any;
+  settings: any;
   course: any;
 
-  constructor(private courseService: CourseService, private alertService: AlertService, private fb: FormBuilder) {
+  constructor(private courseService: CourseService, private alertService: AlertService,
+    private fb: FormBuilder, private settingsService: SettingsService) {
     this.initAlertForm();
     this.initCourseForm();
+    this.initSettingsForm();
   }
 
   ngOnInit() {
@@ -32,6 +37,15 @@ export class AdminComponent implements OnInit {
     });
     this.alertForm.valueChanges.subscribe(changes => {
       this.alert = changes;
+    });
+  }
+
+  initSettingsForm() {
+    this.settingsForm = this.fb.group({
+      cacheLength: ['', Validators.required]
+    });
+    this.settingsForm.valueChanges.subscribe(changes => {
+      this.settings = changes;
     });
   }
 
@@ -56,6 +70,11 @@ export class AdminComponent implements OnInit {
   saveCourse() {
     this.courseService.push(this.course);
     this.initCourseForm();
+  }
+
+  saveSettings() {
+    this.settingsService.update(this.settings);
+    this.initSettingsForm();
   }
 
   removeAlert(alert) {

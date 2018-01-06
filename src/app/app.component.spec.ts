@@ -2,11 +2,21 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+
+import { SettingsService } from './core/settings.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+class MockSettings {
+  settings$: BehaviorSubject<any> = new BehaviorSubject(null);
+}
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
+      ],
+      providers: [
+        { provide: SettingsService, useClass: MockSettings }
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
