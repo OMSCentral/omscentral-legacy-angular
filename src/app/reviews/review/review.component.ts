@@ -14,6 +14,7 @@ import { CourseService } from '../../courses/course.service';
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
   @Input() title?= false;
+  @Input() modify?= true;
   @Output() cancelNew = new EventEmitter<boolean>();
   @Output() saveNew = new EventEmitter<Review>();
   @Output() update = new EventEmitter<Review>();

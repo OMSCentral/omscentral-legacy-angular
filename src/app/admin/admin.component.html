@@ -64,7 +64,7 @@
                     <label for="gForm_4">Department</label>
                   </div>
                   <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-                    <input id="gForm_4" rows="5" class="form-control" formControlName="department">
+                    <input id="gForm_4" class="form-control" formControlName="department">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -72,7 +72,7 @@
                     <label for="gForm_4">Number</label>
                   </div>
                   <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-                    <input id="gForm_4" rows="5" class="form-control" formControlName="number">
+                    <input id="gForm_4" class="form-control" formControlName="number">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -80,7 +80,7 @@
                     <label for="gForm_4">Name</label>
                   </div>
                   <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-                    <input id="gForm_4" rows="5" class="form-control" formControlName="name">
+                    <input id="gForm_4" class="form-control" formControlName="name">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -88,13 +88,37 @@
                     <label for="gForm_4">Program</label>
                   </div>
                   <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-                    <input id="gForm_4" rows="5" class="form-control" formControlName="program">
+                    <input id="gForm_4" class="form-control" formControlName="program">
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
               <button type="submit" class="btn btn-sm btn-link" (click)="saveCourse()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              Settings
+            </div>
+            <div class="card-block">
+              <form [formGroup]="settingsForm" novalidate>
+                <div class="form-group row">
+                  <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <label for="gForm_4">Cache Length (min)</label>
+                  </div>
+                  <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                    <input id="gForm_4" type="number" class="form-control" formControlName="cacheLength">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-link" (click)="saveSettings()">Save</button>
             </div>
           </div>
         </div>

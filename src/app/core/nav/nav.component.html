@@ -1,7 +1,7 @@
 <header class="header-6">
   <div class="branding">
     <a href="/" class="nav-link">
-      <span class="title">OMS Central</span>
+      <span class="title">OMSCentral</span>
     </a>
   </div>
   <!-- <form class="search">
@@ -35,6 +35,9 @@
     </li>
     <li class="nav-item">
       <a href class="nav-link" routerLink="/courses" routerLinkActive="active">Courses</a>
+    </li>
+    <li class="nav-item" *ngIf="(authenticated)">
+      <a href class="nav-link" routerLink="/recent" routerLinkActive="active">Recent</a>
     </li>
     <li class="nav-item">
       <a href class="nav-link" routerLink="/donate" routerLinkActive="active">Donate</a>
