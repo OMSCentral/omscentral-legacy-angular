@@ -8,6 +8,7 @@ import { AuthService } from '../firebase/auth.service';
 import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { QueryReference } from 'angularfire2/database/interfaces';
+import { SettingsService } from '../core/settings.service';
 
 // temporary
 // import * as jsonData from '../../../merged-dev.json';
@@ -15,16 +16,22 @@ import { QueryReference } from 'angularfire2/database/interfaces';
 @Injectable()
 export class ReviewService {
   cached = {};
-  cacheTime: Date = null;
+  cacheTime: number = null;
   reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
   recent$: BehaviorSubject<any> = new BehaviorSubject([]);
   recentSub: QueryReference = null;
   reviewIds: string[];
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
-    private courseService: CourseService, private localStorageService: LocalStorageService) {
+    private courseService: CourseService, private localStorageService: LocalStorageService,
+    private settingsService: SettingsService) {
     this.cached = localStorageService.getObject('reviews') || {};
-    this.cacheTime = new Date(localStorageService.get('reviewsCacheTime'));
+    const cacheTime = localStorageService.get('reviewsCacheTime');
+    if (cacheTime !== null || cacheTime !== 'null') {
+      this.cacheTime = (new Date(Number(cacheTime))).valueOf();
+    } else {
+      this.cacheTime = null;
+    }
   }
 
   downloadReview(reviewId) {
@@ -35,7 +42,7 @@ export class ReviewService {
       temp[reviewId] = review;
       this.cached = Object.assign(this.cached, temp);
       if (this.cacheTime === null) {
-        this.cacheTime = new Date();
+        this.cacheTime = (new Date()).valueOf();
       }
       return review;
     });
@@ -138,7 +145,7 @@ export class ReviewService {
 
       this.cached = Object.assign(this.cached, temp);
       if (this.cacheTime === null) {
-        this.cacheTime = new Date();
+        this.cacheTime = (new Date()).valueOf();
       }
 
       this.reviews$.next(reviews);
@@ -163,7 +170,7 @@ export class ReviewService {
 
       this.cached = Object.assign(this.cached, temp);
       if (this.cacheTime === null) {
-        this.cacheTime = new Date();
+        this.cacheTime = (new Date()).valueOf();
       }
 
       this.reviews$.next(reviews);
@@ -307,7 +314,7 @@ export class ReviewService {
     if (this.cacheTime === null) {
       return true;
     } else {
-      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 0 /*24 * 60 * 60 * 1000*/) {
+      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= this.settingsService.cacheLength) {
         this.cacheTime = null;
         this.localStorageService.set('reviewsCacheTime', null);
         return true;
