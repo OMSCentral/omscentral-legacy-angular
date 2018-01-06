@@ -72,6 +72,9 @@ export class ReviewService {
     };
     const postRef: any = this.db.database.ref('/reviews/').push(newReview);
     const refKey = postRef.key;
+    if (!this.reviewIds) {
+      this.reviewIds = [];
+    }
     this.reviewIds.push(refKey);
     const temp = {};
     newReview['id'] = refKey;
@@ -132,14 +135,17 @@ export class ReviewService {
 
   getReviewsByCourse(courseId: string) {
     this.db.database.ref('/reviews').orderByChild('course').equalTo(courseId).once('value').then((snapshot) => {
-      const reviewsObj = snapshot.val();
+      const reviewsObj = snapshot.val() || {};
       const temp = {};
-      temp[courseId] = {};
+
+      this.reviewIds = Object.keys(reviewsObj);
 
       const reviews = Object.keys(reviewsObj).map(reviewId => {
         const review: Review = new Review(reviewsObj[reviewId]);
         review.id = reviewId;
-        temp[courseId][reviewId] = review;
+        temp[reviewId] = review;
+        return review;
+      }).filter(review => {
         return review;
       });
 
@@ -159,12 +165,11 @@ export class ReviewService {
     this.db.database.ref('/reviews').orderByChild('author').equalTo(authorId).once('value').then((snapshot) => {
       const reviewsObj = snapshot.val();
       const temp = {};
-      temp[authorId] = {};
 
       const reviews = Object.keys(reviewsObj).map(reviewId => {
         const review: Review = new Review(reviewsObj[reviewId]);
         review.id = reviewId;
-        temp[authorId][reviewId] = review;
+        temp[reviewId] = review;
         return review;
       });
 
@@ -189,7 +194,7 @@ export class ReviewService {
           const review: Review = new Review(reviewsObj[reviewId]);
           review.id = reviewId;
           return review;
-        });
+        }).reverse();
 
         this.recent$.next(reviews);
 

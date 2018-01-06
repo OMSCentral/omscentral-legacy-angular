@@ -1,0 +1,35 @@
+<clr-datagrid>
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button class="btn btn-sm" [ngClass]="{'btn-primary': expanded, 'btn-secondary': !expanded}" (click)="toggleExpand()">Expand All</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column [clrDgField]="'program'">Program</clr-dg-column>
+  <clr-dg-column [clrDgField]="'id'">Course Number</clr-dg-column>
+  <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
+  <clr-dg-column [clrDgField]="'workload'">Workload</clr-dg-column>
+  <clr-dg-column [clrDgField]="'difficulty'">Difficulty</clr-dg-column>
+  <clr-dg-column [clrDgField]="'rating'">Rating</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let review of reviews">
+    <clr-dg-action-overflow *ngIf="modify">
+      <button class="action-item">Edit</button>
+      <button class="action-item">Delete</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{review.program ? review.program : 'OMSCS'}}</clr-dg-cell>
+    <clr-dg-cell>
+      <a [routerLink]="['/courses', review.course]">{{review.course}}</a>
+    </clr-dg-cell>
+    <clr-dg-cell>{{review.semester | semester}}</clr-dg-cell>
+    <clr-dg-cell>{{review.workload}}</clr-dg-cell>
+    <clr-dg-cell>{{review.difficulty | difficulty}}</clr-dg-cell>
+    <clr-dg-cell>{{review.rating | rating}}</clr-dg-cell>
+    <clr-dg-row-detail *clrIfExpanded="review.expanded">
+      <markdown>{{review.text}}</markdown>
+    </clr-dg-row-detail>
+  </clr-dg-row>
+  <clr-dg-footer>
+    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} reviews
+    <clr-dg-pagination #pagination [clrDgPageSize]="20"></clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

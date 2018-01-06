@@ -8,6 +8,7 @@ import { ReviewComponent } from './review/review.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { MarkdownModule } from 'angular2-markdown';
+import { ReviewListComponent } from './review-list/review-list.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { MarkdownModule } from 'angular2-markdown';
     NO_ERRORS_SCHEMA,
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  declarations: [ReviewsComponent, CourseReviewsComponent, ReviewComponent],
-  exports: [ReviewComponent]
+  declarations: [ReviewsComponent, CourseReviewsComponent, ReviewComponent, ReviewListComponent],
+  exports: [ReviewComponent, ReviewListComponent]
 })
 export class ReviewsModule { }

@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class RecentComponent implements OnInit, OnDestroy {
   reviews$: Observable<Review[]>;
+
   constructor(private reviewService: ReviewService) {
 
   }
@@ -21,5 +22,4 @@ export class RecentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.reviewService.unsubRecent();
   }
-
 }
