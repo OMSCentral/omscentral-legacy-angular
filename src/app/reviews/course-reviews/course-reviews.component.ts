@@ -43,15 +43,12 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
         this.courseService.getCourse(params.get('courseId')));
 
     this.courseSub = this.course$.debounceTime(1000).subscribe(course => {
-      this.grades = this.gradeService.getCourseGrades(course.id);
       if (course === null) {
         this.course = null;
       }
       if (this.course.id !== course.id) {
-        const revIds = Object.keys(course.reviews || {}).filter(revId => {
-          return course.reviews[revId];
-        });
-        this.reviews$ = this.reviewService.getReviews(revIds);
+        this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
+        this.grades = this.gradeService.getCourseGrades(course.id);
         this.reviewSub = this.reviews$.debounceTime(1000).subscribe(reviews => {
           if (reviews !== null) {
             const courseReviews = reviews.filter(rev => {
