@@ -7,6 +7,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
 import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
+import { QueryReference } from 'angularfire2/database/interfaces';
 
 // temporary
 // import * as jsonData from '../../../merged-dev.json';
@@ -16,6 +17,8 @@ export class ReviewService {
   cached = {};
   cacheTime: Date = null;
   reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
+  recent$: BehaviorSubject<any> = new BehaviorSubject([]);
+  recentSub: QueryReference = null;
   reviewIds: string[];
 
   constructor(private db: AngularFireDatabase, private auth: AuthService,
@@ -118,6 +121,80 @@ export class ReviewService {
       return new Review(this.cached[reviewId]);
     });
     return reviews;
+  }
+
+  getReviewsByCourse(courseId: string) {
+    this.db.database.ref('/reviews').orderByChild('course').equalTo(courseId).once('value').then((snapshot) => {
+      const reviewsObj = snapshot.val();
+      const temp = {};
+      temp[courseId] = {};
+
+      const reviews = Object.keys(reviewsObj).map(reviewId => {
+        const review: Review = new Review(reviewsObj[reviewId]);
+        review.id = reviewId;
+        temp[courseId][reviewId] = review;
+        return review;
+      });
+
+      this.cached = Object.assign(this.cached, temp);
+      if (this.cacheTime === null) {
+        this.cacheTime = new Date();
+      }
+
+      this.reviews$.next(reviews);
+
+      return reviews;
+    });
+    return this.reviews$;
+  }
+
+  getReviewsByAuthor(authorId: string) {
+    this.db.database.ref('/reviews').orderByChild('author').equalTo(authorId).once('value').then((snapshot) => {
+      const reviewsObj = snapshot.val();
+      const temp = {};
+      temp[authorId] = {};
+
+      const reviews = Object.keys(reviewsObj).map(reviewId => {
+        const review: Review = new Review(reviewsObj[reviewId]);
+        review.id = reviewId;
+        temp[authorId][reviewId] = review;
+        return review;
+      });
+
+      this.cached = Object.assign(this.cached, temp);
+      if (this.cacheTime === null) {
+        this.cacheTime = new Date();
+      }
+
+      this.reviews$.next(reviews);
+
+      return reviews;
+    });
+    return this.reviews$;
+  }
+
+  getRecentReviews() {
+    if (this.recentSub === null) {
+      this.recentSub = this.db.database.ref('/reviews').orderByChild('created').limitToFirst(10);
+      this.recentSub.on('value', snapshot => {
+        const reviewsObj = snapshot.val();
+        const reviews = Object.keys(reviewsObj).map(reviewId => {
+          const review: Review = new Review(reviewsObj[reviewId]);
+          review.id = reviewId;
+          return review;
+        });
+
+        this.recent$.next(reviews);
+
+        return reviews;
+      });
+    }
+    return this.recent$;
+  }
+
+  unsubRecent() {
+    this.recentSub.off();
+    this.recentSub = null;
   }
 
   getReviews(reviewIds: string[]) {
@@ -230,7 +307,7 @@ export class ReviewService {
     if (this.cacheTime === null) {
       return true;
     } else {
-      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
+      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 0 /*24 * 60 * 60 * 1000*/) {
         this.cacheTime = null;
         this.localStorageService.set('reviewsCacheTime', null);
         return true;
