@@ -22,7 +22,10 @@ class MockCourse {
 
 import { ReviewService } from '../reviews/review.service';
 class MockReview {
+  getRecentReviews() {
 
+  }
+  unsubRecent() { }
 }
 
 import { ClarityModule } from 'clarity-angular';
