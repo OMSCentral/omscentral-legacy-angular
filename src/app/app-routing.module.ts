@@ -12,6 +12,7 @@ import { DonateComponent } from './donate/donate.component';
 import { CourseReviewsComponent } from './reviews/course-reviews/course-reviews.component';
 import { RegisterComponent } from './register/register.component';
 import { CoursesComponent } from './courses/courses.component';
+import { RecentComponent } from './recent/recent.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'courses',
     component: CoursesComponent
+  },
+  {
+    path: 'recent',
+    component: RecentComponent,
+    canActivate: [AuthGuard]
   },
   // {
   //   path: 'reviews',

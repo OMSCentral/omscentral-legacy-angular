@@ -10,6 +10,10 @@
       ".write": "auth.uid == 'IoEyvOStggUiM8ueeeTKqF8wuSA3'",
       ".read": "true"
     },
+    "settings": {
+      ".write": "auth.uid == 'IoEyvOStggUiM8ueeeTKqF8wuSA3'",
+      ".read": "true"
+    },
     "courses": {
       ".write": "auth.uid == 'IoEyvOStggUiM8ueeeTKqF8wuSA3'",
       ".read": "true"
