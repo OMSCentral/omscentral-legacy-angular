@@ -1,14 +1,7 @@
 <clr-main-container>
   <div class="content-container">
     <div class="content-area">
-      <div class="row" *ngIf="loading">
-        <div class="col-xs-12 text-center">
-          <span class="spinner">
-            Loading...
-          </span>
-        </div>
-      </div>
-      <div class="row" *ngIf="!loading">
+      <div class="row" *ngIf="course?.id">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
             <div class="card-header">
@@ -114,6 +107,13 @@
           <oms-review [review]="review" (saveNew)="saveNew($event)" (cancelNew)="cancelNew($event)"></oms-review>
         </div>
       </div>
+      <div class="row" *ngIf="loading">
+        <div class="col-xs-12 text-center">
+          <span class="spinner">
+            Loading...
+          </span>
+        </div>
+      </div>
       <div class="row" *ngIf="course.numReviews > 0 && reviews.length === 0 && !loading">
         <div class="col-xs-12 text-center">
           <span class="spinner">
@@ -121,6 +121,11 @@
           </span>
         </div>
       </div>
+      <!-- <div class="row" *ngIf="!loading">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <oms-review-list [reviews]="reviews"></oms-review-list>
+        </div>
+      </div> -->
       <div class="row" *ngIf="!loading">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <oms-review [review]="review" (remove)="remove($event)" (update)="update($event)" *ngFor="let review of reviews"></oms-review>

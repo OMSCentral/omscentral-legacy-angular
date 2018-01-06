@@ -65,9 +65,6 @@ export class CourseService {
     if (!this.courses$) {
       this.courses$ = new BehaviorSubject([]);
     }
-    if (!this.course$) {
-      this.course$ = new BehaviorSubject({});
-    }
     this.courses$.next(this.courseIds.map(courseId => {
       return this.cached[courseId] || {};
     }));
@@ -187,11 +184,14 @@ export class CourseService {
     this.course$.next(null);
     this.courseId = courseId;
     if (Object.keys(this.cached).indexOf(courseId) === -1 || this.cacheExpired()) {
-      return this.downloadCourse(courseId);
+      this.downloadCourse(courseId);
     } else {
       this.broadcast();
-      return this.course$.asObservable();
     }
+    if (!this.course$) {
+      this.course$ = new BehaviorSubject({});
+    }
+    return this.course$;
   }
 
   push(course: any) {
