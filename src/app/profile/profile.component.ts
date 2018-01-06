@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder, private router: Router) {
     this.auth = this.authService.user.subscribe(auth => {
       this.auth = auth;
+      this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
     });
   }
 
@@ -55,12 +56,6 @@ export class ProfileComponent implements OnInit {
         // if (this.specialization !== user.specialization) {
         //   this.profileForm.setValue({specialization: user.specialization || null});
         // }
-        if (user && user.reviews) {
-          const reviewIds = Object.keys(user.reviews).filter(revId => {
-            return user.reviews[revId];
-          });
-          this.reviews$ = this.reviewService.getReviews(reviewIds);
-        }
       }
     });
   }

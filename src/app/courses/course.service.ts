@@ -3,19 +3,25 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from '../core/local-storage.service';
+import { SettingsService } from '../core/settings.service';
 
 @Injectable()
 export class CourseService {
   cached = {};
-  cacheTime: Date = null;
+  cacheTime: number = null;
   courses$: BehaviorSubject<any> = new BehaviorSubject([]);
   course$: BehaviorSubject<any> = new BehaviorSubject({});
   courseIds: string[] = [];
   courseId: string;
 
-  constructor(private db: AngularFireDatabase, private localStorageService: LocalStorageService) {
+  constructor(private db: AngularFireDatabase, private localStorageService: LocalStorageService, private settingsService: SettingsService) {
     this.cached = localStorageService.getObject('courses') || {};
-    this.cacheTime = new Date(localStorageService.get('coursesCacheTime'));
+    const cacheTime = localStorageService.get('coursesCacheTime');
+    if (cacheTime !== null || cacheTime !== 'null') {
+      this.cacheTime = (new Date(Number(cacheTime))).valueOf();
+    } else {
+      this.cacheTime = null;
+    }
   }
 
   processGrades(grades) {
@@ -95,7 +101,7 @@ export class CourseService {
       });
       this.cached = Object.assign(this.cached, courses);
       if (this.cacheTime === null) {
-        this.cacheTime = new Date();
+        this.cacheTime = (new Date()).valueOf();
         this.localStorageService.set('coursesCacheTime', this.cacheTime);
       }
       this.broadcast();
@@ -220,7 +226,7 @@ export class CourseService {
     if (!this.cacheTime || this.cacheTime === null) {
       return true;
     } else {
-      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= 24 * 60 * 60 * 1000) {
+      if ((new Date()).valueOf() - this.cacheTime.valueOf() >= this.settingsService.cacheLength) {
         this.cacheTime = null;
         this.localStorageService.set('coursesCacheTime', null);
         return true;

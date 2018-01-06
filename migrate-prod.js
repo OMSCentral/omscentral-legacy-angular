@@ -136,7 +136,7 @@ Object.keys(merged.courses).forEach(function (courseId) {
 
 merged.alerts = {
     type: 'info',
-    text: 'OMS Central is under new management (@martzcodes).  Talk to me on slack in #OMSCentral',
+    text: 'OMSCentral is under new management (@martzcodes).  Talk to me on slack in #OMSCentral',
     slack: true
 };
 var json = JSON.stringify(merged, null, 4);

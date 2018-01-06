@@ -8,6 +8,11 @@ class MockAuth {
   user = new BehaviorSubject({});
 }
 
+import { SettingsService } from '../core/settings.service';
+class MockSettings {
+
+}
+
 import { LocalStorageService } from '../core/local-storage.service';
 class MockLocalStorage {
   getObject(asdf) {
@@ -37,6 +42,7 @@ describe('ReviewService', () => {
         ReviewService,
         { provide: AngularFireDatabase, useClass: MockAFDB },
         { provide: AuthService, useClass: MockAuth },
+        { provide: SettingsService, useClass: MockSettings },
         { provide: CourseService, useClass: MockCourse },
         { provide: LocalStorageService, useClass: MockLocalStorage }
       ]
