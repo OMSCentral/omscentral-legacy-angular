@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="card-footer" *ngIf="authId == review.author && !(review.isNew || review.isEdit)">
+    <div class="card-footer" *ngIf="authId == review.author && !(review.isNew || review.isEdit) && modify">
       <button class="btn btn-sm btn-link" (click)="edit()">Edit</button>
       <button class="btn btn-sm btn-danger-outline" (click)="delete()">Delete</button>
     </div>

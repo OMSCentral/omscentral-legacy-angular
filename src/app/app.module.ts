@@ -26,6 +26,7 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { CourseService } from './courses/course.service';
 import { UserService } from './core/user.service';
+import { SettingsService } from './core/settings.service';
 import { AlertService } from './core/alert/alert.service';
 import { LocalStorageService } from './core/local-storage.service';
 import { ReviewService } from './reviews/review.service';
@@ -79,7 +80,8 @@ import { MarkdownModule } from 'angular2-markdown';
     GradeService,
     LocalStorageService,
     AlertService,
-    AuthorService
+    AuthorService,
+    SettingsService
   ],
   bootstrap: [AppComponent]
 })

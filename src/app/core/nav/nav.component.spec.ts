@@ -10,6 +10,11 @@ import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
   user = new BehaviorSubject({});
 }
+
+import { SettingsService } from '../settings.service';
+class MockSettings {
+  getSettings() { }
+}
 import { UserService } from '../user.service';
 class MockUser {
   user$ = new BehaviorSubject({});
@@ -27,6 +32,7 @@ describe('NavComponent', () => {
       ],
       providers: [
         { provide: AuthService, useClass: MockAuth },
+        { provide: SettingsService, useClass: MockSettings },
         { provide: UserService, useClass: MockUser }
       ],
       declarations: [NavComponent]
