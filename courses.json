@@ -4,286 +4,349 @@
         "name": "Intro to Information Security",
         "department": "CS",
         "foundational": true,
-        "number": 6035
+        "number": "6035"
     },
     "CSE-6040": {
         "id": "CSE-6040",
         "name": "Computing for Data Analytics",
         "department": "CSE",
         "foundational": false,
-        "number": 6040
+        "number": "6040"
     },
     "CSE-6140": {
         "id": "CSE-6140",
         "name": "Computational Science and Engineering Algorithms",
         "department": "CSE",
         "foundational": false,
-        "number": 6140
+        "number": "6140"
     },
     "MGT-6203": {
         "id": "MGT-6203",
         "name": "Data Analytics in Business",
         "department": "MGT",
         "foundational": false,
-        "number": 6203
+        "number": "6203"
     },
     "CS-6210": {
         "id": "CS-6210",
         "name": "Advanced Operating Systems",
         "department": "CS",
         "foundational": true,
-        "number": 6210
+        "number": "6210"
     },
     "CSE-6220": {
         "id": "CSE-6220",
         "name": "Intro to High-Performance Computing",
         "department": "CSE",
         "foundational": true,
-        "number": 6220
+        "number": "6220"
     },
     "CSE-6240": {
         "id": "CSE-6240",
         "name": "Web Search and Text Mining",
         "department": "CSE",
         "foundational": false,
-        "number": 6240
+        "number": "6240"
     },
     "CSE-6242": {
         "id": "CSE-6242",
         "name": "Data & Visual Analytics",
         "department": "CSE",
         "foundational": true,
-        "number": 6242
+        "number": "6242"
     },
     "CS-6250": {
         "id": "CS-6250",
         "name": "Computer Networks",
         "department": "CS",
         "foundational": true,
-        "number": 6250
+        "number": "6250"
     },
     "CS-6262": {
         "id": "CS-6262",
         "name": "Network Security",
         "department": "CS",
         "foundational": true,
-        "number": 6262
+        "number": "6262"
     },
     "CS-6290": {
         "id": "CS-6290",
         "name": "High Performance Computer Architecture",
         "department": "CS",
         "foundational": true,
-        "number": 6290
+        "number": "6290"
     },
     "CS-6300": {
         "id": "CS-6300",
         "name": "Software Development Process",
         "department": "CS",
         "foundational": true,
-        "number": 6300
+        "number": "6300"
     },
     "CS-6310": {
         "id": "CS-6310",
         "name": "Software Architecture & Design",
         "department": "CS",
         "foundational": true,
-        "number": 6310
+        "number": "6310"
     },
     "CS-6340": {
         "id": "CS-6340",
         "name": "Software Analysis & Test",
         "department": "CS",
         "foundational": true,
-        "number": 6340
+        "number": "6340"
     },
     "CS-6400": {
         "id": "CS-6400",
         "name": "Database Systems Concepts & Design",
         "department": "CS",
         "foundational": true,
-        "number": 6400
+        "number": "6400"
     },
     "ISYE-6402": {
         "id": "ISYE-6402",
         "name": "Time Series Analysis",
         "department": "ISYE",
         "foundational": false,
-        "number": 6402
+        "number": "6402"
     },
     "ISYE-6404": {
         "id": "ISYE-6404",
         "name": "Nonparametric Data Analysis",
         "department": "ISYE",
         "foundational": false,
-        "number": 6404
+        "number": "6404"
     },
     "ISYE-6413": {
         "id": "ISYE-6413",
         "name": "Design and Analysis of Experiments",
         "department": "ISYE",
         "foundational": false,
-        "number": 6413
+        "number": "6413"
     },
     "ISYE-6414": {
         "id": "ISYE-6414",
         "name": "Regression Analysis",
         "department": "ISYE",
         "foundational": false,
-        "number": 6414
+        "number": "6414"
     },
     "ISYE-6416": {
         "id": "ISYE-6416",
         "name": "Computational Statistics",
         "department": "ISYE",
         "foundational": false,
-        "number": 6416
+        "number": "6416"
     },
     "ISYE-6420": {
         "id": "ISYE-6420",
         "name": "Bayesian Statistics",
         "department": "ISYE",
         "foundational": false,
-        "number": 6420
+        "number": "6420"
     },
     "CS-6440": {
         "id": "CS-6440",
         "name": "Intro to Health Informatics",
         "department": "CS",
         "foundational": true,
-        "number": 6440
+        "number": "6440"
     },
     "CS-6460": {
         "id": "CS-6460",
         "name": "Educational Technology",
         "department": "CS",
         "foundational": true,
-        "number": 6460
+        "number": "6460"
     },
     "CS-6465": {
         "id": "CS-6465",
         "name": "Computational Journalism",
         "department": "CS",
         "foundational": false,
-        "number": 6465
+        "number": "6465"
     },
     "CS-6475": {
         "id": "CS-6475",
         "name": "Computational Photography",
         "department": "CS",
         "foundational": true,
-        "number": 6475
+        "number": "6475"
     },
     "CS-6476": {
         "id": "CS-6476",
         "name": "Computer Vision",
         "department": "CS",
         "foundational": true,
-        "number": 6476
+        "number": "6476"
     },
     "ISYE-6501": {
         "id": "ISYE-6501",
         "name": "Introduction to Analytics Modeling",
         "department": "ISYE",
         "foundational": true,
-        "number": 6501
+        "number": "6501"
     },
     "CS-6505": {
         "id": "CS-6505",
         "name": "Computability, Complexity & Algorithms",
         "department": "CS",
         "foundational": true,
-        "number": 6505
+        "number": "6505"
     },
     "CS-6601": {
         "id": "CS-6601",
         "name": "Artificial Intelligence",
         "department": "CS",
         "foundational": true,
-        "number": 6601
+        "number": "6601"
     },
     "ISYE-6644": {
         "id": "ISYE-6644",
         "name": "Simulation",
         "department": "ISYE",
         "foundational": false,
-        "number": 6644
+        "number": "6644"
     },
     "ISYE-6650": {
         "id": "ISYE-6650",
         "name": "Probabilistic Models",
         "department": "ISYE",
         "foundational": false,
-        "number": 6650
+        "number": "6650"
     },
     "ISYE-6669": {
         "id": "ISYE-6669",
         "name": "Deterministic Optimization",
         "department": "ISYE",
         "foundational": false,
-        "number": 6669
+        "number": "6669"
     },
     "CS-6750": {
         "id": "CS-6750",
         "name": "Human-Computer Interaction",
         "department": "CS",
         "foundational": false,
-        "number": 6750
+        "number": "6750"
     },
     "MGT-6754": {
         "id": "MGT-6754",
         "name": "Business Fundamentals for Analytics",
         "department": "MGT",
         "foundational": true,
-        "number": 6754
+        "number": "6754"
     },
     "ISYE-7406": {
         "id": "ISYE-7406",
         "name": "Data Mining and Statistical Learning",
         "department": "ISYE",
         "foundational": false,
-        "number": 7406
+        "number": "7406"
     },
     "CS-7450": {
         "id": "CS-7450",
         "name": "Information Visualization",
         "department": "CS",
         "foundational": false,
-        "number": 7450
+        "number": "7450"
     },
     "CS-7637": {
         "id": "CS-7637",
         "name": "Knowledge-Based AI: Cognitive Systems",
         "department": "CS",
         "foundational": true,
-        "number": 7637
+        "number": "7637"
     },
     "CS-7641": {
         "id": "CS-7641",
         "name": "Machine Learning",
         "department": "CS",
         "foundational": true,
-        "number": 7641
+        "number": "7641"
     },
     "CS-7646": {
         "id": "CS-7646",
         "name": "Machine Learning for Trading",
         "department": "CS",
         "foundational": true,
-        "number": 7646
+        "number": "7646"
     },
-    "CS-8803": {
-        "id": "CS-8803",
-        "name": "Graduate Algorithms",
+    "CS-8803-001": {
+        "id": "CS-8803-001",
+        "name": "AI for Robotics",
         "department": "CS",
         "foundational": true,
-        "number": 8803
+        "number": "8803-001"
     },
-    "CSE-8803": {
-        "id": "CSE-8803",
+    "CS-8803-002": {
+        "id": "CS-8803-002",
+        "name": "Intro to Operating Systems",
+        "department": "CS",
+        "foundational": true,
+        "number": "8803-002"
+    },
+    "CS-8803-003": {
+        "id": "CS-8803-003",
+        "name": "Reinforcement Learning",
+        "department": "CS",
+        "foundational": true,
+        "number": "8803-003"
+    },
+    "CS-8803-004": {
+        "id": "CS-8803-004",
+        "name": "Embedded Software",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-004"
+    },
+    "CS-8803-005": {
+        "id": "CS-8803-005",
+        "name": "Data Visualization for Health Informatics",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-005"
+    },
+    "CS-8803-006": {
+        "id": "CS-8803-006",
+        "name": "Biomedical Analytics",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-006"
+    },
+    "CS-8803-007": {
+        "id": "CS-8803-007",
+        "name": "Cyber-Physical Systems",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-007"
+    },
+    "CS-8803-008": {
+        "id": "CS-8803-008",
+        "name": "Compilers",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-008"
+    },
+    "CS-8803-009": {
+        "id": "CS-8803-009",
+        "name": "Cyber-Physical Design & Analytics",
+        "department": "CS",
+        "foundational": false,
+        "number": "8803-009"
+    },
+    "CSE-8803-BDHI": {
+        "id": "CSE-8803-BDHI",
         "name": "Big Data for Health Informatics",
         "department": "CSE",
         "foundational": true,
-        "number": 8803
+        "number": "8803-BDHI"
+    },
+    "CS-8803-GA": {
+        "id": "CS-8803-GA",
+        "name": "Graduate Algorithms",
+        "department": "CS",
+        "foundational": true,
+        "number": "8803-GA"
     }
 }
