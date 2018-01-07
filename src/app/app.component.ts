@@ -10,10 +10,12 @@ import { SettingsService } from './core/settings.service';
 export class AppComponent {
   title = 'oms';
   downloaded = false;
+  maintenance = false;
   constructor(public router: Router, private settingsService: SettingsService) {
     this.settingsService.settings$.subscribe(settings => {
       if (settings !== null) {
         this.downloaded = true;
+        this.maintenance = settings.maintenance || false;
       }
     });
   }

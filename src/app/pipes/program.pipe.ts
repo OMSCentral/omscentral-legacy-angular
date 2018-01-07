@@ -7,7 +7,7 @@ import { Programs } from '../enums/programs.enum';
 export class ProgramPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return Programs[value] || value;
+    return Programs[value] || 'OMSCS';
   }
 
 }

@@ -16,7 +16,7 @@
       <button class="action-item">Edit</button>
       <button class="action-item">Delete</button>
     </clr-dg-action-overflow>
-    <clr-dg-cell>{{review.program ? review.program : 'OMSCS'}}</clr-dg-cell>
+    <clr-dg-cell>{{review.program | program}}</clr-dg-cell>
     <clr-dg-cell>
       <a [routerLink]="['/courses', review.course]">{{review.course}}</a>
     </clr-dg-cell>
