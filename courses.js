@@ -1,6 +1,6 @@
 var fs = require("fs");
 var _ = require("lodash");
-var rawBase = fs.readFileSync("courses-base.json");
+var rawBase = fs.readFileSync("./backups/20180107.json");
 var base = JSON.parse(rawBase);
 
 var courses = {};
@@ -40,6 +40,6 @@ fs.writeFile('courses.json', json, 'utf8', function () {
 });
 
 var firebaseJson = JSON.stringify(firebase, null, 4);
-fs.writeFile('firebase-courses.json', firebaseJson, 'utf8', function () {
+fs.writeFile('./backups/firebase-courses.json', firebaseJson, 'utf8', function () {
     console.log("wrote firebase");
 });
