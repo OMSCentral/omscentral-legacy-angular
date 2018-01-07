@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit {
   initAlertForm() {
     this.alertForm = this.fb.group({
       text: ['', Validators.required],
+      type: ['info', Validators.required],
       slack: ''
     });
     this.alertForm.valueChanges.subscribe(changes => {
@@ -42,7 +43,7 @@ export class AdminComponent implements OnInit {
 
   initSettingsForm() {
     this.settingsForm = this.fb.group({
-      cacheLength: ['', Validators.required]
+      cacheLength: [this.settingsService.cacheLength / 60 / 1000, Validators.required]
     });
     this.settingsForm.valueChanges.subscribe(changes => {
       this.settings = changes;
