@@ -5,7 +5,8 @@
     </div>
   </clr-dg-action-bar>
   <clr-dg-column [clrDgField]="'program'">Program</clr-dg-column>
-  <clr-dg-column [clrDgField]="'id'">Course Number</clr-dg-column>
+  <clr-dg-column [clrDgField]="'id'">Course</clr-dg-column>
+  <clr-dg-column>Course Name</clr-dg-column>
   <clr-dg-column [clrDgField]="'semester'">Semester</clr-dg-column>
   <clr-dg-column [clrDgField]="'workload'">Workload</clr-dg-column>
   <clr-dg-column [clrDgField]="'difficulty'">Difficulty</clr-dg-column>
@@ -19,6 +20,9 @@
     <clr-dg-cell>{{review.program | program}}</clr-dg-cell>
     <clr-dg-cell>
       <a [routerLink]="['/courses', review.course]">{{review.course}}</a>
+    </clr-dg-cell>
+    <clr-dg-cell>
+      <a [routerLink]="['/courses', review.course]">{{courseService.coursesBasic[review.course]?.name}}</a>
     </clr-dg-cell>
     <clr-dg-cell>{{review.semester | semester}}</clr-dg-cell>
     <clr-dg-cell>{{review.workload}}</clr-dg-cell>

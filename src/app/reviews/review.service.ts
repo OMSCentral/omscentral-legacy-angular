@@ -166,6 +166,8 @@ export class ReviewService {
       const reviewsObj = snapshot.val();
       const temp = {};
 
+      this.reviewIds = Object.keys(reviewsObj);
+
       const reviews = Object.keys(reviewsObj).map(reviewId => {
         const review: Review = new Review(reviewsObj[reviewId]);
         review.id = reviewId;

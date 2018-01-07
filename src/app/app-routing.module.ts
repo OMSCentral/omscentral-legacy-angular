@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { ReviewsComponent } from './reviews/reviews.component';
 import { AuthGuard } from './firebase/auth.guard';
 import { AdminGuard } from './firebase/admin.guard';
 import { AboutComponent } from './about/about.component';
-import { GradesComponent } from './grades/grades.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
 import { DonateComponent } from './donate/donate.component';
@@ -40,24 +38,11 @@ const routes: Routes = [
     component: RecentComponent,
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'reviews',
-  //   component: ReviewsComponent
-  // },
-  // {
-  //   path: 'reviews/:courseId',
-  //   component: CourseReviewsComponent,
-  //   canActivate: [AuthGuard]
-  // },
   {
     path: 'courses/:courseId',
     component: CourseReviewsComponent,
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'grades',
-  //   component: GradesComponent
-  // },
   {
     path: 'donate',
     component: DonateComponent
@@ -69,7 +54,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent,
+    loadChildren: './admin/admin.module#AdminModule',
     canActivate: [AdminGuard]
   }
 ];

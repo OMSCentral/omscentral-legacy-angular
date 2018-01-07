@@ -7,6 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from 'clarity-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CourseService } from '../../courses/course.service';
+class MockCourse {
+
+}
+
 describe('ReviewListComponent', () => {
   let component: ReviewListComponent;
   let fixture: ComponentFixture<ReviewListComponent>;
@@ -17,6 +22,9 @@ describe('ReviewListComponent', () => {
       schemas: [
         NO_ERRORS_SCHEMA,
         CUSTOM_ELEMENTS_SCHEMA
+      ],
+      providers: [
+        { provide: CourseService, useClass: MockCourse }
       ],
       declarations: [ReviewListComponent]
     })
