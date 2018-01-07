@@ -47,10 +47,10 @@ export class ReviewComponent implements OnInit {
   createForm() {
     this.reviewForm = this.fb.group({
       text: ['', Validators.required],
-      rating: '',
-      workload: '',
-      difficulty: '',
-      program: '',
+      rating: ['', Validators.required],
+      workload: ['', Validators.required],
+      difficulty: ['', Validators.required],
+      program: ['', Validators.required],
       semester: ['', Validators.required]
     });
     this.reviewForm.valueChanges.subscribe(changes => {
@@ -68,6 +68,7 @@ export class ReviewComponent implements OnInit {
   }
 
   save() {
+
     if (this.review.isNew) {
       this.review.save(this.reviewForm.value);
       this.saveNew.emit(this.review);

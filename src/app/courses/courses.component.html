@@ -25,7 +25,7 @@
           </div>
         </clr-dg-action-bar>
         <clr-dg-column [clrDgField]="'department'">Dept.</clr-dg-column>
-        <clr-dg-column [clrDgField]="'id'">#</clr-dg-column>
+        <clr-dg-column [clrDgField]="'number'">#</clr-dg-column>
         <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
         <clr-dg-column [clrDgField]="'grades.totals.t'">Enrolled</clr-dg-column>
         <clr-dg-column [clrDgField]="'numReviews'">Reviews</clr-dg-column>
@@ -41,7 +41,7 @@
 
         <clr-dg-row *clrDgItems="let course of courses">
           <clr-dg-cell>{{course.department}}</clr-dg-cell>
-          <clr-dg-cell>{{course.id}}</clr-dg-cell>
+          <clr-dg-cell>{{course.number}}</clr-dg-cell>
           <clr-dg-cell>
             <a [routerLink]="['/courses', course.id]">{{course.name}}</a>
           </clr-dg-cell>
