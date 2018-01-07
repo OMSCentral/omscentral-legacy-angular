@@ -5,6 +5,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService } from '../core/local-storage.service';
 import { SettingsService } from '../core/settings.service';
 
+import * as jsonData from '../../../courses.json';
+
+const coursePrefixes = [
+  'CS',
+  'MG',
+  'IS'
+];
+
 @Injectable()
 export class CourseService {
   cached = {};
@@ -13,6 +21,7 @@ export class CourseService {
   course$: BehaviorSubject<any> = new BehaviorSubject({});
   courseIds: string[] = [];
   courseId: string;
+  coursesBasic = jsonData;
 
   constructor(private db: AngularFireDatabase, private localStorageService: LocalStorageService, private settingsService: SettingsService) {
     this.cached = localStorageService.getObject('courses') || {};
@@ -73,8 +82,10 @@ export class CourseService {
 
   downloadCourses() {
     this.db.database.ref('/courses').once('value').then((snapshot) => {
-      const courses = snapshot.val();
-      Object.keys(courses).forEach(courseId => {
+      const courses = jsonData;
+      const firebaseCourses = snapshot.val();
+      Object.keys(firebaseCourses).forEach(courseId => {
+        courses[courseId] = Object.assign(jsonData[courseId] || {}, firebaseCourses[courseId] || {});
         if (courses[courseId].reviews) {
           const revs = Object.keys(courses[courseId].reviews).filter(rev => {
             return courses[courseId].reviews[rev] && courses[courseId].reviews[rev] !== null;
@@ -97,6 +108,11 @@ export class CourseService {
         }
       });
       this.cached = Object.assign(this.cached, courses);
+      Object.keys(this.cached).forEach(cacheKey => {
+        if (coursePrefixes.indexOf(cacheKey.substr(0, 2)) === -1) {
+          delete this.cached[cacheKey];
+        }
+      });
       if (this.cacheTime === null) {
         this.cacheTime = (new Date()).valueOf();
         this.localStorageService.set('coursesCacheTime', this.cacheTime);
@@ -106,15 +122,18 @@ export class CourseService {
   }
 
   downloadCourse(courseId) {
+    const department = courseId.substr(courseId.indexOf('-') + 1, courseId.length - courseId.indexOf('-') - 1);
     return this.db.database.ref('/courses/' + courseId).once('value').then((snapshot) => {
-      const course: any = snapshot.val();
-      course.numReviews = Object.keys(course.reviews || {}).length;
-      course.id = courseId;
-      const temp = {};
-      temp[courseId] = course;
-      this.cached = Object.assign(this.cached, temp);
-      this.broadcast();
-      return this.course$.asObservable();
+      const firebaseCourse: any = snapshot.val();
+      if (firebaseCourse !== null) {
+        let course = jsonData[courseId];
+        course = Object.assign(course || {}, firebaseCourse);
+        course.numReviews = Object.keys(course.reviews || {}).length;
+        const temp = {};
+        temp[courseId] = course;
+        this.cached = Object.assign(this.cached, temp);
+        this.broadcast();
+      }
     });
   }
 
@@ -201,12 +220,6 @@ export class CourseService {
         rating: null,
         workload: null
       },
-      department: course.department,
-      foundational: course.foundational,
-      icon: '',
-      name: course.name,
-      number: Number(course.number),
-      program: course.program,
       reviews: {}
     };
     const postRef: any = this.db.database.ref('/courses/' + course.number).set(newCourse).then((res) => {

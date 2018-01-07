@@ -5,10 +5,11 @@ import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
 
 const specializations = {
-  cpr: ['6505', '6601', '7641', '8803-GA', '6475', '6476', '8803-001'],
-  cs: ['6035', '6210', '6220', '8803-GA', '6250', '6290', '6300', '6400', '6262', '6310', '6340', '6506', '6200', '6291'],
-  ii: ['6300', '6505', '8803-GA', '6601', '7637', '7641', '6440', '6460'],
-  ml: ['6505', '8803-GA', '7641', '7642', '7646', '6242', '6250']
+  cpr: ['CS-6505', 'CS-6601', 'CS-7641', 'CS-8803-GA', 'CS-6475', 'CS-6476', 'CS-8803-O01'],
+  cs: ['CS-6035', 'CS-6210', 'CSE-6220', 'CS-8803-GA', 'CS-6250', 'CS-6290', 'CS-6300', 'CS-6400',
+    'CS-6262', 'CS-6310', 'CS-6340', 'CS-6506', 'CS-6200', 'CS-6291', 'CS-6505'],
+  ii: ['CS-6300', 'CS-6505', 'CS-8803-GA', 'CS-6601', 'CS-7637', 'CS-7641', 'CS-6440', 'CS-6460'],
+  ml: ['CS-6505', 'CS-8803-GA', 'CS-7641', 'CS-7642', 'CS-8803-O03', 'CS-7646', 'CSE-6242', 'CSE-6250', 'CSE-8803']
 };
 
 const defaultGrades = {
@@ -52,10 +53,14 @@ export class CoursesComponent implements OnInit {
           if (this.grades[course.id]) {
             course.grades = this.grades[course.id];
           } else {
-            course.grades = {
-              totals: defaultGrades,
-              percents: defaultGrades
-            };
+            if (this.grades[course.number]) {
+              course.grades = this.grades[course.number];
+            } else {
+              course.grades = {
+                totals: defaultGrades,
+                percents: defaultGrades
+              };
+            }
           }
           return course;
         });
@@ -63,10 +68,14 @@ export class CoursesComponent implements OnInit {
           if (this.grades[course.id]) {
             course.grades = this.grades[course.id];
           } else {
-            course.grades = {
-              totals: defaultGrades,
-              percents: defaultGrades
-            };
+            if (this.grades[course.number]) {
+              course.grades = this.grades[course.number];
+            } else {
+              course.grades = {
+                totals: defaultGrades,
+                percents: defaultGrades
+              };
+            }
           }
           return course;
         });

@@ -86,6 +86,7 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
   }
 
   cancelNew(evt) {
+    this.review = new Review({ course: this.course.courseId });
     this.newReview = false;
   }
 
