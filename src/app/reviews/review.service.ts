@@ -154,7 +154,7 @@ export class ReviewService {
         this.cacheTime = (new Date()).valueOf();
       }
 
-      this.reviews$.next(reviews);
+      this.reviews$.next(this.sortBySemester(reviews, false));
 
       return reviews;
     });
@@ -180,7 +180,7 @@ export class ReviewService {
         this.cacheTime = (new Date()).valueOf();
       }
 
-      this.reviews$.next(reviews);
+      this.reviews$.next(this.sortBySemester(reviews, false));
 
       return reviews;
     });
