@@ -1,11 +1,4 @@
 {
-    "CS-1234": {
-        "id": "CS-1234",
-        "name": "remove this",
-        "department": "CS",
-        "foundational": "",
-        "number": 1234
-    },
     "CS-6035": {
         "id": "CS-6035",
         "name": "Intro to Information Security",

@@ -1,10 +1,10 @@
 var fs = require("fs");
 var _ = require("lodash");
-var rawCurrent = fs.readFileSync("gt-surveyor-export.json");
+var rawCurrent = fs.readFileSync("./backups/20180107.json");
 var current = JSON.parse(rawCurrent);
 
-var anon = current;
-Object.keys(anon.users, function (userId) {
+var anon = _.cloneDeep(current);
+Object.keys(anon.users).forEach(userId => {
     anon.users[userId].email = userId;
     anon.users[userId].name = userId;
     anon.users[userId].profileImageUrl = userId;
