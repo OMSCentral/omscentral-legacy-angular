@@ -8,13 +8,13 @@ var firebase = _.cloneDeep(base);
 firebase.courses = {};
 
 Object.keys(base.courses).forEach(baseId => {
-    var newKey = (base.courses[baseId].department || 'CS') + '-' + base.courses[baseId].number;
+    var newKey = (base.courses[baseId].department || 'CS') + '-' + baseId;
     var newCourse = {
         id: newKey,
         name: base.courses[baseId].name,
         department: base.courses[baseId].department || 'CS',
         foundational: base.courses[baseId].foundational,
-        number: base.courses[baseId].number,
+        number: baseId,
     };
     var newFirebase = {
         average: base.courses[baseId].average || {

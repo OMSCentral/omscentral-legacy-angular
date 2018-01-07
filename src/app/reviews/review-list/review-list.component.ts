@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Review } from '../../models/review';
+import { CourseService } from '../../courses/course.service';
 
 @Component({
   selector: 'oms-review-list',
@@ -13,7 +14,7 @@ export class ReviewListComponent implements OnInit {
   @Output() remove = new EventEmitter<Review>();
 
   expanded = false;
-  constructor() { }
+  constructor(public courseService: CourseService) { }
 
   ngOnInit() {
 
