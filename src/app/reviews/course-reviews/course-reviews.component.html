@@ -11,7 +11,8 @@
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="card card-block">
-                    <h3 class="card-title">{{course?.numReviews}}</h3>
+                    <h3 class="card-title">
+                      <span *ngIf="stats.num">{{stats.num}} / </span>{{course?.numReviews}}</h3>
                     <p class="card-text">
                       Reviews
                     </p>
@@ -19,7 +20,8 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="card card-block" *ngIf="course?.average">
-                    <h3 class="card-title">{{course?.average.workload | number}}</h3>
+                    <h3 class="card-title">
+                      <span *ngIf="stats.workload">{{stats.workload | number}} / </span>{{course?.average.workload | number}}</h3>
                     <p class="card-text">
                       Avg. Work (Hours / Week)
                     </p>
@@ -27,7 +29,8 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="card card-block" *ngIf="course?.average">
-                    <h3 class="card-title">{{course?.average.difficulty | number}}</h3>
+                    <h3 class="card-title">
+                      <span *ngIf="stats.difficulty">{{stats.difficulty | number}} / </span>{{course?.average.difficulty | number}}</h3>
                     <p class="card-text">
                       Avg. Diff. (1-5 Hardest)
                     </p>
@@ -35,7 +38,8 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="card card-block" *ngIf="course?.average">
-                    <h3 class="card-title">{{course?.average.rating | number}}</h3>
+                    <h3 class="card-title">
+                      <span *ngIf="stats.rating">{{stats.rating | number}} / </span>{{course?.average.rating | number}}</h3>
                     <p class="card-text">
                       Avg. Rating (1-5 Best)
                     </p>
@@ -88,6 +92,24 @@
                 </clr-dg-row>
               </clr-datagrid>
             </div>
+            <div class="card-block">
+              <button class="btn btn-sm" *ngFor="let semester of filterList('semesters')" [ngClass]="{'btn-primary': selected('semesters', semester.id)}"
+                [disabled]="semester.disabled" (click)="change('semesters', semester.id)">
+                {{semester.id | semester}}
+              </button>
+            </div>
+            <div class="card-block">
+              <button class="btn btn-sm" *ngFor="let difficulty of filterList('difficulties')" [ngClass]="{'btn-primary': selected('difficulties', difficulty.id)}"
+                [disabled]="difficulty.disabled" (click)="change('difficulties', difficulty.id)">
+                {{difficulty.id | difficulty}}
+              </button>
+            </div>
+            <div class="card-block">
+              <button class="btn btn-sm" *ngFor="let rating of filterList('ratings')" [ngClass]="{'btn-primary': selected('ratings', rating.id)}"
+                [disabled]="rating.disabled" (click)="change('ratings', rating.id)">
+                {{rating.id | rating}}
+              </button>
+            </div>
             <div class="card-footer" *ngIf="!newReview">
               <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'semester'}" (click)="sortBySemester()">Sort by Semester
                 <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
@@ -128,7 +150,7 @@
       </div> -->
       <div class="row" *ngIf="!loading">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <oms-review [review]="review" (remove)="remove($event)" (update)="update($event)" *ngFor="let review of reviews"></oms-review>
+          <oms-review [review]="review" (remove)="remove($event)" (update)="update($event)" *ngFor="let review of filtered"></oms-review>
         </div>
       </div>
     </div>
