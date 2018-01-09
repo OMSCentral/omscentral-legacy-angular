@@ -34,7 +34,12 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
     ratings: {}
   };
   filtered: Review[] = [];
-  stats = {};
+  stats = {
+    num: null,
+    workload: null,
+    difficulty: null,
+    rating: null
+  };
 
   constructor(private route: ActivatedRoute, private router: Router,
     private courseService: CourseService, private reviewService: ReviewService,
@@ -163,7 +168,12 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
         && this.ratingFilter(review, this.filters);
     });
     if (filtered.length === this.reviews.length) {
-      this.stats = {};
+      this.stats = {
+        num: null,
+        workload: null,
+        difficulty: null,
+        rating: null
+      };
       if (this.sortType === 'date') {
         this.filtered = this.reviewService.sortByDate(this.reviews, this.sortDir);
       } else {
@@ -178,25 +188,38 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
       let difNum = 0;
       filtered.forEach(rev => {
         if (rev.workload) {
-          workload += rev.workload;
+          workload += Number(rev.workload);
           worNum++;
         }
         if (rev.rating) {
-          rating += rev.rating;
+          rating += Number(rev.rating);
           ratNum++;
         }
         if (rev.difficulty) {
-          difficulty += rev.difficulty;
+          difficulty += Number(rev.difficulty);
           difNum++;
         }
       });
 
-      this.stats = {
-        num: filtered.length,
-        workload: workload / worNum,
-        rating: rating / ratNum,
-        difficulty: difficulty / difNum
-      };
+      this.stats.num = filtered.length;
+
+      if (worNum !== 0) {
+        this.stats.workload = workload / worNum;
+      } else {
+        this.stats.workload = null;
+      }
+
+      if (ratNum !== 0) {
+        this.stats.rating = rating / ratNum;
+      } else {
+        this.stats.rating = null;
+      }
+
+      if (difNum !== 0) {
+        this.stats.difficulty = difficulty / difNum;
+      } else {
+        this.stats.difficulty = null;
+      }
 
       if (this.sortType === 'date') {
         this.filtered = this.reviewService.sortByDate(filtered, this.sortDir);
