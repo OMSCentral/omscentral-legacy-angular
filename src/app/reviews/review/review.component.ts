@@ -51,7 +51,16 @@ export class ReviewComponent implements OnInit {
       workload: ['', Validators.required],
       difficulty: ['', Validators.required],
       program: ['', Validators.required],
-      semester: ['', Validators.required]
+      semester: ['', Validators.required],
+      proctorTrack: '',
+      firstCourse: '',
+      previousClasses: '',
+      projects: '',
+      groupProjects: '',
+      tests: '',
+      extraCredit: '',
+      moneySpent: '',
+      frontLoad: ''
     });
     this.reviewForm.valueChanges.subscribe(changes => {
       this.review.update(changes);

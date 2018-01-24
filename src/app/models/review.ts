@@ -10,6 +10,16 @@ export class Review {
     updated: Date;
     workload: number;
     program: string;
+    proctortrack: string;
+    firstCourse: string;
+    previousClasses: number;
+    projects: number;
+    groupProjects: number;
+    tests: number;
+    extraCredit: string;
+    moneySpent: number;
+    frontLoad: string;
+    proctorTrack: string;
 
     editReview = false;
 
@@ -36,7 +46,16 @@ export class Review {
             text: this.text,
             workload: this.workload,
             difficulty: this.difficulty,
-            program: this.program || ''
+            program: this.program || '',
+            proctorTrack: this.proctorTrack || '',
+            firstCourse: this.firstCourse || '',
+            previousClasses: this.previousClasses || '',
+            projects: this.projects || '',
+            groupProjects: this.groupProjects || '',
+            tests: this.tests || '',
+            extraCredit: this.extraCredit || '',
+            moneySpent: this.moneySpent || '',
+            frontLoad: this.frontLoad || ''
         };
     }
 

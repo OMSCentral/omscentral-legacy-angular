@@ -68,7 +68,16 @@ export class ReviewService {
       text: review.text,
       workload: review.workload,
       rating: review.rating,
-      program: review.program
+      program: review.program,
+      proctortrack: review.proctortrack || '',
+      firstCourse: review.firstCourse || '',
+      previousClasses: review.previousClasses || '',
+      projects: review.projects || '',
+      groupProjects: review.groupProjects || '',
+      tests: review.tests || '',
+      extraCredit: review.extraCredit || '',
+      moneySpent: review.moneySpent || '',
+      frontLoad: review.frontLoad || ''
     };
     const postRef: any = this.db.database.ref('/reviews/').push(newReview);
     const refKey = postRef.key;
@@ -106,7 +115,16 @@ export class ReviewService {
       text: review.text,
       workload: review.workload,
       rating: review.rating,
-      program: review.program
+      program: review.program,
+      proctortrack: review.proctortrack || '',
+      firstCourse: review.firstCourse || '',
+      previousClasses: review.previousClasses || '',
+      projects: review.projects || '',
+      groupProjects: review.groupProjects || '',
+      tests: review.tests || '',
+      extraCredit: review.extraCredit || '',
+      moneySpent: review.moneySpent || '',
+      frontLoad: review.frontLoad || ''
     };
     const postRef = this.db.database.ref('/reviews/' + review.id).set(updatedReview);
     const temp = {};
