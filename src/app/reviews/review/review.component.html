@@ -119,7 +119,10 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form-group">
-            <label for="moneySpent_input">Money Spent</label>
+            <label for="moneySpent_input" role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">Money Spent
+              <clr-icon shape="info-circle" size="24"></clr-icon>
+              <span class="tooltip-content">Books, Materials... NOT Tuition/Fees</span>
+            </label>
             <label for="moneySpent_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('moneySpent').invalid
                                   && (reviewForm.get('moneySpent').dirty || reviewForm.get('moneySpent').touched)">
               <input type="number" id="moneySpent_input" placeholder="" size="35" formControlName="moneySpent">
