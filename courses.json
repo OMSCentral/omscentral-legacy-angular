@@ -76,6 +76,13 @@
         "foundational": true,
         "number": "6290"
     },
+    "CS-6291": {
+        "id": "CS-6291",
+        "name": "Embedded System Optimization",
+        "department": "CS",
+        "foundational": true,
+        "number": "6291"
+    },
     "CS-6300": {
         "id": "CS-6300",
         "name": "Software Development Process",
@@ -279,19 +286,21 @@
         "foundational": true,
         "number": "8803-001"
     },
-    "CS-8803-002": {
-        "id": "CS-8803-002",
+    "CS-6200": {
+        "id": "CS-6200",
         "name": "Intro to Operating Systems",
         "department": "CS",
         "foundational": true,
-        "number": "8803-002"
+        "number": "6200",
+        "formerly": "8803-002"
     },
-    "CS-8803-003": {
-        "id": "CS-8803-003",
+    "CS-7642": {
+        "id": "CS-7642",
         "name": "Reinforcement Learning",
         "department": "CS",
         "foundational": true,
-        "number": "8803-003"
+        "number": "7642",
+        "formerly": "8803-003"
     },
     "CS-8803-004": {
         "id": "CS-8803-004",
@@ -314,12 +323,13 @@
         "foundational": false,
         "number": "8803-006"
     },
-    "CS-8803-007": {
-        "id": "CS-8803-007",
+    "CS-6263": {
+        "id": "CS-6263",
         "name": "Cyber-Physical Systems",
         "department": "CS",
         "foundational": false,
-        "number": "8803-007"
+        "number": "6263",
+        "formerly": "8803-007"
     },
     "CS-8803-008": {
         "id": "CS-8803-008",
@@ -335,12 +345,13 @@
         "foundational": false,
         "number": "8803-009"
     },
-    "CSE-8803-BDHI": {
-        "id": "CSE-8803-BDHI",
+    "CSE-6250": {
+        "id": "CSE-6250",
         "name": "Big Data for Health Informatics",
         "department": "CSE",
         "foundational": true,
-        "number": "8803-BDHI"
+        "number": "6250",
+        "formerly": "8803-BDHI"
     },
     "CS-8803-GA": {
         "id": "CS-8803-GA",
