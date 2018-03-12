@@ -2,10 +2,12 @@
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
 
-@import '~clarity-icons/clarity-icons.min.css';
-@import '~clarity-ui/clarity-ui.min.css';
+// @import '~clarity-icons/clarity-icons.min.css';
+// @import '~clarity-ui/clarity-ui.min.css';
 
 @import '~prismjs/themes/prism.css';
+
+@import '~bootstrap/scss/bootstrap';
 
 .alerts-pager {
     background: #004a70;

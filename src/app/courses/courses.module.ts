@@ -5,6 +5,7 @@ import { PipeModule } from '../pipes/pipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { AppRoutingModule } from '../app-routing.module';
     AppRoutingModule,
     ClarityModule,
     PipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
