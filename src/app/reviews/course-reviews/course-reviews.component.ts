@@ -60,7 +60,7 @@ export class CourseReviewsComponent implements OnInit, OnDestroy {
       }
       if (this.course.id !== course.id) {
         this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
-        this.grades = this.gradeService.getCourseGrades(course.number);
+        this.grades = this.gradeService.getCourseGrades(course.id);
         this.reviewSub = this.reviews$.debounceTime(1000).subscribe(reviews => {
           const sems = {};
           const diff = {};
