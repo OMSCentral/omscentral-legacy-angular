@@ -7,13 +7,15 @@ import { UserService } from '../core/user.service';
 import { ReviewService } from '../reviews/review.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     ClarityModule,
     ReviewsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

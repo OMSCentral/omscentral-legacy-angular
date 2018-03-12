@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'angular2-markdown';
 import { ReviewListComponent } from './review-list/review-list.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { AppRoutingModule } from '../app-routing.module';
     PipeModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MarkdownModule
+    MarkdownModule,
+    NgbModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA,

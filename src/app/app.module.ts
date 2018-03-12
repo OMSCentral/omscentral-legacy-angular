@@ -44,6 +44,8 @@ import 'clarity-icons/clarity-icons.min.js';
 
 import { MarkdownModule } from 'angular2-markdown';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -69,7 +71,8 @@ import { MarkdownModule } from 'angular2-markdown';
     GithubButtonModule,
     CoursesModule,
     AdminModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [
     AuthGuard,
