@@ -5,11 +5,11 @@ import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
 
 const specializations = {
-  cpr: ['CS-6505', 'CS-6601', 'CS-7641', 'CS-8803-GA', 'CS-6475', 'CS-6476', 'CS-8803-O01'],
+  cpr: ['CS-6505', 'CS-8803-GA', 'CS-6601', 'CS-7641', 'CS-8803-GA', 'CS-6475', 'CS-6476', 'CS-8803-001'],
   cs: ['CS-6035', 'CS-6210', 'CSE-6220', 'CS-8803-GA', 'CS-6250', 'CS-6290', 'CS-6300', 'CS-6400',
     'CS-6262', 'CS-6310', 'CS-6340', 'CS-6506', 'CS-6200', 'CS-6291', 'CS-6505'],
   ii: ['CS-6300', 'CS-6505', 'CS-8803-GA', 'CS-6601', 'CS-7637', 'CS-7641', 'CS-6440', 'CS-6460'],
-  ml: ['CS-6505', 'CS-8803-GA', 'CS-7641', 'CS-7642', 'CS-8803-O03', 'CS-7646', 'CSE-6242', 'CSE-6250', 'CSE-8803']
+  ml: ['CS-6505', 'CS-8803-GA', 'CS-7641', 'CS-7642', 'CS-8803-003', 'CS-7646', 'CSE-6242', 'CSE-6250', 'CSE-6250']
 };
 
 const defaultGrades = {
