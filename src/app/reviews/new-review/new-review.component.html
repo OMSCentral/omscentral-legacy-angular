@@ -1,0 +1,181 @@
+<form [formGroup]="reviewForm" novalidate>
+    <div class="card" *ngIf="review">
+      <div class="card-header">
+        <h3 class="card-title" *ngIf="title && courseName">
+          <a [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</a>
+        </h3>
+        <span class="label" *ngIf="review.semester &&  review.semester !== '0000-0'">{{review.semester | semester}}</span>
+        <span class="label label-purple" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
+        <span class="label label-blue" *ngIf="review.rating">{{review.rating | rating}}</span>
+        <span class="label label-light-blue" *ngIf="review.workload">{{review.workload | workload}}</span>
+        <span class="label" *ngIf="review.program">{{review.program | program}}</span>
+      </div>
+      <div class="card-block" *ngIf="(review.isNew || review.isEdit)">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="semester_input">Semester</label>
+              <div class="select">
+                <label for="semester_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('semester').invalid
+                              && (reviewForm.get('semester').dirty || reviewForm.get('semester').touched)">
+                  <select id="semester_input" formControlName="semester">
+                    <option *ngFor="let semester of semesters" [value]="semester">{{semester | semester}}</option>
+                  </select>
+                  <span class="tooltip-content">
+                    Semester is required.
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="rating_input">Rating</label>
+              <div class="select">
+                <label for="rating_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('rating').invalid
+                              && (reviewForm.get('rating').dirty || reviewForm.get('rating').touched)">
+                  <select id="rating_input" formControlName="rating">
+                    <option *ngFor="let rating of ratings" [value]="rating">{{rating | rating}}</option>
+                  </select>
+                  <span class="tooltip-content">
+                    Rating is required.
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="difficulty_input">Difficulty</label>
+              <div class="select">
+                <label for="difficulty_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('difficulty').invalid
+                              && (reviewForm.get('difficulty').dirty || reviewForm.get('difficulty').touched)">
+                  <select id="difficulty_input" formControlName="difficulty">
+                    <option *ngFor="let difficulty of difficulties" [value]="difficulty">{{difficulty | difficulty}}</option>
+                  </select>
+                  <span class="tooltip-content">
+                    Difficulty is required.
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="workload_input">Workload</label>
+              <label for="workload_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('workload').invalid
+                            && (reviewForm.get('workload').dirty || reviewForm.get('workload').touched)">
+                <input type="number" id="workload_input" placeholder="" size="35" formControlName="workload">
+                <span class="tooltip-content">
+                  Workload is required.
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="previousClasses_input">Previous # Classes</label>
+              <label for="previousClasses_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('previousClasses').invalid
+                            && (reviewForm.get('previousClasses').dirty || reviewForm.get('previousClasses').touched)">
+                <input type="number" id="previousClasses_input" placeholder="" size="35" formControlName="previousClasses">
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="projects_input"># of Projects</label>
+              <label for="projects_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('projects').invalid
+                              && (reviewForm.get('projects').dirty || reviewForm.get('projects').touched)">
+                <input type="number" id="projects_input" placeholder="" size="35" formControlName="projects">
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="groupProjects_input"># of Group Projects</label>
+              <label for="groupProjects_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('groupProjects').invalid
+                                && (reviewForm.get('groupProjects').dirty || reviewForm.get('groupProjects').touched)">
+                <input type="number" id="groupProjects_input" placeholder="" size="35" formControlName="groupProjects">
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="tests_input"># of Tests</label>
+              <label for="tests_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('tests').invalid
+                                  && (reviewForm.get('tests').dirty || reviewForm.get('tests').touched)">
+                <input type="number" id="tests_input" placeholder="" size="35" formControlName="tests">
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="moneySpent_input" role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg">Money Spent
+                <clr-icon shape="info-circle" size="24"></clr-icon>
+                <span class="tooltip-content">Books, Materials... NOT Tuition/Fees</span>
+              </label>
+              <label for="moneySpent_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('moneySpent').invalid
+                                    && (reviewForm.get('moneySpent').dirty || reviewForm.get('moneySpent').touched)">
+                <input type="number" id="moneySpent_input" placeholder="" size="35" formControlName="moneySpent">
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="program_input">Program</label>
+              <div class="select">
+                <label for="program_input" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="reviewForm.get('program').invalid
+                  && (reviewForm.get('program').dirty || reviewForm.get('program').touched)">
+                  <select id="program_input" formControlName="program">
+                    <option *ngFor="let program of programs" [value]="program">{{program | program}}</option>
+                  </select>
+                  <span class="tooltip-content">
+                    Program is required.
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="checkbox-inline">
+              <input type="checkbox" id="firstCourse" formControlName="firstCourse">
+              <label for="firstCourse">I would recommend this as a first course</label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="checkbox-inline">
+              <input type="checkbox" id="extraCredit" formControlName="extraCredit">
+              <label for="extraCredit">Extra credit was offered</label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="checkbox-inline">
+              <input type="checkbox" id="frontLoad" formControlName="frontLoad">
+              <label for="frontLoad">Can front loaded</label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="checkbox-inline">
+              <input type="checkbox" id="proctorTrack" formControlName="proctorTrack">
+              <label for="proctorTrack">Course used ProctorTrack</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <textarea rows="5" type="text" id="review_text" placeholder="Review..." formControlName="text" required></textarea>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="form-group">
+              <markdown id="markdown_preview" [data]="review.text"></markdown>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-link" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
+        <button class="btn btn-sm btn-danger-outline" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </form>

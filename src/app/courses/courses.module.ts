@@ -6,6 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CourseComponent } from './course/course.component';
+import { CourseNavComponent } from './course-nav/course-nav.component';
+import { ReviewsModule } from '../reviews/reviews.module';
 
 @NgModule({
   imports: [
@@ -14,11 +17,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ClarityModule,
     PipeModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    ReviewsModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  declarations: [CoursesComponent]
+  declarations: [CoursesComponent, CourseComponent, CourseNavComponent]
 })
 export class CoursesModule { }

@@ -14,10 +14,6 @@ import { CourseService } from '../../courses/course.service';
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
   @Input() title?= false;
-  @Input() modify?= true;
-  @Output() cancelNew = new EventEmitter<boolean>();
-  @Output() saveNew = new EventEmitter<Review>();
-  @Output() update = new EventEmitter<Review>();
   @Output() remove = new EventEmitter<Review>();
 
   reviewForm: FormGroup;
@@ -35,7 +31,6 @@ export class ReviewComponent implements OnInit {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
-    this.createForm();
   }
 
   ngOnInit() {
@@ -44,56 +39,11 @@ export class ReviewComponent implements OnInit {
     }
   }
 
-  createForm() {
-    this.reviewForm = this.fb.group({
-      text: ['', Validators.required],
-      rating: ['', Validators.required],
-      workload: ['', Validators.required],
-      difficulty: ['', Validators.required],
-      program: ['', Validators.required],
-      semester: ['', Validators.required],
-      proctorTrack: '',
-      firstCourse: '',
-      previousClasses: '',
-      projects: '',
-      groupProjects: '',
-      tests: '',
-      extraCredit: '',
-      moneySpent: '',
-      frontLoad: ''
-    });
-    this.reviewForm.valueChanges.subscribe(changes => {
-      this.review.update(changes);
-    });
-  }
-
   edit() {
-    const editReview = this.review.edit();
-    this.reviewForm.setValue(editReview);
+    console.log('edit');
   }
 
   delete() {
     this.remove.emit(this.review);
   }
-
-  save() {
-
-    if (this.review.isNew) {
-      this.review.save(this.reviewForm.value);
-      this.saveNew.emit(this.review);
-    } else {
-      this.review.save(this.reviewForm.value);
-      this.update.emit(this.review);
-    }
-  }
-
-  cancel() {
-    if (this.review.isNew) {
-      this.cancelNew.emit(true);
-    }
-    if (this.review.isEdit) {
-      this.review.cancel();
-    }
-  }
-
 }
