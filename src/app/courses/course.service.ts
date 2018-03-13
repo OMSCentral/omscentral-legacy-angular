@@ -95,6 +95,7 @@ export class CourseService {
           courses[courseId].numReviews = 0;
         }
         courses[courseId].id = courseId;
+        courses[courseId].combined = courseId + ': ' + courses[courseId].name;
         if (courses[courseId].grades) {
           courses[courseId].totals = this.processGrades(courses[courseId].grades);
           courses[courseId].semesterGrades = Object.keys(courses[courseId].grades).map(semGrade => {
