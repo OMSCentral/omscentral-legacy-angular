@@ -1,0 +1,28 @@
+<div class="row">
+  <nav class="col-md-2 bg-light sidebar">
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item nav-link">
+          <div class="btn-group btn-group-sm">
+            <button class="btn" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
+            <button class="btn" [ngClass]="{'btn-primary': specialization == 'cpr'}" (click)="changeSpecialization('cpr')">CPR</button>
+            <button class="btn" [ngClass]="{'btn-primary': specialization == 'cs'}" (click)="changeSpecialization('cs')">CS</button>
+            <button class="btn" [ngClass]="{'btn-primary': specialization == 'ii'}" (click)="changeSpecialization('ii')">II</button>
+            <button class="btn" [ngClass]="{'btn-primary': specialization == 'ml'}" (click)="changeSpecialization('ml')">ML</button>
+          </div>
+        </li>
+        <li class="nav-item nav-link">
+          <div class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Filter" aria-label="Filter">
+          </div>
+        </li>
+        <li *ngFor="let course of courses" class="nav-item">
+          <a class="nav-link" [routerLink]="['/courses', course.id]" routerLinkActive="active">{{course.combined}}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+      <ng-content></ng-content>
+  </main>
+</div>
