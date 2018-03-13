@@ -1,4 +1,46 @@
-<div class="login-wrapper">
+<div class="text-center">
+  <form class="form-signin">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="login_email" class="sr-only">Email address</label>
+    <input class="form-control" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
+    <label for="login_password" class="sr-only">Password</label>
+    <input class="form-control" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
+    <div *ngIf="error" class="error active">
+      {{error}}.
+      <button class="btn btn-link" type="button" style="cursor: pointer" *ngIf="email" (click)="resetPassword()">Reset Password?</button>
+    </div>
+    <div *ngIf="reset" class="alert alert-success">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text">A password reset email has been sent.</span>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
+    <br/>
+    <div class="text-center">
+        <div class="btn-group btn-link">
+          <button class="btn" (click)="social('github')">
+            <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+          </button>
+          <button class="btn" (click)="social('twitter')">
+            <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+          </button>
+          <button class="btn" (click)="social('facebook')">
+            <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+          </button>
+          <button class="btn" (click)="social('google')">
+            <i class="fa fa-google fa-3x" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+  </form>
+</div>
+<!-- <div class="login-wrapper">
   <div class="login">
     <label class="title">
       <h3 class="welcome">Welcome to</h3>
@@ -56,4 +98,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
