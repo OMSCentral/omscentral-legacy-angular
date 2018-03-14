@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
@@ -27,7 +28,7 @@ export class ReviewComponent implements OnInit {
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
   constructor(private auth: AuthService, private reviewService: ReviewService,
-    private fb: FormBuilder, private courseService: CourseService) {
+    private fb: FormBuilder, private courseService: CourseService, private router: Router) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
@@ -40,7 +41,7 @@ export class ReviewComponent implements OnInit {
   }
 
   edit() {
-    console.log('edit');
+    this.router.navigate(['/reviews', this.review.id]);
   }
 
   delete() {
