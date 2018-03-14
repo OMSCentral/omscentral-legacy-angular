@@ -1,45 +1,24 @@
-<clr-main-container>
-  <div class="content-container">
-    <div class="content-area">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card">
-            <div class="card-header">
-              {{(user$ | async)?.name}}
-            </div>
-            <div class="card-block">
-              {{(user$ | async)?.email}}
-            </div>
-            <!-- <div class="card-block">
-              <form [formGroup]="profileForm" novalidate>
-                <div class="form-group">
-                  <label for="specialization_input">Specializations</label>
-                  <div class="select">
-                    <select id="specialization_input" formControlName="specialization">
-                      <option *ngFor="let spec of specializations" [value]="spec">{{spec}}</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="card-block">
-              <clr-checkbox [clrChecked]="anonymous" (click)="changeAnonymous()">
-                Hide Reviews
-              </clr-checkbox>
-            </div> -->
-            <div class="card-footer">
-              <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
-            </div>
-          </div>
-        </div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="card-header">
+        {{(user$ | async)?.name}}
       </div>
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card-columns card-columns-2">
-            <oms-review *ngFor="let review of reviews$ | async" [review]="review" [title]="true" (remove)="remove($event)" (update)="update($event)"></oms-review>
-          </div>
-        </div>
+      <div class="card-body">
+        {{(user$ | async)?.email}}
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
       </div>
     </div>
   </div>
-</clr-main-container>
+</div>
+<br/>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div *ngFor="let review of reviews$ | async">
+          <oms-review [review]="review" [title]="true" (remove)="remove($event)" (update)="update($event)"></oms-review>
+          <br/>
+      </div>
+  </div>
+</div>

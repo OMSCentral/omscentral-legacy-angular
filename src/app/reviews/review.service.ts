@@ -327,11 +327,15 @@ export class ReviewService {
     return sorted;
   }
 
-  getReview(reviewId) {
-    if (Object.keys(this.cached).indexOf(reviewId) === -1 || this.cacheExpired()) {
-      return this.downloadReview(reviewId);
+  getReview(reviewId?) {
+    if (reviewId) {
+      if (Object.keys(this.cached).indexOf(reviewId) === -1 || this.cacheExpired()) {
+        return this.downloadReview(reviewId);
+      } else {
+        return Observable.of(new Review(this.cached[reviewId]));
+      }
     } else {
-      return Observable.of(new Review(this.cached[reviewId]));
+      return new Review({});
     }
   }
 

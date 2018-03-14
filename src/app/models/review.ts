@@ -41,6 +41,7 @@ export class Review {
         this.backup = new Review(this);
         this.editReview = true;
         return {
+            course: this.course,
             semester: this.semester,
             rating: this.rating,
             text: this.text,

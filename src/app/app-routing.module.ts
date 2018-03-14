@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { CoursesComponent } from './courses/courses.component';
 import { RecentComponent } from './recent/recent.component';
 import { CourseComponent } from './courses/course/course.component';
+import { NewReviewComponent } from './reviews/new-review/new-review.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,21 @@ const routes: Routes = [
   },
   {
     path: 'courses/:courseId',
+    component: CourseComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reviews/:reviewId',
+    component: NewReviewComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reviews',
+    component: NewReviewComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reviews/:reviewId',
     component: CourseComponent,
     canActivate: [AuthGuard]
   },
