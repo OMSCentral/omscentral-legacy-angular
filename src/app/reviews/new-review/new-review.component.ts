@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
 import { CourseService } from '../../courses/course.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'oms-new-review',
@@ -12,14 +14,10 @@ import { CourseService } from '../../courses/course.service';
   styleUrls: ['./new-review.component.scss']
 })
 export class NewReviewComponent implements OnInit {
-  @Input() review: Review;
-  @Input() title?= false;
-  @Input() modify?= true;
-  @Output() cancelNew = new EventEmitter<boolean>();
-  @Output() saveNew = new EventEmitter<Review>();
-  @Output() update = new EventEmitter<Review>();
-  @Output() remove = new EventEmitter<Review>();
-
+  review: Review;
+  review$: Observable<any>;
+  courses: any;
+  courses$: Observable<any> | Promise<Observable<any>>;
   reviewForm: FormGroup;
   courseName: string;
   authId: string;
@@ -30,7 +28,8 @@ export class NewReviewComponent implements OnInit {
   programs = Array.from(new Array(2), (x, i) => i + 1);
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
-  constructor(private auth: AuthService, private reviewService: ReviewService,
+  constructor(private route: ActivatedRoute, private router: Router,
+    private auth: AuthService, private reviewService: ReviewService,
     private fb: FormBuilder, private courseService: CourseService) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
@@ -39,13 +38,35 @@ export class NewReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.review && this.review.course) {
-      this.courseName = this.courseService.getCourseName(this.review.course);
-    }
+    // this.route.paramMap.subscribe(param => {
+    //   console.log((<any>param).params);
+    // });
+    // this.route.queryParamMap.subscribe(param => {
+    //   console.log((<any>param).params);
+    // });
+    this.courses$ = this.courseService.getCourses();
+    this.courses$.subscribe(courses => {
+      if (courses) {
+        this.courses = courses;
+      }
+    });
+    this.review$ = this.route.paramMap
+      .switchMap((params: ParamMap) =>
+        this.reviewService.getReview(params.get('reviewId')));
+
+      this.review$.subscribe(review => {
+        console.log(review);
+        this.review = review;
+        this.edit();
+      });
+    // if (this.review && this.review.course) {
+    //   this.courseName = this.courseService.getCourseName(this.review.course);
+    // }
   }
 
   createForm() {
     this.reviewForm = this.fb.group({
+      course: ['', Validators.required],
       text: ['', Validators.required],
       rating: ['', Validators.required],
       workload: ['', Validators.required],
@@ -63,6 +84,7 @@ export class NewReviewComponent implements OnInit {
       frontLoad: ''
     });
     this.reviewForm.valueChanges.subscribe(changes => {
+      console.log(changes);
       this.review.update(changes);
     });
   }
