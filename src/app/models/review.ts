@@ -41,12 +41,12 @@ export class Review {
         this.backup = new Review(this);
         this.editReview = true;
         return {
-            course: this.course,
-            semester: this.semester,
-            rating: this.rating,
-            text: this.text,
-            workload: this.workload,
-            difficulty: this.difficulty,
+            course: this.course || '',
+            semester: this.semester || '',
+            rating: this.rating || '',
+            text: this.text || '',
+            workload: this.workload || '',
+            difficulty: this.difficulty || '',
             program: this.program || '',
             proctorTrack: this.proctorTrack || '',
             firstCourse: this.firstCourse || '',
