@@ -1,6 +1,6 @@
 <div class="alert alert-primary" role="alert" *ngFor="let alert of alerts$ | async">
-  <div class="alert-item">
-    <span class="alert-text">
+  <div>
+    <span>
       {{alert.text}}
     </span>
       <a class="alert-link" *ngIf="alert.slack" href="https://omscs-study.slack.com/messages/C83FX0M2S">#OMSCentral on Slack</a>

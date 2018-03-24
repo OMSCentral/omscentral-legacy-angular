@@ -17,6 +17,7 @@ import { SettingsService } from '../core/settings.service';
 export class ReviewService {
   cached = {};
   cacheTime: number = null;
+  review$: BehaviorSubject<any> = new BehaviorSubject({});
   reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
   recent$: BehaviorSubject<any> = new BehaviorSubject([]);
   recentSub: QueryReference = null;
@@ -327,16 +328,17 @@ export class ReviewService {
     return sorted;
   }
 
-  getReview(reviewId?) {
+  getReview(reviewId?): BehaviorSubject<Review> {
     if (reviewId) {
       if (Object.keys(this.cached).indexOf(reviewId) === -1 || this.cacheExpired()) {
-        return this.downloadReview(reviewId);
+        this.review$.next(this.downloadReview(reviewId));
       } else {
-        return Observable.of(new Review(this.cached[reviewId]));
+        this.review$.next(new Review(this.cached[reviewId]));
       }
     } else {
-      return new Review({});
+      this.review$.next(new Review({}));
     }
+    return this.review$;
   }
 
   private cacheExpired() {
