@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
@@ -14,10 +15,6 @@ import { CourseService } from '../../courses/course.service';
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
   @Input() title?= false;
-  @Input() modify?= true;
-  @Output() cancelNew = new EventEmitter<boolean>();
-  @Output() saveNew = new EventEmitter<Review>();
-  @Output() update = new EventEmitter<Review>();
   @Output() remove = new EventEmitter<Review>();
 
   reviewForm: FormGroup;
@@ -31,11 +28,10 @@ export class ReviewComponent implements OnInit {
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
   constructor(private auth: AuthService, private reviewService: ReviewService,
-    private fb: FormBuilder, private courseService: CourseService) {
+    private fb: FormBuilder, private courseService: CourseService, private router: Router) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
-    this.createForm();
   }
 
   ngOnInit() {
@@ -44,56 +40,11 @@ export class ReviewComponent implements OnInit {
     }
   }
 
-  createForm() {
-    this.reviewForm = this.fb.group({
-      text: ['', Validators.required],
-      rating: ['', Validators.required],
-      workload: ['', Validators.required],
-      difficulty: ['', Validators.required],
-      program: ['', Validators.required],
-      semester: ['', Validators.required],
-      proctorTrack: '',
-      firstCourse: '',
-      previousClasses: '',
-      projects: '',
-      groupProjects: '',
-      tests: '',
-      extraCredit: '',
-      moneySpent: '',
-      frontLoad: ''
-    });
-    this.reviewForm.valueChanges.subscribe(changes => {
-      this.review.update(changes);
-    });
-  }
-
   edit() {
-    const editReview = this.review.edit();
-    this.reviewForm.setValue(editReview);
+    this.router.navigate(['/reviews', this.review.id]);
   }
 
   delete() {
     this.remove.emit(this.review);
   }
-
-  save() {
-
-    if (this.review.isNew) {
-      this.review.save(this.reviewForm.value);
-      this.saveNew.emit(this.review);
-    } else {
-      this.review.save(this.reviewForm.value);
-      this.update.emit(this.review);
-    }
-  }
-
-  cancel() {
-    if (this.review.isNew) {
-      this.cancelNew.emit(true);
-    }
-    if (this.review.isEdit) {
-      this.review.cancel();
-    }
-  }
-
 }
