@@ -9,7 +9,7 @@
     </span>
     <span class="pull-right" *ngIf="authId == review.author">
       <button class="btn btn-sm btn-outline-primary" (click)="edit()">Edit</button>
-      <button class="btn btn-sm btn-danger" (click)="delete()">Delete</button>
+      <!-- <button class="btn btn-sm btn-danger" (click)="delete()">Delete</button> -->
     </span>
     <span class="card-text pull-right">
       <span *ngIf="review.updated">{{review.updated | date:'short'}}</span>

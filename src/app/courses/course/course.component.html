@@ -12,7 +12,7 @@
           <span class="text-muted">
             <span *ngIf="stats.num">{{stats?.num}} / </span>{{course?.numReviews}}</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="course?.average">
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
           <div>
             <h6 class="my-0">Average Work</h6>
             <small class="text-muted">Hours/week</small>
@@ -20,7 +20,7 @@
           <span class="text-muted">
             <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{course?.average.workload | number}}</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="course?.average">
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
           <div>
             <h6 class="my-0">Average Difficulty</h6>
             <small class="text-muted">(Easy) 1 - 5 (Hard)</small>
@@ -28,7 +28,7 @@
           <span class="text-muted">
             <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{course?.average.difficulty | number}}</span>
         </li>
-        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="course?.average">
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
           <div>
             <h6 class="my-0">Average Rating</h6>
             <small class="text-muted">(Worst) 1 - 5 (Best)</small>
@@ -126,9 +126,25 @@
           <a class="btn btn-sm btn-link pull-right" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
         </div>
       </div>
-      <div *ngFor="let review of filtered">
-        <oms-review [review]="review"></oms-review>
-        <br/>
+      <div *ngIf="loading" class="text-center">
+        <div class="fa fa-spinner fa-spin fa-2x"></div>
+      </div>
+      <div *ngIf="!loading">
+        <br />
+        <div class="card" *ngIf="reviews?.length == 0">
+          <div class="card-header">
+            <span class="card-title">
+              There are no reviews for {{course?.id}}
+            </span>
+          </div>
+          <div class="card-body text-center">
+              <a class="btn btn-primary" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
+          </div>
+        </div>
+        <div *ngFor="let review of filtered">
+          <oms-review [review]="review"></oms-review>
+          <br/>
+        </div>
       </div>
     </div>
   </div>

@@ -138,6 +138,9 @@ export class ReviewService {
   remove(review) {
     this.db.database.ref('/reviews/' + review.id).remove();
     delete this.cached[review.id];
+    if (!this.reviewIds) {
+      this.reviewIds = [];
+    }
     if (this.reviewIds.indexOf(review.id) !== -1) {
       this.reviewIds.splice(this.reviewIds.indexOf(review.id), 1);
     }
@@ -185,30 +188,34 @@ export class ReviewService {
       const reviewsObj = snapshot.val();
       const temp = {};
 
-      this.reviewIds = Object.keys(reviewsObj);
+      if (reviewsObj) {
+        this.reviewIds = Object.keys(reviewsObj);
 
-      const reviews = Object.keys(reviewsObj).map(reviewId => {
-        const review: Review = new Review(reviewsObj[reviewId]);
-        review.id = reviewId;
-        temp[reviewId] = review;
-        return review;
-      });
+        const reviews = Object.keys(reviewsObj).map(reviewId => {
+          const review: Review = new Review(reviewsObj[reviewId]);
+          review.id = reviewId;
+          temp[reviewId] = review;
+          return review;
+        });
 
-      this.cached = Object.assign(this.cached, temp);
-      if (this.cacheTime === null) {
-        this.cacheTime = (new Date()).valueOf();
+        this.cached = Object.assign(this.cached, temp);
+        if (this.cacheTime === null) {
+          this.cacheTime = (new Date()).valueOf();
+        }
+
+        this.reviews$.next(this.sortBySemester(reviews, false));
+
+        return reviews;
+      } else {
+        return [];
       }
-
-      this.reviews$.next(this.sortBySemester(reviews, false));
-
-      return reviews;
     });
     return this.reviews$;
   }
 
   getRecentReviews() {
     if (this.recentSub === null) {
-      this.recentSub = this.db.database.ref('/reviews').orderByChild('created').limitToFirst(10);
+      this.recentSub = this.db.database.ref('/reviews').orderByChild('created').limitToLast(10);
       this.recentSub.on('value', snapshot => {
         const reviewsObj = snapshot.val();
         const reviews = Object.keys(reviewsObj).map(reviewId => {
@@ -251,6 +258,9 @@ export class ReviewService {
     this.localStorageService.setObject('reviews', this.cached);
     if (!this.reviews$) {
       this.reviews$ = new BehaviorSubject([]);
+    }
+    if (!this.reviewIds) {
+      this.reviewIds = [];
     }
     const reviews = this.reviewIds.map(reviewId => {
       if (this.cached[reviewId]) {

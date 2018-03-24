@@ -35,7 +35,7 @@
           </select>
         </div>
         <div class="form-group col-md-3">
-          <label for="inputWorkload">Workload</label>
+          <label for="inputWorkload">Workload (hrs/week)</label>
           <input type="number" class="form-control" id="inputWorkload" formControlName="workload">
         </div>
       </div>
@@ -93,7 +93,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="review_text">Example textarea</label>
+          <label for="review_text">Review (markdown supported)</label>
           <textarea class="form-control" id="review_text" rows="5" formControlName="text"></textarea>
         </div>
         <div class="form-group col-md-6">
@@ -104,6 +104,7 @@
     </div>
     <div class="card-footer">
       <button type="submit" class="btn btn-sm btn-primary" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
+      <button type="submit" *ngIf="review.id" class="btn btn-sm btn-danger" (click)="delete()">Delete</button>
     </div>
   </div>
 </form>
