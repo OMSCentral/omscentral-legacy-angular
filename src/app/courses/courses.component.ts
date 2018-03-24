@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { CourseService } from '../courses/course.service';
@@ -34,7 +34,7 @@ const defaultGrades = {
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   courses$: Observable<any> | Promise<Observable<any>>;
   percent = false;
   grades: any;
@@ -81,6 +81,10 @@ export class CoursesComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.courses$ = null;
   }
 
   goToCourse(course) {
