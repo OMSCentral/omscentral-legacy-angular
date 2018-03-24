@@ -23,6 +23,7 @@ export class CourseNavComponent implements OnInit {
   original: any;
   courses: any;
   specialization: any = 'all';
+  filter = '';
 
   constructor(private courseService: CourseService, private router: Router) { }
 
