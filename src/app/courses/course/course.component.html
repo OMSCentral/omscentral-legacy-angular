@@ -87,7 +87,7 @@
     </div>
     <div class="col-md-8 order-md-1">
       <div class="card">
-        <div class="card-body" *ngIf="!newReview">
+        <div class="card-body">
           <div class="btn-group">
             <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'semester', 'btn-outline-primary': sortType !== 'semester'}"
               (click)="sortBySemester()">Sort by Semester

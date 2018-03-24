@@ -13,7 +13,7 @@ import { Review } from '../../models/review';
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss']
 })
-export class CourseComponent implements OnInit {
+export class CourseComponent implements OnInit, OnDestroy {
   authId: string = null;
   course$: Observable<any>;
   course: any = {};
