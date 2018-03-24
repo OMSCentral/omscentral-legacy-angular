@@ -64,7 +64,9 @@ export class NewReviewComponent implements OnInit {
 
       this.review$.subscribe(review => {
         this.review = review;
-        this.review.course = this.route.snapshot.queryParamMap.get('courseId');
+        if (this.route.snapshot.queryParamMap.get('courseId')) {
+          this.review.course = this.route.snapshot.queryParamMap.get('courseId');
+        }
         this.edit();
       });
 
@@ -78,7 +80,7 @@ export class NewReviewComponent implements OnInit {
       course: ['', Validators.required],
       text: ['', Validators.required],
       rating: ['', Validators.required],
-      workload: ['', Validators.required],
+      workload: ['', [Validators.required, Validators.max(84)]],
       difficulty: ['', Validators.required],
       program: ['', Validators.required],
       semester: ['', Validators.required],
@@ -105,15 +107,20 @@ export class NewReviewComponent implements OnInit {
 
   delete() {
     // this.remove.emit(this.review);
+    const courseId = this.review.course;
+    this.reviewService.remove(this.review);
+    this.router.navigate(['/courses', courseId]);
   }
 
   save() {
-
     if (this.review.isNew) {
       this.review.save(this.reviewForm.value);
+      this.reviewService.push(this.review);
     } else {
       this.review.save(this.reviewForm.value);
+      this.reviewService.update(this.review);
     }
+    this.router.navigate(['/courses', this.review.course]);
   }
 
   cancel() {
