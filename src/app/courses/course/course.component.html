@@ -123,11 +123,11 @@
                 {{rating.id | rating}}</button>
             </div>
           </div>
-          <button class="btn btn-sm btn-link pull-right" (click)="newReview = true">Write a Review</button>
+          <a class="btn btn-sm btn-link pull-right" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
         </div>
       </div>
       <div *ngFor="let review of filtered">
-        <oms-review [review]="review" (remove)="remove($event)"></oms-review>
+        <oms-review [review]="review"></oms-review>
         <br/>
       </div>
     </div>

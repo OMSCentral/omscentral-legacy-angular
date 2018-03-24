@@ -21,7 +21,6 @@ export class CourseComponent implements OnInit {
   reviews: any;
   review: Review = null;
   grades: any;
-  newReview = false;
   courseSub: any;
   reviewSub: any;
   loading = true;
@@ -227,27 +226,6 @@ export class CourseComponent implements OnInit {
         this.filtered = this.reviewService.sortBySemester(filtered, this.sortDir);
       }
     }
-  }
-
-  saveNew(evt) {
-    evt.course = this.course.id;
-    evt.author = this.authId;
-    this.reviewService.push(evt);
-    this.newReview = false;
-    this.review = new Review({ course: this.course.id });
-  }
-
-  cancelNew(evt) {
-    this.review = new Review({ course: this.course.courseId });
-    this.newReview = false;
-  }
-
-  remove(evt) {
-    this.reviewService.remove(evt);
-  }
-
-  update(evt) {
-    this.reviewService.update(evt);
   }
 
   sortByDate() {

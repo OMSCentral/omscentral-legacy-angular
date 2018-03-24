@@ -7,6 +7,7 @@ import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
 import { CourseService } from '../../courses/course.service';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'oms-new-review',
@@ -15,7 +16,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class NewReviewComponent implements OnInit {
   review: Review;
-  review$: Observable<any>;
+  review$: BehaviorSubject<any>;
+  course$: Observable<any>;
   courses: any;
   courses$: Observable<any> | Promise<Observable<any>>;
   reviewForm: FormGroup;
@@ -50,15 +52,22 @@ export class NewReviewComponent implements OnInit {
         this.courses = courses;
       }
     });
-    this.review$ = this.route.paramMap
-      .switchMap((params: ParamMap) =>
-        this.reviewService.getReview(params.get('reviewId')));
+
+    this.review$ = this.reviewService.getReview(this.route.snapshot.paramMap.get('reviewId'));
+    // this.review$ = this.route.paramMap
+    //   .switchMap((params: ParamMap) =>
+    //     this.reviewService.getReview(params.get('reviewId')));
+
+    // this.course$ = this.route.paramMap
+    //     .switchMap((params: ParamMap) =>
+    //       this.courseService.getCourse(params.get('courseId')));
 
       this.review$.subscribe(review => {
-        console.log(review);
         this.review = review;
+        this.review.course = this.route.snapshot.queryParamMap.get('courseId');
         this.edit();
       });
+
     // if (this.review && this.review.course) {
     //   this.courseName = this.courseService.getCourseName(this.review.course);
     // }
@@ -95,23 +104,21 @@ export class NewReviewComponent implements OnInit {
   }
 
   delete() {
-    this.remove.emit(this.review);
+    // this.remove.emit(this.review);
   }
 
   save() {
 
     if (this.review.isNew) {
       this.review.save(this.reviewForm.value);
-      this.saveNew.emit(this.review);
     } else {
       this.review.save(this.reviewForm.value);
-      this.update.emit(this.review);
     }
   }
 
   cancel() {
     if (this.review.isNew) {
-      this.cancelNew.emit(true);
+      // state go back?
     }
     if (this.review.isEdit) {
       this.review.cancel();
