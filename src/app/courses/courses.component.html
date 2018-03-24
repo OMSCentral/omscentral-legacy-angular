@@ -1,67 +1,58 @@
-<clr-main-container>
-  <div class="content-container">
-    <div class="content-area">
-      <div class="card">
-        <div class="card-header">
-          Courses
-        </div>
-        <div class="card-block">
-          Some courses don't have grade information.
-        </div>
-        <div class="card-block">
-          <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
-          <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cpr'}" (click)="changeSpecialization('cpr')">Computational Perception and Robotics</button>
-          <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cs'}" (click)="changeSpecialization('cs')">Computing Systems</button>
-          <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ii'}" (click)="changeSpecialization('ii')">Interactive Intelligence</button>
-          <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ml'}" (click)="changeSpecialization('ml')">Machine Learning</button>
-        </div>
-      </div>
-      <clr-datagrid>
-        <clr-dg-action-bar>
-          <div class="btn-group">
-            <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent, 'btn-secondary': percent}" (click)="percent = !percent">Counts</button>
-            <button class="btn btn-sm" [ngClass]="{'btn-primary': percent, 'btn-secondary': !percent}" (click)="percent = !percent">Percentage</button>
-            <span *ngIf="percent">&nbsp;&nbsp;Percentages are based off of A-F grade counts.</span>
-          </div>
-        </clr-dg-action-bar>
-        <clr-dg-column [clrDgField]="'department'">Dept.</clr-dg-column>
-        <clr-dg-column [clrDgField]="'number'">#</clr-dg-column>
-        <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
-        <clr-dg-column [clrDgField]="'grades.totals.t'">Enrolled</clr-dg-column>
-        <clr-dg-column [clrDgField]="'numReviews'">Reviews</clr-dg-column>
-        <clr-dg-column [clrDgField]="'average.workload'">Avg. Work</clr-dg-column>
-        <clr-dg-column [clrDgField]="'average.difficulty'">Avg. Dif.</clr-dg-column>
-        <clr-dg-column [clrDgField]="'average.rating'">Avg. Rating</clr-dg-column>
-        <clr-dg-column *ngIf="percent" [clrDgField]="'grades.percents.ab'">% &ge; B</clr-dg-column>
-        <clr-dg-column *ngIf="percent" [clrDgField]="'grades.percents.cdf'">% &le; C</clr-dg-column>
-        <clr-dg-column *ngIf="percent" [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
-        <clr-dg-column *ngIf="!percent" [clrDgField]="'grades.totals.ab'">&ge; B</clr-dg-column>
-        <clr-dg-column *ngIf="!percent" [clrDgField]="'grades.totals.cdf'">&le; C</clr-dg-column>
-        <clr-dg-column *ngIf="!percent" [clrDgField]="'grades.totals.w'">Withdrew</clr-dg-column>
-
-        <clr-dg-row *clrDgItems="let course of courses">
-          <clr-dg-cell>{{course.department}}</clr-dg-cell>
-          <clr-dg-cell>{{course.number}}</clr-dg-cell>
-          <clr-dg-cell>
-            <a [routerLink]="['/courses', course.id]">{{course.name}}</a>
-          </clr-dg-cell>
-          <clr-dg-cell>{{course.grades?.totals.t | number}}</clr-dg-cell>
-          <clr-dg-cell>{{course.numReviews | number}}</clr-dg-cell>
-          <clr-dg-cell>{{course.average?.workload | number}}</clr-dg-cell>
-          <clr-dg-cell>{{course.average?.difficulty | number}}</clr-dg-cell>
-          <clr-dg-cell>{{course.average?.rating | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.percents.ab | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{100 * course.grades?.percents.cdf | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="percent">{{course.grades?.totals.w | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.ab | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.cdf | number}}</clr-dg-cell>
-          <clr-dg-cell *ngIf="!percent">{{course.grades?.totals.w | number}}</clr-dg-cell>
-        </clr-dg-row>
-        <clr-dg-footer>
-          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} courses
-          <clr-dg-pagination #pagination [clrDgPageSize]="20"></clr-dg-pagination>
-        </clr-dg-footer>
-      </clr-datagrid>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Courses</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Some courses don't have grade information.</h6>
+  </div>
+  <div class="card-body">
+    <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
+    <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cpr'}" (click)="changeSpecialization('cpr')">Computational Perception and Robotics</button>
+    <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cs'}" (click)="changeSpecialization('cs')">Computing Systems</button>
+    <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ii'}" (click)="changeSpecialization('ii')">Interactive Intelligence</button>
+    <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ml'}" (click)="changeSpecialization('ml')">Machine Learning</button>
+  </div>
+  <div class="card-body">
+    <div class="btn-group" role="group">
+      <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent, 'btn-default': percent}" (click)="percent = !percent">Counts</button>
+      <button class="btn btn-sm" [ngClass]="{'btn-primary': percent, 'btn-default': !percent}" (click)="percent = !percent">Percentage</button>
+      <span *ngIf="percent">&nbsp;&nbsp;Percentages are based off of A-F grade counts.</span>
     </div>
   </div>
-</clr-main-container>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Enrolled</th>
+          <th scope="col">Reviews</th>
+          <th scope="col">Avg. Work</th>
+          <th scope="col">Avg. Dif.</th>
+          <th scope="col">Avg. Rating</th>
+          <th scope="col" *ngIf="percent">% &ge; B</th>
+          <th scope="col" *ngIf="percent">% &le; C</th>
+          <th scope="col" *ngIf="percent">Withdrew</th>
+          <th scope="col" *ngIf="!percent">&ge; B</th>
+          <th scope="col" *ngIf="!percent">&le; C</th>
+          <th scope="col" *ngIf="!percent">Withdrew</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses">
+          <td>
+            <a [routerLink]="['/courses', course.id]">{{course.combined}}</a>
+          </td>
+          <td>{{course.grades?.totals.t | number}}</td>
+          <td>{{course.numReviews | number}}</td>
+          <td>{{course.average?.workload | number}}</td>
+          <td>{{course.average?.difficulty | number}}</td>
+          <td>{{course.average?.rating | number}}</td>
+          <td *ngIf="percent">{{100 * course.grades?.percents.ab | number}}</td>
+          <td *ngIf="percent">{{100 * course.grades?.percents.cdf | number}}</td>
+          <td *ngIf="percent">{{course.grades?.totals.w | number}}</td>
+          <td *ngIf="!percent">{{course.grades?.totals.ab | number}}</td>
+          <td *ngIf="!percent">{{course.grades?.totals.cdf | number}}</td>
+          <td *ngIf="!percent">{{course.grades?.totals.w | number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
