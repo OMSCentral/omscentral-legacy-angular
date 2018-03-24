@@ -1,0 +1,151 @@
+<oms-course-nav>
+  <div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">{{course?.combined}}</span>
+      </h4>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="course?.average">
+          <div>
+            <h6 class="my-0">Reviews</h6>
+          </div>
+          <span class="text-muted">
+            <span *ngIf="stats.num">{{stats?.num}} / </span>{{course?.numReviews}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
+          <div>
+            <h6 class="my-0">Average Work</h6>
+            <small class="text-muted">Hours/week</small>
+          </div>
+          <span class="text-muted">
+            <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{course?.average.workload | number}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
+          <div>
+            <h6 class="my-0">Average Difficulty</h6>
+            <small class="text-muted">(Easy) 1 - 5 (Hard)</small>
+          </div>
+          <span class="text-muted">
+            <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{course?.average.difficulty | number}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="reviews?.length > 0 && course?.average">
+          <div>
+            <h6 class="my-0">Average Rating</h6>
+            <small class="text-muted">(Worst) 1 - 5 (Best)</small>
+          </div>
+          <span class="text-muted">
+            <span *ngIf="stats?.rating">{{stats?.rating | number}} / </span>{{course?.average.rating | number}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="grades">
+          <div class="btn-group">
+            <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent}" (click)="percent = !percent">Counts</button>
+            <button class="btn btn-sm" [ngClass]="{'btn-primary': percent}" (click)="percent = !percent">Percentage</button>
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngIf="grades && percent">Percentages are based off of A-F grade counts.</li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed" style="padding: 0;" *ngIf="grades">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Semester</th>
+                <th scope="col">Enrolled</th>
+                <th scope="col">A</th>
+                <th scope="col">B</th>
+                <th scope="col">C</th>
+                <th scope="col">D</th>
+                <th scope="col">F</th>
+                <th scope="col">W</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!percent">
+              <tr *ngFor="let grade of grades?.semesterGrades">
+                <td>{{grade.semester | semester}}</td>
+                <td>{{grade.t | number}}</td>
+                <td>{{grade.a | number}}</td>
+                <td>{{grade.b | number}}</td>
+                <td>{{grade.c | number}}</td>
+                <td>{{grade.d | number}}</td>
+                <td>{{grade.f | number}}</td>
+                <td>{{grade.w | number}}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="percent">
+              <tr *ngFor="let grade of grades?.semesterPercents">
+                <td>{{grade.semester | semester}}</td>
+                <td>{{grade.t | number}}</td>
+                <td>{{grade.a * 100 | number:'1.0-0'}}</td>
+                <td>{{grade.b * 100 | number:'1.0-0'}}</td>
+                <td>{{grade.c * 100 | number:'1.0-0'}}</td>
+                <td>{{grade.d * 100 | number:'1.0-0'}}</td>
+                <td>{{grade.f * 100 | number:'1.0-0'}}</td>
+                <td>{{grade.w | number}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8 order-md-1">
+      <div class="card">
+        <div class="card-body" *ngIf="!newReview">
+          <div class="btn-group">
+            <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'semester', 'btn-outline-primary': sortType !== 'semester'}"
+              (click)="sortBySemester()">Sort by Semester
+              <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+              <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+            </button>
+            <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'date', 'btn-outline-primary': sortType !== 'date'}" (click)="sortByDate()">Sort by Date
+              <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+              <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="d-inline-block" ngbDropdown>
+            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Semesters</button>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" *ngFor="let semester of filterList('semesters')" [ngClass]="{'active': selected('semesters', semester.id)}"
+                [disabled]="semester.disabled" (click)="change('semesters', semester.id)">{{semester.id | semester}}</button>
+            </div>
+          </div>
+          <div class="d-inline-block" ngbDropdown>
+            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Difficulties</button>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" *ngFor="let difficulty of filterList('difficulties')" [ngClass]="{'active': selected('difficulties', difficulty.id)}"
+                [disabled]="difficulty.disabled" (click)="change('difficulties', difficulty.id)">
+                {{difficulty.id | difficulty}}
+              </button>
+            </div>
+          </div>
+          <div class="d-inline-block" ngbDropdown>
+            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Ratings</button>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" *ngFor="let rating of filterList('ratings')" [ngClass]="{'active': selected('ratings', rating.id)}"
+                [disabled]="rating.disabled" (click)="change('ratings', rating.id)">
+                {{rating.id | rating}}</button>
+            </div>
+          </div>
+          <a class="btn btn-sm btn-link pull-right" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
+        </div>
+      </div>
+      <div *ngIf="loading" class="text-center">
+        <div class="fa fa-spinner fa-spin fa-2x"></div>
+      </div>
+      <div *ngIf="!loading">
+        <br />
+        <div class="card" *ngIf="reviews?.length == 0">
+          <div class="card-header">
+            <span class="card-title">
+              There are no reviews for {{course?.id}}
+            </span>
+          </div>
+          <div class="card-body text-center">
+              <a class="btn btn-primary" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
+          </div>
+        </div>
+        <div *ngFor="let review of filtered">
+          <oms-review [review]="review"></oms-review>
+          <br/>
+        </div>
+      </div>
+    </div>
+  </div>
+</oms-course-nav>

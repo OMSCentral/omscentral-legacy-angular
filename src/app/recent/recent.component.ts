@@ -17,6 +17,9 @@ export class RecentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.reviews$ = this.reviewService.getRecentReviews();
+    this.reviews$.subscribe(reviews => {
+      console.log(reviews);
+    });
   }
 
   ngOnDestroy() {
