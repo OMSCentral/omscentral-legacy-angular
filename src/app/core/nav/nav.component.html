@@ -1,14 +1,57 @@
-<header class="header-6">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">OMSCentral</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExample04">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a href class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">About</a>
+      </li>
+      <li class="nav-item" *ngIf="(authenticated)">
+        <a href class="nav-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" routerLink="/courses" routerLinkActive="active">Courses</a>
+      </li>
+      <li class="nav-item" *ngIf="(authenticated)">
+        <a href class="nav-link" routerLink="/recent" routerLinkActive="active">Recent</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" routerLink="/donate" routerLinkActive="active">Donate</a>
+      </li>
+      <li class="nav-item" *ngIf="(authenticated && user.admin)">
+        <a href class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+      </li>
+    </ul>
+    <!-- <span class="navbar-text"> -->
+      <span class="pull-right">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <ng-gh-btn class="github-btn" username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="user">
+            <img [src]="user.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href class="active nav-link" *ngIf="user">{{ user.displayName }}</a>
+          <a href class="active nav-link" *ngIf="!(user)" href="/login">Login</a>
+          <a href class="active nav-link" *ngIf="(user)" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </span>
+  </div>
+</nav>
+
+<!-- <header class="header-6">
   <div class="branding">
     <a href="/" class="nav-link">
       <span class="title">OMSCentral</span>
     </a>
   </div>
-  <!-- <form class="search">
-        <label for="search_input">
-            <input id="search_input" type="text" placeholder="Search for keywords...">
-        </label>
-    </form> -->
   <div class="settings">
     <ng-gh-btn class="github-btn" username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
     <a class="active nav-link nav-icon" *ngIf="user">
@@ -46,4 +89,4 @@
       <a href class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
     </li>
   </ul>
-</nav>
+</nav> -->

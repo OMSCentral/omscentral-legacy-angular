@@ -1,0 +1,110 @@
+<form [formGroup]="reviewForm" novalidate>
+  <div class="card" *ngIf="review">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="inputCourse">Course</label>
+          <select id="inputCourse" class="form-control" formControlName="course">
+            <option *ngFor="let course of courses" [value]="course.id">{{course.combined}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputProgram">Program</label>
+          <select id="inputProgram" class="form-control" formControlName="program">
+            <option *ngFor="let program of programs" [value]="program">{{program | program}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputSemester">Semester</label>
+          <select id="inputSemester" class="form-control" formControlName="semester">
+            <option *ngFor="let semester of semesters" [value]="semester">{{semester | semester}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputRating">Rating</label>
+          <select id="inputRating" class="form-control" formControlName="rating">
+            <option *ngFor="let rating of ratings" [value]="rating">{{rating | rating}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputDifficulty">Difficulty</label>
+          <select id="inputDifficulty" class="form-control" formControlName="difficulty">
+            <option *ngFor="let difficulty of difficulties" [value]="difficulty">{{difficulty | difficulty}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputWorkload">Workload (hrs/week)</label>
+          <input type="number" class="form-control" id="inputWorkload" formControlName="workload">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputPreviousClasses">Previous # of Classes</label>
+          <input type="number" class="form-control" id="inputPreviousClasses" formControlName="previousClasses">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputProjects"># of Projects</label>
+          <input type="number" class="form-control" id="inputProjects" formControlName="projects">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputGroupProjects"># of Group Projects</label>
+          <input type="number" class="form-control" id="inputGroupProjects" formControlName="groupProjects">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputTests"># of Tests</label>
+          <input type="number" class="form-control" id="inputTests" formControlName="tests">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="firstCourse" formControlName="firstCourse">
+            <label class="form-check-label" for="firstCourse">
+              I would recommend this as a first course
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="extraCredit" formControlName="extraCredit">
+            <label class="form-check-label" for="extraCredit">
+              Extra credit was offered
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="frontLoad" formControlName="frontLoad">
+            <label class="form-check-label" for="frontLoad">
+              Can front load / work ahead?
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="proctorTrack" formControlName="proctorTrack">
+            <label class="form-check-label" for="proctorTrack">
+              Course used ProctorTrack
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="review_text">Review (markdown supported)</label>
+          <textarea class="form-control" id="review_text" rows="5" formControlName="text"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="markdown_preview">Preview</label>
+          <markdown id="markdown_preview" [data]="review.text"></markdown>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-sm btn-primary" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
+      <button type="submit" *ngIf="review.id" class="btn btn-sm btn-danger" (click)="delete()">Delete</button>
+    </div>
+  </div>
+</form>
