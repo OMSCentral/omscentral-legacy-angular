@@ -54,6 +54,7 @@ export class CourseComponent implements OnInit {
         this.courseService.getCourse(params.get('courseId')));
 
     this.courseSub = this.course$.debounceTime(1000).subscribe(course => {
+      this.loading = true;
       if (course === null) {
         this.course = null;
       }
@@ -61,6 +62,7 @@ export class CourseComponent implements OnInit {
         this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
         this.grades = this.gradeService.getCourseGrades(course.id);
         this.reviewSub = this.reviews$.debounceTime(1000).subscribe(reviews => {
+          this.loading = false;
           const sems = {};
           const diff = {};
           const rats = {};
