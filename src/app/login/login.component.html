@@ -38,64 +38,13 @@
           </button>
         </div>
       </div>
-  </form>
-</div>
-<!-- <div class="login-wrapper">
-  <div class="login">
-    <label class="title">
-      <h3 class="welcome">Welcome to</h3>
-      OMSCentral
-      <h5 class="hint">Share your OMSCS experience with your classmates.</h5>
-    </label>
-    <form>
-      <div class="login-group">
-
-        <input class="username" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
-        <input class="password" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
-        <div *ngIf="error" class="error active">
-          {{error}}.
-          <a style="cursor: pointer" *ngIf="email" (click)="resetPassword()">Reset Password?</a>
-        </div>
-        <div *ngIf="reset" class="alert alert-success">
-          <div class="alert-items">
-            <div class="alert-item static">
-              <div class="alert-icon-wrapper">
-                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
-              </div>
-              <span class="alert-text">A password reset email has been sent.</span>
-            </div>
+      <br />
+      <br />
+      <div class="text-center">
+          <div class="signup">
+            <span>Don't have an account?</span>
+            <a class="btn btn-sm btn-link signup" [routerLink]="['/register']">Register</a>
           </div>
         </div>
-        <div class="btn-group btn-primary">
-          <button type="submit" class="btn btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
-        </div>
-      </div>
-    </form>
-    <br />
-    <br />
-    <div class="text-center">
-      <div class="btn-group btn-link">
-        <button class="btn" (click)="social('github')">
-          <i class="fa fa-github fa-3x" aria-hidden="true"></i>
-        </button>
-        <button class="btn" (click)="social('twitter')">
-          <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
-        </button>
-        <button class="btn" (click)="social('facebook')">
-          <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
-        </button>
-        <button class="btn" (click)="social('google')">
-          <i class="fa fa-google fa-3x" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-    <br />
-    <br />
-    <div class="text-center">
-      <div class="signup">
-        <span>Don't have an account?</span>
-        <button class="btn btn-sm btn-link signup" (click)="register()">Register</button>
-      </div>
-    </div>
-  </div>
-</div> -->
+  </form>
+</div>

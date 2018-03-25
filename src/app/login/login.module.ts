@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { AuthService } from '../firebase/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -16,7 +16,6 @@ export class NavComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router,
     private userService: UserService, private settingsService: SettingsService) {
     userService.user$.subscribe(storedUser => {
-      console.log(storedUser);
       if (storedUser && storedUser.admin) {
         this.user.admin = storedUser.admin;
       }
