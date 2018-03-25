@@ -39,10 +39,6 @@ export class LoginComponent implements OnInit {
         '';
   }
 
-  register() {
-    this.router.navigate(['register']);
-  }
-
   social(authProvider) {
     const self = this;
     this.authService.social(authProvider).then(() => {
