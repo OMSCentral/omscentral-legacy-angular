@@ -1,16 +1,18 @@
 <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Courses</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Some courses don't have grade information.</h6>
+  <div class="card-header">
+    Courses
   </div>
-  <div class="card-body">
+  <div class="card-body course-text">
+    <h5>Some courses don't have grade information.</h5>
+  </div>
+  <div class="card-body course-text">
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cpr'}" (click)="changeSpecialization('cpr')">Computational Perception and Robotics</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cs'}" (click)="changeSpecialization('cs')">Computing Systems</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ii'}" (click)="changeSpecialization('ii')">Interactive Intelligence</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ml'}" (click)="changeSpecialization('ml')">Machine Learning</button>
   </div>
-  <div class="card-body">
+  <div class="card-body course-text">
     <div class="btn-group" role="group">
       <button class="btn btn-sm" [ngClass]="{'btn-primary': !percent, 'btn-default': percent}" (click)="percent = !percent">Counts</button>
       <button class="btn btn-sm" [ngClass]="{'btn-primary': percent, 'btn-default': !percent}" (click)="percent = !percent">Percentage</button>
@@ -38,7 +40,7 @@
       <tbody>
         <tr *ngFor="let course of courses">
           <td>
-            <a [routerLink]="['/courses', course.id]">{{course.combined}}</a>
+            <a [routerLink]="['/courses', course.id]">{{course.combined}} {{course.id}}</a>
           </td>
           <td>{{course.grades?.totals.t | number}}</td>
           <td>{{course.numReviews | number}}</td>

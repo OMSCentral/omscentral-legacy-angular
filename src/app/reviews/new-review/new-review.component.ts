@@ -95,7 +95,6 @@ export class NewReviewComponent implements OnInit {
       frontLoad: ''
     });
     this.reviewForm.valueChanges.subscribe(changes => {
-      console.log(changes);
       this.review.update(changes);
     });
   }
