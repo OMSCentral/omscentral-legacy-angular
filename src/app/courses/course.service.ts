@@ -85,30 +85,33 @@ export class CourseService {
       const courses = jsonData;
       const firebaseCourses = snapshot.val();
       Object.keys(firebaseCourses).forEach(courseId => {
-        courses[courseId] = Object.assign(jsonData[courseId] || {}, firebaseCourses[courseId] || {});
-        if (courses[courseId].reviews) {
-          const revs = Object.keys(courses[courseId].reviews).filter(rev => {
-            return courses[courseId].reviews[rev] && courses[courseId].reviews[rev] !== null;
-          });
-          courses[courseId].numReviews = revs.length;
-        } else {
-          courses[courseId].numReviews = 0;
-        }
-        courses[courseId].id = courseId;
-        courses[courseId].combined = courseId + ': ' + courses[courseId].name;
-        if (courses[courseId].grades) {
-          courses[courseId].totals = this.processGrades(courses[courseId].grades);
-          courses[courseId].semesterGrades = Object.keys(courses[courseId].grades).map(semGrade => {
-            const grade = courses[courseId].grades[semGrade];
-            grade.semester = semGrade;
-            return grade;
-          });
-        } else {
-          courses[courseId].semesterGrades = [];
-          courses[courseId].totals = {};
+        if (jsonData[courseId]) {
+          courses[courseId] = Object.assign(jsonData[courseId] || {}, firebaseCourses[courseId] || {});
+          if (courses[courseId].reviews) {
+            const revs = Object.keys(courses[courseId].reviews).filter(rev => {
+              return courses[courseId].reviews[rev] && courses[courseId].reviews[rev] !== null;
+            });
+            courses[courseId].numReviews = revs.length;
+          } else {
+            courses[courseId].numReviews = 0;
+          }
+          courses[courseId].id = courseId;
+          courses[courseId].combined = courseId + ': ' + courses[courseId].name;
+          if (courses[courseId].grades) {
+            courses[courseId].totals = this.processGrades(courses[courseId].grades);
+            courses[courseId].semesterGrades = Object.keys(courses[courseId].grades).map(semGrade => {
+              const grade = courses[courseId].grades[semGrade];
+              grade.semester = semGrade;
+              return grade;
+            });
+          } else {
+            courses[courseId].semesterGrades = [];
+            courses[courseId].totals = {};
+          }
         }
       });
-      this.cached = Object.assign(this.cached, courses);
+      // console.log(this.cached);
+      this.cached = courses;
       Object.keys(this.cached).forEach(cacheKey => {
         if (coursePrefixes.indexOf(cacheKey.substr(0, 2)) === -1) {
           delete this.cached[cacheKey];
