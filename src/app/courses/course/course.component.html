@@ -130,7 +130,6 @@
         <div class="fa fa-spinner fa-spin fa-2x"></div>
       </div>
       <div *ngIf="!loading">
-        <br />
         <div class="card" *ngIf="reviews?.length == 0">
           <div class="card-header">
             <span class="card-title">
@@ -143,7 +142,6 @@
         </div>
         <div *ngFor="let review of filtered">
           <oms-review [review]="review"></oms-review>
-          <br/>
         </div>
       </div>
     </div>
