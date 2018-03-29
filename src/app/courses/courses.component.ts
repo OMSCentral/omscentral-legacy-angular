@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
+import * as _ from 'lodash';
 
 const specializations = {
   cpr: ['CS-6505', 'CS-8803-GA', 'CS-6601', 'CS-7641', 'CS-8803-GA', 'CS-6475', 'CS-6476', 'CS-8803-001'],
@@ -41,6 +42,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
   original: any;
   courses: any;
   specialization: any = 'all';
+  sortObj = {
+    type: '',
+    dir: -1
+  };
 
   constructor(private courseService: CourseService, private gradeService: GradeService, private router: Router) { }
 
@@ -89,6 +94,33 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   goToCourse(course) {
     this.router.navigate(['/courses', course]);
+  }
+
+  sort(type) {
+    if (this.sortObj.type !== type) {
+      this.sortObj.type = type;
+      this.sortObj.dir = -1;
+    } else {
+      this.sortObj.dir = this.sortObj.dir * -1;
+    }
+    this.courses = this.original.sort((a, b) => {
+      let compare = 0;
+      if (typeof _.get(a, this.sortObj.type, '') === 'string') {
+        if (_.get(a, this.sortObj.type, '').toUpperCase() > _.get(b, this.sortObj.type, '').toUpperCase()) {
+          compare = 1;
+        } else {
+          compare = -1;
+        }
+      } else {
+        if (_.get(a, this.sortObj.type, 0) > _.get(b, this.sortObj.type, 0)) {
+          compare = 1;
+        } else {
+          compare = -1;
+        }
+      }
+      compare = compare * this.sortObj.dir;
+      return compare;
+    });
   }
 
   changeSpecialization(type) {
