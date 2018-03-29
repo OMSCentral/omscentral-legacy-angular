@@ -3,7 +3,7 @@
     Courses
   </div>
   <div class="card-body course-text">
-    <h5>Some courses don't have grade information.</h5>
+    <h5>Some courses don't have grade or enrollment information.</h5>
   </div>
   <div class="card-body course-text">
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
@@ -20,27 +20,48 @@
     </div>
   </div>
   <div class="card-body">
-    <table class="table table-sm">
+    <table class="table table-sm table-striped">
       <thead>
         <tr>
-          <th scope="col">Course</th>
-          <th scope="col">Enrolled</th>
-          <th scope="col">Reviews</th>
-          <th scope="col">Avg. Work</th>
-          <th scope="col">Avg. Dif.</th>
-          <th scope="col">Avg. Rating</th>
-          <th scope="col" *ngIf="percent">% &ge; B</th>
-          <th scope="col" *ngIf="percent">% &le; C</th>
-          <th scope="col" *ngIf="percent">Withdrew</th>
-          <th scope="col" *ngIf="!percent">&ge; B</th>
-          <th scope="col" *ngIf="!percent">&le; C</th>
-          <th scope="col" *ngIf="!percent">Withdrew</th>
+          <th class="clickable" scope="col" (click)="sort('id')">Course&nbsp;
+            <i *ngIf="sortObj.type === 'id' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'id' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('grades.totals.t')">Enrolled&nbsp;
+            <i *ngIf="sortObj.type === 'grades.totals.t' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.totals.t' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('numReviews')">Reviews&nbsp;
+            <i *ngIf="sortObj.type === 'numReviews' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'numReviews' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('average.workload')">Avg. Work&nbsp;
+            <i *ngIf="sortObj.type === 'average.workload' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'average.workload' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('average.difficulty')">Avg. Dif.&nbsp;
+            <i *ngIf="sortObj.type === 'average.difficulty' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'average.difficulty' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('average.rating')">Avg. Rating&nbsp;
+            <i *ngIf="sortObj.type === 'average.rating' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'average.rating' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" *ngIf="percent" (click)="sort('grades.percents.ab')">% &ge; B&nbsp;
+            <i *ngIf="sortObj.type === 'grades.percents.ab' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.percents.ab' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" *ngIf="percent" (click)="sort('grades.percents.cdf')">% &le; C&nbsp;
+            <i *ngIf="sortObj.type === 'grades.percents.cdf' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.percents.cdf' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" *ngIf="!percent" (click)="sort('grades.totals.ab')">&ge; B&nbsp;
+            <i *ngIf="sortObj.type === 'grades.totals.ab' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.totals.ab' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" *ngIf="!percent" (click)="sort('grades.totals.cdf')">&le; C&nbsp;
+            <i *ngIf="sortObj.type === 'grades.totals.cdf' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.totals.cdf' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
+          <th class="clickable" scope="col" (click)="sort('grades.totals.w')">Withdrew&nbsp;
+            <i *ngIf="sortObj.type === 'grades.totals.w' && sortObj.dir === 1" class="fa fa-angle-up"></i>
+            <i *ngIf="sortObj.type === 'grades.totals.w' && sortObj.dir === -1" class="fa fa-angle-down"></i></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let course of courses">
           <td>
-            <a [routerLink]="['/courses', course.id]">{{course.combined}} {{course.id}}</a>
+            <a [routerLink]="['/courses', course.id]">{{course.combined}}</a>
           </td>
           <td>{{course.grades?.totals.t | number}}</td>
           <td>{{course.numReviews | number}}</td>
@@ -49,10 +70,9 @@
           <td>{{course.average?.rating | number}}</td>
           <td *ngIf="percent">{{100 * course.grades?.percents.ab | number}}</td>
           <td *ngIf="percent">{{100 * course.grades?.percents.cdf | number}}</td>
-          <td *ngIf="percent">{{course.grades?.totals.w | number}}</td>
           <td *ngIf="!percent">{{course.grades?.totals.ab | number}}</td>
           <td *ngIf="!percent">{{course.grades?.totals.cdf | number}}</td>
-          <td *ngIf="!percent">{{course.grades?.totals.w | number}}</td>
+          <td>{{course.grades?.totals.w | number}}</td>
         </tr>
       </tbody>
     </table>
