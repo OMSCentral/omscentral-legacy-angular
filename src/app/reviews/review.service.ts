@@ -204,10 +204,8 @@ export class ReviewService {
         }
 
         this.reviews$.next(this.sortBySemester(reviews, false));
-
-        return reviews;
       } else {
-        return [];
+        this.reviews$.next([]);
       }
     });
     return this.reviews$;
@@ -225,8 +223,6 @@ export class ReviewService {
         }).reverse();
 
         this.recent$.next(reviews);
-
-        return reviews;
       });
     }
     return this.recent$;
