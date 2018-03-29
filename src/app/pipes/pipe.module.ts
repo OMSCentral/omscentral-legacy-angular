@@ -7,13 +7,14 @@ import { WorkloadPipe } from '../pipes/workload.pipe';
 import { ProgramPipe } from './program.pipe';
 import { ReviewsPipe } from './reviews.pipe';
 import { CoursePipe } from './course.pipe';
+import { CoursesPipe } from './courses.pipe';
 
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe],
-  exports: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe]
+  declarations: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe, CoursesPipe],
+  exports: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe, CoursesPipe]
 })
 export class PipeModule { }
