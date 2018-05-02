@@ -12,6 +12,8 @@ import { CoursesComponent } from './courses/courses.component';
 import { RecentComponent } from './recent/recent.component';
 import { CourseComponent } from './courses/course/course.component';
 import { NewReviewComponent } from './reviews/new-review/new-review.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+
 
 const routes: Routes = [
   {
@@ -33,6 +35,10 @@ const routes: Routes = [
   {
     path: 'courses',
     component: CoursesComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
   },
   {
     path: 'recent',
