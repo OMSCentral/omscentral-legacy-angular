@@ -45,10 +45,12 @@ import 'clarity-icons/clarity-icons.min.js';
 import { MarkdownModule } from 'angular2-markdown';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
