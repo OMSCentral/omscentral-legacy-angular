@@ -4,11 +4,10 @@ import { NavComponent } from './nav/nav.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AlertComponent } from './alert/alert.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GithubButtonModule } from 'angular-github-buttons';
 
 @NgModule({
-  imports: [CommonModule, AppRoutingModule, GithubButtonModule, NgbModule],
+  imports: [CommonModule, AppRoutingModule, GithubButtonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NavComponent, SidebarComponent, AlertComponent],
   declarations: [NavComponent, SidebarComponent, AlertComponent],

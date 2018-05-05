@@ -42,7 +42,6 @@ import '@webcomponents/custom-elements/custom-elements.min.js';
 
 import { MarkdownModule } from 'angular2-markdown';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
@@ -68,7 +67,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
     CoursesModule,
     AdminModule,
     MarkdownModule.forRoot(),
-    NgbModule.forRoot(),
   ],
   providers: [
     AuthGuard,
