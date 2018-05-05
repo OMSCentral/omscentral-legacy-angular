@@ -1,6 +1,6 @@
 export enum Season {
-    '',
-    'Spring',
-    'Summer',
-    'Fall'
+  '',
+  'Spring',
+  'Summer',
+  'Fall',
 }

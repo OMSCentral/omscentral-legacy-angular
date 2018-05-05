@@ -1,11 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ClarityModule } from 'clarity-angular';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { PipeModule } from '../../pipes/pipe.module';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CourseService } from '../../courses/course.service';
 class MockCourse {
   getCourses() {
@@ -18,18 +17,12 @@ class MockCourse {
 
 import { GradeService } from '../../grades/grade.service';
 class MockGrade {
-  getCourses() {
-
-  }
-  getGrades() {
-
-  }
+  getCourses() {}
+  getGrades() {}
 }
 
 import { ReviewService } from '../../reviews/review.service';
-class MockReview {
-
-}
+class MockReview {}
 
 import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
@@ -44,17 +37,16 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PipeModule, ClarityModule, RouterTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-      providers: [{ provide: CourseService, useClass: MockCourse },
+      imports: [PipeModule, RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: CourseService, useClass: MockCourse },
         { provide: GradeService, useClass: MockGrade },
         { provide: AuthService, useClass: MockAuth },
-        { provide: ReviewService, useClass: MockReview }],
-      declarations: [ CourseComponent ]
-    })
-    .compileComponents();
+        { provide: ReviewService, useClass: MockReview },
+      ],
+      declarations: [CourseComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

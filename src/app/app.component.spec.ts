@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 import { SettingsService } from './core/settings.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 class MockSettings {
   settings$: BehaviorSubject<any> = new BehaviorSubject(null);
 }
@@ -12,18 +12,10 @@ class MockSettings {
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      providers: [
-        { provide: SettingsService, useClass: MockSettings }
-      ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      providers: [{ provide: SettingsService, useClass: MockSettings }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [AppComponent],
     }).compileComponents();
   }));
   it('should create the app', async(() => {

@@ -7,14 +7,18 @@ import { SettingsService } from '../settings.service';
 @Component({
   selector: 'oms-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
   authenticated = false;
   user: any = {};
 
-  constructor(private auth: AuthService, private router: Router,
-    private userService: UserService, private settingsService: SettingsService) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private userService: UserService,
+    private settingsService: SettingsService
+  ) {
     userService.user$.subscribe(storedUser => {
       if (storedUser && storedUser.admin) {
         this.user.admin = storedUser.admin;
@@ -31,12 +35,10 @@ export class NavComponent implements OnInit {
     settingsService.getSettings();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logout() {
     this.auth.logout();
     this.router.navigate(['login']);
   }
-
 }
