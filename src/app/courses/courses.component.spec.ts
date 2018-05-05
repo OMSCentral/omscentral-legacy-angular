@@ -1,12 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ClarityModule } from 'clarity-angular';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CoursesComponent } from './courses.component';
 import { PipeModule } from '../pipes/pipe.module';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { CourseService } from '../courses/course.service';
 class MockCourse {
   getCourses() {
@@ -16,12 +15,8 @@ class MockCourse {
 
 import { GradeService } from '../grades/grade.service';
 class MockGrade {
-  getCourses() {
-
-  }
-  getGrades() {
-
-  }
+  getCourses() {}
+  getGrades() {}
 }
 
 describe('CoursesComponent', () => {
@@ -30,14 +25,14 @@ describe('CoursesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PipeModule, ClarityModule, RouterTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
+      imports: [PipeModule, RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: CourseService, useClass: MockCourse },
+        { provide: GradeService, useClass: MockGrade },
       ],
-      providers: [{ provide: CourseService, useClass: MockCourse }, { provide: GradeService, useClass: MockGrade }],
-      declarations: [CoursesComponent]
-    })
-      .compileComponents();
+      declarations: [CoursesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
