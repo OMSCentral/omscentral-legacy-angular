@@ -6,6 +6,6 @@ export const environment = {
     databaseURL: 'https://gt-surveyor.firebaseio.com',
     projectId: 'firebase-gt-surveyor',
     storageBucket: 'firebase-gt-surveyor.appspot.com',
-    messagingSenderId: '138094612706'
-  }
+    messagingSenderId: '138094612706',
+  },
 };

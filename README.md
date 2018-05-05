@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Grades Data
+
+For grades data, you can go to `https://tableau.gatech.edu/` and build a worksheet that looks like...
+
+![tableau config](./tableau.png "Tableau Config")
+
+And export a raw csv (not available in the normal views).  Hopefully this method persists...

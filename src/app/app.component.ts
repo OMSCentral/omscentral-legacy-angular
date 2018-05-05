@@ -5,7 +5,7 @@ import { SettingsService } from './core/settings.service';
 @Component({
   selector: 'oms-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'oms';

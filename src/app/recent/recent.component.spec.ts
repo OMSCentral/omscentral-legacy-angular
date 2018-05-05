@@ -7,7 +7,7 @@ import { RecentComponent } from './recent.component';
 
 import { PipeModule } from '../pipes/pipe.module';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../firebase/auth.service';
 class MockAuth {
   user = new BehaviorSubject({});
@@ -22,13 +22,9 @@ class MockCourse {
 
 import { ReviewService } from '../reviews/review.service';
 class MockReview {
-  getRecentReviews() {
-
-  }
-  unsubRecent() { }
+  getRecentReviews() {}
+  unsubRecent() {}
 }
-
-import { ClarityModule } from 'clarity-angular';
 
 describe('RecentComponent', () => {
   let component: RecentComponent;
@@ -36,18 +32,20 @@ describe('RecentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PipeModule, RouterTestingModule, ClarityModule, FormsModule, ReactiveFormsModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
+      imports: [
+        PipeModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: CourseService, useClass: MockCourse },
         { provide: ReviewService, useClass: MockReview },
-        { provide: AuthService, useClass: MockAuth }
+        { provide: AuthService, useClass: MockAuth },
       ],
-      declarations: [RecentComponent]
-    })
-      .compileComponents();
+      declarations: [RecentComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

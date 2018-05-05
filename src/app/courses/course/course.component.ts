@@ -1,17 +1,18 @@
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../../reviews/review.service';
 import { GradeService } from '../../grades/grade.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs';
+
 import { Review } from '../../models/review';
 
 @Component({
   selector: 'oms-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  styleUrls: ['./course.component.scss'],
 })
 export class CourseComponent implements OnInit, OnDestroy {
   authId: string = null;
@@ -30,30 +31,37 @@ export class CourseComponent implements OnInit, OnDestroy {
   filters = {
     semesters: {},
     difficulties: {},
-    ratings: {}
+    ratings: {},
   };
   filtered: Review[] = [];
   stats = {
     num: null,
     workload: null,
     difficulty: null,
-    rating: null
+    rating: null,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router,
-    private courseService: CourseService, private reviewService: ReviewService,
-    private auth: AuthService, private gradeService: GradeService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private courseService: CourseService,
+    private reviewService: ReviewService,
+    private auth: AuthService,
+    private gradeService: GradeService
+  ) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
   }
 
   ngOnInit() {
-    this.course$ = this.route.paramMap
-      .switchMap((params: ParamMap) =>
-        this.courseService.getCourse(params.get('courseId')));
+    this.course$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.courseService.getCourse(params.get('courseId'))
+      )
+    );
 
-    this.courseSub = this.course$.debounceTime(1000).subscribe(course => {
+    this.courseSub = this.course$.pipe(debounceTime(1000)).subscribe(course => {
       this.loading = true;
       if (course === null) {
         this.course = null;
@@ -61,45 +69,50 @@ export class CourseComponent implements OnInit, OnDestroy {
       if (this.course.id !== course.id) {
         this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
         this.grades = this.gradeService.getCourseGrades(course.id);
-        this.reviewSub = this.reviews$.debounceTime(1000).subscribe(reviews => {
-          this.loading = false;
-          const sems = {};
-          const diff = {};
-          const rats = {};
-          reviews.forEach(rev => {
-            if (rev.semester && rev.semester !== '0000-0') {
-              this.filters.semesters[rev.semester] = {
-                id: rev.semester,
-                selected: false,
-                disabled: false
-              };
-            }
-            if (rev.difficulty) {
-              this.filters.difficulties[rev.difficulty] = {
-                id: rev.difficulty,
-                selected: false,
-                disabled: false
-              };
-            }
-            if (rev.rating) {
-              this.filters.ratings[rev.rating] = {
-                id: rev.rating,
-                selected: false,
-                disabled: false
-              };
+        this.reviewSub = this.reviews$
+          .pipe(debounceTime(1000))
+          .subscribe(reviews => {
+            this.loading = false;
+            const sems = {};
+            const diff = {};
+            const rats = {};
+            reviews.forEach(rev => {
+              if (rev.semester && rev.semester !== '0000-0') {
+                this.filters.semesters[rev.semester] = {
+                  id: rev.semester,
+                  selected: false,
+                  disabled: false,
+                };
+              }
+              if (rev.difficulty) {
+                this.filters.difficulties[rev.difficulty] = {
+                  id: rev.difficulty,
+                  selected: false,
+                  disabled: false,
+                };
+              }
+              if (rev.rating) {
+                this.filters.ratings[rev.rating] = {
+                  id: rev.rating,
+                  selected: false,
+                  disabled: false,
+                };
+              }
+            });
+
+            if (reviews !== null) {
+              const courseReviews = reviews.filter(rev => {
+                return rev.course === course.id;
+              });
+              this.reviews = courseReviews;
+              this.filtered = courseReviews;
+              this.course = this.courseService.updateCounts(
+                course.id,
+                courseReviews
+              );
+              this.loading = false;
             }
           });
-
-          if (reviews !== null) {
-            const courseReviews = reviews.filter(rev => {
-              return rev.course === course.id;
-            });
-            this.reviews = courseReviews;
-            this.filtered = courseReviews;
-            this.course = this.courseService.updateCounts(course.id, courseReviews);
-            this.loading = false;
-          }
-        });
         this.review = new Review({ course: course.courseId });
       }
     });
@@ -164,21 +177,29 @@ export class CourseComponent implements OnInit, OnDestroy {
   change(type, value) {
     this.filters[type][value].selected = !this.filters[type][value].selected;
     const filtered = this.reviews.filter(review => {
-      return this.semesterFilter(review, this.filters)
-        && this.difficultyFilter(review, this.filters)
-        && this.ratingFilter(review, this.filters);
+      return (
+        this.semesterFilter(review, this.filters) &&
+        this.difficultyFilter(review, this.filters) &&
+        this.ratingFilter(review, this.filters)
+      );
     });
     if (filtered.length === this.reviews.length) {
       this.stats = {
         num: null,
         workload: null,
         difficulty: null,
-        rating: null
+        rating: null,
       };
       if (this.sortType === 'date') {
-        this.filtered = this.reviewService.sortByDate(this.reviews, this.sortDir);
+        this.filtered = this.reviewService.sortByDate(
+          this.reviews,
+          this.sortDir
+        );
       } else {
-        this.filtered = this.reviewService.sortBySemester(this.reviews, this.sortDir);
+        this.filtered = this.reviewService.sortBySemester(
+          this.reviews,
+          this.sortDir
+        );
       }
     } else {
       let workload = 0;
@@ -225,7 +246,10 @@ export class CourseComponent implements OnInit, OnDestroy {
       if (this.sortType === 'date') {
         this.filtered = this.reviewService.sortByDate(filtered, this.sortDir);
       } else {
-        this.filtered = this.reviewService.sortBySemester(filtered, this.sortDir);
+        this.filtered = this.reviewService.sortBySemester(
+          filtered,
+          this.sortDir
+        );
       }
     }
   }
@@ -247,6 +271,9 @@ export class CourseComponent implements OnInit, OnDestroy {
       this.sortType = 'semester';
       this.sortDir = false;
     }
-    this.reviews = this.reviewService.sortBySemester(this.reviews, this.sortDir);
+    this.reviews = this.reviewService.sortBySemester(
+      this.reviews,
+      this.sortDir
+    );
   }
 }
