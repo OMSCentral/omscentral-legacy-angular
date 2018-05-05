@@ -6,6 +6,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatSidenavModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -43,6 +44,7 @@ import '@webcomponents/custom-elements/custom-elements.min.js';
 import { MarkdownModule } from 'angular2-markdown';
 
 import { PrivacyComponent } from './privacy/privacy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, PrivacyComponent],
@@ -67,6 +69,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
     CoursesModule,
     AdminModule,
     MarkdownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatSidenavModule
   ],
   providers: [
     AuthGuard,
