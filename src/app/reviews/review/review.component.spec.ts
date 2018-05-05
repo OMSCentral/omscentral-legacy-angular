@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipeModule } from '../../pipes/pipe.module';
 
 import { ReviewComponent } from './review.component';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
   user = new BehaviorSubject({});
@@ -20,11 +20,7 @@ class MockCourse {
 }
 
 import { ReviewService } from '../review.service';
-class MockReview {
-
-}
-
-import { ClarityModule } from 'clarity-angular';
+class MockReview {}
 
 describe('ReviewComponent', () => {
   let component: ReviewComponent;
@@ -32,19 +28,20 @@ describe('ReviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PipeModule, RouterTestingModule, ClarityModule, FormsModule, ReactiveFormsModule],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-        CUSTOM_ELEMENTS_SCHEMA
+      imports: [
+        PipeModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
       ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: CourseService, useClass: MockCourse },
         { provide: ReviewService, useClass: MockReview },
-        { provide: AuthService, useClass: MockAuth }
+        { provide: AuthService, useClass: MockAuth },
       ],
-      declarations: [ReviewComponent]
-    })
-      .compileComponents();
+      declarations: [ReviewComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

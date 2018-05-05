@@ -9,12 +9,9 @@ describe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-      declarations: [ AboutComponent ]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [AboutComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

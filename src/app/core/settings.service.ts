@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SettingsService {
   settings: any = null;
   settings$: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) {}
 
   getSettings() {
     if (this.settings === null) {

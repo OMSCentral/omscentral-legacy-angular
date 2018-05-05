@@ -5,13 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { LoginComponent } from './login.component';
 
-import { ClarityModule } from 'clarity-angular';
 import { AuthService } from '../firebase/auth.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 class MockAuth {
   user = new BehaviorSubject({});
 }
-
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -19,14 +17,11 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ClarityModule, ReactiveFormsModule, FormsModule, RouterTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-      providers: [{provide: AuthService, useClass: MockAuth}],
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [{ provide: AuthService, useClass: MockAuth }],
+      declarations: [LoginComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
