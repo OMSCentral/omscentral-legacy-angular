@@ -1,136 +1,119 @@
-<div class="row">
-  <nav class="col-md-2 bg-light sidebar">
-    <div class="sidebar-sticky">
-      <ul class="nav flex-column">
-          <li>
-            <a class="nav-item nav-link" href="https://www.reddit.com/r/OMSCS/">OMSCS subreddit</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="https://www.facebook.com/groups/gtomscsstudents/">OMSCS Facebook</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="https://omscs-study.slack.com/">OMSCS Slack</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="https://www.facebook.com/OMSCentral/">OMSCentral Facebook</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="https://twitter.com/OMSCentral">OMSCentral Twitter</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="https://www.paypal.me/martz">Donate</a>
-          </li>
-        </ul>
-    </div>
-  </nav>
-  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            What is this app?
-          </div>
-          <div class="card-body">
-            <p>This app was created for GT OMSCS students to get a feel for course difficulty and workload.</p>
-            <p>It is not endorsed or sponsored by the official OMSCS program or staff.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            Who maintains this app?
-          </div>
-          <div class="card-body">
-            <p>Matt Martz
-              <a href="https://linkedin.com/in/mattmartz" target="_blank">(LinkedIn)</a>
-              <a href="https://twitter.com/martzcodes" target="_blank">(Twitter)</a>
-              <a href="https://github.com/martzcodes" target="_blank">(GitHub)</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            Does this sync with the old Google doc?
-          </div>
-          <div class="card-body">
-            <p>No. There was a one-time import of that data on November 5, 2015.</p>
-            <p>While the Google doc is still accessible, its use is discouraged as it lacks validation and other useful features.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            I am concerned about privacy. How is my information kept secure?
-          </div>
-          <div class="card-body">
-            <p>The app records only your name, email, profile image URL, and OMSCS specialization (if set).</p>
-            <p>For now... all reviews are shown anonymously (to save on bandwidth). We may go back to the toggle-anonymity in
-              the future (which will be opt-in).</p>
-            <p>
-              <a href="https://firebase.google.com/docs/database/security/" target="_blank">Firebase's security infrastructure</a> guarantees that this information is accessible only to individuals who
-              are registered and authenticated.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            How do I publish a review?
-          </div>
-          <div class="card-body">
-            <p>After signing in, click the
-              <button class="btn btn-sm btn-link">Write a Review</button> button.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            What is the caching policy?
-          </div>
-          <div class="card-body">
-            <p>The app caches all data to your browser's local storage (if possible).</p>
-            <p>The cache expires after 24 hours.</p>
-            <p>This conservative caching policy was implemented as a result of intense bandwidth consumption ($$$).</p>
-            <p>You can clear your browser's cache if you need the data sooner.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            Need to report an issue or an enhancement request?
-          </div>
-          <div class="card-body" Markdown>
-            <p>Please submit on
-              <a href="https://github.com/martzcodes/omscentral/issues" target="_blank">GitHub.</a>
-            </p>
-            <p>Requests are prioritized based on the amount of activity/support from the OMSCS community. ***I'll happily accept
-              money to move something higher in the queue.***</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-          <div class="card-header">
-            Have a question not answered here?
-          </div>
-          <div class="card-body">
-            If you are a student on the OMSCS Slack team, my user name is
-            <strong>
-              <i>martzcodes</i>
-            </strong> and we have a channel setup at
-            <strong>
-              <a href="https://omscs-study.slack.com/messages/C83FX0M2S" target="_blank">#OMSCentral.</a>
-            </strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav class="sidenav" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="120">
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <a mat-button href="https://www.reddit.com/r/OMSCS/">OMSCS subreddit</a>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <a mat-button href="https://www.facebook.com/groups/gtomscsstudents/">OMSCS Facebook</a>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <a mat-button href="https://omscs-study.slack.com/">OMSCS Slack</a>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <a mat-button href="https://www.facebook.com/OMSCentral/">OMSCentral Facebook</a>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <a mat-button href="https://twitter.com/OMSCentral">OMSCentral Twitter</a>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <a mat-button href="https://www.paypal.me/martz">Donate</a>
+      </mat-list-item>
+    </mat-list>
+    <ul class="nav flex-column">
+
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-card>
+      <mat-card-title>
+        What is this app?
+      </mat-card-title>
+      <mat-card-content>
+        <p>This app was created for GT OMSCS students to get a feel for course difficulty and workload.</p>
+        <p>It is not endorsed or sponsored by the official OMSCS program or staff.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Who maintains this app?
+      </mat-card-title>
+      <mat-card-content>
+        <p>Matt Martz
+          <a href="https://linkedin.com/in/mattmartz" target="_blank">(LinkedIn)</a>
+          <a href="https://twitter.com/martzcodes" target="_blank">(Twitter)</a>
+          <a href="https://github.com/martzcodes" target="_blank">(GitHub)</a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Does this sync with the old Google doc?
+      </mat-card-title>
+      <mat-card-content>
+        <p>No. There was a one-time import of that data on November 5, 2015.</p>
+        <p>While the Google doc is still accessible, its use is discouraged as it lacks validation and other useful features.
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        I am concerned about privacy. How is my information kept secure?
+      </mat-card-title>
+      <mat-card-content>
+        <p>The app records only your name, email, profile image URL, and OMSCS specialization (if set).</p>
+        <p>For now... all reviews are shown anonymously (to save on bandwidth). We may go back to the toggle-anonymity in the
+          future (which will be opt-in).</p>
+        <p>
+          <a href="https://firebase.google.com/docs/database/security/" target="_blank">Firebase's security infrastructure</a> guarantees that this information is accessible only to individuals who are
+          registered and authenticated.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        How do I publish a review?
+      </mat-card-title>
+      <mat-card-content>
+        <p>After signing in, click the
+          <button class="btn btn-sm btn-link">Write a Review</button> button.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        What is the caching policy?
+      </mat-card-title>
+      <mat-card-content>
+        <p>The app caches all data to your browser's local storage (if possible).</p>
+        <p>The cache expires after 24 hours.</p>
+        <p>This conservative caching policy was implemented as a result of intense bandwidth consumption ($$$).</p>
+        <p>You can clear your browser's cache if you need the data sooner.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Need to report an issue or an enhancement request?
+      </mat-card-title>
+      <mat-card-content Markdown>
+        <p>Please submit on
+          <a href="https://github.com/martzcodes/omscentral/issues" target="_blank">GitHub.</a>
+        </p>
+        <p>Requests are prioritized based on the amount of activity/support from the OMSCS community. ***I'll happily accept
+          money to move something higher in the queue.***</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Have a question not answered here?
+      </mat-card-title>
+      <mat-card-content>
+        If you are a student on the OMSCS Slack team, my user name is
+        <strong>
+          <i>martzcodes</i>
+        </strong> and we have a channel setup at
+        <strong>
+          <a href="https://omscs-study.slack.com/messages/C83FX0M2S" target="_blank">#OMSCentral.</a>
+        </strong>
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

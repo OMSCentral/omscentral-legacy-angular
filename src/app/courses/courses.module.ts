@@ -7,6 +7,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CourseComponent } from './course/course.component';
 import { CourseNavComponent } from './course-nav/course-nav.component';
 import { ReviewsModule } from '../reviews/reviews.module';
+import { MatCardModule, MatButtonToggleModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -16,6 +17,9 @@ import { ReviewsModule } from '../reviews/reviews.module';
     ReactiveFormsModule,
     ReviewsModule,
     FormsModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    MatButtonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [CoursesComponent, CourseComponent, CourseNavComponent],

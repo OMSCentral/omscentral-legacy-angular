@@ -1,9 +1,11 @@
-<oms-alert></oms-alert>
-<oms-nav *ngIf="!(router.url == '/login' || router.url == '/register')"></oms-nav>
-<div class="container-fluid">
-  <div class="jumbotron" *ngIf="maintenance">
-    <h1 class="display-4">We're undergoing brief maintenance... please stand by...</h1>
-    <p class="lead">{{maintenance}}</p>
+<div class="main">
+<oms-nav *ngIf="!(router.url == '/login' || router.url == '/register')" class="mat-elevation-z6"></oms-nav>
+  <oms-alert></oms-alert>
+  <div class="container-fluid">
+    <div class="jumbotron" *ngIf="maintenance">
+      <h1 class="display-4">We're undergoing brief maintenance... please stand by...</h1>
+      <p class="lead">{{maintenance}}</p>
+    </div>
+    <router-outlet *ngIf="downloaded && !maintenance"></router-outlet>
   </div>
-  <router-outlet *ngIf="downloaded && !maintenance"></router-outlet>
 </div>
