@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { CourseData } from '../models/course';
+
 import * as _ from 'lodash';
 
 const specializations = {
@@ -79,6 +82,22 @@ const defaultGrades = {
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit, OnDestroy {
+  displayedColumns = [
+    'combined',
+    'numReviews',
+    'work',
+    'difficulty',
+    'rating',
+    'enrolled',
+    'ab',
+    'cdf',
+    'withdrew'
+  ];
+  dataSource: MatTableDataSource<CourseData>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   courses$: Observable<any> | Promise<Observable<any>>;
   percent = false;
   grades: any;
@@ -99,9 +118,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.grades = this.gradeService.getGrades();
     this.courses$ = this.courseService.getCourses();
+    this.dataSource = new MatTableDataSource([]);
     this.courses$.subscribe(courses => {
       if (courses) {
-        this.courses = courses.map(course => {
+        this.dataSource.data = courses.map(course => {
           if (this.grades[course.id]) {
             course.grades = this.grades[course.id];
           } else {
@@ -114,6 +134,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
               };
             }
           }
+          course.enrolled = course.grades.totals.total;
+          course.work = course.average.workload;
+          course.difficulty = course.average.difficulty;
+          course.rating = course.average.rating;
+          course.ab = course.grades.totals.ab;
+          course.cdf = course.grades.totals.cdf;
+          course.withdrew = course.grades.totals.w;
           return course;
         });
         this.original = courses.map(course => {
@@ -133,6 +160,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.applyFilter('');
   }
 
   ngOnDestroy() {
@@ -143,42 +173,18 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/courses', course]);
   }
 
-  sort(type) {
-    if (this.sortObj.type !== type) {
-      this.sortObj.type = type;
-      this.sortObj.dir = -1;
-    } else {
-      this.sortObj.dir = this.sortObj.dir * -1;
-    }
-    this.courses = this.original.sort((a, b) => {
-      let compare = 0;
-      if (typeof _.get(a, this.sortObj.type, '') === 'string') {
-        if (
-          _.get(a, this.sortObj.type, '').toUpperCase() >
-          _.get(b, this.sortObj.type, '').toUpperCase()
-        ) {
-          compare = 1;
-        } else {
-          compare = -1;
-        }
-      } else {
-        if (_.get(a, this.sortObj.type, 0) > _.get(b, this.sortObj.type, 0)) {
-          compare = 1;
-        } else {
-          compare = -1;
-        }
-      }
-      compare = compare * this.sortObj.dir;
-      return compare;
-    });
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   changeSpecialization(type) {
     this.specialization = type;
     if (type === 'all') {
-      this.courses = this.original;
+      this.dataSource.data = this.original;
     } else {
-      this.courses = this.original.filter(course => {
+      this.dataSource.data = this.original.filter(course => {
         return specializations[type].indexOf(course.id) !== -1;
       });
     }
