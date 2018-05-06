@@ -14,78 +14,82 @@
       <mat-button-toggle value="ml" (click)="changeSpecialization('ml')">Machine Learning</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-card-content>
-  <mat-card-actions>
+  <!-- <mat-card-actions>
     <button mat-raised-button [color]="percent ? '' : 'accent'" (click)="percent = !percent">Counts</button>
     <button mat-raised-button [color]="percent ? 'accent' : ''" (click)="percent = !percent">Percentage</button>
     <span *ngIf="percent">&nbsp;&nbsp;Percentages are based off of A-F grade counts.</span>
-  </mat-card-actions>
+  </mat-card-actions> -->
 </mat-card>
-<div class="card-body">
-  <table class="table table-sm table-striped">
-    <thead>
-      <tr>
-        <th class="clickable" scope="col" (click)="sort('id')">Course&nbsp;
-          <i *ngIf="sortObj.type === 'id' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'id' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('grades.totals.t')">Enrolled&nbsp;
-          <i *ngIf="sortObj.type === 'grades.totals.t' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.totals.t' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('numReviews')">Reviews&nbsp;
-          <i *ngIf="sortObj.type === 'numReviews' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'numReviews' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('average.workload')">Avg. Work&nbsp;
-          <i *ngIf="sortObj.type === 'average.workload' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'average.workload' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('average.difficulty')">Avg. Dif.&nbsp;
-          <i *ngIf="sortObj.type === 'average.difficulty' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'average.difficulty' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('average.rating')">Avg. Rating&nbsp;
-          <i *ngIf="sortObj.type === 'average.rating' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'average.rating' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" *ngIf="percent" (click)="sort('grades.percents.ab')">% &ge; B&nbsp;
-          <i *ngIf="sortObj.type === 'grades.percents.ab' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.percents.ab' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" *ngIf="percent" (click)="sort('grades.percents.cdf')">% &le; C&nbsp;
-          <i *ngIf="sortObj.type === 'grades.percents.cdf' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.percents.cdf' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" *ngIf="!percent" (click)="sort('grades.totals.ab')">&ge; B&nbsp;
-          <i *ngIf="sortObj.type === 'grades.totals.ab' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.totals.ab' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" *ngIf="!percent" (click)="sort('grades.totals.cdf')">&le; C&nbsp;
-          <i *ngIf="sortObj.type === 'grades.totals.cdf' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.totals.cdf' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-        <th class="clickable" scope="col" (click)="sort('grades.totals.w')">Withdrew&nbsp;
-          <i *ngIf="sortObj.type === 'grades.totals.w' && sortObj.dir === 1" class="fa fa-angle-up"></i>
-          <i *ngIf="sortObj.type === 'grades.totals.w' && sortObj.dir === -1" class="fa fa-angle-down"></i>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let course of courses">
-        <td>
-          <a [routerLink]="['/courses', course.id]">{{course.combined}}</a>
-        </td>
-        <td>{{course.grades?.totals.t | number}}</td>
-        <td>{{course.numReviews | number}}</td>
-        <td>{{course.average?.workload | number}}</td>
-        <td>{{course.average?.difficulty | number}}</td>
-        <td>{{course.average?.rating | number}}</td>
-        <td *ngIf="percent">{{100 * course.grades?.percents.ab | number}}</td>
-        <td *ngIf="percent">{{100 * course.grades?.percents.cdf | number}}</td>
-        <td *ngIf="!percent">{{course.grades?.totals.ab | number}}</td>
-        <td *ngIf="!percent">{{course.grades?.totals.cdf | number}}</td>
-        <td>{{course.grades?.totals.w | number}}</td>
-      </tr>
-    </tbody>
+<div class="courses-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div class="courses-container mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- combined Column -->
+    <ng-container matColumnDef="combined">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Course</th>
+      <td mat-cell *matCellDef="let row">
+        <a mat-button [routerLink]="['/courses', row.id]">{{row.combined}}</a>
+      </td>
+    </ng-container>
+
+    <!-- enrolled Column -->
+    <ng-container matColumnDef="enrolled">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Enrolled</th>
+      <td mat-cell *matCellDef="let row"> {{row.enrolled | number}} </td>
+    </ng-container>
+
+    <!-- reviews Column -->
+    <ng-container matColumnDef="numReviews">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Reviews</th>
+      <td mat-cell *matCellDef="let row"> {{row.numReviews | number}} </td>
+    </ng-container>
+
+    <!-- work Column -->
+    <ng-container matColumnDef="work">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Workload</th>
+      <td mat-cell *matCellDef="let row"> {{row.work | number}} </td>
+    </ng-container>
+
+    <!-- difficulty Column -->
+    <ng-container matColumnDef="difficulty">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</th>
+      <td mat-cell *matCellDef="let row"> {{row.difficulty | number}} </td>
+    </ng-container>
+
+    <!-- rating Column -->
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+      <td mat-cell *matCellDef="let row"> {{row.rating| number}} </td>
+    </ng-container>
+
+    <!-- ab Column -->
+    <ng-container matColumnDef="ab">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>&ge; B</th>
+      <td mat-cell *matCellDef="let row"> {{row.ab | number}} </td>
+    </ng-container>
+
+    <!-- cdf Column -->
+    <ng-container matColumnDef="cdf">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>&le; C</th>
+      <td mat-cell *matCellDef="let row"> {{row.cdf | number}} </td>
+    </ng-container>
+
+    <!-- withdrew Column -->
+    <ng-container matColumnDef="withdrew">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Withdrew</th>
+      <td mat-cell *matCellDef="let row"> {{row.withdrew | number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
   </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 </div>
