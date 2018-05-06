@@ -7,7 +7,16 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CourseComponent } from './course/course.component';
 import { CourseNavComponent } from './course-nav/course-nav.component';
 import { ReviewsModule } from '../reviews/reviews.module';
-import { MatCardModule, MatButtonToggleModule, MatButtonModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatButtonToggleModule,
+  MatButtonModule,
+  MatTableModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatSortModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -19,7 +28,12 @@ import { MatCardModule, MatButtonToggleModule, MatButtonModule } from '@angular/
     FormsModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [CoursesComponent, CourseComponent, CourseNavComponent],
