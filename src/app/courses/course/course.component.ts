@@ -40,6 +40,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     difficulty: null,
     rating: null,
   };
+  displayedColumns = ['semester', 'total', 'a', 'b', 'c', 'd', 'f', 'w'];
 
   constructor(
     private route: ActivatedRoute,
