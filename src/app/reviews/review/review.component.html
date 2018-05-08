@@ -1,31 +1,27 @@
-<div class="card" *ngIf="review">
-  <div class="card-header">
-    <span class="card-title" *ngIf="title && courseName">
-      <a [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</a>
-    </span>
-    <ng-template #whyId>This author has not shared their identity</ng-template>
-    <span class="card-title" *ngIf="!(title && courseName)" [ngbTooltip]="whyId">
-      Author: {{review.author}}
-    </span>
+<mat-card *ngIf="review">
+  <mat-card-title *ngIf="title && courseName">
+    <button mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</button>
+  </mat-card-title>
+  <mat-card-subtitle>
+    Author:
+    <span matTooltip="This author has not shared their identity">{{review.author}}</span>
     <span class="pull-right" *ngIf="authId == review.author">
-      <button class="btn btn-sm btn-outline-primary" (click)="edit()">Edit</button>
-      <!-- <button class="btn btn-sm btn-danger" (click)="delete()">Delete</button> -->
+      <button mat-raised-button color="primary" (click)="edit()">Edit</button>
     </span>
-    <span class="card-text pull-right">
+    <span class="pull-right">
       <span *ngIf="review.updated">{{review.updated | date:'short'}}</span>
       <span *ngIf="!review.updated">{{review.created | date:'short'}}</span>
     </span>
-  </div>
-  <div class="card-body">
-    <p class="card-text">
-      <markdown [data]="review.text"></markdown>
-    </p>
-  </div>
-  <div class="card-footer">
-    <span class="badge badge-primary" *ngIf="review.semester &&  review.semester !== '0000-0'">{{review.semester | semester}}</span>
-    <span class="badge badge-secondary" *ngIf="review.difficulty">{{review.difficulty | difficulty}}</span>
-    <span class="badge badge-info" *ngIf="review.rating">{{review.rating | rating}}</span>
-    <span class="badge badge-warning" *ngIf="review.workload">{{review.workload | workload}}</span>
-    <span class="badge badge-success" *ngIf="review.program">{{review.program | program}}</span>
-  </div>
-</div>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <markdown [data]="review.text"></markdown>
+  </mat-card-content>
+  <mat-card-content>
+    <mat-chip-list>
+      <mat-chip *ngIf="review.semester &&  review.semester !== '0000-0'">{{review.semester | semester}}</mat-chip>
+      <mat-chip *ngIf="review.difficulty">{{review.difficulty | difficulty}}</mat-chip>
+      <mat-chip *ngIf="review.rating">{{review.rating | rating}}</mat-chip>
+      <mat-chip *ngIf="review.workload">{{review.workload | workload}}</mat-chip>
+      <mat-chip *ngIf="review.program">{{review.program | program}}</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>

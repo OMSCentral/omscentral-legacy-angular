@@ -18,8 +18,10 @@ import {
   MatSortModule,
   MatSidenavModule,
   MatListModule,
+  MatSelectModule
 } from '@angular/material';
 import { CourseListComponent } from './course-list/course-list.component';
+import { CourseStatsComponent } from './course-stats/course-stats.component';
 
 @NgModule({
   imports: [
@@ -39,8 +41,9 @@ import { CourseListComponent } from './course-list/course-list.component';
     MatSortModule,
     MatSidenavModule,
     MatListModule,
+    MatSelectModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [CoursesComponent, CourseComponent, CourseNavComponent, CourseListComponent],
+  declarations: [CoursesComponent, CourseComponent, CourseNavComponent, CourseListComponent, CourseStatsComponent],
 })
 export class CoursesModule {}

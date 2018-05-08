@@ -5,6 +5,7 @@ import { PipeModule } from '../pipes/pipe.module';
 import { ReviewsModule } from '../reviews/reviews.module';
 import { MarkdownModule } from 'angular2-markdown/markdown/markdown.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { AppRoutingModule } from '../app-routing.module';
     ReviewsModule,
     MarkdownModule,
     AppRoutingModule,
+    MatCardModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RecentComponent],
