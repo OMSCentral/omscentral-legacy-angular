@@ -1,131 +1,45 @@
 <oms-course-nav>
   <mat-sidenav-container class="container">
-    <mat-sidenav position="end" #courseinfo class="courseinfo" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="120">
-      <h4>{{course?.combined}}</h4>
-      <mat-list role="list">
-        <mat-list-item role="listitem">
-          <h4 mat-line>Reviews</h4>
-          <div>
-            <span *ngIf="stats.num">{{stats?.num}} / </span>{{course?.numReviews}}
-          </div>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <h4 mat-line>Average Work</h4>
-          <p mat-line>Hours/week</p>
-          <div>
-            <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{course?.average?.workload | number}}
-          </div>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <h4 mat-line>Average Difficulty</h4>
-          <p mat-line>(Easy) 1 - 5 (Hard)</p>
-          <div>
-            <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{course?.average?.difficulty | number}}
-          </div>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          <h4 mat-line>Average Rating</h4>
-          <p mat-line>(Worst) 1 - 5 (Best)</p>
-          <div>
-            <span *ngIf="stats?.rating">{{stats?.rating | number}} / </span>{{course?.average?.rating | number}}
-          </div>
-        </mat-list-item>
-      </mat-list>
-      <table mat-table #table [dataSource]="grades?.semesterGrades" style="width: 100%">
-
-        <!-- semester Column -->
-        <ng-container matColumnDef="semester">
-          <th mat-header-cell *matHeaderCellDef> Semester </th>
-          <td mat-cell *matCellDef="let element"> {{element.semester | semester}} </td>
-        </ng-container>
-
-        <!-- total Column -->
-        <ng-container matColumnDef="total">
-          <th mat-header-cell *matHeaderCellDef> Enrolled </th>
-          <td mat-cell *matCellDef="let element"> {{element.total | number}} </td>
-        </ng-container>
-
-        <!-- a Column -->
-        <ng-container matColumnDef="a">
-          <th mat-header-cell *matHeaderCellDef> A </th>
-          <td mat-cell *matCellDef="let element"> {{element.a | number}} </td>
-        </ng-container>
-
-        <!-- b Column -->
-        <ng-container matColumnDef="b">
-          <th mat-header-cell *matHeaderCellDef> B </th>
-          <td mat-cell *matCellDef="let element"> {{element.b | number}} </td>
-        </ng-container>
-
-        <!-- c Column -->
-        <ng-container matColumnDef="c">
-          <th mat-header-cell *matHeaderCellDef> C </th>
-          <td mat-cell *matCellDef="let element"> {{element.c | number}} </td>
-        </ng-container>
-
-        <!-- d Column -->
-        <ng-container matColumnDef="d">
-          <th mat-header-cell *matHeaderCellDef> D </th>
-          <td mat-cell *matCellDef="let element"> {{element.d | number}} </td>
-        </ng-container>
-
-        <!-- f Column -->
-        <ng-container matColumnDef="f">
-          <th mat-header-cell *matHeaderCellDef> F </th>
-          <td mat-cell *matCellDef="let element"> {{element.f | number}} </td>
-        </ng-container>
-
-        <!-- w Column -->
-        <ng-container matColumnDef="w">
-          <th mat-header-cell *matHeaderCellDef> W </th>
-          <td mat-cell *matCellDef="let element"> {{element.w | number}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    <mat-sidenav position="end" #courseinfo class="courseinfo" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="60">
+      <oms-course-stats [course]="course" [grades]="grades" [stats]="stats"></oms-course-stats>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="card">
-        <div class="card-body">
-          <div class="btn-group">
-            <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'semester', 'btn-outline-primary': sortType !== 'semester'}"
-              (click)="sortBySemester()">Sort by Semester
-              <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-              <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
-            </button>
-            <button class="btn btn-sm" [ngClass]="{'btn-primary': sortType === 'date', 'btn-outline-primary': sortType !== 'date'}" (click)="sortByDate()">Sort by Date
-              <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-              <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="d-inline-block" ngbDropdown>
-            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Semesters</button>
-            <div ngbDropdownMenu>
-              <button class="dropdown-item" *ngFor="let semester of filterList('semesters')" [ngClass]="{'active': selected('semesters', semester.id)}"
-                [disabled]="semester.disabled" (click)="change('semesters', semester.id)">{{semester.id | semester}}</button>
-            </div>
-          </div>
-          <div class="d-inline-block" ngbDropdown>
-            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Difficulties</button>
-            <div ngbDropdownMenu>
-              <button class="dropdown-item" *ngFor="let difficulty of filterList('difficulties')" [ngClass]="{'active': selected('difficulties', difficulty.id)}"
-                [disabled]="difficulty.disabled" (click)="change('difficulties', difficulty.id)">
-                {{difficulty.id | difficulty}}
-              </button>
-            </div>
-          </div>
-          <div class="d-inline-block" ngbDropdown>
-            <button class="btn btn-sm btn-outline-primary" ngbDropdownToggle>Ratings</button>
-            <div ngbDropdownMenu>
-              <button class="dropdown-item" *ngFor="let rating of filterList('ratings')" [ngClass]="{'active': selected('ratings', rating.id)}"
-                [disabled]="rating.disabled" (click)="change('ratings', rating.id)">
-                {{rating.id | rating}}</button>
-            </div>
-          </div>
-          <a class="btn btn-sm btn-link pull-right" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
-        </div>
-      </div>
+      <mat-card>
+        <mat-card-content class="space-between">
+            <mat-form-field>
+                <mat-select placeholder="Semesters" [formControl]="semesters" multiple>
+                    <mat-option *ngFor="let semester of filterList('semesters')" [value]="semester.id" [disabled]="semester.disabled">{{semester.id | semester}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Difficulties" [formControl]="difficulties" multiple>
+                    <mat-option *ngFor="let difficulty of filterList('difficulties')" [value]="difficulty.id" [disabled]="difficulty.disabled">{{difficulty.id | difficulty}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Ratings" [formControl]="ratings" multiple>
+                    <mat-option *ngFor="let rating of filterList('ratings')" [value]="rating.id" [disabled]="rating.disabled">{{rating.id | rating}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Programs" [formControl]="programs" multiple>
+                    <mat-option *ngFor="let program of filterList('programs')" [value]="program.id" [disabled]="program.disabled">{{program.id | program}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button [color]="sortType === 'semester' ? 'accent' : ''"
+            (click)="sortBySemester()">Sort by Semester
+            <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+            <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+          </button>
+          <button mat-raised-button [color]="sortType === 'date' ? 'accent' : ''" (click)="sortByDate()">Sort by Date
+            <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
+            <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+          </button>
+          <button class="pull-right" mat-raised-button color="primary" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</button>
+        </mat-card-actions>
+      </mat-card>
       <div *ngIf="loading" class="text-center">
         <div class="fa fa-spinner fa-spin fa-2x"></div>
       </div>

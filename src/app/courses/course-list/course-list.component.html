@@ -91,5 +91,5 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="shortened ? [1000] : [10, 25, 100]"></mat-paginator>
+    <mat-paginator *ngIf="!shortened" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
   </div>

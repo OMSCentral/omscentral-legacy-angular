@@ -43,6 +43,7 @@ const specializations = {
   ],
   ml: [
     'CS-6505',
+    'CS-6476',
     'CS-8803-GA',
     'CS-7641',
     'CS-7642',
