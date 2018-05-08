@@ -27,6 +27,9 @@ export class Review {
 
   constructor(review: object) {
     Object.assign(this, review);
+    if (!this.program) {
+      this.program = '1';
+    }
   }
 
   get isNew() {

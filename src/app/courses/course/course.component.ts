@@ -1,5 +1,6 @@
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {FormControl} from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { AuthService } from '../../firebase/auth.service';
@@ -32,6 +33,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     semesters: {},
     difficulties: {},
     ratings: {},
+    programs: {}
   };
   filtered: Review[] = [];
   stats = {
@@ -40,7 +42,11 @@ export class CourseComponent implements OnInit, OnDestroy {
     difficulty: null,
     rating: null,
   };
-  displayedColumns = ['semester', 'total', 'a', 'b', 'c', 'd', 'f', 'w'];
+
+  semesters = new FormControl();
+  difficulties = new FormControl();
+  ratings = new FormControl();
+  programs = new FormControl();
 
   constructor(
     private route: ActivatedRoute,
@@ -99,6 +105,13 @@ export class CourseComponent implements OnInit, OnDestroy {
                   disabled: false,
                 };
               }
+              if (rev.program) {
+                this.filters.programs[rev.program] = {
+                  id: rev.program,
+                  selected: false,
+                  disabled: false,
+                };
+              }
             });
 
             if (reviews !== null) {
@@ -116,6 +129,33 @@ export class CourseComponent implements OnInit, OnDestroy {
           });
         this.review = new Review({ course: course.courseId });
       }
+    });
+    this.semesters.valueChanges.subscribe(sem => {
+      Object.keys(this.filters.semesters).forEach(filt => {
+        this.filters.semesters[filt].selected = sem.indexOf(filt) !== -1;
+      });
+      this.change();
+    });
+
+    this.difficulties.valueChanges.subscribe(dif => {
+      Object.keys(this.filters.difficulties).forEach(filt => {
+        this.filters.difficulties[filt].selected = dif.indexOf(filt) !== -1;
+      });
+      this.change();
+    });
+
+    this.ratings.valueChanges.subscribe(rat => {
+      Object.keys(this.filters.ratings).forEach(filt => {
+        this.filters.ratings[filt].selected = rat.indexOf(filt) !== -1;
+      });
+      this.change();
+    });
+
+    this.programs.valueChanges.subscribe(pro => {
+      Object.keys(this.filters.programs).forEach(filt => {
+        this.filters.programs[filt].selected = pro.indexOf(filt) !== -1;
+      });
+      this.change();
     });
   }
 
@@ -136,7 +176,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     const semesters = Object.keys(filters.semesters).filter(sem => {
       return filters.semesters[sem].selected;
     });
-    if (semesters.length === 0) {
+    if (semesters.length === 0 && (this.semesters.value || []).length === 0) {
       return true;
     } else {
       return semesters.indexOf(review.semester) !== -1;
@@ -144,10 +184,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   difficultyFilter(review, filters) {
-    const difficulties = Object.keys(filters.difficulties).filter(sem => {
-      return filters.difficulties[sem].selected;
+    const difficulties = Object.keys(filters.difficulties).filter(dif => {
+      return filters.difficulties[dif].selected;
     });
-    if (difficulties.length === 0) {
+    if (difficulties.length === 0 && (this.difficulties.value || []).length === 0) {
       return true;
     } else {
       return difficulties.indexOf(String(review.difficulty)) !== -1;
@@ -155,13 +195,24 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   ratingFilter(review, filters) {
-    const ratings = Object.keys(filters.ratings).filter(sem => {
-      return filters.ratings[sem].selected;
+    const ratings = Object.keys(filters.ratings).filter(rat => {
+      return filters.ratings[rat].selected;
     });
-    if (ratings.length === 0) {
+    if (ratings.length === 0 && (this.ratings.value || []).length === 0) {
       return true;
     } else {
       return ratings.indexOf(String(review.rating)) !== -1;
+    }
+  }
+
+  programFilter(review, filters) {
+    const programs = Object.keys(filters.programs).filter(pro => {
+      return filters.programs[pro].selected;
+    });
+    if (programs.length === 0 && (this.programs.value || []).length === 0) {
+      return true;
+    } else {
+      return programs.indexOf(String(review.rating)) !== -1;
     }
   }
 
@@ -175,13 +226,13 @@ export class CourseComponent implements OnInit, OnDestroy {
     return this.filters[type][value].selected;
   }
 
-  change(type, value) {
-    this.filters[type][value].selected = !this.filters[type][value].selected;
+  change() {
     const filtered = this.reviews.filter(review => {
       return (
         this.semesterFilter(review, this.filters) &&
         this.difficultyFilter(review, this.filters) &&
-        this.ratingFilter(review, this.filters)
+        this.ratingFilter(review, this.filters) &&
+        this.programFilter(review, this.filters)
       );
     });
     if (filtered.length === this.reviews.length) {

@@ -10,6 +10,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'angular2-markdown';
 import { AppRoutingModule } from '../app-routing.module';
 import { NewReviewComponent } from './new-review/new-review.component';
+import {
+  MatCardModule,
+  MatTooltipModule,
+  MatButtonModule,
+  MatChipsModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MatCheckboxModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -18,6 +28,14 @@ import { NewReviewComponent } from './new-review/new-review.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MarkdownModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCheckboxModule
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ReviewComponent, NewReviewComponent],

@@ -10,16 +10,16 @@ $fa-font-path: "~font-awesome/fonts";
   flex: 1 1 auto;
 }
 
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid #42A948;
-  /* green */
-}
+// .ng-valid[required],
+// .ng-valid.required {
+//   border-left: 5px solid #42A948;
+//   /* green */
+// }
 
-.ng-invalid:not(form) {
-  border-left: 5px solid #a94442;
-  /* red */
-}
+// .ng-invalid:not(form) {
+//   border-left: 5px solid #a94442;
+//   /* red */
+// }
 
 .clickable {
   cursor: pointer;
@@ -71,4 +71,21 @@ oms-nav {
   align-items: center;
   justify-content: center;
   width: 400px;
+}
+
+
+td.mat-cell:last-child, td.mat-footer-cell:last-child, th.mat-header-cell:last-child {
+  padding: 0 !important;
+}
+
+td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:first-child {
+  padding: 16px !important;
+}
+
+.course-title {
+  padding-left: 16px;
+}
+
+.text-center {
+  text-align: center!important;
 }
