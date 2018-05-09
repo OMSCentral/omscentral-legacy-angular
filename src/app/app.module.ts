@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material';
 
+import { StateModule } from './state/state.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -70,7 +71,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminModule,
     MarkdownModule.forRoot(),
     BrowserAnimationsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    StateModule.forRoot()
   ],
   providers: [
     AuthGuard,
