@@ -5,8 +5,21 @@ import { LocalStorageService } from '../core/local-storage.service';
 import { SettingsService } from '../core/settings.service';
 
 import * as jsonData from '../../../courses.json';
+import { GradeService } from '../grades/grade.service';
 
 const coursePrefixes = ['CS', 'MG', 'IS'];
+
+const defaultGrades = {
+  a: 0,
+  b: 0,
+  c: 0,
+  d: 0,
+  f: 0,
+  w: 0,
+  ab: 0,
+  cdf: 0,
+  total: 0,
+};
 
 @Injectable()
 export class CourseService {
@@ -21,7 +34,8 @@ export class CourseService {
   constructor(
     private db: AngularFireDatabase,
     private localStorageService: LocalStorageService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private gradeService: GradeService
   ) {
     this.cached = localStorageService.getObject('courses') || {};
     const cacheTime = localStorageService.get('coursesCacheTime');
@@ -30,22 +44,6 @@ export class CourseService {
     } else {
       this.cacheTime = null;
     }
-  }
-
-  processGrades(grades) {
-    const totals = {};
-    if (grades) {
-      Object.keys(grades).forEach(grade => {
-        Object.keys(grades[grade]).forEach(letter => {
-          if (Object.keys(totals).indexOf(letter) !== -1) {
-            totals[letter] += grades[grade][letter];
-          } else {
-            totals[letter] = grades[grade][letter];
-          }
-        });
-      });
-    }
-    return totals;
   }
 
   addReview(courseId, reviewId) {
@@ -82,12 +80,14 @@ export class CourseService {
   }
 
   downloadCourses() {
+    const grades = this.gradeService.getGrades();
     this.db.database
       .ref('/courses')
       .once('value')
       .then(snapshot => {
         const courses = jsonData;
         const firebaseCourses = snapshot.val();
+
         Object.keys(firebaseCourses).forEach(courseId => {
           if (jsonData[courseId]) {
             courses[courseId] = Object.assign(
@@ -110,21 +110,25 @@ export class CourseService {
             courses[courseId].id = courseId;
             courses[courseId].combined =
               courseId + ': ' + courses[courseId].name;
-            if (courses[courseId].grades) {
-              courses[courseId].totals = this.processGrades(
-                courses[courseId].grades
-              );
-              courses[courseId].semesterGrades = Object.keys(
-                courses[courseId].grades
-              ).map(semGrade => {
-                const grade = courses[courseId].grades[semGrade];
-                grade.semester = semGrade;
-                return grade;
-              });
+            if (grades[courseId]) {
+              courses[courseId].grades = grades[courseId];
             } else {
-              courses[courseId].semesterGrades = [];
-              courses[courseId].totals = {};
+              if (grades[courses[courseId].number]) {
+                courses[courseId].grades = grades[courses[courseId].number];
+              } else {
+                courses[courseId].grades = {
+                  totals: defaultGrades,
+                  percents: defaultGrades,
+                };
+              }
             }
+            courses[courseId].enrolled = courses[courseId].grades.totals.total;
+            courses[courseId].work = courses[courseId].average.workload;
+            courses[courseId].difficulty = courses[courseId].average.difficulty;
+            courses[courseId].rating = courses[courseId].average.rating;
+            courses[courseId].ab = courses[courseId].grades.totals.ab;
+            courses[courseId].cdf = courses[courseId].grades.totals.cdf;
+            courses[courseId].withdrew = courses[courseId].grades.totals.w;
           }
         });
         // console.log(this.cached);
