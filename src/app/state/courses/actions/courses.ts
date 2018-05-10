@@ -7,6 +7,7 @@ export const LOAD_COURSES_SUCCESS = createActionType('LOAD_COURSES_SUCCESS');
 export const LOAD_COURSE = createActionType('LOAD_COURSE');
 export const LOAD_COURSE_SUCCESS = createActionType('LOAD_COURSE_SUCCESS');
 export const FILTER_COURSES = createActionType('FILTER_COURSES');
+export const SELECT_COURSE = createActionType('SELECT_COURSE');
 
 export class LoadCourses implements Action {
   readonly type = LOAD_COURSES;
@@ -38,10 +39,17 @@ export class LoadCourse implements Action {
     constructor(public payload: string) {}
   }
 
+  export class SelectCourse implements Action {
+    readonly type = SELECT_COURSE;
+
+    constructor(public payload: string) {}
+  }
+
 
 export type CoursesAction =
   LoadCourses
   | LoadCoursesSuccess
   | LoadCourse
   | LoadCourseSuccess
-  | FilterCourses;
+  | FilterCourses
+  | SelectCourse;

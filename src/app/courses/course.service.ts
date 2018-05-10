@@ -142,7 +142,7 @@ export class CourseService {
 
         Object.keys(firebaseCourses).forEach(courseId => {
           if (jsonData[courseId]) {
-            courses[courseId] = Object.assign(
+            courses[courseId] = Object.assign( {},
               jsonData[courseId] || {},
               firebaseCourses[courseId] || {}
             );
