@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CourseService } from '../courses/course.service';
 import { GradeService } from '../grades/grade.service';
-import { CourseData } from '../models/course';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'oms-courses',

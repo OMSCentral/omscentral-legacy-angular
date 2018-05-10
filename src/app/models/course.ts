@@ -1,4 +1,4 @@
-export interface CourseData {
+export interface Course {
     id: string;
     name: string;
     department: string;
@@ -13,4 +13,8 @@ export interface CourseData {
     ab: number;
     cdf: number;
     withdrew: number;
+    cs: boolean;
+    ml: boolean;
+    cpr: boolean;
+    ii: boolean;
   }
