@@ -28,6 +28,11 @@ export const getSpecialization = createSelector(
   fromCourses.getSpecialization
 );
 
+export const getSelectedCourseId = createSelector(
+  getCoursesEntityState,
+  fromCourses.getSelectedCourseId
+);
+
 export const {
   selectAll: getAllCourses,
   selectEntities: getCourseEntities,
@@ -50,5 +55,13 @@ export const getSpecializationCourses = createSelector(
       });
       return specCourses;
     }
+  }
+);
+
+export const getSelectedCourse = createSelector(
+  getCourseEntities,
+  getSelectedCourseId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
   }
 );

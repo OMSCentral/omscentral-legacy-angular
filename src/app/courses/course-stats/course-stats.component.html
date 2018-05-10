@@ -1,36 +1,36 @@
-<div *ngIf="!(course?.combined && grades)" class="text-center">
+<div *ngIf="!((course$ | async)?.combined && grades)" class="text-center">
   <div class="fa fa-spinner fa-spin fa-2x"></div>
 </div>
-<div *ngIf="course?.combined && grades">
-  <mat-list role="list" *ngIf="course?.combined">
+<div *ngIf="(course$ | async)?.combined && grades">
+  <mat-list role="list" *ngIf="(course$ | async)?.combined">
     <mat-list-item role="listitem">
-      <h4 mat-line>{{course?.combined}}</h4>
+      <h4 mat-line>{{(course$ | async)?.combined}}</h4>
     </mat-list-item>
-    <mat-list-item role="listitem" *ngIf="course?.numReviews">
+    <mat-list-item role="listitem" *ngIf="(course$ | async)?.numReviews">
       <h4 mat-line>Reviews</h4>
       <div>
-        <span *ngIf="stats.num">{{stats?.num}} / </span>{{course?.numReviews}}
+        <span *ngIf="stats?.num">{{stats?.num}} / </span>{{(course$ | async)?.numReviews}}
       </div>
     </mat-list-item>
-    <mat-list-item role="listitem" *ngIf="course?.average?.workload">
+    <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.workload">
       <h4 mat-line>Average Work</h4>
       <p mat-line>Hours/week</p>
       <div>
-        <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{course?.average?.workload | number}}
+        <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{(course$ | async)?.average?.workload | number}}
       </div>
     </mat-list-item>
-    <mat-list-item role="listitem" *ngIf="course?.average?.difficulty">
+    <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.difficulty">
       <h4 mat-line>Average Difficulty</h4>
       <p mat-line>(Easy) 1 - 5 (Hard)</p>
       <div>
-        <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{course?.average?.difficulty | number}}
+        <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{(course$ | async)?.average?.difficulty | number}}
       </div>
     </mat-list-item>
-    <mat-list-item role="listitem" *ngIf="course?.average?.rating">
+    <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.rating">
       <h4 mat-line>Average Rating</h4>
       <p mat-line>(Worst) 1 - 5 (Best)</p>
       <div>
-        <span *ngIf="stats?.rating">{{stats?.rating | number}} / </span>{{course?.average?.rating | number}}
+        <span *ngIf="stats?.rating">{{stats?.rating | number}} / </span>{{(course$ | async)?.average?.rating | number}}
       </div>
     </mat-list-item>
   </mat-list>
@@ -88,4 +88,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
+<pre>{{course$ | async | json}}</pre>
 <oms-course-list [displayedColumns]="['combined']" [shortened]="true"></oms-course-list>

@@ -22,6 +22,7 @@ import {
 } from '@angular/material';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseStatsComponent } from './course-stats/course-stats.component';
+import { CourseReviewsComponent } from './course-reviews/course-reviews.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,6 @@ import { CourseStatsComponent } from './course-stats/course-stats.component';
     MatSelectModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [CoursesComponent, CourseComponent, CourseNavComponent, CourseListComponent, CourseStatsComponent],
+  declarations: [CoursesComponent, CourseComponent, CourseNavComponent, CourseListComponent, CourseStatsComponent, CourseReviewsComponent],
 })
 export class CoursesModule {}
