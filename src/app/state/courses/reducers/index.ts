@@ -2,6 +2,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState } from '../../app.interfaces';
 import * as fromCourses from './courses';
 
+const specializations = ['ii', 'ml', 'cpr', 'cs'];
+
 export interface CoursesState {
   courses: fromCourses.State;
 }
@@ -21,9 +23,32 @@ export const getCoursesEntityState = createSelector(
   (state) => state.courses
 );
 
+export const getSpecialization = createSelector(
+  getCoursesEntityState,
+  fromCourses.getSpecialization
+);
+
 export const {
   selectAll: getAllCourses,
   selectEntities: getCourseEntities,
   selectIds: getCourseIds,
   selectTotal: getCoursesTotal
 } = fromCourses.adapter.getSelectors(getCoursesEntityState);
+
+export const getSpecializationCourses = createSelector(
+  getCourseEntities,
+  getSpecialization,
+  (courses, specialization) => {
+    if (specializations.indexOf(specialization) === -1) {
+      return courses;
+    } else {
+      let specCourses = {};
+      Object.keys(courses).forEach(courseId => {
+        if (courses[courseId][specialization]) {
+          specCourses[courseId] = courses[courseId];
+        }
+      });
+      return specCourses;
+    }
+  }
+);
