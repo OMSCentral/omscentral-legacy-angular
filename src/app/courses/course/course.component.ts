@@ -6,7 +6,12 @@ import { CourseService } from '../../courses/course.service';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../../reviews/review.service';
 import { GradeService } from '../../grades/grade.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { CoursesState } from '../../state/courses/reducers';
+import { SelectCourse, LoadCourse } from '../../state/courses/actions/courses';
+
 
 import { Review } from '../../models/review';
 
@@ -16,7 +21,9 @@ import { Review } from '../../models/review';
   styleUrls: ['./course.component.scss'],
 })
 export class CourseComponent implements OnInit, OnDestroy {
+  actionsSubscription: Subscription;
   authId: string = null;
+  courseId: string;
   course$: Observable<any>;
   course: any = {};
   reviews$: Observable<any>;
@@ -36,12 +43,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     programs: {}
   };
   filtered: Review[] = [];
-  stats = {
-    num: null,
-    workload: null,
-    difficulty: null,
-    rating: null,
-  };
 
   semesters = new FormControl();
   difficulties = new FormControl();
@@ -49,6 +50,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   programs = new FormControl();
 
   constructor(
+    private store: Store<CoursesState>,
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CourseService,
@@ -56,120 +58,128 @@ export class CourseComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private gradeService: GradeService
   ) {
-    auth.user.subscribe(user => {
-      this.authId = user.uid;
-    });
+    this.actionsSubscription = this.route.params
+      .pipe(
+        map(params => {
+        this.courseId = params.courseId;
+        // this.store.dispatch(new LoadCourse({id: params.courseId}));
+        return new SelectCourse(params.courseId);
+      }))
+      .subscribe(store);
   }
 
   ngOnInit() {
-    this.course$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.courseService.getCourse(params.get('courseId'))
-      )
-    );
 
-    this.courseSub = this.course$.pipe(debounceTime(1000)).subscribe(course => {
-      this.loading = true;
-      if (course === null) {
-        this.course = null;
-      }
-      if (this.course.id !== course.id) {
-        this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
-        this.grades = this.gradeService.getCourseGrades(course.id);
-        this.reviewSub = this.reviews$
-          .pipe(debounceTime(1000))
-          .subscribe(reviews => {
-            this.loading = false;
-            const sems = {};
-            const diff = {};
-            const rats = {};
-            reviews.forEach(rev => {
-              if (rev.semester && rev.semester !== '0000-0') {
-                this.filters.semesters[rev.semester] = {
-                  id: rev.semester,
-                  selected: false,
-                  disabled: false,
-                };
-              }
-              if (rev.difficulty) {
-                this.filters.difficulties[rev.difficulty] = {
-                  id: rev.difficulty,
-                  selected: false,
-                  disabled: false,
-                };
-              }
-              if (rev.rating) {
-                this.filters.ratings[rev.rating] = {
-                  id: rev.rating,
-                  selected: false,
-                  disabled: false,
-                };
-              }
-              if (rev.program) {
-                this.filters.programs[rev.program] = {
-                  id: rev.program,
-                  selected: false,
-                  disabled: false,
-                };
-              }
-            });
+    // this.course$ = this.route.paramMap.pipe(
+    //   switchMap((params: ParamMap) =>
+    //   // this.store.select(new LoadCourse({id:}))
+    //     // this.courseService.getCourse(params.get('courseId'))
+    //   )
+    // );
 
-            if (reviews !== null) {
-              const courseReviews = reviews.filter(rev => {
-                return rev.course === course.id;
-              });
-              this.reviews = courseReviews;
-              this.filtered = courseReviews;
-              this.course = this.courseService.updateCounts(
-                course.id,
-                courseReviews
-              );
-              this.loading = false;
-            }
-          });
-        this.review = new Review({ course: course.courseId });
-      }
-    });
-    this.semesters.valueChanges.subscribe(sem => {
-      Object.keys(this.filters.semesters).forEach(filt => {
-        this.filters.semesters[filt].selected = sem.indexOf(filt) !== -1;
-      });
-      this.change();
-    });
+    // this.courseSub = this.course$.pipe(debounceTime(1000)).subscribe(course => {
+    //   this.loading = true;
+    //   if (course === null) {
+    //     this.course = null;
+    //   }
+    //   if (this.course.id !== course.id) {
+    //     this.reviews$ = this.reviewService.getReviewsByCourse(course.id);
+    //     this.grades = this.gradeService.getCourseGrades(course.id);
+    //     this.reviewSub = this.reviews$
+    //       .pipe(debounceTime(1000))
+    //       .subscribe(reviews => {
+    //         this.loading = false;
+    //         const sems = {};
+    //         const diff = {};
+    //         const rats = {};
+    //         reviews.forEach(rev => {
+    //           if (rev.semester && rev.semester !== '0000-0') {
+    //             this.filters.semesters[rev.semester] = {
+    //               id: rev.semester,
+    //               selected: false,
+    //               disabled: false,
+    //             };
+    //           }
+    //           if (rev.difficulty) {
+    //             this.filters.difficulties[rev.difficulty] = {
+    //               id: rev.difficulty,
+    //               selected: false,
+    //               disabled: false,
+    //             };
+    //           }
+    //           if (rev.rating) {
+    //             this.filters.ratings[rev.rating] = {
+    //               id: rev.rating,
+    //               selected: false,
+    //               disabled: false,
+    //             };
+    //           }
+    //           if (rev.program) {
+    //             this.filters.programs[rev.program] = {
+    //               id: rev.program,
+    //               selected: false,
+    //               disabled: false,
+    //             };
+    //           }
+    //         });
 
-    this.difficulties.valueChanges.subscribe(dif => {
-      Object.keys(this.filters.difficulties).forEach(filt => {
-        this.filters.difficulties[filt].selected = dif.indexOf(filt) !== -1;
-      });
-      this.change();
-    });
+    //         if (reviews !== null) {
+    //           const courseReviews = reviews.filter(rev => {
+    //             return rev.course === course.id;
+    //           });
+    //           this.reviews = courseReviews;
+    //           this.filtered = courseReviews;
+    //           this.course = this.courseService.updateCounts(
+    //             course.id,
+    //             courseReviews
+    //           );
+    //           this.loading = false;
+    //         }
+    //       });
+    //     this.review = new Review({ course: course.courseId });
+    //   }
+    // });
+    // this.semesters.valueChanges.subscribe(sem => {
+    //   Object.keys(this.filters.semesters).forEach(filt => {
+    //     this.filters.semesters[filt].selected = sem.indexOf(filt) !== -1;
+    //   });
+    //   this.change();
+    // });
 
-    this.ratings.valueChanges.subscribe(rat => {
-      Object.keys(this.filters.ratings).forEach(filt => {
-        this.filters.ratings[filt].selected = rat.indexOf(filt) !== -1;
-      });
-      this.change();
-    });
+    // this.difficulties.valueChanges.subscribe(dif => {
+    //   Object.keys(this.filters.difficulties).forEach(filt => {
+    //     this.filters.difficulties[filt].selected = dif.indexOf(filt) !== -1;
+    //   });
+    //   this.change();
+    // });
 
-    this.programs.valueChanges.subscribe(pro => {
-      Object.keys(this.filters.programs).forEach(filt => {
-        this.filters.programs[filt].selected = pro.indexOf(filt) !== -1;
-      });
-      this.change();
-    });
+    // this.ratings.valueChanges.subscribe(rat => {
+    //   Object.keys(this.filters.ratings).forEach(filt => {
+    //     this.filters.ratings[filt].selected = rat.indexOf(filt) !== -1;
+    //   });
+    //   this.change();
+    // });
+
+    // this.programs.valueChanges.subscribe(pro => {
+    //   Object.keys(this.filters.programs).forEach(filt => {
+    //     this.filters.programs[filt].selected = pro.indexOf(filt) !== -1;
+    //   });
+    //   this.change();
+    // });
   }
 
   ngOnDestroy() {
-    if (this.courseSub) {
-      this.courseSub.unsubscribe();
-    }
-    if (this.reviewSub) {
-      this.reviewSub.unsubscribe();
-    }
-    this.reviews$ = null;
-    this.review = null;
-    this.course$ = null;
-    this.course = {};
+    this.actionsSubscription.unsubscribe();
+    // if (this.courseSub) {
+    //   this.courseSub.unsubscribe();
+    // }
+    // if (this.reviewSub) {
+    //   this.reviewSub.unsubscribe();
+    // }
+    // this.reviews$ = null;
+    // this.review = null;
+    // this.course$ = null;
+    // this.course = {};
   }
 
   semesterFilter(review, filters) {
@@ -226,85 +236,85 @@ export class CourseComponent implements OnInit, OnDestroy {
     return this.filters[type][value].selected;
   }
 
-  change() {
-    const filtered = this.reviews.filter(review => {
-      return (
-        this.semesterFilter(review, this.filters) &&
-        this.difficultyFilter(review, this.filters) &&
-        this.ratingFilter(review, this.filters) &&
-        this.programFilter(review, this.filters)
-      );
-    });
-    if (filtered.length === this.reviews.length) {
-      this.stats = {
-        num: null,
-        workload: null,
-        difficulty: null,
-        rating: null,
-      };
-      if (this.sortType === 'date') {
-        this.filtered = this.reviewService.sortByDate(
-          this.reviews,
-          this.sortDir
-        );
-      } else {
-        this.filtered = this.reviewService.sortBySemester(
-          this.reviews,
-          this.sortDir
-        );
-      }
-    } else {
-      let workload = 0;
-      let worNum = 0;
-      let rating = 0;
-      let ratNum = 0;
-      let difficulty = 0;
-      let difNum = 0;
-      filtered.forEach(rev => {
-        if (rev.workload) {
-          workload += Number(rev.workload);
-          worNum++;
-        }
-        if (rev.rating) {
-          rating += Number(rev.rating);
-          ratNum++;
-        }
-        if (rev.difficulty) {
-          difficulty += Number(rev.difficulty);
-          difNum++;
-        }
-      });
+  // change() {
+  //   const filtered = this.reviews.filter(review => {
+  //     return (
+  //       this.semesterFilter(review, this.filters) &&
+  //       this.difficultyFilter(review, this.filters) &&
+  //       this.ratingFilter(review, this.filters) &&
+  //       this.programFilter(review, this.filters)
+  //     );
+  //   });
+  //   if (filtered.length === this.reviews.length) {
+  //     this.stats = {
+  //       num: null,
+  //       workload: null,
+  //       difficulty: null,
+  //       rating: null,
+  //     };
+  //     if (this.sortType === 'date') {
+  //       this.filtered = this.reviewService.sortByDate(
+  //         this.reviews,
+  //         this.sortDir
+  //       );
+  //     } else {
+  //       this.filtered = this.reviewService.sortBySemester(
+  //         this.reviews,
+  //         this.sortDir
+  //       );
+  //     }
+  //   } else {
+  //     let workload = 0;
+  //     let worNum = 0;
+  //     let rating = 0;
+  //     let ratNum = 0;
+  //     let difficulty = 0;
+  //     let difNum = 0;
+  //     filtered.forEach(rev => {
+  //       if (rev.workload) {
+  //         workload += Number(rev.workload);
+  //         worNum++;
+  //       }
+  //       if (rev.rating) {
+  //         rating += Number(rev.rating);
+  //         ratNum++;
+  //       }
+  //       if (rev.difficulty) {
+  //         difficulty += Number(rev.difficulty);
+  //         difNum++;
+  //       }
+  //     });
 
-      this.stats.num = filtered.length;
+  //     this.stats.num = filtered.length;
 
-      if (worNum !== 0) {
-        this.stats.workload = workload / worNum;
-      } else {
-        this.stats.workload = null;
-      }
+  //     if (worNum !== 0) {
+  //       this.stats.workload = workload / worNum;
+  //     } else {
+  //       this.stats.workload = null;
+  //     }
 
-      if (ratNum !== 0) {
-        this.stats.rating = rating / ratNum;
-      } else {
-        this.stats.rating = null;
-      }
+  //     if (ratNum !== 0) {
+  //       this.stats.rating = rating / ratNum;
+  //     } else {
+  //       this.stats.rating = null;
+  //     }
 
-      if (difNum !== 0) {
-        this.stats.difficulty = difficulty / difNum;
-      } else {
-        this.stats.difficulty = null;
-      }
+  //     if (difNum !== 0) {
+  //       this.stats.difficulty = difficulty / difNum;
+  //     } else {
+  //       this.stats.difficulty = null;
+  //     }
 
-      if (this.sortType === 'date') {
-        this.filtered = this.reviewService.sortByDate(filtered, this.sortDir);
-      } else {
-        this.filtered = this.reviewService.sortBySemester(
-          filtered,
-          this.sortDir
-        );
-      }
-    }
-  }
+  //     if (this.sortType === 'date') {
+  //       this.filtered = this.reviewService.sortByDate(filtered, this.sortDir);
+  //     } else {
+  //       this.filtered = this.reviewService.sortBySemester(
+  //         filtered,
+  //         this.sortDir
+  //       );
+  //     }
+  //   }
+  // }
 
   sortByDate() {
     if (this.sortType === 'date') {

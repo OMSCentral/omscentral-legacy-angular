@@ -1,62 +1,9 @@
 <oms-course-nav>
   <mat-sidenav-container class="container">
     <mat-sidenav position="end" #courseinfo class="courseinfo" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="60">
-      <oms-course-stats [course]="course" [grades]="grades" [stats]="stats"></oms-course-stats>
+      <oms-course-stats [courseId]="courseId"></oms-course-stats>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-card>
-        <mat-card-content class="space-between">
-            <mat-form-field>
-                <mat-select placeholder="Semesters" [formControl]="semesters" multiple>
-                    <mat-option *ngFor="let semester of filterList('semesters')" [value]="semester.id" [disabled]="semester.disabled">{{semester.id | semester}}</mat-option>
-                  </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Difficulties" [formControl]="difficulties" multiple>
-                    <mat-option *ngFor="let difficulty of filterList('difficulties')" [value]="difficulty.id" [disabled]="difficulty.disabled">{{difficulty.id | difficulty}}</mat-option>
-                  </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Ratings" [formControl]="ratings" multiple>
-                    <mat-option *ngFor="let rating of filterList('ratings')" [value]="rating.id" [disabled]="rating.disabled">{{rating.id | rating}}</mat-option>
-                  </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Programs" [formControl]="programs" multiple>
-                    <mat-option *ngFor="let program of filterList('programs')" [value]="program.id" [disabled]="program.disabled">{{program.id | program}}</mat-option>
-                  </mat-select>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button [color]="sortType === 'semester' ? 'accent' : ''"
-            (click)="sortBySemester()">Sort by Semester
-            <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-            <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
-          </button>
-          <button mat-raised-button [color]="sortType === 'date' ? 'accent' : ''" (click)="sortByDate()">Sort by Date
-            <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-            <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
-          </button>
-          <button class="pull-right" mat-raised-button color="primary" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</button>
-        </mat-card-actions>
-      </mat-card>
-      <div *ngIf="loading" class="text-center">
-        <div class="fa fa-spinner fa-spin fa-2x"></div>
-      </div>
-      <div *ngIf="!loading">
-        <div class="card" *ngIf="reviews?.length == 0">
-          <div class="card-header">
-            <span class="card-title">
-              There are no reviews for {{course?.id}}
-            </span>
-          </div>
-          <div class="card-body text-center">
-            <a class="btn btn-primary" [routerLink]="['/reviews']" [queryParams]="{courseId: course.id}">Write a Review</a>
-          </div>
-        </div>
-        <div *ngFor="let review of filtered">
-          <oms-review [review]="review"></oms-review>
-        </div>
-      </div>
+      <!-- <oms-course-reviews></oms-course-reviews> -->
     </mat-sidenav-content>
   </mat-sidenav-container>
