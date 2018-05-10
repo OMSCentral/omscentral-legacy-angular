@@ -8,7 +8,7 @@ import { Course } from '../../models/course';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { CoursesState, getSpecializationCourses } from '../../state/courses/reducers';
-import { LoadCourses, FilterCourses } from '../../state/courses/actions/courses';
+import { LoadCourses, FilterCourses, LoadCourse } from '../../state/courses/actions/courses';
 
 @Component({
   selector: 'oms-course-list',
