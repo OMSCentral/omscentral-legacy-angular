@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { ReviewsState, getAllReviews, getFilters } from '../../state/reviews/reducers';
+import { Review, ReviewFilter } from '../../models/review';
+import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { UpdateFilter } from '../../state/reviews/actions/reviews';
 
 @Component({
   selector: 'oms-course-reviews',
@@ -6,10 +12,86 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-reviews.component.scss']
 })
 export class CourseReviewsComponent implements OnInit {
+  @Input() courseId: string;
+  reviews$: Observable<Review[]>;
+  semesters = new FormControl();
+  difficulties = new FormControl();
+  ratings = new FormControl();
+  programs = new FormControl();
+  sortType = 'semester';
+  sortDir = false;
+  filters: ReviewFilter = {
+    semesters: {},
+    difficulties: {},
+    ratings: {},
+    programs: {}
+  };
 
-  constructor() { }
+  constructor(private store: Store<ReviewsState>) {
+    this.reviews$ = store.pipe(select(getAllReviews)) as Observable<Review[]>;
+    (store.pipe(select(getFilters)) as Observable<ReviewFilter>).subscribe(filters => {
+      console.log(filters);
+      this.filters = filters;
+    });
+  }
 
   ngOnInit() {
+    this.semesters.valueChanges.subscribe(sem => {
+      Object.keys(this.filters.semesters).forEach(filt => {
+        this.filters.semesters[filt].selected = sem.indexOf(filt) !== -1;
+      });
+      this.store.dispatch(new UpdateFilter(this.filters));
+    });
+
+    this.difficulties.valueChanges.subscribe(dif => {
+      Object.keys(this.filters.difficulties).forEach(filt => {
+        this.filters.difficulties[filt].selected = dif.indexOf(filt) !== -1;
+      });
+      this.store.dispatch(new UpdateFilter(this.filters));
+    });
+
+    this.ratings.valueChanges.subscribe(rat => {
+      Object.keys(this.filters.ratings).forEach(filt => {
+        this.filters.ratings[filt].selected = rat.indexOf(filt) !== -1;
+      });
+      this.store.dispatch(new UpdateFilter(this.filters));
+    });
+
+    this.programs.valueChanges.subscribe(pro => {
+      Object.keys(this.filters.programs).forEach(filt => {
+        this.filters.programs[filt].selected = pro.indexOf(filt) !== -1;
+      });
+      this.store.dispatch(new UpdateFilter(this.filters));
+    });
+  }
+
+  filterList(type) {
+    return Object.keys(this.filters[type]).map(filt => {
+      return this.filters[type][filt];
+    });
+  }
+
+  sortByDate() {
+    if (this.sortType === 'date') {
+      this.sortDir = !this.sortDir;
+    } else {
+      this.sortType = 'date';
+      this.sortDir = false;
+    }
+    // this.reviews = this.reviewService.sortByDate(this.reviews, this.sortDir);
+  }
+
+  sortBySemester() {
+    if (this.sortType === 'semester') {
+      this.sortDir = !this.sortDir;
+    } else {
+      this.sortType = 'semester';
+      this.sortDir = false;
+    }
+    // this.reviews = this.reviewService.sortBySemester(
+    //   this.reviews,
+    //   this.sortDir
+    // );
   }
 
 }

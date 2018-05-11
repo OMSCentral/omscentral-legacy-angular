@@ -22,7 +22,7 @@ export class LoadCoursesSuccess implements Action {
 export class LoadCourse implements Action {
     readonly type = LOAD_COURSE;
 
-    constructor(public payload: { id: number }) {
+    constructor(public payload: { id: string }) {
     }
   }
 
