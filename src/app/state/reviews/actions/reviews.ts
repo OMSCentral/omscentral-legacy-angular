@@ -1,18 +1,21 @@
-import { Action } from '@ngrx/store';
-import { Review } from '../../../models/review';
+import { Action, UPDATE } from '@ngrx/store';
+import { Review, ReviewFilter } from '../../../models/review';
 import { createActionType } from '../../shared/utils';
 
 export const LOAD_REVIEWS = createActionType('LOAD_REVIEWS');
 export const LOAD_REVIEWS_SUCCESS = createActionType('LOAD_REVIEWS_SUCCESS');
 export const LOAD_REVIEW = createActionType('LOAD_REVIEW');
 export const LOAD_REVIEW_SUCCESS = createActionType('LOAD_REVIEW_SUCCESS');
-export const FILTER_REVIEWS = createActionType('FILTER_REVIEWS');
+export const UPDATE_FILTER = createActionType('UPDATE_FILTER');
+export const PROCESS_STATS = createActionType('PROCESS_STATS');
+export const PROCESS_FILTERS = createActionType('PROCESS_FILTERS');
+export const PROCESS_FILTERS_SUCCESS = createActionType('PROCESS_FILTERS_SUCCESS');
 export const SELECT_REVIEW = createActionType('SELECT_REVIEW');
 
 export class LoadReviews implements Action {
   readonly type = LOAD_REVIEWS;
 
-  constructor(public payload: { ids: string[] }) {}
+  constructor(public payload: { reviews: object }) {}
 }
 
 export class LoadReviewsSuccess implements Action {
@@ -35,14 +38,32 @@ export class LoadReview implements Action {
     }
   }
 
-  export class FilterReviews implements Action {
-    readonly type = FILTER_REVIEWS;
+  export class SelectReview implements Action {
+    readonly type = SELECT_REVIEW;
 
     constructor(public payload: string) {}
   }
 
-  export class SelectReview implements Action {
-    readonly type = SELECT_REVIEW;
+  export class ProcessFilters implements Action {
+    readonly type = PROCESS_FILTERS;
+
+    constructor(public payload: Review[]) {}
+  }
+
+  export class ProcessFiltersSuccess implements Action {
+    readonly type = PROCESS_FILTERS_SUCCESS;
+
+    constructor(public payload: ReviewFilter) {}
+  }
+
+  export class UpdateFilter implements Action {
+    readonly type = UPDATE_FILTER;
+
+    constructor(public payload: ReviewFilter) {}
+  }
+
+  export class ProcessStats implements Action {
+    readonly type = PROCESS_STATS;
 
     constructor(public payload: string) {}
   }
@@ -53,5 +74,8 @@ export type ReviewsAction =
   | LoadReviewsSuccess
   | LoadReview
   | LoadReviewSuccess
-  | FilterReviews
-  | SelectReview;
+  | UpdateFilter
+  | SelectReview
+  | ProcessFilters
+  | ProcessFiltersSuccess
+  | ProcessStats;
