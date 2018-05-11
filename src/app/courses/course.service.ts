@@ -107,12 +107,12 @@ export class CourseService {
     const temp = {};
     temp[courseId] = course;
     this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
+    // this.broadcast();
   }
 
   removeReview(courseId, reviewId) {
     delete this.cached[courseId].reviews[reviewId];
-    this.broadcast();
+    // this.broadcast();
   }
 
   broadcast() {
@@ -131,6 +131,45 @@ export class CourseService {
     this.course$.next(this.cached[this.courseId] || {});
   }
 
+  processCourse(course, firebaseCourse, grades) {
+    const courseId = course.id;
+    course = Object.assign({}, course || {}, firebaseCourse || {});
+    if (course.reviews) {
+      const revs = Object.keys(course.reviews).filter(rev => {
+        return course.reviews[rev] && course.reviews[rev] !== null;
+      });
+      course.numReviews = revs.length;
+    } else {
+      course.numReviews = 0;
+    }
+
+    course.combined = courseId + ': ' + course.name;
+    if (grades[courseId]) {
+      course.grades = grades[courseId];
+    } else {
+      if (grades[course.number]) {
+        course.grades = grades[course.number];
+      } else {
+        course.grades = {
+          totals: defaultGrades,
+          percents: defaultGrades,
+        };
+      }
+    }
+    course.enrolled = course.grades.totals.total;
+    course.work = course.average.workload;
+    course.difficulty = course.average.difficulty;
+    course.rating = course.average.rating;
+    course.ab = course.grades.totals.ab;
+    course.cdf = course.grades.totals.cdf;
+    course.withdrew = course.grades.totals.w;
+    course.cpr = specializations.cpr.indexOf(courseId) !== -1;
+    course.cs = specializations.cs.indexOf(courseId) !== -1;
+    course.ii = specializations.ii.indexOf(courseId) !== -1;
+    course.ml = specializations.ml.indexOf(courseId) !== -1;
+    return course;
+  }
+
   downloadCourses() {
     const grades = this.gradeService.getGrades();
     this.db.database
@@ -142,67 +181,19 @@ export class CourseService {
 
         Object.keys(firebaseCourses).forEach(courseId => {
           if (jsonData[courseId]) {
-            courses[courseId] = Object.assign( {},
-              jsonData[courseId] || {},
-              firebaseCourses[courseId] || {}
+            courses[courseId] = this.processCourse(
+              courses[courseId],
+              firebaseCourses[courseId],
+              grades
             );
-            if (courses[courseId].reviews) {
-              const revs = Object.keys(courses[courseId].reviews).filter(
-                rev => {
-                  return (
-                    courses[courseId].reviews[rev] &&
-                    courses[courseId].reviews[rev] !== null
-                  );
-                }
-              );
-              courses[courseId].numReviews = revs.length;
-            } else {
-              courses[courseId].numReviews = 0;
-            }
-            courses[courseId].id = courseId;
-            courses[courseId].combined =
-              courseId + ': ' + courses[courseId].name;
-            if (grades[courseId]) {
-              courses[courseId].grades = grades[courseId];
-            } else {
-              if (grades[courses[courseId].number]) {
-                courses[courseId].grades = grades[courses[courseId].number];
-              } else {
-                courses[courseId].grades = {
-                  totals: defaultGrades,
-                  percents: defaultGrades,
-                };
-              }
-            }
-            courses[courseId].enrolled = courses[courseId].grades.totals.total;
-            courses[courseId].work = courses[courseId].average.workload;
-            courses[courseId].difficulty = courses[courseId].average.difficulty;
-            courses[courseId].rating = courses[courseId].average.rating;
-            courses[courseId].ab = courses[courseId].grades.totals.ab;
-            courses[courseId].cdf = courses[courseId].grades.totals.cdf;
-            courses[courseId].withdrew = courses[courseId].grades.totals.w;
-            courses[courseId].cpr = specializations.cpr.indexOf(courseId) !== -1;
-            courses[courseId].cs = specializations.cs.indexOf(courseId) !== -1;
-            courses[courseId].ii = specializations.ii.indexOf(courseId) !== -1;
-            courses[courseId].ml = specializations.ml.indexOf(courseId) !== -1;
           }
         });
-        // console.log(this.cached);
-        this.cached = courses;
-        Object.keys(this.cached).forEach(cacheKey => {
-          if (coursePrefixes.indexOf(cacheKey.substr(0, 2)) === -1) {
-            delete this.cached[cacheKey];
-          }
-        });
-        if (this.cacheTime === null) {
-          this.cacheTime = new Date().valueOf();
-          this.localStorageService.set('coursesCacheTime', this.cacheTime);
-        }
-        this.broadcast();
+        return courses;
       });
   }
 
-  downloadCourse(courseId) {
+  downloadCourse(courseId: string) {
+    const grades = this.gradeService.getGrades();
     const department = courseId.substr(
       courseId.indexOf('-') + 1,
       courseId.length - courseId.indexOf('-') - 1
@@ -213,13 +204,7 @@ export class CourseService {
       .then(snapshot => {
         const firebaseCourse: any = snapshot.val();
         if (firebaseCourse !== null) {
-          let course = jsonData[courseId];
-          course = Object.assign(course || {}, firebaseCourse);
-          course.numReviews = Object.keys(course.reviews || {}).length;
-          const temp = {};
-          temp[courseId] = course;
-          this.cached = Object.assign(this.cached, temp);
-          this.broadcast();
+          return this.processCourse(jsonData[courseId], firebaseCourse, grades);
         }
       });
   }
@@ -281,26 +266,13 @@ export class CourseService {
       this.downloadCourses();
     } else {
       this.courseIds = Object.keys(this.cached);
-      this.broadcast();
+      // this.broadcast();
     }
     return this.courses$.asObservable();
   }
 
   getCourse(courseId) {
-    this.course$.next(null);
-    this.courseId = courseId;
-    if (
-      Object.keys(this.cached).indexOf(courseId) === -1 ||
-      this.cacheExpired()
-    ) {
-      this.downloadCourse(courseId);
-    } else {
-      this.broadcast();
-    }
-    if (!this.course$) {
-      this.course$ = new BehaviorSubject({});
-    }
-    return this.course$;
+    return this.downloadCourse(courseId);
   }
 
   push(course: any) {
@@ -328,7 +300,7 @@ export class CourseService {
     newCourse['id'] = course.number;
     temp[course.number] = newCourse;
     this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
+    // this.broadcast();
   }
 
   private cacheExpired() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
-import { Review } from '../models/review';
+import { Review, ReviewFilter } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
 import { CourseService } from '../courses/course.service';
@@ -257,21 +257,68 @@ export class ReviewService {
     this.recentSub = null;
   }
 
-  getReviews(reviewIds: string[]) {
-    this.reviewIds = reviewIds;
-    this.reviews$.next(null);
-    if (reviewIds.length === 0) {
-      this.broadcast();
-    } else {
-      const reviews = [];
-      reviewIds.forEach(reviewId => {
-        reviews.push(this.getReview(reviewId));
-      });
-      forkJoin(reviews).subscribe(revs => {
-        this.broadcast();
-      });
-    }
-    return this.reviews$;
+  processFilters(reviews: Review[]) {
+    const filters: ReviewFilter = {
+      semesters: {},
+      difficulties: {},
+      ratings: {},
+      programs: {},
+    };
+    reviews.forEach(rev => {
+      if (rev.semester && rev.semester !== '0000-0') {
+        filters.semesters[rev.semester] = {
+          id: rev.semester,
+          selected: false,
+          disabled: false,
+        };
+      }
+      if (rev.difficulty) {
+        filters.difficulties[rev.difficulty] = {
+          id: rev.difficulty,
+          selected: false,
+          disabled: false,
+        };
+      }
+      if (rev.rating) {
+        filters.ratings[rev.rating] = {
+          id: rev.rating,
+          selected: false,
+          disabled: false,
+        };
+      }
+      if (rev.program) {
+        filters.programs[rev.program] = {
+          id: rev.program,
+          selected: false,
+          disabled: false,
+        };
+      }
+    });
+    return Observable.of(filters);
+  }
+
+  getReviews(reviews: object) {
+    console.log(reviews);
+    const revs = [];
+    Object.keys(reviews).forEach(rev => {
+      if (reviews[rev]) {
+        revs.push(this.downloadReview(rev));
+      }
+    });
+    return forkJoin(revs);
+    // this.reviewIds = reviewIds;
+    // if (reviewIds.length === 0) {
+    //   this.broadcast();
+    // } else {
+    //   const reviews = [];
+    //   reviewIds.forEach(reviewId => {
+    //     reviews.push(this.getReview(reviewId));
+    //   });
+    //   forkJoin(reviews).subscribe(revs => {
+    //     this.broadcast();
+    //   });
+    // }
+    // return this.reviews$;
   }
 
   broadcast() {

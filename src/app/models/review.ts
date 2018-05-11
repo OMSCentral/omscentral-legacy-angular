@@ -1,3 +1,10 @@
+export class ReviewFilter {
+  programs: object;
+  semesters: object;
+  difficulties: object;
+  ratings: object;
+}
+
 export class Review {
   id: string = null;
   author: string;

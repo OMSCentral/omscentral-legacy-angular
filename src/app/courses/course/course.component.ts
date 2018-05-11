@@ -24,30 +24,6 @@ export class CourseComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
   authId: string = null;
   courseId: string;
-  course$: Observable<any>;
-  course: any = {};
-  reviews$: Observable<any>;
-  reviews: any;
-  review: Review = null;
-  grades: any;
-  courseSub: any;
-  reviewSub: any;
-  loading = true;
-  sortType = 'semester';
-  sortDir = false;
-  percent = false;
-  filters = {
-    semesters: {},
-    difficulties: {},
-    ratings: {},
-    programs: {}
-  };
-  filtered: Review[] = [];
-
-  semesters = new FormControl();
-  difficulties = new FormControl();
-  ratings = new FormControl();
-  programs = new FormControl();
 
   constructor(
     private store: Store<CoursesState>,
@@ -182,59 +158,53 @@ export class CourseComponent implements OnInit, OnDestroy {
     // this.course = {};
   }
 
-  semesterFilter(review, filters) {
-    const semesters = Object.keys(filters.semesters).filter(sem => {
-      return filters.semesters[sem].selected;
-    });
-    if (semesters.length === 0 && (this.semesters.value || []).length === 0) {
-      return true;
-    } else {
-      return semesters.indexOf(review.semester) !== -1;
-    }
-  }
+  // semesterFilter(review, filters) {
+  //   const semesters = Object.keys(filters.semesters).filter(sem => {
+  //     return filters.semesters[sem].selected;
+  //   });
+  //   if (semesters.length === 0 && (this.semesters.value || []).length === 0) {
+  //     return true;
+  //   } else {
+  //     return semesters.indexOf(review.semester) !== -1;
+  //   }
+  // }
 
-  difficultyFilter(review, filters) {
-    const difficulties = Object.keys(filters.difficulties).filter(dif => {
-      return filters.difficulties[dif].selected;
-    });
-    if (difficulties.length === 0 && (this.difficulties.value || []).length === 0) {
-      return true;
-    } else {
-      return difficulties.indexOf(String(review.difficulty)) !== -1;
-    }
-  }
+  // difficultyFilter(review, filters) {
+  //   const difficulties = Object.keys(filters.difficulties).filter(dif => {
+  //     return filters.difficulties[dif].selected;
+  //   });
+  //   if (difficulties.length === 0 && (this.difficulties.value || []).length === 0) {
+  //     return true;
+  //   } else {
+  //     return difficulties.indexOf(String(review.difficulty)) !== -1;
+  //   }
+  // }
 
-  ratingFilter(review, filters) {
-    const ratings = Object.keys(filters.ratings).filter(rat => {
-      return filters.ratings[rat].selected;
-    });
-    if (ratings.length === 0 && (this.ratings.value || []).length === 0) {
-      return true;
-    } else {
-      return ratings.indexOf(String(review.rating)) !== -1;
-    }
-  }
+  // ratingFilter(review, filters) {
+  //   const ratings = Object.keys(filters.ratings).filter(rat => {
+  //     return filters.ratings[rat].selected;
+  //   });
+  //   if (ratings.length === 0 && (this.ratings.value || []).length === 0) {
+  //     return true;
+  //   } else {
+  //     return ratings.indexOf(String(review.rating)) !== -1;
+  //   }
+  // }
 
-  programFilter(review, filters) {
-    const programs = Object.keys(filters.programs).filter(pro => {
-      return filters.programs[pro].selected;
-    });
-    if (programs.length === 0 && (this.programs.value || []).length === 0) {
-      return true;
-    } else {
-      return programs.indexOf(String(review.rating)) !== -1;
-    }
-  }
+  // programFilter(review, filters) {
+  //   const programs = Object.keys(filters.programs).filter(pro => {
+  //     return filters.programs[pro].selected;
+  //   });
+  //   if (programs.length === 0 && (this.programs.value || []).length === 0) {
+  //     return true;
+  //   } else {
+  //     return programs.indexOf(String(review.rating)) !== -1;
+  //   }
+  // }
 
-  filterList(type) {
-    return Object.keys(this.filters[type]).map(filt => {
-      return this.filters[type][filt];
-    });
-  }
-
-  selected(type, value) {
-    return this.filters[type][value].selected;
-  }
+  // selected(type, value) {
+  //   return this.filters[type][value].selected;
+  // }
 
   // change() {
   //   const filtered = this.reviews.filter(review => {
@@ -315,27 +285,4 @@ export class CourseComponent implements OnInit, OnDestroy {
   //     }
   //   }
   // }
-
-  sortByDate() {
-    if (this.sortType === 'date') {
-      this.sortDir = !this.sortDir;
-    } else {
-      this.sortType = 'date';
-      this.sortDir = false;
-    }
-    this.reviews = this.reviewService.sortByDate(this.reviews, this.sortDir);
-  }
-
-  sortBySemester() {
-    if (this.sortType === 'semester') {
-      this.sortDir = !this.sortDir;
-    } else {
-      this.sortType = 'semester';
-      this.sortDir = false;
-    }
-    this.reviews = this.reviewService.sortBySemester(
-      this.reviews,
-      this.sortDir
-    );
-  }
 }
