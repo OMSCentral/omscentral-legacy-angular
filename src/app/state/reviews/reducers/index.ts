@@ -23,14 +23,14 @@ export const getReviewsEntityState = createSelector(
   (state) => state.reviews
 );
 
-export const getFilter = createSelector(
-  getReviewsEntityState,
-  fromReviews.getFilter
-);
-
 export const getSelectedReviewId = createSelector(
   getReviewsEntityState,
   fromReviews.getSelectedReviewId
+);
+
+export const getFilters = createSelector(
+  getReviewsEntityState,
+  fromReviews.getFilters
 );
 
 export const {
@@ -39,14 +39,6 @@ export const {
   selectIds: getReviewIds,
   selectTotal: getReviewsTotal
 } = fromReviews.adapter.getSelectors(getReviewsEntityState);
-
-export const getFilterReviews = createSelector(
-  getReviewEntities,
-  getFilter,
-  (reviews, filter) => {
-    return reviews;
-  }
-);
 
 export const getSelectedReview = createSelector(
   getReviewEntities,
