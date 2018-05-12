@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { ReviewsState, getAllReviews, getFilters } from '../../state/reviews/reducers';
+import { ReviewsState, getFilteredReviews, getFilters } from '../../state/reviews/reducers';
 import { Review, ReviewFilter } from '../../models/review';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { UpdateFilter } from '../../state/reviews/actions/reviews';
+import { UpdateProgramFilter, UpdateDifficultyFilter, UpdateRatingFilter, UpdateSemesterFilter } from '../../state/reviews/actions/reviews';
 
 @Component({
   selector: 'oms-course-reviews',
@@ -28,7 +28,7 @@ export class CourseReviewsComponent implements OnInit {
   };
 
   constructor(private store: Store<ReviewsState>) {
-    this.reviews$ = store.pipe(select(getAllReviews)) as Observable<Review[]>;
+    this.reviews$ = store.pipe(select(getFilteredReviews)) as Observable<Review[]>;
     (store.pipe(select(getFilters)) as Observable<ReviewFilter>).subscribe(filters => {
       console.log(filters);
       this.filters = filters;
@@ -37,31 +37,19 @@ export class CourseReviewsComponent implements OnInit {
 
   ngOnInit() {
     this.semesters.valueChanges.subscribe(sem => {
-      Object.keys(this.filters.semesters).forEach(filt => {
-        this.filters.semesters[filt].selected = sem.indexOf(filt) !== -1;
-      });
-      this.store.dispatch(new UpdateFilter(this.filters));
+      this.store.dispatch(new UpdateSemesterFilter(sem));
     });
 
     this.difficulties.valueChanges.subscribe(dif => {
-      Object.keys(this.filters.difficulties).forEach(filt => {
-        this.filters.difficulties[filt].selected = dif.indexOf(filt) !== -1;
-      });
-      this.store.dispatch(new UpdateFilter(this.filters));
+      this.store.dispatch(new UpdateDifficultyFilter(dif));
     });
 
     this.ratings.valueChanges.subscribe(rat => {
-      Object.keys(this.filters.ratings).forEach(filt => {
-        this.filters.ratings[filt].selected = rat.indexOf(filt) !== -1;
-      });
-      this.store.dispatch(new UpdateFilter(this.filters));
+      this.store.dispatch(new UpdateRatingFilter(rat));
     });
 
     this.programs.valueChanges.subscribe(pro => {
-      Object.keys(this.filters.programs).forEach(filt => {
-        this.filters.programs[filt].selected = pro.indexOf(filt) !== -1;
-      });
-      this.store.dispatch(new UpdateFilter(this.filters));
+      this.store.dispatch(new UpdateProgramFilter(pro));
     });
   }
 

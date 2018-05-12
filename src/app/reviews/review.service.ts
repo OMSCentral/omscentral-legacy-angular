@@ -13,29 +13,14 @@ import { SettingsService } from '../core/settings.service';
 
 @Injectable()
 export class ReviewService {
-  cached = {};
-  cacheTime: number = null;
-  review$: BehaviorSubject<any> = new BehaviorSubject({});
-  reviews$: BehaviorSubject<any> = new BehaviorSubject([]);
-  recent$: BehaviorSubject<any> = new BehaviorSubject([]);
-  recentSub: QueryReference = null;
-  reviewIds: string[];
-
+  review$: BehaviorSubject<Review> = new BehaviorSubject<Review>(null);
   constructor(
     private db: AngularFireDatabase,
     private auth: AuthService,
     private courseService: CourseService,
     private localStorageService: LocalStorageService,
     private settingsService: SettingsService
-  ) {
-    this.cached = localStorageService.getObject('reviews') || {};
-    const cacheTime = localStorageService.get('reviewsCacheTime');
-    if (cacheTime !== null || cacheTime !== 'null') {
-      this.cacheTime = new Date(Number(cacheTime)).valueOf();
-    } else {
-      this.cacheTime = null;
-    }
-  }
+  ) {}
 
   downloadReview(reviewId) {
     return this.db.database
@@ -44,12 +29,6 @@ export class ReviewService {
       .then(snapshot => {
         const review: Review = new Review(snapshot.val());
         review.id = reviewId;
-        const temp = {};
-        temp[reviewId] = review;
-        this.cached = Object.assign(this.cached, temp);
-        if (this.cacheTime === null) {
-          this.cacheTime = new Date().valueOf();
-        }
         return review;
       });
   }
@@ -87,18 +66,14 @@ export class ReviewService {
     };
     const postRef: any = this.db.database.ref('/reviews/').push(newReview);
     const refKey = postRef.key;
-    if (!this.reviewIds) {
-      this.reviewIds = [];
-    }
-    this.reviewIds.push(refKey);
     const temp = {};
     newReview['id'] = refKey;
     temp[refKey] = new Review(newReview);
-    this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
+    // this.cached = Object.assign(this.cached, temp);
+    // this.broadcast();
 
     // Add review to course cache
-    this.courseService.addReview(review.course, postRef.key);
+    // this.courseService.addReview(review.course, postRef.key);
   }
 
   update(review: Review) {
@@ -138,124 +113,67 @@ export class ReviewService {
     const temp = {};
     updatedReview.id = review.id;
     temp[review.id] = new Review(updatedReview);
-    this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
+    // this.cached = Object.assign(this.cached, temp);
   }
 
   remove(review) {
     this.db.database.ref('/reviews/' + review.id).remove();
-    delete this.cached[review.id];
-    if (!this.reviewIds) {
-      this.reviewIds = [];
-    }
-    if (this.reviewIds.indexOf(review.id) !== -1) {
-      this.reviewIds.splice(this.reviewIds.indexOf(review.id), 1);
-    }
-    this.courseService.removeReview(review.course, review.id);
-    this.broadcast();
   }
 
-  reviewList() {
-    const reviews = Object.keys(this.cached).map(reviewId => {
-      return new Review(this.cached[reviewId]);
-    });
-    return reviews;
-  }
+  // getReviewsByAuthor(authorId: string) {
+  //   this.db.database
+  //     .ref('/reviews')
+  //     .orderByChild('author')
+  //     .equalTo(authorId)
+  //     .once('value')
+  //     .then(snapshot => {
+  //       const reviewsObj = snapshot.val();
+  //       const temp = {};
 
-  getReviewsByCourse(courseId: string) {
-    this.db.database
-      .ref('/reviews')
-      .orderByChild('course')
-      .equalTo(courseId)
-      .once('value')
-      .then(snapshot => {
-        const reviewsObj = snapshot.val() || {};
-        const temp = {};
+  //       if (reviewsObj) {
+  //         this.reviewIds = Object.keys(reviewsObj);
 
-        this.reviewIds = Object.keys(reviewsObj);
+  //         const reviews = Object.keys(reviewsObj).map(reviewId => {
+  //           const review: Review = new Review(reviewsObj[reviewId]);
+  //           review.id = reviewId;
+  //           temp[reviewId] = review;
+  //           return review;
+  //         });
 
-        const reviews = Object.keys(reviewsObj)
-          .map(reviewId => {
-            const review: Review = new Review(reviewsObj[reviewId]);
-            review.id = reviewId;
-            temp[reviewId] = review;
-            return review;
-          })
-          .filter(review => {
-            return review;
-          });
+  //         this.cached = Object.assign(this.cached, temp);
+  //         if (this.cacheTime === null) {
+  //           this.cacheTime = new Date().valueOf();
+  //         }
 
-        this.cached = Object.assign(this.cached, temp);
-        if (this.cacheTime === null) {
-          this.cacheTime = new Date().valueOf();
-        }
+  //         this.reviews$.next(this.sortBySemester(reviews, false));
+  //       } else {
+  //         this.reviews$.next([]);
+  //       }
+  //     });
+  //   return this.reviews$;
+  // }
 
-        this.reviews$.next(this.sortBySemester(reviews, false));
+  // getRecentReviews() {
+  //   if (this.recentSub === null) {
+  //     this.recentSub = this.db.database
+  //       .ref('/reviews')
+  //       .orderByChild('created')
+  //       .limitToLast(10);
+  //     this.recentSub.on('value', snapshot => {
+  //       const reviewsObj = snapshot.val();
+  //       const reviews = Object.keys(reviewsObj)
+  //         .map(reviewId => {
+  //           const review: Review = new Review(reviewsObj[reviewId]);
+  //           review.id = reviewId;
+  //           return review;
+  //         })
+  //         .reverse();
 
-        return reviews;
-      });
-    return this.reviews$;
-  }
-
-  getReviewsByAuthor(authorId: string) {
-    this.db.database
-      .ref('/reviews')
-      .orderByChild('author')
-      .equalTo(authorId)
-      .once('value')
-      .then(snapshot => {
-        const reviewsObj = snapshot.val();
-        const temp = {};
-
-        if (reviewsObj) {
-          this.reviewIds = Object.keys(reviewsObj);
-
-          const reviews = Object.keys(reviewsObj).map(reviewId => {
-            const review: Review = new Review(reviewsObj[reviewId]);
-            review.id = reviewId;
-            temp[reviewId] = review;
-            return review;
-          });
-
-          this.cached = Object.assign(this.cached, temp);
-          if (this.cacheTime === null) {
-            this.cacheTime = new Date().valueOf();
-          }
-
-          this.reviews$.next(this.sortBySemester(reviews, false));
-        } else {
-          this.reviews$.next([]);
-        }
-      });
-    return this.reviews$;
-  }
-
-  getRecentReviews() {
-    if (this.recentSub === null) {
-      this.recentSub = this.db.database
-        .ref('/reviews')
-        .orderByChild('created')
-        .limitToLast(10);
-      this.recentSub.on('value', snapshot => {
-        const reviewsObj = snapshot.val();
-        const reviews = Object.keys(reviewsObj)
-          .map(reviewId => {
-            const review: Review = new Review(reviewsObj[reviewId]);
-            review.id = reviewId;
-            return review;
-          })
-          .reverse();
-
-        this.recent$.next(reviews);
-      });
-    }
-    return this.recent$;
-  }
-
-  unsubRecent() {
-    this.recentSub.off();
-    this.recentSub = null;
-  }
+  //       this.recent$.next(reviews);
+  //     });
+  //   }
+  //   return this.recent$;
+  // }
 
   processFilters(reviews: Review[]) {
     const filters: ReviewFilter = {
@@ -297,8 +215,11 @@ export class ReviewService {
     return Observable.of(filters);
   }
 
+  getReview(reviewId) {
+    return this.downloadReview(reviewId);
+  }
+
   getReviews(reviews: object) {
-    console.log(reviews);
     const revs = [];
     Object.keys(reviews).forEach(rev => {
       if (reviews[rev]) {
@@ -306,41 +227,6 @@ export class ReviewService {
       }
     });
     return forkJoin(revs);
-    // this.reviewIds = reviewIds;
-    // if (reviewIds.length === 0) {
-    //   this.broadcast();
-    // } else {
-    //   const reviews = [];
-    //   reviewIds.forEach(reviewId => {
-    //     reviews.push(this.getReview(reviewId));
-    //   });
-    //   forkJoin(reviews).subscribe(revs => {
-    //     this.broadcast();
-    //   });
-    // }
-    // return this.reviews$;
-  }
-
-  broadcast() {
-    this.localStorageService.setObject('reviews', this.cached);
-    if (!this.reviews$) {
-      this.reviews$ = new BehaviorSubject([]);
-    }
-    if (!this.reviewIds) {
-      this.reviewIds = [];
-    }
-    const reviews = this.reviewIds
-      .map(reviewId => {
-        if (this.cached[reviewId]) {
-          return new Review(this.cached[reviewId]);
-        } else {
-          return null;
-        }
-      })
-      .filter(rev => {
-        return rev !== null;
-      });
-    this.reviews$.next(this.sortBySemester(reviews, false));
   }
 
   sortBySemester(reviews, rev = false) {
@@ -405,38 +291,5 @@ export class ReviewService {
     }
 
     return sorted;
-  }
-
-  getReview(reviewId?): BehaviorSubject<Review> {
-    if (reviewId) {
-      if (
-        Object.keys(this.cached).indexOf(reviewId) === -1 ||
-        this.cacheExpired()
-      ) {
-        this.review$.next(this.downloadReview(reviewId));
-      } else {
-        this.review$.next(new Review(this.cached[reviewId]));
-      }
-    } else {
-      this.review$.next(new Review({}));
-    }
-    return this.review$;
-  }
-
-  private cacheExpired() {
-    if (this.cacheTime === null) {
-      return true;
-    } else {
-      if (
-        new Date().valueOf() - this.cacheTime.valueOf() >=
-        this.settingsService.cacheLength
-      ) {
-        this.cacheTime = null;
-        this.localStorageService.set('reviewsCacheTime', null);
-        return true;
-      } else {
-        return false;
-      }
-    }
   }
 }

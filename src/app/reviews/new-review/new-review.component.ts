@@ -62,9 +62,9 @@ export class NewReviewComponent implements OnInit {
       }
     });
 
-    this.review$ = this.reviewService.getReview(
-      this.route.snapshot.paramMap.get('reviewId')
-    );
+    // this.review$ = this.reviewService.getReview(
+    //   this.route.snapshot.paramMap.get('reviewId')
+    // );
     // this.review$ = this.route.paramMap
     //   .switchMap((params: ParamMap) =>
     //     this.reviewService.getReview(params.get('reviewId')));
