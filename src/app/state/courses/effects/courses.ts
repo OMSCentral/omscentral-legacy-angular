@@ -22,7 +22,7 @@ export class CoursesEffects {
   loadCourses: Observable<Action> = this.actions
     .ofType<LoadCourses>(LOAD_COURSES)
     .pipe(
-      switchMap(() => this.coursesService.getCourses()),
+      switchMap(() => this.courseService.getCourses()),
       map(courses => {
         return new LoadCoursesSuccess(courses);
       })
@@ -38,7 +38,7 @@ export class CoursesEffects {
     .ofType<LoadCourse>(LOAD_COURSE)
     .pipe(
       map(action => action.payload),
-      switchMap(payload => this.coursesService.getCourse(payload.id)),
+      switchMap(payload => this.courseService.getCourse(payload.id)),
       map(course => {
         console.log(course);
         return course;
@@ -51,6 +51,6 @@ export class CoursesEffects {
 
   constructor(
     private actions: Actions,
-    private coursesService: CourseService
+    private courseService: CourseService
   ) {}
 }
