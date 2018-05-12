@@ -14,10 +14,10 @@ export class RecentComponent implements OnInit, OnDestroy {
   constructor(private reviewService: ReviewService) {}
 
   ngOnInit() {
-    this.reviews$ = this.reviewService.getRecentReviews();
+    // this.reviews$ = this.reviewService.getRecentReviews();
   }
 
   ngOnDestroy() {
-    this.reviewService.unsubRecent();
+    // this.reviewService.unsubRecent();
   }
 }
