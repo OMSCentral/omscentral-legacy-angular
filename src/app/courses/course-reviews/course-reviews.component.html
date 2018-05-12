@@ -43,6 +43,6 @@
     <a class="btn btn-primary" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</a>
   </div>
 </div>
-<div *ngFor="let review of (reviews$ | async)">
+<div *ngFor="let review of (reviews$ | async) | reviewSort:sortType:sortDir">
   <oms-review [review]="review"></oms-review>
 </div>

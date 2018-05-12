@@ -9,28 +9,28 @@
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.numReviews">
       <h4 mat-line>Reviews</h4>
       <div>
-        <span *ngIf="stats?.num">{{stats?.num}} / </span>{{(course$ | async)?.numReviews}}
+        <span *ngIf="(stats$ | async)?.num">{{(stats$ | async)?.num}} / </span>{{(course$ | async)?.numReviews}}
       </div>
     </mat-list-item>
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.workload">
       <h4 mat-line>Average Work</h4>
       <p mat-line>Hours/week</p>
       <div>
-        <span *ngIf="stats?.workload">{{stats?.workload | number}} / </span>{{(course$ | async)?.average?.workload | number}}
+        <span *ngIf="(stats$ | async)?.workload">{{(stats$ | async)?.workload | number}} / </span>{{(course$ | async)?.average?.workload | number}}
       </div>
     </mat-list-item>
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.difficulty">
       <h4 mat-line>Average Difficulty</h4>
       <p mat-line>(Easy) 1 - 5 (Hard)</p>
       <div>
-        <span *ngIf="stats?.difficulty">{{stats?.difficulty | number}} / </span>{{(course$ | async)?.average?.difficulty | number}}
+        <span *ngIf="(stats$ | async)?.difficulty">{{(stats$ | async)?.difficulty | number}} / </span>{{(course$ | async)?.average?.difficulty | number}}
       </div>
     </mat-list-item>
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.average?.rating">
       <h4 mat-line>Average Rating</h4>
       <p mat-line>(Worst) 1 - 5 (Best)</p>
       <div>
-        <span *ngIf="stats?.rating">{{stats?.rating | number}} / </span>{{(course$ | async)?.average?.rating | number}}
+        <span *ngIf="(stats$ | async)?.rating">{{(stats$ | async)?.rating | number}} / </span>{{(course$ | async)?.average?.rating | number}}
       </div>
     </mat-list-item>
   </mat-list>

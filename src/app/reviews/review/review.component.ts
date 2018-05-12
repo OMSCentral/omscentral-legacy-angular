@@ -46,7 +46,8 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit() {
     if (this.review && this.review.course) {
-      this.courseName = this.courseService.getCourseName(this.review.course);
+      // TODO
+      // this.courseName = this.courseService.getCourseName(this.review.course);
     }
   }
 

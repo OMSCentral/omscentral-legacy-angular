@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   ) {
     this.auth = this.authService.user.subscribe(auth => {
       this.auth = auth;
-      this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
+      // this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
     });
   }
 
