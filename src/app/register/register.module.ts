@@ -5,15 +5,9 @@ import { AuthService } from '../firebase/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RegisterComponent],
-  providers: [AuthService]
+  providers: [AuthService],
 })
-export class RegisterModule { }
+export class RegisterModule {}

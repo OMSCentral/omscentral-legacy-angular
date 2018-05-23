@@ -3,14 +3,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UserService } from '../core/user.service';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   authState: any = null;
 
-  constructor(private firebaseAuth: AngularFireAuth, private userService: UserService) {
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    private userService: UserService
+  ) {
     this.user = firebaseAuth.authState;
     this.user.subscribe(auth => {
       if (auth && auth.uid !== null) {
@@ -38,14 +41,13 @@ export class AuthService {
 
   signup(values) {
     const email = values.email.toLowerCase();
-    return this.firebaseAuth
-      .auth
+    return this.firebaseAuth.auth
       .createUserWithEmailAndPassword(email, values.password)
       .then(auth => {
         this.authState = auth;
         const entity = {
           name: values.name,
-          email: email
+          email: email,
         };
         return this.userService.updateInfo(entity, auth);
       })
@@ -88,15 +90,14 @@ export class AuthService {
         email: auth.user.providerData[0].email,
         anonymous: true,
         profileImageUrl: auth.user.providerData[0].photoURL,
-        authProvider: providerName
+        authProvider: providerName,
       };
       return this.userService.updateInfo(entity, auth.user);
     });
   }
 
   login(email: string, password: string) {
-    return this.firebaseAuth
-      .auth
+    return this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(auth => {
         this.authState = auth;
@@ -109,9 +110,6 @@ export class AuthService {
   }
 
   logout() {
-    this.firebaseAuth
-      .auth
-      .signOut();
+    this.firebaseAuth.auth.signOut();
   }
-
 }

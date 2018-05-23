@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavComponent } from './nav.component';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../../firebase/auth.service';
 class MockAuth {
@@ -13,7 +13,7 @@ class MockAuth {
 
 import { SettingsService } from '../settings.service';
 class MockSettings {
-  getSettings() { }
+  getSettings() {}
 }
 import { UserService } from '../user.service';
 class MockUser {
@@ -27,17 +27,14 @@ describe('NavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthService, useClass: MockAuth },
         { provide: SettingsService, useClass: MockSettings },
-        { provide: UserService, useClass: MockUser }
+        { provide: UserService, useClass: MockUser },
       ],
-      declarations: [NavComponent]
-    })
-      .compileComponents();
+      declarations: [NavComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

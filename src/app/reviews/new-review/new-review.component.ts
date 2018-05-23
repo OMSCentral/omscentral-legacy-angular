@@ -1,18 +1,22 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../../firebase/auth.service';
 import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
 import { CourseService } from '../../courses/course.service';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'oms-new-review',
   templateUrl: './new-review.component.html',
-  styleUrls: ['./new-review.component.scss']
+  styleUrls: ['./new-review.component.scss'],
 })
 export class NewReviewComponent implements OnInit {
   review: Review;
@@ -30,9 +34,14 @@ export class NewReviewComponent implements OnInit {
   programs = Array.from(new Array(2), (x, i) => i + 1);
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
-  constructor(private route: ActivatedRoute, private router: Router,
-    private auth: AuthService, private reviewService: ReviewService,
-    private fb: FormBuilder, private courseService: CourseService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService,
+    private reviewService: ReviewService,
+    private fb: FormBuilder,
+    private courseService: CourseService
+  ) {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
@@ -53,7 +62,9 @@ export class NewReviewComponent implements OnInit {
       }
     });
 
-    this.review$ = this.reviewService.getReview(this.route.snapshot.paramMap.get('reviewId'));
+    this.review$ = this.reviewService.getReview(
+      this.route.snapshot.paramMap.get('reviewId')
+    );
     // this.review$ = this.route.paramMap
     //   .switchMap((params: ParamMap) =>
     //     this.reviewService.getReview(params.get('reviewId')));
@@ -62,13 +73,13 @@ export class NewReviewComponent implements OnInit {
     //     .switchMap((params: ParamMap) =>
     //       this.courseService.getCourse(params.get('courseId')));
 
-      this.review$.subscribe(review => {
-        this.review = review;
-        if (this.route.snapshot.queryParamMap.get('courseId')) {
-          this.review.course = this.route.snapshot.queryParamMap.get('courseId');
-        }
-        this.edit();
-      });
+    this.review$.subscribe(review => {
+      this.review = review;
+      if (this.route.snapshot.queryParamMap.get('courseId')) {
+        this.review.course = this.route.snapshot.queryParamMap.get('courseId');
+      }
+      this.edit();
+    });
 
     // if (this.review && this.review.course) {
     //   this.courseName = this.courseService.getCourseName(this.review.course);
@@ -92,7 +103,7 @@ export class NewReviewComponent implements OnInit {
       tests: '',
       extraCredit: '',
       moneySpent: '',
-      frontLoad: ''
+      frontLoad: '',
     });
     this.reviewForm.valueChanges.subscribe(changes => {
       this.review.update(changes);
@@ -130,5 +141,4 @@ export class NewReviewComponent implements OnInit {
       this.review.cancel();
     }
   }
-
 }

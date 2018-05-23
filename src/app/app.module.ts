@@ -4,7 +4,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { ClarityModule } from 'clarity-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -40,16 +39,14 @@ import { AuthService } from './firebase/auth.service';
 import { GithubButtonModule } from 'angular-github-buttons';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
-import 'clarity-icons/clarity-icons.min.js';
 
 import { MarkdownModule } from 'angular2-markdown';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, PrivacyComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -57,7 +54,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    ClarityModule.forRoot(),
     LoginModule,
     ReactiveFormsModule,
     ReviewsModule,
@@ -72,7 +68,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     CoursesModule,
     AdminModule,
     MarkdownModule.forRoot(),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   providers: [
     AuthGuard,
@@ -84,8 +80,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     LocalStorageService,
     AlertService,
     AuthorService,
-    SettingsService
+    SettingsService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

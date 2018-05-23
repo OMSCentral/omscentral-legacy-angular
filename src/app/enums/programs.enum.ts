@@ -1,8 +1,8 @@
 export enum Programs {
-    '',
-    'OMSCS',
-    'OMSA',
-    'Medium',
-    'Hard',
-    'Very Hard'
+  '',
+  'OMSCS',
+  'OMSA',
+  'Medium',
+  'Hard',
+  'Very Hard',
 }
