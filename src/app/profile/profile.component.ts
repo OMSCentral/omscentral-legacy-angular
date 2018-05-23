@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../firebase/auth.service';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { UserService } from '../core/user.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ReviewService } from '../reviews/review.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/throttleTime';
 
 @Component({
   selector: 'oms-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   auth: any = {};
@@ -22,15 +21,20 @@ export class ProfileComponent implements OnInit {
     'Computational Perception & Robotics',
     'Computing Systems',
     'Interactive Intelligence',
-    'Machine Learning'
+    'Machine Learning',
   ];
   anonymous = false;
   specialization = null;
   profileForm: any = {};
 
-  constructor(private authService: AuthService, private userService: UserService,
-    private reviewService: ReviewService, private localStorageService: LocalStorageService,
-    private fb: FormBuilder, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private reviewService: ReviewService,
+    private localStorageService: LocalStorageService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
     this.auth = this.authService.user.subscribe(auth => {
       this.auth = auth;
       this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
@@ -78,5 +82,4 @@ export class ProfileComponent implements OnInit {
     this.localStorageService.clear();
     this.router.navigate(['login']);
   }
-
 }

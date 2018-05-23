@@ -13,14 +13,10 @@ class MockLocal {
 }
 
 import { SettingsService } from '../core/settings.service';
-class MockSettings {
-
-}
+class MockSettings {}
 
 import { AngularFireDatabase } from 'angularfire2/database';
-class MockAFDB {
-
-}
+class MockAFDB {}
 
 describe('CourseService', () => {
   beforeEach(() => {
@@ -29,12 +25,15 @@ describe('CourseService', () => {
         CourseService,
         { provide: AngularFireDatabase, useClass: MockAFDB },
         { provide: SettingsService, useClass: MockSettings },
-        { provide: LocalStorageService, useClass: MockLocal }
-      ]
+        { provide: LocalStorageService, useClass: MockLocal },
+      ],
     });
   });
 
-  it('should be created', inject([CourseService], (service: CourseService) => {
-    expect(service).toBeTruthy();
-  }));
+  it(
+    'should be created',
+    inject([CourseService], (service: CourseService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });
