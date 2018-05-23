@@ -2,12 +2,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ClarityModule } from 'clarity-angular';
 
 import { ProfileComponent } from './profile.component';
 
 import { AuthService } from '../firebase/auth.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 class MockAuth {
   user = new BehaviorSubject({});
 }
@@ -20,13 +19,11 @@ class MockUser {
 }
 
 import { LocalStorageService } from '../core/local-storage.service';
-class MockLocalStorage {
-
-}
+class MockLocalStorage {}
 
 import { ReviewService } from '../reviews/review.service';
 class MockReview {
-  getReviewsByAuthor() { }
+  getReviewsByAuthor() {}
 }
 
 describe('ProfileComponent', () => {
@@ -35,19 +32,16 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ClarityModule, ReactiveFormsModule, FormsModule, RouterTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
+      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthService, useClass: MockAuth },
         { provide: UserService, useClass: MockUser },
         { provide: ReviewService, useClass: MockReview },
-        { provide: LocalStorageService, useClass: MockLocalStorage }
+        { provide: LocalStorageService, useClass: MockLocalStorage },
       ],
-      declarations: [ProfileComponent]
-    })
-      .compileComponents();
+      declarations: [ProfileComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClarityModule } from 'clarity-angular';
 import { PipeModule } from '../pipes/pipe.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
@@ -14,16 +13,13 @@ import { ReviewsModule } from '../reviews/reviews.module';
   imports: [
     CommonModule,
     AppRoutingModule,
-    ClarityModule,
     PipeModule,
     ReactiveFormsModule,
     NgbModule,
     ReviewsModule,
-    FormsModule
+    FormsModule,
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
-  declarations: [CoursesComponent, CourseComponent, CourseNavComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [CoursesComponent, CourseComponent, CourseNavComponent],
 })
-export class CoursesModule { }
+export class CoursesModule {}

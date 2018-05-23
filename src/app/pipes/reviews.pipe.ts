@@ -2,10 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'reviews',
-  pure: false
+  pure: false,
 })
 export class ReviewsPipe implements PipeTransform {
-
   semesterFilter(review, filters) {
     const semesters = Object.keys(filters.semesters).filter(sem => {
       return filters.semesters[sem].selected;
@@ -41,11 +40,12 @@ export class ReviewsPipe implements PipeTransform {
 
   transform(reviews: any, filters: any): any {
     const filtered = reviews.filter(review => {
-      return this.semesterFilter(review, filters)
-        && this.difficultyFilter(review, filters)
-        && this.ratingFilter(review, filters);
+      return (
+        this.semesterFilter(review, filters) &&
+        this.difficultyFilter(review, filters) &&
+        this.ratingFilter(review, filters)
+      );
     });
     return filtered;
   }
-
 }

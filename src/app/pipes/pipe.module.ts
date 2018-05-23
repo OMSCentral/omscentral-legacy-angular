@@ -9,12 +9,27 @@ import { ReviewsPipe } from './reviews.pipe';
 import { CoursePipe } from './course.pipe';
 import { CoursesPipe } from './courses.pipe';
 
-
 @NgModule({
-  imports: [
-    CommonModule
+  imports: [CommonModule],
+  declarations: [
+    DifficultyPipe,
+    SemesterPipe,
+    RatingPipe,
+    WorkloadPipe,
+    ProgramPipe,
+    ReviewsPipe,
+    CoursePipe,
+    CoursesPipe,
   ],
-  declarations: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe, CoursesPipe],
-  exports: [DifficultyPipe, SemesterPipe, RatingPipe, WorkloadPipe, ProgramPipe, ReviewsPipe, CoursePipe, CoursesPipe]
+  exports: [
+    DifficultyPipe,
+    SemesterPipe,
+    RatingPipe,
+    WorkloadPipe,
+    ProgramPipe,
+    ReviewsPipe,
+    CoursePipe,
+    CoursesPipe,
+  ],
 })
-export class PipeModule { }
+export class PipeModule {}

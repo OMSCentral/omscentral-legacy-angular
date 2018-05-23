@@ -1,8 +1,8 @@
 export enum Rating {
-    '',
-    'Strongly Disliked',
-    'Disliked',
-    'Neutral',
-    'Liked',
-    'Loved!'
+  '',
+  'Strongly Disliked',
+  'Disliked',
+  'Neutral',
+  'Liked',
+  'Loved!',
 }

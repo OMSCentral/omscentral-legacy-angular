@@ -12,7 +12,7 @@ export class GradeService {
 
   getGrades() {
     if (this.courseGrades === null) {
-      const courseGrades = (<any>jsonData);
+      const courseGrades = <any>jsonData;
       this.courseGrades = courseGrades;
     }
     return this.courseGrades;
@@ -21,5 +21,4 @@ export class GradeService {
   getCourseGrades(courseId) {
     return this.courseGrades[courseId];
   }
-
 }
