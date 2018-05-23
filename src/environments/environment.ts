@@ -11,6 +11,6 @@ export const environment = {
     databaseURL: 'https://gt-course-surveys-dev.firebaseio.com',
     projectId: 'gt-course-surveys-dev',
     storageBucket: 'gt-course-surveys-dev.appspot.com',
-    messagingSenderId: '1029912675292'
-  }
+    messagingSenderId: '1029912675292',
+  },
 };
