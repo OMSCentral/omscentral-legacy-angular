@@ -5,12 +5,13 @@
   <div class="card-body course-text">
     <h5>Some courses don't have grade or enrollment information.</h5>
   </div>
-  <div class="card-body course-text">
+  <div class="card-body course-text form-inline">
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'all'}" (click)="changeSpecialization('all')">All</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cpr'}" (click)="changeSpecialization('cpr')">Computational Perception and Robotics</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'cs'}" (click)="changeSpecialization('cs')">Computing Systems</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ii'}" (click)="changeSpecialization('ii')">Interactive Intelligence</button>
     <button class="btn btn-sm" [ngClass]="{'btn-primary': specialization == 'ml'}" (click)="changeSpecialization('ml')">Machine Learning</button>
+    <input type="text" class="form-control ml-auto" placeholder="Search courses" aria-label="Search courses" (keyup)="onSearchKeyup($event)" />
   </div>
   <div class="card-body course-text">
     <div class="btn-group" role="group">
