@@ -11,11 +11,17 @@ import {
   UPDATE_DIFFICULTY_FILTER,
   UPDATE_RATING_FILTER,
   LOAD_REVIEWS,
+  NEW_REVIEW_SUCCESS,
+  EDIT_REVIEW_SUCCESS,
+  REMOVE_REVIEW_SUCCESS,
+  LOAD_RECENT_REVIEWS,
+  LOAD_RECENT_REVIEWS_SUCCESS,
 } from '../actions/reviews';
 
 export interface State extends EntityState<Review> {
   selectedId: string | null;
   selectedIds: string[] | null;
+  recentIds: string[] | null;
   semesters: object;
   difficulties: object;
   ratings: object;
@@ -27,6 +33,7 @@ export const adapter: EntityAdapter<Review> = createEntityAdapter();
 const initialState: State = adapter.getInitialState({
   selectedId: null,
   selectedIds: null,
+  recentIds: null,
   semesters: {},
   difficulties: {},
   ratings: {},
@@ -41,8 +48,25 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
       });
       return {
         ...state,
-        selectedIds: reviewIds
+        selectedIds: reviewIds,
       };
+    case LOAD_RECENT_REVIEWS_SUCCESS:
+      return adapter.addMany(action.payload, {
+        ...state,
+        recentIds: action.payload.map(review => {
+          return review.id;
+        })
+      });
+    case NEW_REVIEW_SUCCESS:
+      return adapter.addOne(action.payload, state);
+    case EDIT_REVIEW_SUCCESS:
+      return adapter.updateOne(
+        {
+          id: action.payload.id,
+          changes: action.payload,
+        },
+        state
+      );
     case LOAD_REVIEW_SUCCESS:
       return adapter.addOne(action.payload, state);
     case LOAD_REVIEWS_SUCCESS:
@@ -52,6 +76,8 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
         ...state,
         selectedId: action.payload,
       };
+    case REMOVE_REVIEW_SUCCESS:
+      return adapter.removeOne(action.payload.id, state);
     case PROCESS_FILTERS_SUCCESS:
       return {
         ...state,
@@ -71,10 +97,10 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
       });
       return {
         ...state,
-        programs
+        programs,
       };
     case UPDATE_SEMESTER_FILTER:
-    let semesters = {};
+      let semesters = {};
       Object.keys(state.semesters).forEach(sem => {
         semesters[sem] = {
           id: sem,
@@ -84,10 +110,10 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
       });
       return {
         ...state,
-        semesters
+        semesters,
       };
     case UPDATE_DIFFICULTY_FILTER:
-    let difficulties = {};
+      let difficulties = {};
       Object.keys(state.difficulties).forEach(dif => {
         difficulties[dif] = {
           id: dif,
@@ -97,10 +123,10 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
       });
       return {
         ...state,
-        difficulties
+        difficulties,
       };
     case UPDATE_RATING_FILTER:
-    let ratings = {};
+      let ratings = {};
       Object.keys(state.ratings).forEach(rat => {
         ratings[rat] = {
           id: rat,
@@ -110,7 +136,7 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
       });
       return {
         ...state,
-        ratings
+        ratings,
       };
     default:
       return state;
@@ -119,6 +145,7 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
 
 export const getSelectedReviewId = (state: State) => state.selectedId;
 export const getSelectedReviewIds = (state: State) => state.selectedIds;
+export const getRecentIds = (state: State) => state.recentIds;
 export const getProgramFilters = (state: State) => state.programs;
 export const getSemesterFilters = (state: State) => state.semesters;
 export const getDifficultyFilters = (state: State) => state.difficulties;

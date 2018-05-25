@@ -14,8 +14,9 @@ import { CourseService } from '../../courses/course.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { CoursesState, getSelectedCourse, getAllCourses } from '../../state/courses/reducers';
-import { ReviewsState, getFilteredStats } from '../../state/reviews/reducers';
+import { ReviewsState, getFilteredStats, getSelectedReview } from '../../state/reviews/reducers';
 import { Course } from '../../models/course';
+import { NewReview, EditReview, SelectReview, RemoveReview } from '../../state/reviews/actions/reviews';
 
 @Component({
   selector: 'oms-new-review',
@@ -24,8 +25,8 @@ import { Course } from '../../models/course';
 })
 export class NewReviewComponent implements OnInit {
   review: Review;
-  review$: BehaviorSubject<any>;
-  courses$: Observable<any> | Promise<Observable<any>>;
+  review$: Observable<Review>;
+  courses: Course[];
   reviewForm: FormGroup;
   courseName: string;
   authId: string;
@@ -49,11 +50,35 @@ export class NewReviewComponent implements OnInit {
     auth.user.subscribe(user => {
       this.authId = user.uid;
     });
-    this.courses$ = this.courseStore.pipe(select(getAllCourses)) as Observable<Course[]>;
+    // this.courses$ = this.courseStore.pipe(select(getAllCourses)) as Observable<Course[]>;
+    const basicCourses = this.courseService.getBasicCourses();
+    this.courses = Object.keys(basicCourses).map(courseId => {
+      const basicCourse = basicCourses[courseId];
+      basicCourse.id = courseId;
+      basicCourse.combined = courseId + ': ' + basicCourse.name;
+      return basicCourses[courseId];
+    });
     this.createForm();
   }
 
   ngOnInit() {
+    let reviewId = this.route.snapshot.paramMap.get('reviewId');
+    let courseId = this.route.snapshot.queryParamMap.get('courseId');
+    if (reviewId) {
+      // get review
+      this.reviewStore.dispatch(new SelectReview(reviewId));
+      this.review$ = this.reviewStore.pipe(select(getSelectedReview)) as Observable<Review>;
+      this.review$.subscribe(review => {
+        this.review = new Review(review);
+        this.edit();
+      });
+    } else {
+      this.review = new Review({
+        course: courseId
+      });
+      this.edit();
+    }
+
     // this.route.paramMap.subscribe(param => {
     //   console.log((<any>param).params);
     // });
@@ -117,19 +142,17 @@ export class NewReviewComponent implements OnInit {
   delete() {
     // this.remove.emit(this.review);
     const courseId = this.review.course;
-    this.reviewService.remove(this.review);
-    this.router.navigate(['/courses', courseId]);
+    this.reviewStore.dispatch(new RemoveReview(this.review));
   }
 
   save() {
     if (this.review.isNew) {
       this.review.save(this.reviewForm.value);
-      this.reviewService.push(this.review);
+      this.reviewStore.dispatch(new NewReview(this.review));
     } else {
       this.review.save(this.reviewForm.value);
-      this.reviewService.update(this.review);
+      this.reviewStore.dispatch(new EditReview(this.review));
     }
-    this.router.navigate(['/courses', this.review.course]);
   }
 
   cancel() {

@@ -34,20 +34,15 @@ export class CourseComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private gradeService: GradeService
   ) {
-    this.actionsSubscription = this.route.params
-      .pipe(
-        map(params => {
-        this.courseId = params.courseId;
-        return new SelectCourse(params.courseId);
-      }))
-      .subscribe(store);
+
   }
 
   ngOnInit() {
-
+    this.courseId = this.route.snapshot.paramMap.get('courseId');
+    this.store.dispatch(new SelectCourse(this.courseId));
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
+
   }
 }
