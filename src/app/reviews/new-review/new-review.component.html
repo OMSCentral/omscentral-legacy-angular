@@ -3,7 +3,7 @@
     <mat-card-content class="review-fields">
       <mat-form-field [floatLabel]="'always'">
         <mat-select required formControlName="course">
-          <mat-option *ngFor="let course of courses" [value]="course.id">{{course.combined}}</mat-option>
+          <mat-option *ngFor="let course of courses$ | async" [value]="course.id">{{course.combined}}</mat-option>
         </mat-select>
         <mat-label>Course</mat-label>
       </mat-form-field>

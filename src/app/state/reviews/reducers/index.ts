@@ -29,6 +29,11 @@ export const getSelectedReviewId = createSelector(
   fromReviews.getSelectedReviewId
 );
 
+export const getSelectedReviewIds = createSelector(
+  getReviewsEntityState,
+  fromReviews.getSelectedReviewIds
+);
+
 export const getFilters = createSelector(
   getReviewsEntityState,
   fromReviews.getFilters
@@ -95,8 +100,19 @@ function programFilter(review, filters) {
   }
 }
 
-export const getFilteredReviews = createSelector(
+export const getSelectedReviews = createSelector(
   getAllReviews,
+  getSelectedReviewIds,
+  (reviews, reviewIds) => {
+    const filtered = reviews.filter(rev => {
+      return reviewIds.indexOf(rev.id) !== -1;
+    });
+    return filtered;
+  }
+);
+
+export const getFilteredReviews = createSelector(
+  getSelectedReviews,
   getFilters,
   (reviews, filters) => {
     const filtered = reviews.filter(review => {
@@ -107,75 +123,6 @@ export const getFilteredReviews = createSelector(
         programFilter(review, filters)
       );
     });
-    // if (filtered.length === this.reviews.length) {
-    //   this.stats = {
-    //     num: null,
-    //     workload: null,
-    //     difficulty: null,
-    //     rating: null,
-    //   };
-    //   if (this.sortType === 'date') {
-    //     this.filtered = this.reviewService.sortByDate(
-    //       this.reviews,
-    //       this.sortDir
-    //     );
-    //   } else {
-    //     this.filtered = this.reviewService.sortBySemester(
-    //       this.reviews,
-    //       this.sortDir
-    //     );
-    //   }
-    // } else {
-    //   let workload = 0;
-    //   let worNum = 0;
-    //   let rating = 0;
-    //   let ratNum = 0;
-    //   let difficulty = 0;
-    //   let difNum = 0;
-    //   filtered.forEach(rev => {
-    //     if (rev.workload) {
-    //       workload += Number(rev.workload);
-    //       worNum++;
-    //     }
-    //     if (rev.rating) {
-    //       rating += Number(rev.rating);
-    //       ratNum++;
-    //     }
-    //     if (rev.difficulty) {
-    //       difficulty += Number(rev.difficulty);
-    //       difNum++;
-    //     }
-    //   });
-
-    //   this.stats.num = filtered.length;
-
-    //   if (worNum !== 0) {
-    //     this.stats.workload = workload / worNum;
-    //   } else {
-    //     this.stats.workload = null;
-    //   }
-
-    //   if (ratNum !== 0) {
-    //     this.stats.rating = rating / ratNum;
-    //   } else {
-    //     this.stats.rating = null;
-    //   }
-
-    //   if (difNum !== 0) {
-    //     this.stats.difficulty = difficulty / difNum;
-    //   } else {
-    //     this.stats.difficulty = null;
-    //   }
-
-    //   if (this.sortType === 'date') {
-    //     this.filtered = this.reviewService.sortByDate(filtered, this.sortDir);
-    //   } else {
-    //     this.filtered = this.reviewService.sortBySemester(
-    //       filtered,
-    //       this.sortDir
-    //     );
-    //   }
-    // }
     return filtered;
   }
 );
