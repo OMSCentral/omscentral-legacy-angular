@@ -35,15 +35,6 @@ export class ReviewService {
 
   push(review: Review) {
     const newReview = {
-      // "author": "JCLHCu3hGhelwrRCG3fPsDdGKcK2",
-      // "course": "8803-002",
-      // "created": "2016-08-05T14:01:38Z",
-      // "difficulty": 4,
-      // "rating": 5,
-      // "semester": "2015-3",
-      // "text": "Very interesting topics. Very interesting programming assignments. ",
-      // "updated": "2016-08-05T14:01:38Z",
-      // "workload": 18
       created: new Date().getTime(),
       updated: new Date().getTime(),
       author: this.auth.authState.uid,
@@ -66,27 +57,12 @@ export class ReviewService {
     };
     const postRef: any = this.db.database.ref('/reviews/').push(newReview);
     const refKey = postRef.key;
-    const temp = {};
     newReview['id'] = refKey;
-    temp[refKey] = new Review(newReview);
-    // this.cached = Object.assign(this.cached, temp);
-    // this.broadcast();
-
-    // Add review to course cache
-    // this.courseService.addReview(review.course, postRef.key);
+    return Observable.of(new Review(newReview));
   }
 
   update(review: Review) {
     const updatedReview: any = {
-      // "author": "JCLHCu3hGhelwrRCG3fPsDdGKcK2",
-      // "course": "8803-002",
-      // "created": "2016-08-05T14:01:38Z",
-      // "difficulty": 4,
-      // "rating": 5,
-      // "semester": "2015-3",
-      // "text": "Very interesting topics. Very interesting programming assignments. ",
-      // "updated": "2016-08-05T14:01:38Z",
-      // "workload": 18
       created: review.created || new Date().getTime(),
       updated: new Date().getTime(),
       author: this.auth.authState.uid,
@@ -110,14 +86,18 @@ export class ReviewService {
     const postRef = this.db.database
       .ref('/reviews/' + review.id)
       .set(updatedReview);
-    const temp = {};
     updatedReview.id = review.id;
-    temp[review.id] = new Review(updatedReview);
-    // this.cached = Object.assign(this.cached, temp);
+    return Observable.of(new Review(updatedReview));
   }
 
   remove(review) {
-    this.db.database.ref('/reviews/' + review.id).remove();
+    return this.db.database
+      .ref('/reviews/' + review.id)
+      .remove()
+      .then(() => {
+        console.log(review);
+        return review;
+      });
   }
 
   // getReviewsByAuthor(authorId: string) {
@@ -229,8 +209,35 @@ export class ReviewService {
     return forkJoin(revs);
   }
 
+  getRecentReviews(): Promise<Review[]> {
+    return new Promise((resolve, reject) => {
+      this.db.database
+      .ref('/reviews')
+      .orderByChild('created')
+      .limitToLast(10)
+      .on('value', snapshot => {
+        const reviewsObj = snapshot.val();
+        const reviews: Review[] = Object.keys(reviewsObj)
+          .map(reviewId => {
+            const review: Review = new Review(reviewsObj[reviewId]);
+            review.id = reviewId;
+            return review;
+          })
+          .reverse();
+
+        resolve(reviews);
+      });
+    });
+  }
+
   sortBySemester(reviews, rev = false) {
     let sorted = reviews.sort((a, b) => {
+      if (a && !b) {
+        return 1;
+      }
+      if (b && !a) {
+        return -1;
+      }
       if (a.author === this.auth.authState.uid) {
         return rev ? 1 : -1;
       } else {

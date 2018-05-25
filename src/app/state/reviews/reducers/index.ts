@@ -2,6 +2,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState } from '../../app.interfaces';
 import * as fromReviews from './reviews';
 import { CourseStats } from '../../../models/course';
+import { Observable } from 'rxjs';
+import { Review } from '../../../models/review';
 
 const filters = ['ii', 'ml', 'cpr', 'cs'];
 
@@ -32,6 +34,11 @@ export const getSelectedReviewId = createSelector(
 export const getSelectedReviewIds = createSelector(
   getReviewsEntityState,
   fromReviews.getSelectedReviewIds
+);
+
+export const getRecentIds = createSelector(
+  getReviewsEntityState,
+  fromReviews.getRecentIds
 );
 
 export const getFilters = createSelector(
@@ -103,6 +110,17 @@ function programFilter(review, filters) {
 export const getSelectedReviews = createSelector(
   getAllReviews,
   getSelectedReviewIds,
+  (reviews, reviewIds) => {
+    const filtered = reviews.filter(rev => {
+      return reviewIds.indexOf(rev.id) !== -1;
+    });
+    return filtered;
+  }
+);
+
+export const getRecentReviews = createSelector(
+  getAllReviews,
+  getRecentIds,
   (reviews, reviewIds) => {
     const filtered = reviews.filter(rev => {
       return reviewIds.indexOf(rev.id) !== -1;
