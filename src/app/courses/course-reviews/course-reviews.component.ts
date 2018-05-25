@@ -30,7 +30,6 @@ export class CourseReviewsComponent implements OnInit {
   constructor(private store: Store<ReviewsState>) {
     this.reviews$ = store.pipe(select(getFilteredReviews)) as Observable<Review[]>;
     (store.pipe(select(getFilters)) as Observable<ReviewFilter>).subscribe(filters => {
-      console.log(filters);
       this.filters = filters;
     });
   }
