@@ -161,6 +161,10 @@ export class CourseService {
       });
   }
 
+  getBasicCourses() {
+    return jsonData;
+  }
+
   getCourses() {
     this.downloadCourses();
     return this.courses$.asObservable();
@@ -170,25 +174,11 @@ export class CourseService {
     return this.downloadCourse(courseId);
   }
 
-  push(course: any) {
-    const newCourse = {
-      average: {
-        difficulty: null,
-        rating: null,
-        workload: null,
-      },
-      reviews: {},
-    };
-    const postRef: any = this.db.database
-      .ref('/courses/' + course.number)
-      .set(newCourse)
-      .then(
-        res => {
-          return res;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+  getCourseName(courseId) {
+    if (jsonData[courseId]) {
+      return jsonData[courseId].name;
+    } else {
+      return '';
+    }
   }
 }

@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReviewService } from '../reviews/review.service';
 import { Review } from '../models/review';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ReviewsState, getRecentReviews } from '../state/reviews/reducers';
+import { LoadRecentReviews } from '../state/reviews/actions/reviews';
 
 @Component({
   selector: 'oms-recent',
@@ -11,10 +14,11 @@ import { Observable } from 'rxjs';
 export class RecentComponent implements OnInit, OnDestroy {
   reviews$: Observable<Review[]>;
 
-  constructor(private reviewService: ReviewService) {}
+  constructor(private store: Store<ReviewsState>) {}
 
   ngOnInit() {
-    // this.reviews$ = this.reviewService.getRecentReviews();
+    this.reviews$ = this.store.select(getRecentReviews);
+    this.store.dispatch(new LoadRecentReviews());
   }
 
   ngOnDestroy() {

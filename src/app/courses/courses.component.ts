@@ -32,14 +32,4 @@ export class CoursesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
 
   }
-
-  onSearchKeyup($event) {
-    const name = $event.target.value;
-    this.changeSpecialization(this.specialization);
-    if (name !== "") {
-        this.courses = this.courses.filter(course => {
-            return course.combined.toUpperCase().indexOf(name.toUpperCase()) !== -1;
-        });
-    }
-  }
 }
