@@ -4,6 +4,8 @@ import { createActionType } from '../../shared/utils';
 
 export const LOAD_REVIEWS = createActionType('LOAD_REVIEWS');
 export const LOAD_REVIEWS_SUCCESS = createActionType('LOAD_REVIEWS_SUCCESS');
+export const LOAD_RECENT_REVIEWS = createActionType('LOAD_RECENT_REVIEWS');
+export const LOAD_RECENT_REVIEWS_SUCCESS = createActionType('LOAD_RECENT_REVIEWS_SUCCESS');
 export const LOAD_REVIEW = createActionType('LOAD_REVIEW');
 export const LOAD_REVIEW_SUCCESS = createActionType('LOAD_REVIEW_SUCCESS');
 export const UPDATE_PROGRAM_FILTER = createActionType('UPDATE_PROGRAM_FILTER');
@@ -14,6 +16,12 @@ export const PROCESS_STATS = createActionType('PROCESS_STATS');
 export const PROCESS_FILTERS = createActionType('PROCESS_FILTERS');
 export const PROCESS_FILTERS_SUCCESS = createActionType('PROCESS_FILTERS_SUCCESS');
 export const SELECT_REVIEW = createActionType('SELECT_REVIEW');
+export const NEW_REVIEW = createActionType('NEW_REVIEW');
+export const NEW_REVIEW_SUCCESS = createActionType('NEW_REVIEW_SUCCESS');
+export const EDIT_REVIEW = createActionType('EDIT_REVIEW');
+export const EDIT_REVIEW_SUCCESS = createActionType('EDIT_REVIEW_SUCCESS');
+export const REMOVE_REVIEW = createActionType('REMOVE_REVIEW');
+export const REMOVE_REVIEW_SUCCESS = createActionType('REMOVE_REVIEW_SUCCESS');
 
 export class LoadReviews implements Action {
   readonly type = LOAD_REVIEWS;
@@ -23,6 +31,18 @@ export class LoadReviews implements Action {
 
 export class LoadReviewsSuccess implements Action {
   readonly type = LOAD_REVIEWS_SUCCESS;
+
+  constructor(public payload: Review[]) {}
+}
+
+export class LoadRecentReviews implements Action {
+  readonly type = LOAD_RECENT_REVIEWS;
+
+  constructor() {}
+}
+
+export class LoadRecentReviewsSuccess implements Action {
+  readonly type = LOAD_RECENT_REVIEWS_SUCCESS;
 
   constructor(public payload: Review[]) {}
 }
@@ -89,10 +109,49 @@ export class LoadReview implements Action {
     constructor(public payload: string) {}
   }
 
+  export class NewReview implements Action {
+    readonly type = NEW_REVIEW;
+
+    constructor(public payload: Review) {}
+  }
+
+  export class NewReviewSuccess implements Action {
+    readonly type = NEW_REVIEW_SUCCESS;
+
+    constructor(public payload: Review) {}
+  }
+
+  export class EditReview implements Action {
+    readonly type = EDIT_REVIEW;
+
+    constructor(public payload: Review) {}
+  }
+
+  export class EditReviewSuccess implements Action {
+    readonly type = EDIT_REVIEW_SUCCESS;
+
+    constructor(public payload: Review) {}
+  }
+
+  export class RemoveReview implements Action {
+    readonly type = REMOVE_REVIEW;
+
+    constructor(public payload: Review) {}
+  }
+
+  export class RemoveReviewSuccess implements Action {
+    readonly type = REMOVE_REVIEW_SUCCESS;
+
+    constructor(public payload: Review) {}
+  }
+
+
 
 export type ReviewsAction =
   LoadReviews
   | LoadReviewsSuccess
+  | LoadRecentReviews
+  | LoadRecentReviewsSuccess
   | LoadReview
   | LoadReviewSuccess
   | UpdateProgramFilter
@@ -102,4 +161,10 @@ export type ReviewsAction =
   | SelectReview
   | ProcessFilters
   | ProcessFiltersSuccess
-  | ProcessStats;
+  | ProcessStats
+  | NewReview
+  | NewReviewSuccess
+  | EditReview
+  | EditReviewSuccess
+  | RemoveReview
+  | RemoveReviewSuccess;

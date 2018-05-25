@@ -3,7 +3,7 @@
     <mat-card-content class="review-fields">
       <mat-form-field [floatLabel]="'always'">
         <mat-select required formControlName="course">
-          <mat-option *ngFor="let course of courses$ | async" [value]="course.id">{{course.combined}}</mat-option>
+          <mat-option *ngFor="let course of courses" [value]="course.id">{{course.combined}}</mat-option>
         </mat-select>
         <mat-label>Course</mat-label>
       </mat-form-field>
@@ -20,20 +20,20 @@
         <mat-label>Semester</mat-label>
       </mat-form-field>
       <mat-form-field [floatLabel]="'always'">
-        <mat-select formControlName="rating">
+        <mat-select required formControlName="rating">
           <mat-option *ngFor="let rating of ratings" [value]="rating">{{rating | rating}}</mat-option>
         </mat-select>
         <mat-label>Rating</mat-label>
       </mat-form-field>
       <mat-form-field [floatLabel]="'always'">
-        <mat-select formControlName="difficulty">
+        <mat-select required formControlName="difficulty">
           <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">{{difficulty | difficulty}}</mat-option>
         </mat-select>
         <mat-label>Difficulty</mat-label>
       </mat-form-field>
       <mat-form-field [floatLabel]="'always'">
         <mat-label>Workload (hrs/week)</mat-label>
-        <input matInput type="number" formControlName="workload">
+        <input matInput required type="number" formControlName="workload">
       </mat-form-field>
       <mat-form-field [floatLabel]="'always'">
         <mat-label>Previous # of Classes Taken</mat-label>
@@ -68,7 +68,7 @@
       <markdown id="markdown_preview" [data]="review.text"></markdown>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button type="submit" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
+      <button mat-raised-button type="button" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
       <button mat-raised-button color="warn" *ngIf="review.id" (click)="delete()">Delete</button>
     </mat-card-actions>
   </mat-card>
