@@ -10,6 +10,7 @@ import {
   UPDATE_SEMESTER_FILTER,
   UPDATE_DIFFICULTY_FILTER,
   UPDATE_RATING_FILTER,
+  LOAD_REVIEWS,
 } from '../actions/reviews';
 
 export interface State extends EntityState<Review> {
@@ -34,6 +35,14 @@ const initialState: State = adapter.getInitialState({
 
 export function reducer(state: State = initialState, action: ReviewsAction) {
   switch (action.type) {
+    case LOAD_REVIEWS:
+      let reviewIds = Object.keys(action.payload.reviews).filter(rev => {
+        return action.payload.reviews[rev];
+      });
+      return {
+        ...state,
+        selectedIds: reviewIds
+      };
     case LOAD_REVIEW_SUCCESS:
       return adapter.addOne(action.payload, state);
     case LOAD_REVIEWS_SUCCESS:
@@ -109,6 +118,7 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
 }
 
 export const getSelectedReviewId = (state: State) => state.selectedId;
+export const getSelectedReviewIds = (state: State) => state.selectedIds;
 export const getProgramFilters = (state: State) => state.programs;
 export const getSemesterFilters = (state: State) => state.semesters;
 export const getDifficultyFilters = (state: State) => state.difficulties;
