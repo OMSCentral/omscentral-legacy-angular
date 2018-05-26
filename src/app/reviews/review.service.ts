@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
+import { Observable, BehaviorSubject, forkJoin, of } from 'rxjs';
 import { Review, ReviewFilter } from '../models/review';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from '../firebase/auth.service';
@@ -7,9 +7,6 @@ import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { QueryReference } from 'angularfire2/database/interfaces';
 import { SettingsService } from '../core/settings.service';
-
-// temporary
-// import * as jsonData from '../../../merged-dev.json';
 
 @Injectable()
 export class ReviewService {
@@ -58,7 +55,7 @@ export class ReviewService {
     const postRef: any = this.db.database.ref('/reviews/').push(newReview);
     const refKey = postRef.key;
     newReview['id'] = refKey;
-    return Observable.of(new Review(newReview));
+    return of(new Review(newReview));
   }
 
   update(review: Review) {
@@ -87,7 +84,7 @@ export class ReviewService {
       .ref('/reviews/' + review.id)
       .set(updatedReview);
     updatedReview.id = review.id;
-    return Observable.of(new Review(updatedReview));
+    return of(new Review(updatedReview));
   }
 
   remove(review) {
@@ -99,61 +96,6 @@ export class ReviewService {
         return review;
       });
   }
-
-  // getReviewsByAuthor(authorId: string) {
-  //   this.db.database
-  //     .ref('/reviews')
-  //     .orderByChild('author')
-  //     .equalTo(authorId)
-  //     .once('value')
-  //     .then(snapshot => {
-  //       const reviewsObj = snapshot.val();
-  //       const temp = {};
-
-  //       if (reviewsObj) {
-  //         this.reviewIds = Object.keys(reviewsObj);
-
-  //         const reviews = Object.keys(reviewsObj).map(reviewId => {
-  //           const review: Review = new Review(reviewsObj[reviewId]);
-  //           review.id = reviewId;
-  //           temp[reviewId] = review;
-  //           return review;
-  //         });
-
-  //         this.cached = Object.assign(this.cached, temp);
-  //         if (this.cacheTime === null) {
-  //           this.cacheTime = new Date().valueOf();
-  //         }
-
-  //         this.reviews$.next(this.sortBySemester(reviews, false));
-  //       } else {
-  //         this.reviews$.next([]);
-  //       }
-  //     });
-  //   return this.reviews$;
-  // }
-
-  // getRecentReviews() {
-  //   if (this.recentSub === null) {
-  //     this.recentSub = this.db.database
-  //       .ref('/reviews')
-  //       .orderByChild('created')
-  //       .limitToLast(10);
-  //     this.recentSub.on('value', snapshot => {
-  //       const reviewsObj = snapshot.val();
-  //       const reviews = Object.keys(reviewsObj)
-  //         .map(reviewId => {
-  //           const review: Review = new Review(reviewsObj[reviewId]);
-  //           review.id = reviewId;
-  //           return review;
-  //         })
-  //         .reverse();
-
-  //       this.recent$.next(reviews);
-  //     });
-  //   }
-  //   return this.recent$;
-  // }
 
   processFilters(reviews: Review[]) {
     const filters: ReviewFilter = {
@@ -192,7 +134,7 @@ export class ReviewService {
         };
       }
     });
-    return Observable.of(filters);
+    return of(filters);
   }
 
   getReview(reviewId) {

@@ -10,8 +10,10 @@ import { appReducer, appMetaReducers } from './app.reducer';
 import { CustomSerializer } from './shared/utils';
 import * as fromCourses from './courses/reducers';
 import * as fromReviews from './reviews/reducers';
+import * as fromAuth from './auth/reducers';
 import { CoursesEffects } from './courses/effects/courses';
 import { ReviewsEffects } from './reviews/effects/reviews';
+import { AuthEffects } from './auth/effects/auth';
 
 @NgModule({
   imports: [
@@ -21,13 +23,15 @@ import { ReviewsEffects } from './reviews/effects/reviews';
     }),
     StoreModule.forFeature('courses', fromCourses.reducers),
     StoreModule.forFeature('reviews', fromReviews.reducers),
+    StoreModule.forFeature('auth', fromAuth.reducers),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([
       AppEffects
     ]),
     EffectsModule.forFeature([
       CoursesEffects,
-      ReviewsEffects
+      ReviewsEffects,
+      AuthEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../state/auth/reducers';
+import { Login } from '../state/auth/actions/auth';
 
 @Component({
   selector: 'oms-login',
@@ -15,14 +18,14 @@ export class LoginComponent implements OnInit {
   socialError = '';
   reset = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router, private store: Store<AuthState>) {}
 
   ngOnInit() {
-    this.authService.user.subscribe(user => {
-      if (user && user.uid) {
-        this.router.navigate(['courses']);
-      }
-    });
+    // this.authService.user.subscribe(user => {
+    //   if (user && user.uid) {
+    //     this.router.navigate(['courses']);
+    //   }
+    // });
   }
 
   resetPassword() {
@@ -44,39 +47,25 @@ export class LoginComponent implements OnInit {
 
   social(authProvider) {
     const self = this;
-    this.authService.social(authProvider).then(
-      () => {
-        this.router.navigate(['courses']);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    // this.authService.social(authProvider).then(
+    //   () => {
+    //     this.router.navigate(['courses']);
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   login() {
-    this.authService.login(this.email.value, this.password.value).then(
-      err => {
-        this.password.setValue('');
-        if (err) {
-          this.error = err;
-        } else {
-          this.email.setValue('');
-          this.error = '';
-          this.router.navigate(['courses']);
-        }
-      },
-      err => {
-        this.error = err.message;
-      }
-    );
+    this.store.dispatch(new Login({username: this.email.value, password: this.password.value}));
   }
 
   forgotEmail() {
     if (this.email) {
-      this.authService.sendPasswordResetEmail(this.email.value).then(() => {
-        this.error = 'A password reset email has been sent';
-      });
+      // this.authService.sendPasswordResetEmail(this.email.value).then(() => {
+      //   this.error = 'A password reset email has been sent';
+      // });
     }
   }
 }
