@@ -19,26 +19,26 @@ export class NavComponent implements OnInit {
     private userService: UserService,
     private settingsService: SettingsService
   ) {
-    userService.user$.subscribe(storedUser => {
-      if (storedUser && storedUser.admin) {
-        this.user.admin = storedUser.admin;
-      }
-    });
-    auth.user.subscribe(user => {
-      this.user = Object.assign(this.user, user);
-      if (user) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
-    });
+    // userService.user$.subscribe(storedUser => {
+    //   if (storedUser && storedUser.admin) {
+    //     this.user.admin = storedUser.admin;
+    //   }
+    // });
+    // auth.user.subscribe(user => {
+    //   this.user = Object.assign(this.user, user);
+    //   if (user) {
+    //     this.authenticated = true;
+    //   } else {
+    //     this.authenticated = false;
+    //   }
+    // });
     settingsService.getSettings();
   }
 
   ngOnInit() {}
 
   logout() {
-    this.auth.logout();
-    this.router.navigate(['login']);
+    // this.auth.logout();
+    // this.router.navigate(['login']);
   }
 }
