@@ -3,7 +3,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UserService } from '../core/user.service';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { User, Authenticate } from '../models/user';
 
 @Injectable()
 export class AuthService {
@@ -14,13 +15,7 @@ export class AuthService {
     private firebaseAuth: AngularFireAuth,
     private userService: UserService
   ) {
-    this.user = firebaseAuth.authState;
-    this.user.subscribe(auth => {
-      if (auth && auth.uid !== null) {
-        this.authState = auth;
-        this.userService.retrieveUser(auth.uid);
-      }
-    });
+
   }
 
   get authenticated(): boolean {
@@ -96,17 +91,22 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string) {
-    return this.firebaseAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(auth => {
-        this.authState = auth;
-        return;
-      })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
-        return err.message;
-      });
+  login(auth: Authenticate): Promise<User> {
+    console.log(auth);
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth
+        .signInWithEmailAndPassword(auth.username, auth.password)
+        .then(auth => {
+          this.authState = auth;
+          resolve(new User(auth.user));
+          return;
+        })
+        .catch(err => {
+          console.log('Something went wrong:', err.message);
+          reject(err);
+          return err.message;
+        });
+    });
   }
 
   logout() {
