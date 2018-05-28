@@ -45,6 +45,8 @@ export class CourseListComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource([]);
     this.courses$.subscribe(courses => {
       this.dataSource.data = Object.keys(courses).map(courseId => courses[courseId]);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
