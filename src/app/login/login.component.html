@@ -5,8 +5,8 @@
     <input class="form-control" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
     <label for="login_password" class="sr-only">Password</label>
     <input class="form-control" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
-    <div *ngIf="error" class="error active">
-      {{error}}.
+    <div *ngIf="error$ | async" class="error active">
+      {{error$ | async}}.
       <button class="btn btn-link" type="button" style="cursor: pointer" *ngIf="email" (click)="resetPassword()">Reset Password?</button>
     </div>
     <div *ngIf="reset" class="alert alert-success">
