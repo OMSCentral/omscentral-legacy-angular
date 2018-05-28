@@ -3,13 +3,13 @@
     <span>OMSCentral</span>
   </a>
   <a mat-button class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">About</a>
-  <a mat-button *ngIf="(authenticated)" class="nav-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
+  <a mat-button *ngIf="(user$ | async)" class="nav-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
   <a mat-button class="nav-link" routerLink="/courses" routerLinkActive="active">Courses</a>
-  <a mat-button *ngIf="(authenticated)" class="nav-link" routerLink="/recent" routerLinkActive="active">Recent</a>
+  <a mat-button *ngIf="(user$ | async)" class="nav-link" routerLink="/recent" routerLinkActive="active">Recent</a>
   <a mat-button class="nav-link" routerLink="/donate" routerLinkActive="active">Donate</a>
   <div class="flex-spacer"></div>
   <ng-gh-btn username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
-  <a mat-button *ngIf="authenticated" class="nav-link active">{{ user.displayName }}</a>
-  <a mat-button *ngIf="!(authenticated)" class="nav-link active nav-auth" routerLink="/login">Login</a>
-  <a mat-button *ngIf="authenticated" class="nav-link active nav-auth" (click)="logout()">Logout</a>
+  <a mat-button *ngIf="(user$ | async)?.name | async" class="nav-link active">{{ (user$ | async)?.name }}</a>
+  <a mat-button *ngIf="!(user$ | async)" class="nav-link active nav-auth" routerLink="/login">Login</a>
+  <a mat-button *ngIf="user$ | async" class="nav-link active nav-auth" (click)="logout()">Logout</a>
 </mat-toolbar>

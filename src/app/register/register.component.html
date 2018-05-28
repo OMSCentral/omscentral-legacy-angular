@@ -19,6 +19,9 @@
         </div>
       </div>
     </form>
+    <div *ngIf="error$ | async" class="error active">
+      {{error$ | async}}
+    </div>
     <form *ngIf="oobCode && !success" [formGroup]="resetForm" novalidate>
       <div class="login-group">
 
