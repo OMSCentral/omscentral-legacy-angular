@@ -1,6 +1,39 @@
-.form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 72px 0;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.loginError {
+  padding: 16px;
+  width: 300px;
+  color: white;
+  background-color: red;
+}
+
+.loginButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+hr {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
 }
