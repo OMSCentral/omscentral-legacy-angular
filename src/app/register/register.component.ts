@@ -7,6 +7,11 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthState } from '../state/auth/reducers';
+import { Store } from '@ngrx/store';
+import { Register } from '../state/auth/actions/auth';
+import { getRegisterError } from '../state/auth/reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'oms-register',
@@ -16,8 +21,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   resetForm: FormGroup;
-  error = '';
-  socialError = '';
+  error$: Observable<any> | Promise<Observable<any>>;
   success = false;
   formValues: any = {};
   oobCode: string;
@@ -28,17 +32,13 @@ export class RegisterComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<AuthState>
   ) {
     this.createForm();
   }
 
   ngOnInit() {
-    this.authService.user.subscribe(user => {
-      if (user && user.uid) {
-        this.router.navigate(['courses']);
-      }
-    });
     // https://omscentral.com/set-password?mode=%3Caction%3E&oobCode=%3Ccode%3E
     // this.sessionId = this.route
     //   .queryParamMap
@@ -47,11 +47,15 @@ export class RegisterComponent implements OnInit {
       this.mode = params.get('mode');
       this.oobCode = params.get('oobCode');
     });
+    this.error$ = this.store.select(getRegisterError);
   }
 
   resetPassword() {
+    console.log('here');
     if (this.oobCode) {
+      console.log(this.oobCode);
       this.authService.resetPassword(this.oobCode, this.password).then(() => {
+        console.log('here');
         this.oobCode = null;
         this.router.navigate(['login']);
       });
@@ -76,14 +80,16 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.authService.signup(this.formValues).then(
-      () => {
-        this.success = true;
-      },
-      err => {
-        this.error = err.message;
-      }
-    );
+    this.store.dispatch(new Register(this.formValues));
+
+    // this.authService.signup(this.formValues).then(
+    //   () => {
+    //     this.success = true;
+    //   },
+    //   err => {
+    //     this.error = err.message;
+    //   }
+    // );
   }
 
   social(authProvider) {

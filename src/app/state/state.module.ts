@@ -24,7 +24,9 @@ import { AuthEffects } from './auth/effects/auth';
     StoreModule.forFeature('courses', fromCourses.reducers),
     StoreModule.forFeature('reviews', fromReviews.reducers),
     StoreModule.forFeature('auth', fromAuth.reducers),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router'
+    }),
     EffectsModule.forRoot([
       AppEffects
     ]),
