@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LocalStorageService } from '../core/local-storage.service';
 import { SettingsService } from '../core/settings.service';
@@ -7,6 +7,9 @@ import { SettingsService } from '../core/settings.service';
 import * as jsonData from '../../../courses.json';
 import { GradeService } from '../grades/grade.service';
 import { Course } from '../models/course';
+import { Store, select } from '@ngrx/store';
+import { CoursesState, getCourseEntities } from '../state/courses/reducers';
+import { map, switchMap, take } from 'rxjs/operators';
 
 const coursePrefixes = ['CS', 'MG', 'IS'];
 
@@ -82,7 +85,8 @@ export class CourseService {
     private db: AngularFireDatabase,
     private localStorageService: LocalStorageService,
     private settingsService: SettingsService,
-    private gradeService: GradeService
+    private gradeService: GradeService,
+    private store: Store<CoursesState>
   ) {}
 
   processCourse(course, firebaseCourse, grades): Course {
@@ -165,13 +169,33 @@ export class CourseService {
     return jsonData;
   }
 
+  checkCourse(courseId) {
+    return this.store.pipe(
+      select(getCourseEntities),
+      map(entities => {
+        return entities[courseId];
+      }),
+      switchMap(review => {
+        console.log(review);
+        if (!!review) {
+          console.log('had course');
+          return of(review);
+        } else {
+          console.log('no course');
+          return this.downloadCourse(courseId);
+        }
+      }),
+      take(1)
+    );
+  }
+
   getCourses() {
     this.downloadCourses();
     return this.courses$.asObservable();
   }
 
   getCourse(courseId) {
-    return this.downloadCourse(courseId);
+    return this.checkCourse(courseId);
   }
 
   getCourseName(courseId) {

@@ -7,10 +7,12 @@ import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { QueryReference } from 'angularfire2/database/interfaces';
 import { SettingsService } from '../core/settings.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AuthState } from '../state/auth/reducers';
 import { getUser } from '../state/auth/reducers';
 import { User } from '../models/user';
+import { getReviewEntities } from '../state/reviews/reducers';
+import { map, take, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class ReviewService {
@@ -148,15 +150,35 @@ export class ReviewService {
     return of(filters);
   }
 
+  checkReview(reviewId) {
+    return this.store.pipe(
+      select(getReviewEntities),
+      map(entities => {
+        return entities[reviewId];
+      }),
+      switchMap(review => {
+        console.log(review);
+        if (!!review) {
+          console.log('had review');
+          return of(review);
+        } else {
+          console.log('no review');
+          return this.downloadReview(reviewId);
+        }
+      }),
+      take(1)
+    );
+  }
+
   getReview(reviewId) {
-    return this.downloadReview(reviewId);
+    return this.checkReview(reviewId);
   }
 
   getReviews(reviews: object) {
     const revs = [];
     Object.keys(reviews).forEach(rev => {
       if (reviews[rev]) {
-        revs.push(this.downloadReview(rev));
+        revs.push(this.checkReview(rev));
       }
     });
     return forkJoin(revs);
