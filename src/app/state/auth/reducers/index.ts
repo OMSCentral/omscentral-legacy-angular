@@ -29,7 +29,7 @@ export const getLoggedIn = createSelector(
   selectAuthStatusState,
   fromAuth.getLoggedIn
 );
-export const getLoading = createSelector(selectAuthStatusState, fromAuth.getLoading);
+export const getLoaded = createSelector(selectAuthStatusState, fromAuth.getLoaded);
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
 export const getUserDetails = createSelector(selectAuthStatusState, fromAuth.getDetails);
 export const getLoginError = createSelector(selectAuthStatusState, fromAuth.getLoginError);

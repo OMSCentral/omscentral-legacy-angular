@@ -7,17 +7,28 @@ import { CourseService } from '../courses/course.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { QueryReference } from 'angularfire2/database/interfaces';
 import { SettingsService } from '../core/settings.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../state/auth/reducers';
+import { getUser } from '../state/auth/reducers';
+import { User } from '../models/user';
 
 @Injectable()
 export class ReviewService {
+  auth: User;
+  auth$: Observable<User>;
   review$: BehaviorSubject<Review> = new BehaviorSubject<Review>(null);
   constructor(
     private db: AngularFireDatabase,
-    private auth: AuthService,
+    private store: Store<AuthState>,
     private courseService: CourseService,
     private localStorageService: LocalStorageService,
     private settingsService: SettingsService
-  ) {}
+  ) {
+    this.auth$ = this.store.select(getUser);
+    this.auth$.subscribe(auth => {
+      this.auth = auth;
+    });
+  }
 
   downloadReview(reviewId) {
     return this.db.database
@@ -34,7 +45,7 @@ export class ReviewService {
     const newReview = {
       created: new Date().getTime(),
       updated: new Date().getTime(),
-      author: this.auth.authState.uid,
+      author: this.auth.uid,
       course: review.course,
       difficulty: review.difficulty,
       semester: review.semester,
@@ -62,7 +73,7 @@ export class ReviewService {
     const updatedReview: any = {
       created: review.created || new Date().getTime(),
       updated: new Date().getTime(),
-      author: this.auth.authState.uid,
+      author: this.auth.uid,
       course: review.course,
       difficulty: review.difficulty,
       semester: review.semester,
@@ -180,10 +191,10 @@ export class ReviewService {
       if (b && !a) {
         return -1;
       }
-      if (a.author === this.auth.authState.uid) {
+      if (a.author === this.auth.uid) {
         return rev ? 1 : -1;
       } else {
-        if (b.author === this.auth.authState.uid) {
+        if (b.author === this.auth.uid) {
           return rev ? -1 : 1;
         } else {
           const aData = a.semester.split('-');
@@ -211,10 +222,10 @@ export class ReviewService {
 
   sortByDate(reviews, rev = false) {
     let sorted = reviews.sort((a, b) => {
-      if (a.author === this.auth.authState.uid) {
+      if (a.author === this.auth.uid) {
         return rev ? 1 : -1;
       } else {
-        if (b.author === this.auth.authState.uid) {
+        if (b.author === this.auth.uid) {
           return rev ? -1 : 1;
         } else {
           let aDate, bDate;

@@ -6,6 +6,12 @@ import { Observable } from 'rxjs';
 import { ReviewService } from '../reviews/review.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState, getUserDetails } from '../state/auth/reducers';
+import { UserDetails } from '../models/user';
+import { Review } from '../models/review';
+import { LoadUserReviews } from '../state/reviews/actions/reviews';
+import { getUserReviews } from '../state/reviews/reducers';
 
 @Component({
   selector: 'oms-profile',
@@ -13,18 +19,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  auth: any = {};
-  user: any;
-  user$: Observable<any>;
-  reviews$: Observable<any[]>;
-  specializations = [
-    'Computational Perception & Robotics',
-    'Computing Systems',
-    'Interactive Intelligence',
-    'Machine Learning',
-  ];
-  anonymous = false;
-  specialization = null;
+  user$: Observable<UserDetails>;
+  reviews$: Observable<Review[]>;
   profileForm: any = {};
 
   constructor(
@@ -33,53 +29,19 @@ export class ProfileComponent implements OnInit {
     private reviewService: ReviewService,
     private localStorageService: LocalStorageService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store<AuthState>
   ) {
-    this.auth = this.authService.user.subscribe(auth => {
-      this.auth = auth;
-      // this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
-    });
-  }
-
-  ngOnInit() {
-    // this.profileForm = this.fb.group({
-    //   specialization: null
-    // });
-    // this.profileForm.valueChanges.subscribe(values => {
-    //   this.specialization = values.specialization;
-    //   if (values.specialization !== null && this.user.specialization !== values.specialization) {
-    //     this.user.specialization = values.specialization;
-    //     this.userService.updateInfo(this.user, this.auth);
-    //   }
-    // });
-    this.user$ = this.userService.getUser();
+    this.user$ = this.store.select(getUserDetails);
+    this.reviews$ = this.store.select(getUserReviews);
     this.user$.subscribe(user => {
-      if (user && Object.keys(user).length !== 0) {
-        this.user = user;
-        // this.anonymous = user.anonymous;
-        // if (this.specialization !== user.specialization) {
-        //   this.profileForm.setValue({specialization: user.specialization || null});
-        // }
+      if (user && Object.keys(user).indexOf('reviews') !== -1) {
+        this.store.dispatch(new LoadUserReviews({reviews: user.reviews}));
       }
     });
   }
 
-  changeAnonymous() {
-    this.anonymous = !this.anonymous;
-    this.user.anonymous = this.anonymous;
-    this.userService.updateInfo(this.user, this.auth);
-  }
+  ngOnInit() {
 
-  remove(evt) {
-    this.reviewService.remove(evt);
-  }
-
-  update(evt) {
-    this.reviewService.update(evt);
-  }
-
-  clear() {
-    this.localStorageService.clear();
-    this.router.navigate(['login']);
   }
 }

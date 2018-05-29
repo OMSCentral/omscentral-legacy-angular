@@ -36,6 +36,11 @@ export const getSelectedReviewIds = createSelector(
   fromReviews.getSelectedReviewIds
 );
 
+export const getUserReviewIds = createSelector(
+  getReviewsEntityState,
+  fromReviews.getUserReviewIds
+);
+
 export const getRecentIds = createSelector(
   getReviewsEntityState,
   fromReviews.getRecentIds
@@ -76,9 +81,7 @@ function difficultyFilter(review, filters) {
   const difficulties = Object.keys(filters.difficulties).filter(dif => {
     return filters.difficulties[dif].selected;
   });
-  if (
-    difficulties.length === 0
-  ) {
+  if (difficulties.length === 0) {
     return true;
   } else {
     return difficulties.indexOf(String(review.difficulty)) !== -1;
@@ -107,26 +110,33 @@ function programFilter(review, filters) {
   }
 }
 
-export const getSelectedReviews = createSelector(
-  getAllReviews,
-  getSelectedReviewIds,
-  (reviews, reviewIds) => {
+function filterReviews(reviews, reviewIds) {
+  if (reviewIds) {
     const filtered = reviews.filter(rev => {
       return reviewIds.indexOf(rev.id) !== -1;
     });
     return filtered;
+  } else {
+    return [];
   }
+}
+
+export const getUserReviews = createSelector(
+  getAllReviews,
+  getUserReviewIds,
+  (reviews, reviewIds) => filterReviews(reviews, reviewIds)
+);
+
+export const getSelectedReviews = createSelector(
+  getAllReviews,
+  getSelectedReviewIds,
+  (reviews, reviewIds) => filterReviews(reviews, reviewIds)
 );
 
 export const getRecentReviews = createSelector(
   getAllReviews,
   getRecentIds,
-  (reviews, reviewIds) => {
-    const filtered = reviews.filter(rev => {
-      return reviewIds.indexOf(rev.id) !== -1;
-    });
-    return filtered;
-  }
+  (reviews, reviewIds) => filterReviews(reviews, reviewIds)
 );
 
 export const getFilteredReviews = createSelector(

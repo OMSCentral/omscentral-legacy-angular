@@ -16,12 +16,15 @@ import {
   REMOVE_REVIEW_SUCCESS,
   LOAD_RECENT_REVIEWS,
   LOAD_RECENT_REVIEWS_SUCCESS,
+  LOAD_USER_REVIEWS_SUCCESS,
+  LOAD_USER_REVIEWS,
 } from '../actions/reviews';
 
 export interface State extends EntityState<Review> {
   selectedId: string | null;
   selectedIds: string[] | null;
   recentIds: string[] | null;
+  userIds: string[] | null;
   semesters: object;
   difficulties: object;
   ratings: object;
@@ -34,6 +37,7 @@ const initialState: State = adapter.getInitialState({
   selectedId: null,
   selectedIds: null,
   recentIds: null,
+  userIds: null,
   semesters: {},
   difficulties: {},
   ratings: {},
@@ -50,12 +54,21 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
         ...state,
         selectedIds: reviewIds,
       };
+    case LOAD_USER_REVIEWS:
+      let userIds = Object.keys(action.payload.reviews).filter(rev => {
+        return action.payload.reviews[rev];
+      });
+      return {
+        ...state,
+        userIds: userIds,
+      };
     case LOAD_RECENT_REVIEWS_SUCCESS:
+      let recentIds = action.payload.map(review => {
+        return review.id;
+      });
       return adapter.addMany(action.payload, {
         ...state,
-        recentIds: action.payload.map(review => {
-          return review.id;
-        })
+        recentIds: recentIds,
       });
     case NEW_REVIEW_SUCCESS:
       return adapter.addOne(action.payload, state);
@@ -70,6 +83,8 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
     case LOAD_REVIEW_SUCCESS:
       return adapter.addOne(action.payload, state);
     case LOAD_REVIEWS_SUCCESS:
+      return adapter.addMany(action.payload, state);
+    case LOAD_USER_REVIEWS_SUCCESS:
       return adapter.addMany(action.payload, state);
     case SELECT_REVIEW:
       return {
@@ -145,6 +160,7 @@ export function reducer(state: State = initialState, action: ReviewsAction) {
 
 export const getSelectedReviewId = (state: State) => state.selectedId;
 export const getSelectedReviewIds = (state: State) => state.selectedIds;
+export const getUserReviewIds = (state: State) => state.userIds;
 export const getRecentIds = (state: State) => state.recentIds;
 export const getProgramFilters = (state: State) => state.programs;
 export const getSemesterFilters = (state: State) => state.semesters;
