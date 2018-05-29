@@ -4,6 +4,8 @@ import { createActionType } from '../../shared/utils';
 
 export const LOAD_REVIEWS = createActionType('LOAD_REVIEWS');
 export const LOAD_REVIEWS_SUCCESS = createActionType('LOAD_REVIEWS_SUCCESS');
+export const LOAD_USER_REVIEWS = createActionType('LOAD_USER_REVIEWS');
+export const LOAD_USER_REVIEWS_SUCCESS = createActionType('LOAD_USER_REVIEWS_SUCCESS');
 export const LOAD_RECENT_REVIEWS = createActionType('LOAD_RECENT_REVIEWS');
 export const LOAD_RECENT_REVIEWS_SUCCESS = createActionType('LOAD_RECENT_REVIEWS_SUCCESS');
 export const LOAD_REVIEW = createActionType('LOAD_REVIEW');
@@ -27,6 +29,18 @@ export class LoadReviews implements Action {
   readonly type = LOAD_REVIEWS;
 
   constructor(public payload: { reviews: object }) {}
+}
+
+export class LoadUserReviews implements Action {
+  readonly type = LOAD_USER_REVIEWS;
+
+  constructor(public payload: { reviews: object }) {}
+}
+
+export class LoadUserReviewsSuccess implements Action {
+  readonly type = LOAD_USER_REVIEWS_SUCCESS;
+
+  constructor(public payload: Review[]) {}
 }
 
 export class LoadReviewsSuccess implements Action {
@@ -149,6 +163,8 @@ export class LoadReview implements Action {
 
 export type ReviewsAction =
   LoadReviews
+  | LoadUserReviews
+  | LoadUserReviewsSuccess
   | LoadReviewsSuccess
   | LoadRecentReviews
   | LoadRecentReviewsSuccess

@@ -3,8 +3,7 @@
     <button mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</button>
   </mat-card-title>
   <mat-card-subtitle>
-    Author:
-    <span matTooltip="This author has not shared their identity">{{review.author}}</span>
+    <span *ngIf="authId !== review.author" matTooltip="This author has not shared their identity">Author: {{review.author}}</span>
     <span class="pull-right" *ngIf="authId == review.author">
       <button mat-raised-button color="primary" (click)="edit()">Edit</button>
     </span>

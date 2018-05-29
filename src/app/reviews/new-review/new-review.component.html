@@ -68,7 +68,7 @@
       <markdown id="markdown_preview" [data]="review.text"></markdown>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button type="button" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
+      <button mat-raised-button color="primary" type="button" (click)="save()" [disabled]="reviewForm.invalid">Save</button>
       <button mat-raised-button color="warn" *ngIf="review.id" (click)="delete()">Delete</button>
     </mat-card-actions>
   </mat-card>
