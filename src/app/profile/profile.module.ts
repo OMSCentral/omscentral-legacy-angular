@@ -6,9 +6,10 @@ import { UserService } from '../core/user.service';
 import { ReviewService } from '../reviews/review.service';
 import { LocalStorageService } from '../core/local-storage.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule, MatProgressBarModule } from '@angular/material';
 
 @NgModule({
-  imports: [CommonModule, ReviewsModule, ReactiveFormsModule],
+  imports: [CommonModule, ReviewsModule, ReactiveFormsModule, MatCardModule, MatProgressBarModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfileComponent],
   providers: [UserService, ReviewService, LocalStorageService],

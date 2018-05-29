@@ -1,24 +1,14 @@
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-        {{(user$ | async)?.name}}
-      </div>
-      <div class="card-body">
-        {{(user$ | async)?.email}}
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-sm btn-danger" (click)="clear()">Emergency Clear Cache</button>
-      </div>
-    </div>
-  </div>
-</div>
-<br/>
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div *ngFor="let review of reviews$ | async">
-          <oms-review [review]="review" [title]="true" (remove)="remove($event)" (update)="update($event)"></oms-review>
-          <br/>
-      </div>
-  </div>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <pre>{{user$ | async | json}}</pre>
+  </mat-card-content>
+  <mat-card-content>
+    <h2>Overall Progress</h2>
+    <mat-progress-bar mode="determinate" [value]="(reviews$ | async).length * 10"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+<div *ngFor="let review of reviews$ | async">
+  <oms-review [review]="review" [title]="true"></oms-review>
+  <br/>
 </div>

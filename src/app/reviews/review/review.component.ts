@@ -11,6 +11,9 @@ import { ReviewService } from '../review.service';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
 import { CourseService } from '../../courses/course.service';
+import { Store } from '@ngrx/store';
+import { User } from '../../models/user';
+import { getUser } from '../../state/auth/reducers';
 
 @Component({
   selector: 'oms-review',
@@ -33,13 +36,13 @@ export class ReviewComponent implements OnInit {
   ratings = Array.from(new Array(5), (x, i) => i + 1);
 
   constructor(
-    private auth: AuthService,
+    private store: Store<User>,
     private reviewService: ReviewService,
     private fb: FormBuilder,
     private courseService: CourseService,
     private router: Router
   ) {
-    auth.user.subscribe(user => {
+    this.store.select(getUser).subscribe(user => {
       this.authId = user.uid;
     });
   }

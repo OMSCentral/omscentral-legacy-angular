@@ -32,6 +32,9 @@ import {
   LOAD_RECENT_REVIEWS,
   LoadRecentReviews,
   LoadRecentReviewsSuccess,
+  LOAD_USER_REVIEWS,
+  LoadUserReviews,
+  LoadUserReviewsSuccess,
 } from '../actions/reviews';
 import { Router } from '@angular/router';
 
@@ -48,6 +51,17 @@ export class ReviewsEffects {
         new ProcessFilters(reviews),
       ])
     );
+
+    @Effect()
+    loadUserReviews: Observable<Action> = this.actions
+      .ofType<LoadUserReviews>(LOAD_USER_REVIEWS)
+      .pipe(
+        map(action => action.payload),
+        switchMap(payload => this.reviewService.getReviews(payload.reviews)),
+        flatMap(reviews => [
+          new LoadUserReviewsSuccess(reviews)
+        ])
+      );
 
     @Effect()
   loadRecentReviews: Observable<Action> = this.actions

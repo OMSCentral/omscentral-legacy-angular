@@ -18,6 +18,8 @@ import {
   GetUser,
   Logout,
   LogoutSuccess,
+  GetUserSuccess,
+  GetUserFailure,
 } from '../actions/auth';
 import { Authenticate, User } from '../../../models/user';
 import { AuthService } from '../../../firebase/auth.service';
@@ -36,12 +38,22 @@ export class AuthEffects {
       map(authData => {
         if (authData) {
           const user = new User(authData);
-          console.log(user);
-          return new LoginSuccess({ user });
+          return new GetUserSuccess(user);
         } else {
-          return new LogoutSuccess();
+          return new GetUserFailure();
         }
       })
+    );
+
+  @Effect()
+  getUserSuccess: Observable<Action> = this.actions
+    .ofType<GetUserSuccess>(AuthActionTypes.GetUserSuccess)
+    .pipe(
+      map(action => action.payload),
+      flatMap(user => [
+        new LoginSuccess({ user }),
+        new Details(user)
+      ])
     );
 
   @Effect()
@@ -109,11 +121,11 @@ export class AuthEffects {
       map(details => new DetailsSuccess({ details }))
     );
 
-  @Effect({ dispatch: false })
-  detailsSuccess$ = this.actions.pipe(
-    ofType(AuthActionTypes.DetailsSuccess),
-    tap(() => this.router.navigate(['/']))
-  );
+  // @Effect({ dispatch: false })
+  // detailsSuccess$ = this.actions.pipe(
+  //   ofType(AuthActionTypes.DetailsSuccess),
+  //   tap(() => this.router.navigate(['/']))
+  // );
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions.pipe(
