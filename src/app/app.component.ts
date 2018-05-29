@@ -4,7 +4,7 @@ import { SettingsService } from './core/settings.service';
 import { Store } from '@ngrx/store';
 import { AuthState } from './state/auth/reducers';
 import { GetUser } from './state/auth/actions/auth';
-import { getLoading } from './state/auth/reducers';
+import { getLoaded } from './state/auth/reducers';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   maintenance = false;
   loading$: Promise<boolean> | Observable<boolean>;
   constructor(public router: Router, private settingsService: SettingsService, private store: Store<AuthState>) {
-    this.loading$ = this.store.select(getLoading)
+    this.loading$ = this.store.select(getLoaded)
     this.settingsService.settings$.subscribe(settings => {
       if (settings !== null) {
         this.downloaded = true;

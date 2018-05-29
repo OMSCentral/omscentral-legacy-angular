@@ -17,6 +17,8 @@ import { CoursesState, getSelectedCourse, getAllCourses } from '../../state/cour
 import { ReviewsState, getFilteredStats, getSelectedReview } from '../../state/reviews/reducers';
 import { Course } from '../../models/course';
 import { NewReview, EditReview, SelectReview, RemoveReview } from '../../state/reviews/actions/reviews';
+import { User } from '../../models/user';
+import { getUser } from '../../state/auth/reducers';
 
 @Component({
   selector: 'oms-new-review',
@@ -45,9 +47,10 @@ export class NewReviewComponent implements OnInit {
     private auth: AuthService,
     private reviewService: ReviewService,
     private fb: FormBuilder,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private store: Store<User>
   ) {
-    auth.user.subscribe(user => {
+    this.store.select(getUser).subscribe(user => {
       this.authId = user.uid;
     });
     // this.courses$ = this.courseStore.pipe(select(getAllCourses)) as Observable<Course[]>;

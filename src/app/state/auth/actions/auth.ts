@@ -3,6 +3,8 @@ import { User, Authenticate, UserDetails } from '../../../models/user';
 
 export enum AuthActionTypes {
   GetUser = '[Auth] Get User',
+  GetUserSuccess = '[Auth] Get User Success',
+  GetUserFailure = '[Auth] Get User Failure',
   Login = '[Auth] Login',
   SocialLogin = '[Auth] Social Login',
   Register = '[Auth] Register',
@@ -19,6 +21,18 @@ export enum AuthActionTypes {
 
 export class GetUser implements Action {
   readonly type = AuthActionTypes.GetUser;
+
+  constructor(public payload?: any) {}
+}
+
+export class GetUserSuccess implements Action {
+  readonly type = AuthActionTypes.GetUserSuccess;
+
+  constructor(public payload?: any) {}
+}
+
+export class GetUserFailure implements Action {
+  readonly type = AuthActionTypes.GetUserFailure;
 
   constructor(public payload?: any) {}
 }
@@ -93,6 +107,8 @@ export class LogoutSuccess implements Action {
 
 export type AuthActionsUnion =
   | GetUser
+  | GetUserSuccess
+  | GetUserFailure
   | Login
   | LoginSuccess
   | SocialLogin

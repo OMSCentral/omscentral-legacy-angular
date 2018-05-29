@@ -2,7 +2,7 @@ import { AuthActionsUnion, AuthActionTypes } from '../actions/auth';
 import { User, UserDetails } from '../../../models/user';
 
 export interface State {
-  loading: boolean;
+  loaded: boolean;
   loggedIn: boolean;
   user: User | null;
   details: UserDetails | null;
@@ -11,7 +11,7 @@ export interface State {
 }
 
 export const initialState: State = {
-  loading: false,
+  loaded: true,
   loggedIn: false,
   user: null,
   details: null,
@@ -24,14 +24,24 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
     case AuthActionTypes.GetUser: {
       return {
         ...state,
-        loading: true
+        loaded: false
       };
     }
     case AuthActionTypes.LoginSuccess: {
       return {
         ...state,
         loggedIn: true,
-        loading: false,
+        loaded: true,
+        user: action.payload.user,
+        loginError: null,
+        registerError: null
+      };
+    }
+    case AuthActionTypes.GetUserSuccess: {
+      return {
+        ...state,
+        loggedIn: true,
+        loaded: true,
         user: action.payload.user,
         loginError: null,
         registerError: null
@@ -41,7 +51,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       return {
         ...state,
         loggedIn: true,
-        loading: false,
+        loaded: true,
         user: action.payload.user,
         loginError: null,
         registerError: null
@@ -50,7 +60,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
     case AuthActionTypes.DetailsSuccess: {
       return {
         ...state,
-        loading: false,
+        loaded: true,
         details: action.payload.details,
         loginError: null,
         registerError: null
@@ -61,7 +71,16 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       console.log(action.payload);
       return {
         ...state,
-        loading: false,
+        loaded: true,
+        loginError: action.payload.message
+      };
+    }
+
+    case AuthActionTypes.GetUserFailure: {
+      console.log(action.payload);
+      return {
+        ...state,
+        loaded: true,
         loginError: action.payload.message
       };
     }
@@ -70,7 +89,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       console.log(action.payload);
       return {
         ...state,
-        loading: false,
+        loaded: true,
         registerError: action.payload.message
       };
     }
@@ -85,7 +104,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
   }
 }
 
-export const getLoading = (state: State) => state.loading;
+export const getLoaded = (state: State) => state.loaded;
 export const getLoggedIn = (state: State) => state.loggedIn;
 export const getUser = (state: State) => state.user;
 export const getDetails = (state: State) => state.details;
