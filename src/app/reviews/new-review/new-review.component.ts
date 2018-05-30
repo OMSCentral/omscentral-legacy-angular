@@ -13,10 +13,23 @@ import { Semester } from '../../enums/semester.enum';
 import { CourseService } from '../../courses/course.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { CoursesState, getSelectedCourse, getAllCourses } from '../../state/courses/reducers';
-import { ReviewsState, getFilteredStats, getSelectedReview } from '../../state/reviews/reducers';
+import {
+  CoursesState,
+  getSelectedCourse,
+  getAllCourses,
+} from '../../state/courses/reducers';
+import {
+  ReviewsState,
+  getFilteredStats,
+  getSelectedReview,
+} from '../../state/reviews/reducers';
 import { Course } from '../../models/course';
-import { NewReview, EditReview, SelectReview, RemoveReview } from '../../state/reviews/actions/reviews';
+import {
+  NewReview,
+  EditReview,
+  SelectReview,
+  RemoveReview,
+} from '../../state/reviews/actions/reviews';
 import { User } from '../../models/user';
 import { getUser } from '../../state/auth/reducers';
 
@@ -70,47 +83,19 @@ export class NewReviewComponent implements OnInit {
     if (reviewId) {
       // get review
       this.reviewStore.dispatch(new SelectReview(reviewId));
-      this.review$ = this.reviewStore.pipe(select(getSelectedReview)) as Observable<Review>;
+      this.review$ = this.reviewStore.pipe(
+        select(getSelectedReview)
+      ) as Observable<Review>;
       this.review$.subscribe(review => {
         this.review = new Review(review);
         this.edit();
       });
     } else {
       this.review = new Review({
-        course: courseId
+        course: courseId,
       });
       this.edit();
     }
-
-    // this.route.paramMap.subscribe(param => {
-    //   console.log((<any>param).params);
-    // });
-    // this.route.queryParamMap.subscribe(param => {
-    //   console.log((<any>param).params);
-    // });
-
-    // this.review$ = this.reviewService.getReview(
-    //   this.route.snapshot.paramMap.get('reviewId')
-    // );
-    // this.review$ = this.route.paramMap
-    //   .switchMap((params: ParamMap) =>
-    //     this.reviewService.getReview(params.get('reviewId')));
-
-    // this.course$ = this.route.paramMap
-    //     .switchMap((params: ParamMap) =>
-    //       this.courseService.getCourse(params.get('courseId')));
-
-    // this.review$.subscribe(review => {
-    //   this.review = review;
-    //   if (this.route.snapshot.queryParamMap.get('courseId')) {
-    //     this.review.course = this.route.snapshot.queryParamMap.get('courseId');
-    //   }
-    //   this.edit();
-    // });
-
-    // if (this.review && this.review.course) {
-    //   this.courseName = this.courseService.getCourseName(this.review.course);
-    // }
   }
 
   createForm() {

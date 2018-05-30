@@ -105,7 +105,6 @@ export class ReviewService {
       .ref('/reviews/' + review.id)
       .remove()
       .then(() => {
-        console.log(review);
         return review;
       });
   }
@@ -157,12 +156,9 @@ export class ReviewService {
         return entities[reviewId];
       }),
       switchMap(review => {
-        console.log(review);
         if (!!review) {
-          console.log('had review');
           return of(review);
         } else {
-          console.log('no review');
           return this.downloadReview(reviewId);
         }
       }),
