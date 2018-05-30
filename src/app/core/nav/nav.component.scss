@@ -10,3 +10,75 @@
 // .nav-auth {
 //     padding-top: 24px;
 // }
+
+.brand {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+  color: white;
+
+  > .mat-button {
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+}
+
+.angular-logo {
+  height: 26px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+}
+
+.github-logo {
+  height: 21px;
+  margin: 0 7px 2px 0;
+  vertical-align: middle;
+}
+
+.navbar-link {
+  text-decoration: inherit;
+  flex: 1;
+}
+
+.navbar {
+  display: none;
+}
+
+.navbar-show-small {
+  display: none;
+  color: white;
+}
+
+/**
+  * Rules for when the device is detected to be a small screen.
+  * Moves content two rows instead of one.
+  */
+@media (max-width: 720px) {
+  .navbar-hide-small {
+    display: none;
+  }
+
+  .navbar-show-small {
+    display: block;
+  }
+
+  .navbar {
+    display: flex;
+  }
+
+  .navbar--github-logo {
+    margin: 0;
+  }
+}

@@ -16,7 +16,7 @@ export const initialState: State = {
   user: null,
   details: null,
   loginError: null,
-  registerError: null
+  registerError: null,
 };
 
 export function reducer(state = initialState, action: AuthActionsUnion): State {
@@ -24,7 +24,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
     case AuthActionTypes.GetUser: {
       return {
         ...state,
-        loaded: false
+        loaded: false,
       };
     }
     case AuthActionTypes.LoginSuccess: {
@@ -34,7 +34,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
         loaded: true,
         user: action.payload.user,
         loginError: null,
-        registerError: null
+        registerError: null,
       };
     }
     case AuthActionTypes.GetUserSuccess: {
@@ -44,7 +44,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
         loaded: true,
         user: action.payload.user,
         loginError: null,
-        registerError: null
+        registerError: null,
       };
     }
     case AuthActionTypes.RegisterSuccess: {
@@ -54,7 +54,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
         loaded: true,
         user: action.payload.user,
         loginError: null,
-        registerError: null
+        registerError: null,
       };
     }
     case AuthActionTypes.DetailsSuccess: {
@@ -63,7 +63,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
         loaded: true,
         details: action.payload.details,
         loginError: null,
-        registerError: null
+        registerError: null,
       };
     }
 
@@ -72,16 +72,14 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       return {
         ...state,
         loaded: true,
-        loginError: action.payload.message
+        loginError: action.payload.message,
       };
     }
 
     case AuthActionTypes.GetUserFailure: {
-      console.log(action.payload);
       return {
         ...state,
         loaded: true,
-        loginError: action.payload.message
       };
     }
 
@@ -90,7 +88,7 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
       return {
         ...state,
         loaded: true,
-        registerError: action.payload.message
+        registerError: action.payload.message,
       };
     }
 

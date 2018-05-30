@@ -8,7 +8,6 @@
       <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
       <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
     </button>
-    <button class="pull-right" mat-raised-button color="primary" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</button>
   </mat-card-content>
   <mat-card-actions class="space-between">
     <mat-form-field>

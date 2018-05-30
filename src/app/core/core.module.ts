@@ -10,6 +10,7 @@ import {
   MatRippleModule,
   MatSnackBarModule,
   MatCardModule,
+  MatSidenavModule,
 } from '@angular/material';
 import { AlertService } from './alert.service';
 import { LocalStorageService } from './local-storage.service';
@@ -27,6 +28,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatRippleModule,
     MatSnackBarModule,
     MatCardModule,
+    MatSidenavModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NavComponent, SidebarComponent],

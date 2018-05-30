@@ -1,9 +1,4 @@
-<oms-course-nav>
-  <mat-sidenav-container class="container">
-    <mat-sidenav position="end" #courseinfo class="courseinfo" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="60">
-      <oms-course-stats [courseId]="courseId"></oms-course-stats>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <oms-course-reviews [courseId]="courseId"></oms-course-reviews>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<div class="course-grid">
+  <oms-course-stats [courseId]="courseId"></oms-course-stats>
+  <oms-course-reviews [courseId]="courseId"></oms-course-reviews>
+</div>

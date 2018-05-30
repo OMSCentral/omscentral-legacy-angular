@@ -35,6 +35,7 @@ import { MarkdownModule } from 'angular2-markdown';
 
 import { PrivacyComponent } from './privacy/privacy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent, PrivacyComponent],
@@ -61,6 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatSidenavModule,
     StateModule.forRoot(),
+    FlexLayoutModule,
   ],
   providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent],

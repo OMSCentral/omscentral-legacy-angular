@@ -1,6 +1,6 @@
 .course-text {
-  padding-top: .5px;
-  padding-bottom: .5px;
+  padding-top: 0.5px;
+  padding-bottom: 0.5px;
 }
 
 .courses-header {
@@ -18,4 +18,9 @@
   flex-direction: column;
   min-width: 300px;
   overflow: auto;
+}
+
+.mat-row:hover {
+  background-color: rgba(158, 158, 158, 0.2);
+  cursor: pointer;
 }
