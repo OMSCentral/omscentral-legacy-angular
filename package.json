@@ -10,10 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy":
-      "ng build && firebase use staging && firebase deploy --only hosting",
-    "deploy:prod":
-      "ng build --prod && firebase use production && firebase deploy --only hosting",
+    "deploy": "ng build && firebase use staging && firebase deploy --only hosting",
+    "deploy:prod": "ng build --prod && firebase use production && firebase deploy --only hosting",
     "prettier": "prettier --write \"**/*.ts\""
   },
   "private": true,
@@ -43,8 +41,9 @@
     "font-awesome": "^4.7.0",
     "ngrx-store-freeze": "^0.2.3",
     "prismjs": "^1.14.0",
+    "raven-js": "3.25.2",
     "rxjs": "^6.1.0",
-    "rxjs-compat": "^6.1.0",
+    "rxjs-compat": "^6.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

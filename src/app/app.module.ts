@@ -1,5 +1,6 @@
+import * as Raven from 'raven-js';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -36,6 +37,16 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+Raven.config(
+  'https://0e91a95e29e44c63b164865f792ec308@sentry.io/1216631'
+).install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err);
+  }
+}
+
 @NgModule({
   declarations: [AppComponent, PrivacyComponent],
   imports: [
@@ -62,7 +73,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     StateModule.forRoot(),
     FlexLayoutModule,
   ],
-  providers: [AuthGuard, AuthService],
+  providers: [
+    AuthGuard,
+    AuthService,
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
