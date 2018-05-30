@@ -18,8 +18,9 @@ import {
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
-  MatCheckboxModule
+  MatCheckboxModule,
 } from '@angular/material';
+import { ReviewService } from './review.service';
 
 @NgModule({
   imports: [
@@ -35,10 +36,11 @@ import {
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ReviewComponent, NewReviewComponent],
   exports: [ReviewComponent],
+  providers: [ReviewService],
 })
 export class ReviewsModule {}
