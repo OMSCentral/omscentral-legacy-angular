@@ -1,5 +1,11 @@
 <div class="container">
   <mat-card class="card">
+    <mat-card-title>My Profile</mat-card-title>
+    <mat-card-content>
+      <pre>{{user$ | async | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card">
     <mat-card-title>Overall Progress ({{courses.length}} / 10)</mat-card-title>
     <mat-card-content>
       <mat-progress-bar mode="determinate" color="primary" [value]="courses.length * 10"></mat-progress-bar>
@@ -16,20 +22,16 @@
             <mat-list-item>{{choice.amount * choice.progress(courses)}} / {{choice.amount}}&nbsp;
               <i *ngIf="choice.progress(courses) >= 1" class="fa fa-2x fa-check primary"></i>
             </mat-list-item>
+            <mat-list-item *ngFor="let course of choice.courses">
+              <div class="choice-line">
+                <button mat-button type="button" class="course-btn" [routerLink]="['/courses', course]">{{course | course:basicCourses}}</button>
+                <i *ngIf="courses.indexOf(course) !== -1" class="fa fa-2x fa-check accent pull-right"></i>
+              </div>
+            </mat-list-item>
           </mat-list>
-          <mat-nav-list>
-            <a mat-list-item *ngFor="let course of choice.courses" [routerLink]="['/courses', course]">
-              {{course | course:basicCourses}}&nbsp;
-              <i *ngIf="courses.indexOf(course) !== -1" class="fa fa-2x fa-check accent"></i>
-            </a>
-          </mat-nav-list>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
-  <div *ngFor="let review of reviews$ | async">
-    <oms-review [review]="review" [title]="true"></oms-review>
-    <br/>
-  </div>
+  <oms-review *ngFor="let review of reviews$ | async" [review]="review" [title]="true"></oms-review>
 </div>
-<pre>{{user$ | async | json}}</pre>

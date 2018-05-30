@@ -1,0 +1,17 @@
+.course-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 1vh;
+  grid-row-gap: 1vh;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .course-grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-column-gap: 1vh;
+    grid-row-gap: 1vh;
+    width: 100%;
+  }
+}

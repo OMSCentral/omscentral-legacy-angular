@@ -10,8 +10,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --environment=dev && firebase use staging && firebase deploy --only hosting",
-    "deploy:prod": "ng build --prod && firebase use production && firebase deploy --only hosting",
+    "deploy":
+      "ng build --prod --environment=dev && firebase use staging && firebase deploy --only hosting",
+    "deploy:prod":
+      "ng build --prod && firebase use production && firebase deploy --only hosting",
     "prettier": "prettier --write \"**/*.ts\""
   },
   "private": true,
@@ -21,6 +23,7 @@
     "@angular/common": "6.0.0",
     "@angular/compiler": "6.0.0",
     "@angular/core": "6.0.0",
+    "@angular/flex-layout": "^6.0.0-beta.15",
     "@angular/forms": "6.0.0",
     "@angular/http": "6.0.0",
     "@angular/material": "^6.0.0",

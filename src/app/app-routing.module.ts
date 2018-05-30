@@ -41,12 +41,12 @@ const routes: Routes = [
   {
     path: 'recent',
     component: RecentComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'courses/:courseId',
     component: CourseComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'reviews/:reviewId',
@@ -56,11 +56,6 @@ const routes: Routes = [
   {
     path: 'reviews',
     component: NewReviewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'reviews/:reviewId',
-    component: CourseComponent,
     canActivate: [AuthGuard],
   },
   {

@@ -25,6 +25,7 @@ export class AlertService {
     this.systemAlert = this.matSnackBar.open(content, 'Dismiss', {
       announcementMessage: content,
       verticalPosition: 'top',
+      duration: 5000,
     });
   }
 }

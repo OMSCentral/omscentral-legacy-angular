@@ -10,6 +10,7 @@ import {
   MatProgressBarModule,
   MatListModule,
   MatCheckboxModule,
+  MatButtonModule,
 } from '@angular/material';
 import { CoursesModule } from '../courses/courses.module';
 import { PipeModule } from '../pipes/pipe.module';
@@ -27,6 +28,7 @@ import { AppRoutingModule } from '../app-routing.module';
     MatCheckboxModule,
     PipeModule,
     AppRoutingModule,
+    MatButtonModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfileComponent],
