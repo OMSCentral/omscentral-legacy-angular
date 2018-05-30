@@ -65,13 +65,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
-            "styles": [
-              {
-                "input":
-                  "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-              },
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "assets": ["src/assets", "src/favicon.ico"]
           }
         },

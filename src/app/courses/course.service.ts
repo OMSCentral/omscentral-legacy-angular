@@ -10,6 +10,7 @@ import { Course } from '../models/course';
 import { Store, select } from '@ngrx/store';
 import { CoursesState, getCourseEntities } from '../state/courses/reducers';
 import { map, switchMap, take } from 'rxjs/operators';
+import { Specialization, Choice } from '../models/specialization';
 
 const coursePrefixes = ['CS', 'MG', 'IS'];
 
@@ -25,57 +26,36 @@ const defaultGrades = {
   total: 0,
 };
 
-const specializations = {
-  cpr: [
-    'CS-6505',
-    'CS-8803-GA',
-    'CS-6601',
-    'CS-7641',
-    'CS-8803-GA',
-    'CS-6475',
-    'CS-6476',
-    'CS-8803-001',
-  ],
-  cs: [
-    'CS-6035',
-    'CS-6210',
-    'CSE-6220',
-    'CS-8803-GA',
-    'CS-6250',
-    'CS-6290',
-    'CS-6300',
-    'CS-6400',
-    'CS-6262',
-    'CS-6310',
-    'CS-6340',
-    'CS-6506',
-    'CS-6200',
-    'CS-6291',
-    'CS-6505',
-  ],
-  ii: [
-    'CS-6300',
-    'CS-6505',
-    'CS-8803-GA',
-    'CS-6601',
-    'CS-7637',
-    'CS-7641',
-    'CS-6440',
-    'CS-6460',
-  ],
-  ml: [
-    'CS-6505',
-    'CS-6476',
-    'CS-8803-GA',
-    'CS-7641',
-    'CS-7642',
-    'CS-8803-003',
-    'CS-7646',
-    'CSE-6242',
-    'CSE-6250',
-    'CSE-6250',
-  ],
-};
+const specializations = [
+  new Specialization('Computational Perception and Robotics', 'cpr', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6601', 'CS-7641']),
+    new Choice(3, ['CS-6475', 'CS-6476', 'CS-8803-001']),
+  ]),
+  new Specialization('Computing Systems', 'cs', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(2, ['CS-6210', 'CS-6250', 'CS-6290', 'CS-6300', 'CS-6400']),
+    new Choice(3, [
+      'CS-6035',
+      'CS-6200',
+      'CS-6262',
+      'CS-6291',
+      'CS-6310',
+      'CS-6340',
+      'CSE-6220',
+    ]),
+  ]),
+  new Specialization('Interactive Intelligence', 'ii', [
+    new Choice(1, ['CS-6300', 'CS-6505', 'CS-8803-GA']),
+    new Choice(2, ['CS-6601', 'CS-7637', 'CS-7641']),
+    new Choice(2, ['CS-6440', 'CS-6460']),
+  ]),
+  new Specialization('Machine Learning', 'ml', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-7641']),
+    new Choice(3, ['CS-7642', 'CS-7646', 'CS-6476', 'CSE-6242', 'CSE-6250']),
+  ]),
+];
 
 @Injectable()
 export class CourseService {
@@ -88,6 +68,10 @@ export class CourseService {
     private gradeService: GradeService,
     private store: Store<CoursesState>
   ) {}
+
+  getSpecializations() {
+    return specializations;
+  }
 
   processCourse(course, firebaseCourse, grades): Course {
     const courseId = course.id;
@@ -121,10 +105,9 @@ export class CourseService {
     course.ab = course.grades.totals.ab;
     course.cdf = course.grades.totals.cdf;
     course.withdrew = course.grades.totals.w;
-    course.cpr = specializations.cpr.indexOf(courseId) !== -1;
-    course.cs = specializations.cs.indexOf(courseId) !== -1;
-    course.ii = specializations.ii.indexOf(courseId) !== -1;
-    course.ml = specializations.ml.indexOf(courseId) !== -1;
+    specializations.forEach(speciailization => {
+      course[speciailization.short] = speciailization.contains(courseId);
+    });
     return course;
   }
 
