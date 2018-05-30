@@ -46,7 +46,7 @@
       </mat-card-title>
       <mat-card-content>
         <p>After signing in, click the
-          <button mat-raised-button color="accent">Write a Review</button> button.</p>
+          <button mat-raised-button color="accent" routerLink="/reviews">Write a Review</button> button.</p>
       </mat-card-content>
     </mat-card>
     <mat-card>
@@ -93,4 +93,18 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-card class="card" style="width: 80%">
+    <mat-card-title>How can I help?</mat-card-title>
+    <mat-card-content>
+      <p>
+        <button mat-raised-button color="accent" routerLink="/reviews">Write a Review</button>
+      </p>
+      <p>Or... Please consider making a donation (
+        <a class="primary" href="https://www.paypal.me/martz" target="_blank">PayPal</a> ). Even a dollar goes a long way. Thank you!</p>
+      <p>Or... take a look at some of our
+        <a class="primary" href="https://github.com/martzcodes/omscentral/issues" target="_blank">issues</a> and contribute code.</p>
+      <p>Or... star the project on
+        <a class="primary" href="https://github.com/martzcodes/omscentral" target="_blank">Github</a>.</p>
+    </mat-card-content>
+  </mat-card>
 </div>
