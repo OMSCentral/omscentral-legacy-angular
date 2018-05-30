@@ -1,6 +1,5 @@
 <div class="main" [hidden]="(loading$ | async)">
   <oms-nav *ngIf="!(router.url == '/login' || router.url == '/register' || router.url.indexOf('set-password') !== -1)" class="mat-elevation-z6"></oms-nav>
-  <oms-alert></oms-alert>
   <div class="container-fluid">
     <div class="jumbotron" *ngIf="maintenance">
       <h1 class="display-4">We're undergoing brief maintenance... please stand by...</h1>

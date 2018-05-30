@@ -1,32 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
-$fa-font-path: "~font-awesome/fonts";
+@import './theme.scss';
+$fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
-// @import '~clarity-icons/clarity-icons.min.css';
-// @import '~clarity-ui/clarity-ui.min.css';
 @import '~prismjs/themes/prism.css';
 
 .spacer {
   flex: 1 1 auto;
 }
 
-// .ng-valid[required],
-// .ng-valid.required {
-//   border-left: 5px solid #42A948;
-//   /* green */
-// }
-
-// .ng-invalid:not(form) {
-//   border-left: 5px solid #a94442;
-//   /* red */
-// }
-
 .clickable {
   cursor: pointer;
 }
 
 .mat-elevation-z6 {
-  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
 
 oms-nav {
@@ -73,12 +62,15 @@ oms-nav {
   width: 400px;
 }
 
-
-td.mat-cell:last-child, td.mat-footer-cell:last-child, th.mat-header-cell:last-child {
+td.mat-cell:last-child,
+td.mat-footer-cell:last-child,
+th.mat-header-cell:last-child {
   padding: 0 !important;
 }
 
-td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:first-child {
+td.mat-cell:first-child,
+td.mat-footer-cell:first-child,
+th.mat-header-cell:first-child {
   padding: 16px !important;
 }
 
@@ -87,5 +79,5 @@ td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:firs
 }
 
 .text-center {
-  text-align: center!important;
+  text-align: center !important;
 }
