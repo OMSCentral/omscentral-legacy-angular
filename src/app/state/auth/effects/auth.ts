@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of, Observable } from 'rxjs';
-import { catchError, exhaustMap, map, tap, switchMap, flatMap } from 'rxjs/operators';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  tap,
+  switchMap,
+  flatMap,
+} from 'rxjs/operators';
 
 import {
   AuthActionTypes,
@@ -50,10 +57,7 @@ export class AuthEffects {
     .ofType<GetUserSuccess>(AuthActionTypes.GetUserSuccess)
     .pipe(
       map(action => action.payload),
-      flatMap(user => [
-        new LoginSuccess({ user }),
-        new Details(user)
-      ])
+      flatMap(user => [new LoginSuccess({ user }), new Details(user)])
     );
 
   @Effect()
@@ -64,10 +68,7 @@ export class AuthEffects {
         return action.payload;
       }),
       switchMap(auth => this.authService.register(auth)),
-      flatMap(user => [
-        new RegisterSuccess({ user }),
-        new Details(user),
-      ]),
+      flatMap(user => [new RegisterSuccess({ user }), new Details(user)]),
       catchError(err => of(new RegisterFailure(err)))
     );
 
@@ -79,10 +80,7 @@ export class AuthEffects {
         return action.payload;
       }),
       switchMap(auth => this.authService.login(auth)),
-      flatMap(user => [
-        new LoginSuccess({ user }),
-        new Details(user),
-      ]),
+      flatMap(user => [new LoginSuccess({ user }), new Details(user)]),
       catchError(err => of(new LoginFailure(err)))
     );
 
@@ -103,10 +101,7 @@ export class AuthEffects {
         return action.payload;
       }),
       switchMap(provider => this.authService.social(provider)),
-      flatMap(user => [
-        new LoginSuccess({ user }),
-        new Details(user),
-      ]),
+      flatMap(user => [new LoginSuccess({ user }), new Details(user)]),
       catchError(err => of(new LoginFailure(err)))
     );
 
@@ -141,5 +136,5 @@ export class AuthEffects {
     private router: Router,
     private userService: UserService,
     private afAuth: AngularFireAuth
-  ) { }
+  ) {}
 }
