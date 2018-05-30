@@ -37,6 +37,7 @@ import {
   LoadUserReviewsSuccess,
 } from '../actions/reviews';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../core/alert.service';
 
 @Injectable()
 export class ReviewsEffects {
@@ -52,18 +53,16 @@ export class ReviewsEffects {
       ])
     );
 
-    @Effect()
-    loadUserReviews: Observable<Action> = this.actions
-      .ofType<LoadUserReviews>(LOAD_USER_REVIEWS)
-      .pipe(
-        map(action => action.payload),
-        switchMap(payload => this.reviewService.getReviews(payload.reviews)),
-        flatMap(reviews => [
-          new LoadUserReviewsSuccess(reviews)
-        ])
-      );
+  @Effect()
+  loadUserReviews: Observable<Action> = this.actions
+    .ofType<LoadUserReviews>(LOAD_USER_REVIEWS)
+    .pipe(
+      map(action => action.payload),
+      switchMap(payload => this.reviewService.getReviews(payload.reviews)),
+      flatMap(reviews => [new LoadUserReviewsSuccess(reviews)])
+    );
 
-    @Effect()
+  @Effect()
   loadRecentReviews: Observable<Action> = this.actions
     .ofType<LoadRecentReviews>(LOAD_RECENT_REVIEWS)
     .pipe(
@@ -133,6 +132,7 @@ export class ReviewsEffects {
     .pipe(
       map(action => action.payload),
       tap(review => {
+        this.alertService.addAlert('Review Saved');
         this.router.navigate(['/courses', review.course]);
       })
     );
@@ -143,23 +143,28 @@ export class ReviewsEffects {
     .pipe(
       map(action => action.payload),
       tap(review => {
+        this.alertService.addAlert(
+          'Review Saved! It may take a moment to show up.'
+        );
         this.router.navigate(['/courses', review.course]);
       })
     );
 
-    @Effect({ dispatch: false })
-    removeReviewSuccess = this.actions
-      .ofType<NewReviewSuccess>(REMOVE_REVIEW_SUCCESS)
-      .pipe(
-        map(action => action.payload),
-        tap(review => {
-          this.router.navigate(['/courses', review.course]);
-        })
-      );
+  @Effect({ dispatch: false })
+  removeReviewSuccess = this.actions
+    .ofType<NewReviewSuccess>(REMOVE_REVIEW_SUCCESS)
+    .pipe(
+      map(action => action.payload),
+      tap(review => {
+        this.alertService.addAlert('Review Deleted');
+        this.router.navigate(['/courses', review.course]);
+      })
+    );
 
   constructor(
     private actions: Actions,
     private reviewService: ReviewService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 }

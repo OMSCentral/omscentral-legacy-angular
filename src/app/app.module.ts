@@ -24,14 +24,6 @@ import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
 import { PipeModule } from './pipes/pipe.module';
 
-import { CourseService } from './courses/course.service';
-import { UserService } from './core/user.service';
-import { SettingsService } from './core/settings.service';
-import { AlertService } from './core/alert/alert.service';
-import { LocalStorageService } from './core/local-storage.service';
-import { ReviewService } from './reviews/review.service';
-import { GradeService } from './grades/grade.service';
-
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
@@ -68,18 +60,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MarkdownModule.forRoot(),
     BrowserAnimationsModule,
     MatSidenavModule,
-    StateModule.forRoot()
+    StateModule.forRoot(),
   ],
-  providers: [
-    AuthGuard,
-    AuthService,
-    CourseService,
-    ReviewService,
-    GradeService,
-    LocalStorageService,
-    AlertService,
-    SettingsService,
-  ],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
