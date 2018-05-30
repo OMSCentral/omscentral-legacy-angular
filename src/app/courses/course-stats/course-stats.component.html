@@ -1,10 +1,15 @@
-<div *ngIf="!((course$ | async)?.combined && grades)" class="text-center">
+<div *ngIf="!((course$ | async)?.combined)" class="text-center">
   <div class="fa fa-spinner fa-spin fa-2x"></div>
 </div>
-<div *ngIf="(course$ | async)?.combined && grades">
+<div *ngIf="(course$ | async)?.combined">
   <mat-list role="list" *ngIf="(course$ | async)?.combined">
     <mat-list-item role="listitem">
       <h4 mat-line>{{(course$ | async)?.combined}}</h4>
+    </mat-list-item>
+    <mat-list-item *ngIf="authId" role="listitem">
+      <div mat-line style="text-align: right;">
+        <button mat-raised-button color="accent" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</button>
+      </div>
     </mat-list-item>
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.numReviews">
       <h4 mat-line>Reviews</h4>
@@ -32,6 +37,9 @@
       <div>
         <span *ngIf="(stats$ | async)?.rating">{{(stats$ | async)?.rating | number}} / </span>{{(course$ | async)?.average?.rating | number}}
       </div>
+    </mat-list-item>
+    <mat-list-item *ngIf="!grades">
+      Grade information not available :(
     </mat-list-item>
   </mat-list>
   <table mat-table #table *ngIf="grades" [dataSource]="grades?.semesterGrades" style="width: 100%">
@@ -88,4 +96,3 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-<pre>{{course$ | async | json}}</pre>

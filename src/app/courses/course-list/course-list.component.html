@@ -6,19 +6,21 @@
     Note: Some courses don't have grade or enrollment information
   </mat-card-subtitle>
   <mat-card-content>
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle-group fxHide fxShow.gt-sm>
       <mat-button-toggle value="all" (click)="changeSpecialization('all')">{{ shortened ? 'ALL' : 'All' }}</mat-button-toggle>
       <mat-button-toggle value="cpr" (click)="changeSpecialization('cpr')">{{ shortened ? 'CPR' : 'Computational Perception and Robotics'}}</mat-button-toggle>
       <mat-button-toggle value="cs" (click)="changeSpecialization('cs')">{{ shortened ? 'CS' : 'Computing Systems'}}</mat-button-toggle>
       <mat-button-toggle value="ii" (click)="changeSpecialization('ii')">{{ shortened ? 'II' : 'Interactive Intelligence'}}</mat-button-toggle>
       <mat-button-toggle value="ml" (click)="changeSpecialization('ml')">{{ shortened ? 'ML' : 'Machine Learning'}}</mat-button-toggle>
     </mat-button-toggle-group>
+    <mat-button-toggle-group fxShow fxHide.gt-sm>
+      <mat-button-toggle value="all" (click)="changeSpecialization('all')">ALL'</mat-button-toggle>
+      <mat-button-toggle value="cpr" (click)="changeSpecialization('cpr')">CPR'</mat-button-toggle>
+      <mat-button-toggle value="cs" (click)="changeSpecialization('cs')">CS'</mat-button-toggle>
+      <mat-button-toggle value="ii" (click)="changeSpecialization('ii')">II'</mat-button-toggle>
+      <mat-button-toggle value="ml" (click)="changeSpecialization('ml')">ML'</mat-button-toggle>
+    </mat-button-toggle-group>
   </mat-card-content>
-  <!-- <mat-card-actions>
-      <button mat-raised-button [color]="percent ? '' : 'accent'" (click)="percent = !percent">Counts</button>
-      <button mat-raised-button [color]="percent ? 'accent' : ''" (click)="percent = !percent">Percentage</button>
-      <span *ngIf="percent">&nbsp;&nbsp;Percentages are based off of A-F grade counts.</span>
-    </mat-card-actions> -->
 </mat-card>
 <div class="courses-header">
   <mat-form-field>
@@ -33,7 +35,8 @@
     <ng-container matColumnDef="combined">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Course</th>
       <td mat-cell *matCellDef="let row">
-        <a mat-button [routerLink]="['/courses', row.id]">{{row.combined}}</a>
+        <span fxHide fxShow.gt-sm>{{row.combined}}</span>
+        <span fxShow fxHide.gt-sm>{{row.id}}</span>
       </td>
     </ng-container>
 
@@ -86,7 +89,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/courses', row.id]">
     </tr>
   </table>
 

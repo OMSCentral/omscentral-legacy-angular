@@ -36,9 +36,16 @@ oms-nav {
   right: 0;
 }
 
+@media (max-width: 720px) {
+  .main {
+    top: 92px;
+  }
+}
+
 .container {
   flex: 1;
   box-sizing: border-box;
+  margin: 25px;
 }
 
 .sidenav {
@@ -94,6 +101,16 @@ th.mat-header-cell:first-child {
   // Use mat-color to extract individual colors from a palette as necessary.
   .primary {
     color: mat-color($primary, 500);
+  }
+
+  .primary-bg {
+    background-color: mat-color($primary, 500);
+    color: white;
+  }
+
+  .accent-bg {
+    background-color: mat-color($accent, 500);
+    color: black;
   }
 
   .accent {

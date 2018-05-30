@@ -1,116 +1,96 @@
-<mat-sidenav-container class="container">
-  <mat-sidenav #sidenav class="sidenav" [opened]="true" [mode]="'side'" [fixedInViewport]="true" fixedTopGap="120">
-    <mat-list role="list">
-      <mat-list-item role="listitem">
-        <a mat-button href="https://www.reddit.com/r/OMSCS/">OMSCS subreddit</a>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <a mat-button href="https://www.facebook.com/groups/gtomscsstudents/">OMSCS Facebook</a>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <a mat-button href="https://omscs-study.slack.com/">OMSCS Slack</a>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <a mat-button href="https://www.facebook.com/OMSCentral/">OMSCentral Facebook</a>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <a mat-button href="https://twitter.com/OMSCentral">OMSCentral Twitter</a>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <a mat-button href="https://www.paypal.me/martz">Donate</a>
-      </mat-list-item>
-    </mat-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-card class="card">
+<header class="header-background accent-bg">
+  <div class="header-section">
+    <div class="header-headline">
+      <h1 class="mat-h1">OMSCentral</h1>
+      <h2>Unofficial course review site for Georgia Tech's OMSCS and OMSA Programs</h2>
+    </div>
+    <div class="header-start">
+      <a mat-raised-button class="button" routerLink="/courses">View Courses</a>
+    </div>
+  </div>
+</header>
+
+<div class="homepage-promo">
+  <div class="homepage-grid">
+    <mat-card>
       <mat-card-title>
         What is this app?
       </mat-card-title>
       <mat-card-content>
-        <p>This app was created for GT OMSCS students to get a feel for course difficulty and workload.</p>
+        <p>This app was originally created for GT OMSCS students to get a feel for course difficulty and workload.</p>
         <p>It is not endorsed or sponsored by the official OMSCS program or staff.</p>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card">
+    <mat-card>
       <mat-card-title>
         Who maintains this app?
       </mat-card-title>
       <mat-card-content>
-        <p>Matt Martz
-          <a href="https://linkedin.com/in/mattmartz" target="_blank">(LinkedIn)</a>
-          <a href="https://twitter.com/martzcodes" target="_blank">(Twitter)</a>
-          <a href="https://github.com/martzcodes" target="_blank">(GitHub)</a>
-        </p>
+        <p>Matt Martz</p>
+        <div class="space-between">
+          <a class="primary" href="https://linkedin.com/in/mattmartz" target="_blank">
+            <i class="fa fa-3x fa-linkedin"></i>
+          </a>
+          <a class="primary" href="https://twitter.com/martzcodes" target="_blank">
+            <i class="fa fa-3x fa-twitter-square"></i>
+          </a>
+          <a class="primary" href="https://github.com/martzcodes" target="_blank">
+            <i class="fa fa-3x fa-github-square"></i>
+          </a>
+        </div>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card">
-      <mat-card-title>
-        Does this sync with the old Google doc?
-      </mat-card-title>
-      <mat-card-content>
-        <p>No. There was a one-time import of that data on November 5, 2015.</p>
-        <p>While the Google doc is still accessible, its use is discouraged as it lacks validation and other useful features.
-        </p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-title>
-        I am concerned about privacy. How is my information kept secure?
-      </mat-card-title>
-      <mat-card-content>
-        <p>The app records only your name, email, profile image URL, and OMSCS specialization (if set).</p>
-        <p>For now... all reviews are shown anonymously (to save on bandwidth). We may go back to the toggle-anonymity in the
-          future (which will be opt-in).</p>
-        <p>
-          <a href="https://firebase.google.com/docs/database/security/" target="_blank">Firebase's security infrastructure</a> guarantees that this information is accessible only to individuals who are
-          registered and authenticated.</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="card">
+    <mat-card>
       <mat-card-title>
         How do I publish a review?
       </mat-card-title>
       <mat-card-content>
         <p>After signing in, click the
-          <button mat-raised-button color="primary">Write a Review</button> button.</p>
+          <button mat-raised-button color="accent">Write a Review</button> button.</p>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card">
+    <mat-card>
       <mat-card-title>
-        What is the caching policy?
+        I am concerned about privacy. How is my information kept secure?
       </mat-card-title>
       <mat-card-content>
-        <p>The app caches all data to your browser's local storage (if possible).</p>
-        <p>The cache expires after 24 hours.</p>
-        <p>This conservative caching policy was implemented as a result of intense bandwidth consumption ($$$).</p>
-        <p>You can clear your browser's cache if you need the data sooner.</p>
+        <a class="primary" href="/privacy">Privacy Policy</a>
+        <p>The app records only your name, email, profile image URL, and OMSCS specialization (if set).</p>
+        <p>For now... all reviews are shown anonymously (to save on bandwidth). We may go back to the toggle-anonymity in the
+          future (which will be opt-in).</p>
+        <p>
+          <a class="primary" href="https://firebase.google.com/docs/database/security/" target="_blank">Firebase's security infrastructure</a> guarantees that this information is accessible only to individuals who are
+          registered and authenticated.</p>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card">
+    <mat-card>
       <mat-card-title>
         Need to report an issue or an enhancement request?
       </mat-card-title>
       <mat-card-content Markdown>
         <p>Please submit on
-          <a href="https://github.com/martzcodes/omscentral/issues" target="_blank">GitHub.</a>
+          <a class="primary" href="https://github.com/martzcodes/omscentral/issues" target="_blank">GitHub.</a>
         </p>
         <p>Requests are prioritized based on the amount of activity/support from the OMSCS community. ***I'll happily accept
           money to move something higher in the queue.***</p>
       </mat-card-content>
     </mat-card>
-    <mat-card class="card">
+    <mat-card>
       <mat-card-title>
         Have a question not answered here?
       </mat-card-title>
       <mat-card-content>
-        If you are a student on the OMSCS Slack team, my user name is
-        <strong>
-          <i>martzcodes</i>
-        </strong> and we have a channel setup at
-        <strong>
-          <a href="https://omscs-study.slack.com/messages/C83FX0M2S" target="_blank">#OMSCentral.</a>
-        </strong>
+        <p>If you are a student and on the OMSCS Slack workspace... we have a channel setup at
+          <strong>
+            <a class="primary" href="https://omscs-study.slack.com/messages/C83FX0M2S" target="_blank">#OMSCentral.</a>
+          </strong>
+        </p>
+        <p>My user name on slack is
+          <strong>
+            <i>martzcodes</i>
+          </strong>
+        </p>
       </mat-card-content>
     </mat-card>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+</div>

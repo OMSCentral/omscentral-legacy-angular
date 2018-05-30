@@ -187,21 +187,21 @@ export class ReviewService {
   getRecentReviews(): Promise<Review[]> {
     return new Promise((resolve, reject) => {
       this.db.database
-      .ref('/reviews')
-      .orderByChild('created')
-      .limitToLast(10)
-      .on('value', snapshot => {
-        const reviewsObj = snapshot.val();
-        const reviews: Review[] = Object.keys(reviewsObj)
-          .map(reviewId => {
-            const review: Review = new Review(reviewsObj[reviewId]);
-            review.id = reviewId;
-            return review;
-          })
-          .reverse();
+        .ref('/reviews')
+        .orderByChild('created')
+        .limitToLast(10)
+        .on('value', snapshot => {
+          const reviewsObj = snapshot.val();
+          const reviews: Review[] = Object.keys(reviewsObj)
+            .map(reviewId => {
+              const review: Review = new Review(reviewsObj[reviewId]);
+              review.id = reviewId;
+              return review;
+            })
+            .reverse();
 
-        resolve(reviews);
-      });
+          resolve(reviews);
+        });
     });
   }
 
@@ -213,10 +213,10 @@ export class ReviewService {
       if (b && !a) {
         return -1;
       }
-      if (a.author === this.auth.uid) {
+      if (this.auth && a.author === this.auth.uid) {
         return rev ? 1 : -1;
       } else {
-        if (b.author === this.auth.uid) {
+        if (this.auth && b.author === this.auth.uid) {
           return rev ? -1 : 1;
         } else {
           const aData = a.semester.split('-');

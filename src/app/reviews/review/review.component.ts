@@ -22,7 +22,7 @@ import { getUser } from '../../state/auth/reducers';
 })
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
-  @Input() title ? = false;
+  @Input() title? = false;
   @Output() remove = new EventEmitter<Review>();
 
   reviewForm: FormGroup;
@@ -43,7 +43,9 @@ export class ReviewComponent implements OnInit {
     private router: Router
   ) {
     this.store.select(getUser).subscribe(user => {
-      this.authId = user.uid;
+      if (user) {
+        this.authId = user.uid;
+      }
     });
   }
 
