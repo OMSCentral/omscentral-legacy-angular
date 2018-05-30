@@ -11,16 +11,12 @@ export class AuthGuard implements CanActivate {
   constructor(private store: Store<AuthState>) {}
 
   waitForAuthToLoad(): Observable<boolean> {
-    return this.store.select(getLoaded).pipe(
-      filter(loaded => loaded),
-      take(1)
-    );
+    return this.store.select(getLoaded).pipe(filter(loaded => loaded), take(1));
   }
 
   isAuthenticated(): Observable<boolean> {
     return this.store.select(getLoggedIn).pipe(
       map(authed => {
-        console.log(authed);
         if (!authed) {
           this.store.dispatch(new LoginRedirect());
           return false;

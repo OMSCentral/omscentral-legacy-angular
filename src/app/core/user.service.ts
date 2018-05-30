@@ -10,21 +10,19 @@ export class UserService {
   user$: ReplaySubject<User> = new ReplaySubject();
   user: any = null;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) {}
 
   getUser() {
     return this.user$.asObservable();
   }
 
   retrieveUser(user: User): Promise<UserDetails> {
-    console.log(user);
     return new Promise((resolve, reject) => {
       this.db.database
         .ref('/users/' + user.uid)
         .once('value')
         .then(snapshot => {
           const details = snapshot.val();
-          console.log(details);
           if (details !== null) {
             resolve(new UserDetails(details));
           } else {
@@ -35,16 +33,14 @@ export class UserService {
   }
 
   set(id, data): Promise<UserDetails> {
-    console.log(id);
     const formatted = new WriteableUser(data);
-    console.log(formatted);
     return new Promise((resolve, reject) => {
       this.db.database
         .ref('users')
         .child(id)
         .set(formatted)
-        .then((snapshot) => {
-          resolve(this.retrieveUser(new User({uid: id})));
+        .then(snapshot => {
+          resolve(this.retrieveUser(new User({ uid: id })));
         });
     });
   }
