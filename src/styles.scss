@@ -81,3 +81,24 @@ th.mat-header-cell:first-child {
 .text-center {
   text-align: center !important;
 }
+
+.card {
+  margin: 10px;
+}
+
+@mixin temp-theme($theme) {
+  // Extract whichever individual palettes you need from the theme.
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  // Use mat-color to extract individual colors from a palette as necessary.
+  .primary {
+    color: mat-color($primary, 500);
+  }
+
+  .accent {
+    color: mat-color($accent, 500);
+  }
+}
+
+@include temp-theme($gt-app-theme);

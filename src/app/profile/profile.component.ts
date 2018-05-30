@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../firebase/auth.service';
-import { FormControl, FormBuilder } from '@angular/forms';
-import { UserService } from '../core/user.service';
 import { Observable } from 'rxjs';
-import { ReviewService } from '../reviews/review.service';
-import { LocalStorageService } from '../core/local-storage.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState, getUserDetails } from '../state/auth/reducers';
 import { UserDetails } from '../models/user';
+import { Specialization } from '../models/specialization';
 import { Review } from '../models/review';
 import { LoadUserReviews } from '../state/reviews/actions/reviews';
 import { getUserReviews } from '../state/reviews/reducers';
+import { CourseService } from '../courses/course.service';
 
 @Component({
   selector: 'oms-profile',
@@ -21,14 +18,12 @@ import { getUserReviews } from '../state/reviews/reducers';
 export class ProfileComponent implements OnInit {
   user$: Observable<UserDetails>;
   reviews$: Observable<Review[]>;
-  profileForm: any = {};
+  specializations: Specialization[];
+  courses: any;
+  basicCourses: any;
 
   constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private reviewService: ReviewService,
-    private localStorageService: LocalStorageService,
-    private fb: FormBuilder,
+    private courseService: CourseService,
     private router: Router,
     private store: Store<AuthState>
   ) {
@@ -36,12 +31,22 @@ export class ProfileComponent implements OnInit {
     this.reviews$ = this.store.select(getUserReviews);
     this.user$.subscribe(user => {
       if (user && Object.keys(user).indexOf('reviews') !== -1) {
-        this.store.dispatch(new LoadUserReviews({reviews: user.reviews}));
+        this.store.dispatch(new LoadUserReviews({ reviews: user.reviews }));
       }
     });
+    this.reviews$.subscribe(reviews => {
+      if (reviews) {
+        this.courses = reviews.map(review => {
+          return review.course;
+        });
+      } else {
+        this.courses = [];
+      }
+    });
+    this.specializations = this.courseService.getSpecializations();
   }
 
   ngOnInit() {
-
+    this.basicCourses = this.courseService.getBasicCourses();
   }
 }

@@ -9,11 +9,13 @@ import {
   MatButtonModule,
   MatRippleModule,
   MatSnackBarModule,
+  MatCardModule,
 } from '@angular/material';
 import { AlertService } from './alert.service';
 import { LocalStorageService } from './local-storage.service';
 import { UserService } from './user.service';
 import { SettingsService } from './settings.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -24,10 +26,11 @@ import { SettingsService } from './settings.service';
     MatButtonModule,
     MatRippleModule,
     MatSnackBarModule,
+    MatCardModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NavComponent, SidebarComponent],
-  declarations: [NavComponent, SidebarComponent],
+  declarations: [NavComponent, SidebarComponent, PageNotFoundComponent],
   providers: [AlertService, LocalStorageService, UserService, SettingsService],
 })
 export class CoreModule {}
