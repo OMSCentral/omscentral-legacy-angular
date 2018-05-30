@@ -68,7 +68,6 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
     }
 
     case AuthActionTypes.LoginFailure: {
-      console.log(action.payload);
       return {
         ...state,
         loaded: true,
@@ -84,7 +83,6 @@ export function reducer(state = initialState, action: AuthActionsUnion): State {
     }
 
     case AuthActionTypes.RegisterFailure: {
-      console.log(action.payload);
       return {
         ...state,
         loaded: true,

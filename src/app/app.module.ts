@@ -20,7 +20,6 @@ import { AboutModule } from './about/about.module';
 import { GradesModule } from './grades/grades.module';
 import { RecentModule } from './recent/recent.module';
 import { RegisterModule } from './register/register.module';
-import { DonateModule } from './donate/donate.module';
 import { ProfileModule } from './profile/profile.module';
 import { PipeModule } from './pipes/pipe.module';
 
@@ -53,7 +52,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AboutModule,
     CoreModule,
     GradesModule,
-    DonateModule,
     ProfileModule,
     RegisterModule,
     GithubButtonModule,

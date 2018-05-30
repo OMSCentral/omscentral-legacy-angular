@@ -31,7 +31,7 @@ export class CoursesEffects {
   @Effect()
   selectCourse: Observable<Action> = this.actions
     .ofType<SelectCourse>(SELECT_COURSE)
-    .pipe(map(action => new LoadCourse({id: action.payload})));
+    .pipe(map(action => new LoadCourse({ id: action.payload })));
 
   @Effect()
   loadCourse: Observable<Action> = this.actions
@@ -40,7 +40,6 @@ export class CoursesEffects {
       map(action => action.payload),
       switchMap(payload => this.courseService.getCourse(payload.id)),
       map(course => {
-        console.log(course);
         return course;
       }),
       flatMap(course => [
@@ -49,8 +48,5 @@ export class CoursesEffects {
       ])
     );
 
-  constructor(
-    private actions: Actions,
-    private courseService: CourseService
-  ) {}
+  constructor(private actions: Actions, private courseService: CourseService) {}
 }

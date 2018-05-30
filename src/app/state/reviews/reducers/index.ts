@@ -130,7 +130,6 @@ export const getUserReviews = createSelector(
 export const getUserReviewedCourses = createSelector(
   getUserReviews,
   userReviews => {
-    console.log(userReviews);
     return userReviews.map(rev => {
       return rev.course;
     });

@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy":
-      "ng build --prod --environment=dev && firebase use staging && firebase deploy --only hosting",
+      "ng build && firebase use staging && firebase deploy --only hosting",
     "deploy:prod":
       "ng build --prod && firebase use production && firebase deploy --only hosting",
     "prettier": "prettier --write \"**/*.ts\""
