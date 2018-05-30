@@ -100,8 +100,8 @@ $mat-gtgold: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$gt-app-primary: mat-palette($mat-gtblue, 500, 300, 900);
-$gt-app-accent: mat-palette($mat-gtgold, 500, 300, 900);
+$gt-app-primary: mat-palette($mat-gtblue, 500, 100, 900);
+$gt-app-accent: mat-palette($mat-gtgold, 500, 100, 900);
 
 // The warn palette is optional (defaults to red).
 $gt-app-warn: mat-palette($mat-red);
