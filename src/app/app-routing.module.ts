@@ -11,6 +11,7 @@ import { RecentComponent } from './recent/recent.component';
 import { CourseComponent } from './courses/course/course.component';
 import { NewReviewComponent } from './reviews/new-review/new-review.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 

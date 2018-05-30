@@ -1,4 +1,4 @@
-<mat-card *ngIf="review">
+<mat-card class="card" *ngIf="review">
   <mat-card-title *ngIf="title && courseName">
     <button mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</button>
   </mat-card-title>
