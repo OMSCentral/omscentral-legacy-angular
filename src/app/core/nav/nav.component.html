@@ -5,12 +5,13 @@
   <a mat-button *ngIf="(user$ | async)" class="navbar-hide-small nav-button" routerLink="/profile" routerLinkActive="active">My Profile</a>
   <a mat-button class="navbar-hide-small nav-button" routerLink="/courses" routerLinkActive="active">Courses</a>
   <a mat-button class="navbar-hide-small nav-button" routerLink="/recent" routerLinkActive="active">Recent</a>
-  <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-hide-small nav-button" routerLink="/donate" routerLinkActive="active">Write a Review</a>
+  <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-hide-small nav-button" routerLink="/reviews" routerLinkActive="active">Write a Review</a>
 
   <div class="flex-spacer"></div>
   <ng-gh-btn class="navbar-hide-small nav-button" username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
   <a mat-button *ngIf="!(user$ | async)" class="nav-button active nav-auth" routerLink="/login">Login</a>
-  <a mat-button *ngIf="user$ | async" class="nav-button active nav-auth" (click)="logout()">Logout</a>
+  <a mat-button *ngIf="user$ | async" class="nav-button active nav-auth navbar-hide-small" (click)="logout()">Logout</a>
+  <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-show-small nav-button" routerLink="/reviews" routerLinkActive="active">Write a Review</a>
 </nav>
 <nav class="navbar navbar-show-small primary-bg">
   <a mat-button *ngIf="(user$ | async)" class="navbar-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
