@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './firebase/auth.guard';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
-import { DonateComponent } from './donate/donate.component';
 import { RegisterComponent } from './register/register.component';
 import { CoursesComponent } from './courses/courses.component';
 import { RecentComponent } from './recent/recent.component';
@@ -57,10 +56,6 @@ const routes: Routes = [
     path: 'reviews',
     component: NewReviewComponent,
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'donate',
-    component: DonateComponent,
   },
   {
     path: 'profile',

@@ -84,7 +84,6 @@ export class AuthService {
           profileImageUrl: auth.user.providerData[0].photoURL,
           authProvider: providerName,
         };
-        console.log(entity);
         // this.userService.updateInfo(entity, auth.user);
         resolve(new User(auth.user));
       });
@@ -92,7 +91,6 @@ export class AuthService {
   }
 
   login(auth: Authenticate): Promise<User> {
-    console.log(auth);
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth
         .signInWithEmailAndPassword(auth.email, auth.password)

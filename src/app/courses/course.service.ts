@@ -159,12 +159,9 @@ export class CourseService {
         return entities[courseId];
       }),
       switchMap(review => {
-        console.log(review);
         if (!!review) {
-          console.log('had course');
           return of(review);
         } else {
-          console.log('no course');
           return this.downloadCourse(courseId);
         }
       }),
