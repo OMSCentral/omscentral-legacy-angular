@@ -127,6 +127,16 @@ export const getUserReviews = createSelector(
   (reviews, reviewIds) => filterReviews(reviews, reviewIds)
 );
 
+export const getUserReviewedCourses = createSelector(
+  getUserReviews,
+  userReviews => {
+    console.log(userReviews);
+    return userReviews.map(rev => {
+      return rev.course;
+    });
+  }
+);
+
 export const getSelectedReviews = createSelector(
   getAllReviews,
   getSelectedReviewIds,

@@ -19,6 +19,7 @@ import {
   MatSelectModule,
   MatInputModule,
   MatCheckboxModule,
+  MatListModule,
 } from '@angular/material';
 import { ReviewService } from './review.service';
 
@@ -37,6 +38,7 @@ import { ReviewService } from './review.service';
     MatSelectModule,
     MatInputModule,
     MatCheckboxModule,
+    MatListModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ReviewComponent, NewReviewComponent],

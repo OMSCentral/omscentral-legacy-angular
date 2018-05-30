@@ -24,6 +24,7 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseStatsComponent } from './course-stats/course-stats.component';
 import { CourseReviewsComponent } from './course-reviews/course-reviews.component';
 import { CourseService } from './course.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { CourseService } from './course.service';
     MatSidenavModule,
     MatListModule,
     MatSelectModule,
+    FlexLayoutModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
