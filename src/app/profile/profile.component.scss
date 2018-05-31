@@ -20,7 +20,7 @@
   .choices {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 1vh;
     grid-row-gap: 1vh;
     width: 100%;
