@@ -50,3 +50,6 @@ gt-surveyor-export.json
 backups/
 
 dist
+data/temp-merged-prod.json
+data/merged-prod.json
+data/gt-course-surveys-dev-export.json
