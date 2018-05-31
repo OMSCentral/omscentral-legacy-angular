@@ -1,148 +1,138 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LocalStorageService } from '../core/local-storage.service';
 import { SettingsService } from '../core/settings.service';
 
 import * as jsonData from '../../../courses.json';
+import { GradeService } from '../grades/grade.service';
+import { Course } from '../models/course';
+import { Store, select } from '@ngrx/store';
+import { CoursesState, getCourseEntities } from '../state/courses/reducers';
+import { map, switchMap, take } from 'rxjs/operators';
+import { Specialization, Choice } from '../models/specialization';
 
 const coursePrefixes = ['CS', 'MG', 'IS'];
 
+const defaultGrades = {
+  a: 0,
+  b: 0,
+  c: 0,
+  d: 0,
+  f: 0,
+  w: 0,
+  ab: 0,
+  cdf: 0,
+  total: 0,
+};
+
+const specializations = [
+  new Specialization('Computational Perception and Robotics', 'cpr', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6601', 'CS-7641']),
+    new Choice(3, ['CS-6475', 'CS-6476', 'CS-8803-001']),
+  ]),
+  new Specialization('Computing Systems', 'cs', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(2, ['CS-6210', 'CS-6250', 'CS-6290', 'CS-6300', 'CS-6400']),
+    new Choice(3, [
+      'CS-6035',
+      'CS-6200',
+      'CS-6262',
+      'CS-6291',
+      'CS-6310',
+      'CS-6340',
+      'CSE-6220',
+    ]),
+  ]),
+  new Specialization('Interactive Intelligence', 'ii', [
+    new Choice(1, ['CS-6300', 'CS-6505', 'CS-8803-GA']),
+    new Choice(2, ['CS-6601', 'CS-7637', 'CS-7641']),
+    new Choice(2, ['CS-6440', 'CS-6460']),
+  ]),
+  new Specialization('Machine Learning', 'ml', [
+    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-7641']),
+    new Choice(3, ['CS-7642', 'CS-7646', 'CS-6476', 'CSE-6242', 'CSE-6250']),
+  ]),
+];
+
 @Injectable()
 export class CourseService {
-  cached = {};
-  cacheTime: number = null;
   courses$: BehaviorSubject<any> = new BehaviorSubject([]);
-  course$: BehaviorSubject<any> = new BehaviorSubject({});
-  courseIds: string[] = [];
-  courseId: string;
-  coursesBasic = jsonData;
 
   constructor(
     private db: AngularFireDatabase,
     private localStorageService: LocalStorageService,
-    private settingsService: SettingsService
-  ) {
-    this.cached = localStorageService.getObject('courses') || {};
-    const cacheTime = localStorageService.get('coursesCacheTime');
-    if (cacheTime !== null || cacheTime !== 'null') {
-      this.cacheTime = new Date(Number(cacheTime)).valueOf();
-    } else {
-      this.cacheTime = null;
-    }
+    private settingsService: SettingsService,
+    private gradeService: GradeService,
+    private store: Store<CoursesState>
+  ) {}
+
+  getSpecializations() {
+    return specializations;
   }
 
-  processGrades(grades) {
-    const totals = {};
-    if (grades) {
-      Object.keys(grades).forEach(grade => {
-        Object.keys(grades[grade]).forEach(letter => {
-          if (Object.keys(totals).indexOf(letter) !== -1) {
-            totals[letter] += grades[grade][letter];
-          } else {
-            totals[letter] = grades[grade][letter];
-          }
-        });
+  processCourse(course, firebaseCourse, grades): Course {
+    const courseId = course.id;
+    course = Object.assign({}, course || {}, firebaseCourse || {});
+    if (course.reviews) {
+      const revs = Object.keys(course.reviews).filter(rev => {
+        return course.reviews[rev] && course.reviews[rev] !== null;
       });
+      course.numReviews = revs.length;
+    } else {
+      course.numReviews = 0;
     }
-    return totals;
-  }
 
-  addReview(courseId, reviewId) {
-    const course = this.cached[courseId];
-    if (!course.reviews) {
-      course.reviews = {};
+    course.combined = courseId + ': ' + course.name;
+    if (grades[courseId]) {
+      course.grades = grades[courseId];
+    } else {
+      if (grades[course.number]) {
+        course.grades = grades[course.number];
+      } else {
+        course.grades = {
+          totals: defaultGrades,
+          percents: defaultGrades,
+        };
+      }
     }
-    course.reviews[reviewId] = true;
-    const temp = {};
-    temp[courseId] = course;
-    this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
-  }
-
-  removeReview(courseId, reviewId) {
-    delete this.cached[courseId].reviews[reviewId];
-    this.broadcast();
-  }
-
-  broadcast() {
-    this.localStorageService.setObject('courses', this.cached);
-    if (this.courseIds.length === 0) {
-      this.courseIds = Object.keys(this.cached);
-    }
-    if (!this.courses$) {
-      this.courses$ = new BehaviorSubject([]);
-    }
-    this.courses$.next(
-      this.courseIds.map(courseId => {
-        return this.cached[courseId] || {};
-      })
-    );
-    this.course$.next(this.cached[this.courseId] || {});
+    course.enrolled = course.grades.totals.total;
+    course.work = course.average.workload;
+    course.difficulty = course.average.difficulty;
+    course.rating = course.average.rating;
+    course.ab = course.grades.totals.ab;
+    course.cdf = course.grades.totals.cdf;
+    course.withdrew = course.grades.totals.w;
+    specializations.forEach(speciailization => {
+      course[speciailization.short] = speciailization.contains(courseId);
+    });
+    return course;
   }
 
   downloadCourses() {
-    this.db.database
+    const grades = this.gradeService.getGrades();
+    return this.db.database
       .ref('/courses')
       .once('value')
       .then(snapshot => {
-        const courses = jsonData;
         const firebaseCourses = snapshot.val();
-        Object.keys(firebaseCourses).forEach(courseId => {
-          if (jsonData[courseId]) {
-            courses[courseId] = Object.assign(
-              jsonData[courseId] || {},
-              firebaseCourses[courseId] || {}
-            );
-            if (courses[courseId].reviews) {
-              const revs = Object.keys(courses[courseId].reviews).filter(
-                rev => {
-                  return (
-                    courses[courseId].reviews[rev] &&
-                    courses[courseId].reviews[rev] !== null
-                  );
-                }
-              );
-              courses[courseId].numReviews = revs.length;
-            } else {
-              courses[courseId].numReviews = 0;
-            }
-            courses[courseId].id = courseId;
-            courses[courseId].combined =
-              courseId + ': ' + courses[courseId].name;
-            if (courses[courseId].grades) {
-              courses[courseId].totals = this.processGrades(
-                courses[courseId].grades
-              );
-              courses[courseId].semesterGrades = Object.keys(
-                courses[courseId].grades
-              ).map(semGrade => {
-                const grade = courses[courseId].grades[semGrade];
-                grade.semester = semGrade;
-                return grade;
-              });
-            } else {
-              courses[courseId].semesterGrades = [];
-              courses[courseId].totals = {};
-            }
-          }
+
+        let courses = Object.keys(firebaseCourses).map(courseId => {
+          return this.processCourse(
+            jsonData[courseId],
+            firebaseCourses[courseId],
+            grades
+          );
         });
-        // console.log(this.cached);
-        this.cached = courses;
-        Object.keys(this.cached).forEach(cacheKey => {
-          if (coursePrefixes.indexOf(cacheKey.substr(0, 2)) === -1) {
-            delete this.cached[cacheKey];
-          }
-        });
-        if (this.cacheTime === null) {
-          this.cacheTime = new Date().valueOf();
-          this.localStorageService.set('coursesCacheTime', this.cacheTime);
-        }
-        this.broadcast();
+        this.courses$.next(courses);
+        return courses;
       });
   }
 
-  downloadCourse(courseId) {
+  downloadCourse(courseId: string) {
+    const grades = this.gradeService.getGrades();
     const department = courseId.substr(
       courseId.indexOf('-') + 1,
       courseId.length - courseId.indexOf('-') - 1
@@ -153,138 +143,46 @@ export class CourseService {
       .then(snapshot => {
         const firebaseCourse: any = snapshot.val();
         if (firebaseCourse !== null) {
-          let course = jsonData[courseId];
-          course = Object.assign(course || {}, firebaseCourse);
-          course.numReviews = Object.keys(course.reviews || {}).length;
-          const temp = {};
-          temp[courseId] = course;
-          this.cached = Object.assign(this.cached, temp);
-          this.broadcast();
+          return this.processCourse(jsonData[courseId], firebaseCourse, grades);
         }
       });
   }
 
-  updateCounts(courseId, reviews) {
-    let difficulty = 0;
-    let diffNum = 0;
-    let rating = 0;
-    let ratingNum = 0;
-    let workload = 0;
-    let workNum = 0;
-    const updateReviews = reviews.filter(rev => {
-      return rev && rev !== null;
-    });
-    updateReviews.forEach(review => {
-      if (review) {
-        if (review.difficulty) {
-          difficulty += parseInt(review.difficulty, 10);
-          diffNum++;
-        }
-        if (review.rating) {
-          rating += parseInt(review.rating, 10);
-          ratingNum++;
-        }
-        if (review.workload) {
-          workload += parseInt(review.workload, 10);
-          workNum++;
-        }
-      }
-    });
-    const update = {
-      difficulty: difficulty / diffNum,
-      rating: rating / ratingNum,
-      workload: workload / workNum,
-    };
-    this.cached[courseId].average = update;
-    this.cached[courseId].numReviews = updateReviews.length;
-    this.localStorageService.setObject('courses', this.cached);
-    return this.cached[courseId];
+  getBasicCourses() {
+    return jsonData;
   }
 
-  courseList() {
-    const courses = Object.keys(this.cached).map(courseId => {
-      return this.cached[courseId];
-    });
-    return courses;
-  }
-
-  getCourseName(courseId) {
-    if (this.cached[courseId]) {
-      return this.cached[courseId].name;
-    } else {
-      return '';
-    }
+  checkCourse(courseId) {
+    return this.store.pipe(
+      select(getCourseEntities),
+      map(entities => {
+        return entities[courseId];
+      }),
+      switchMap(review => {
+        if (!!review) {
+          return of(review);
+        } else {
+          return this.downloadCourse(courseId);
+        }
+      }),
+      take(1)
+    );
   }
 
   getCourses() {
-    if (this.cacheExpired()) {
-      this.downloadCourses();
-    } else {
-      this.courseIds = Object.keys(this.cached);
-      this.broadcast();
-    }
+    this.downloadCourses();
     return this.courses$.asObservable();
   }
 
   getCourse(courseId) {
-    this.course$.next(null);
-    this.courseId = courseId;
-    if (
-      Object.keys(this.cached).indexOf(courseId) === -1 ||
-      this.cacheExpired()
-    ) {
-      this.downloadCourse(courseId);
-    } else {
-      this.broadcast();
-    }
-    if (!this.course$) {
-      this.course$ = new BehaviorSubject({});
-    }
-    return this.course$;
+    return this.checkCourse(courseId);
   }
 
-  push(course: any) {
-    const newCourse = {
-      average: {
-        difficulty: null,
-        rating: null,
-        workload: null,
-      },
-      reviews: {},
-    };
-    const postRef: any = this.db.database
-      .ref('/courses/' + course.number)
-      .set(newCourse)
-      .then(
-        res => {
-          return res;
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    this.courseIds.push(course.number);
-    const temp = {};
-    newCourse['id'] = course.number;
-    temp[course.number] = newCourse;
-    this.cached = Object.assign(this.cached, temp);
-    this.broadcast();
-  }
-
-  private cacheExpired() {
-    if (!this.cacheTime || this.cacheTime === null) {
-      return true;
+  getCourseName(courseId) {
+    if (jsonData[courseId]) {
+      return jsonData[courseId].name;
     } else {
-      if (
-        new Date().valueOf() - this.cacheTime.valueOf() >=
-        this.settingsService.cacheLength
-      ) {
-        this.cacheTime = null;
-        this.localStorageService.set('coursesCacheTime', null);
-        return true;
-      } else {
-        return false;
-      }
+      return '';
     }
   }
 }

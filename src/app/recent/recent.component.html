@@ -1,21 +1,8 @@
-<div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-        Recent Reviews
-      </div>
-      <div class="card-body">
-        Here are the 10 most recent reviews (updating live)
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <br />
-        <div *ngFor="let review of reviews$ | async">
-          <oms-review [review]="review" [title]="true"></oms-review>
-          <br/>
-        </div>
-      </div>
-    </div>
-  </div>
+<mat-card class="card">
+  <mat-card-title>Recent Reviews</mat-card-title>
+  <mat-card-subtitle>Here are the 10 most recent reviews (updating live)</mat-card-subtitle>
+</mat-card>
+<div *ngFor="let review of reviews$ | async">
+  <oms-review [review]="review" [title]="true"></oms-review>
+  <br/>
 </div>

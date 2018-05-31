@@ -1,11 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PipeModule } from '../pipes/pipe.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GradeService } from './grade.service';
 
 @NgModule({
-  imports: [CommonModule, PipeModule, NgbModule],
+  imports: [CommonModule, PipeModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [],
+  providers: [GradeService],
 })
 export class GradesModule {}

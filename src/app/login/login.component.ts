@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  FormBuilder,
+} from '@angular/forms';
 import { AuthService } from '../firebase/auth.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../state/auth/reducers';
+import { Login, SocialLogin } from '../state/auth/actions/auth';
+import { Observable } from 'rxjs';
+import { getLoginError } from '../state/auth/reducers';
 
 @Component({
   selector: 'oms-login',
@@ -9,74 +19,45 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
-  error = '';
-  socialError = '';
+  loginForm: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  error$: Observable<any> | Promise<Observable<any>>;
   reset = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private store: Store<AuthState>,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
-    this.authService.user.subscribe(user => {
-      if (user && user.uid) {
-        this.router.navigate(['courses']);
-      }
-    });
+    this.error$ = this.store.select(getLoginError);
   }
 
   resetPassword() {
     return this.authService
-      .sendPasswordResetEmail(this.email.value)
+      .sendPasswordResetEmail(this.loginForm.value.email)
       .then(() => {
-        this.error = '';
+        // this.error = '';
         this.reset = true;
       });
   }
 
-  getErrorMessage() {
-    return this.email.hasError('required')
-      ? 'You must enter a value'
-      : this.email.hasError('email')
-        ? 'Not a valid email'
-        : '';
-  }
-
   social(authProvider) {
     const self = this;
-    this.authService.social(authProvider).then(
-      () => {
-        this.router.navigate(['courses']);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.store.dispatch(new SocialLogin(authProvider));
   }
 
   login() {
-    this.authService.login(this.email.value, this.password.value).then(
-      err => {
-        this.password.setValue('');
-        if (err) {
-          this.error = err;
-        } else {
-          this.email.setValue('');
-          this.error = '';
-          this.router.navigate(['courses']);
-        }
-      },
-      err => {
-        this.error = err.message;
-      }
+    this.store.dispatch(
+      new Login({
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password,
+      })
     );
-  }
-
-  forgotEmail() {
-    if (this.email) {
-      this.authService.sendPasswordResetEmail(this.email.value).then(() => {
-        this.error = 'A password reset email has been sent';
-      });
-    }
   }
 }
