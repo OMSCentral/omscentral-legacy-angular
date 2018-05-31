@@ -12,6 +12,9 @@ class MockLocal {
   }
 }
 
+import { GradeService } from '../grades/grade.service';
+class MockGrades {}
+
 import { SettingsService } from '../core/settings.service';
 class MockSettings {}
 
@@ -24,6 +27,7 @@ describe('CourseService', () => {
       providers: [
         CourseService,
         { provide: AngularFireDatabase, useClass: MockAFDB },
+        { provide: GradeService, useClass: MockGrades },
         { provide: SettingsService, useClass: MockSettings },
         { provide: LocalStorageService, useClass: MockLocal },
       ],
