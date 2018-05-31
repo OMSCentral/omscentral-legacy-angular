@@ -154,7 +154,11 @@ export class ReviewService {
     return this.store.pipe(
       select(getReviewEntities),
       map(entities => {
-        return entities[reviewId];
+        if (entities) {
+          return entities[reviewId];
+        } else {
+          return;
+        }
       }),
       switchMap(review => {
         if (!!review) {

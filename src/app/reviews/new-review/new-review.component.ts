@@ -64,7 +64,9 @@ export class NewReviewComponent implements OnInit {
     private store: Store<User>
   ) {
     this.store.select(getUser).subscribe(user => {
-      this.authId = user.uid;
+      if (user) {
+        this.authId = user.uid;
+      }
     });
     // this.courses$ = this.courseStore.pipe(select(getAllCourses)) as Observable<Course[]>;
     const basicCourses = this.courseService.getBasicCourses();
