@@ -1,6 +1,9 @@
 <nav class="navbar-header primary-bg">
   <a mat-button class="nav-button" routerLink="/" aria-label="OMSCentral">
-    <span class="brand">OMSCentral</span>
+    <img class="omscentral-logo"
+         src="../../../assets/omscentral-logo.svg"
+         alt="omscentral">
+    <span>OMSCentral</span>
   </a>
   <a mat-button *ngIf="(user$ | async)" class="navbar-hide-small nav-button" routerLink="/profile" routerLinkActive="active">My Profile</a>
   <a mat-button class="navbar-hide-small nav-button" routerLink="/courses" routerLinkActive="active">Courses</a>
