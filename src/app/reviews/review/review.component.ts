@@ -22,7 +22,7 @@ import { getUser } from '../../state/auth/reducers';
 })
 export class ReviewComponent implements OnInit {
   @Input() review: Review;
-  @Input() title? = false;
+  @Input() title?: boolean = false;
   @Output() remove = new EventEmitter<Review>();
 
   reviewForm: FormGroup;
