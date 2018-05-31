@@ -47,21 +47,25 @@ const initialState: State = adapter.getInitialState({
 export function reducer(state: State = initialState, action: ReviewsAction) {
   switch (action.type) {
     case LOAD_REVIEWS:
-      let reviewIds = Object.keys(action.payload.reviews).filter(rev => {
-        return action.payload.reviews[rev];
-      });
-      return {
-        ...state,
-        selectedIds: reviewIds,
-      };
+      if (action.payload.reviews) {
+        let reviewIds = Object.keys(action.payload.reviews).filter(rev => {
+          return action.payload.reviews[rev];
+        });
+        return { ...state, selectedIds: reviewIds };
+      } else {
+        return { ...state };
+      }
     case LOAD_USER_REVIEWS:
-      let userIds = Object.keys(action.payload.reviews).filter(rev => {
-        return action.payload.reviews[rev];
-      });
-      return {
-        ...state,
-        userIds: userIds,
-      };
+      if (action.payload.reviews) {
+        let userIds = Object.keys(action.payload.reviews).filter(rev => {
+          return action.payload.reviews[rev];
+        });
+        return { ...state, userIds: userIds };
+      } else {
+        return {
+          ...state,
+        };
+      }
     case LOAD_RECENT_REVIEWS_SUCCESS:
       let recentIds = action.payload.map(review => {
         return review.id;
