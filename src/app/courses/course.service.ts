@@ -119,7 +119,7 @@ export class CourseService {
       .then(snapshot => {
         const firebaseCourses = snapshot.val();
 
-        let courses = Object.keys(firebaseCourses).map(courseId => {
+        let courses = Object.keys(firebaseCourses || {}).map(courseId => {
           return this.processCourse(
             jsonData[courseId],
             firebaseCourses[courseId],

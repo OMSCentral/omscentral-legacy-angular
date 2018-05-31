@@ -7,8 +7,15 @@ import { Course } from '../../models/course';
 
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
-import { CoursesState, getSpecializationCourses } from '../../state/courses/reducers';
-import { LoadCourses, FilterCourses, LoadCourse } from '../../state/courses/actions/courses';
+import {
+  CoursesState,
+  getSpecializationCourses,
+} from '../../state/courses/reducers';
+import {
+  LoadCourses,
+  FilterCourses,
+  LoadCourse,
+} from '../../state/courses/actions/courses';
 
 @Component({
   selector: 'oms-course-list',
@@ -34,19 +41,20 @@ export class CourseListComponent implements OnInit, OnDestroy {
     dir: -1,
   };
 
-  constructor(
-    private store: Store<CoursesState>,
-    private router: Router
-  ) {}
+  constructor(private store: Store<CoursesState>, private router: Router) {}
 
   ngOnInit() {
     this.courses$ = this.store.select(getSpecializationCourses);
     this.store.dispatch(new LoadCourses());
     this.dataSource = new MatTableDataSource([]);
     this.courses$.subscribe(courses => {
-      this.dataSource.data = Object.keys(courses).map(courseId => courses[courseId]);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      if (courses) {
+        this.dataSource.data = Object.keys(courses).map(
+          courseId => courses[courseId]
+        );
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
