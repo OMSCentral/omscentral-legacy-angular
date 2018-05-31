@@ -177,11 +177,13 @@ export class ReviewService {
 
   getReviews(reviews: object) {
     const revs = [];
-    Object.keys(reviews).forEach(rev => {
-      if (reviews[rev]) {
-        revs.push(this.checkReview(rev));
-      }
-    });
+    if (reviews) {
+      Object.keys(reviews).forEach(rev => {
+        if (reviews[rev]) {
+          revs.push(this.checkReview(rev));
+        }
+      });
+    }
     return forkJoin(revs);
   }
 
@@ -193,7 +195,7 @@ export class ReviewService {
         .limitToLast(10)
         .on('value', snapshot => {
           const reviewsObj = snapshot.val();
-          const reviews: Review[] = Object.keys(reviewsObj)
+          const reviews: Review[] = Object.keys(reviewsObj || {})
             .map(reviewId => {
               const review: Review = new Review(reviewsObj[reviewId]);
               review.id = reviewId;
