@@ -1,22 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Course } from '../models/course';
 
 @Pipe({
   name: 'course',
 })
 export class CoursePipe implements PipeTransform {
-  transform(courses: any[], args: string): any {
-    if (args.length === 0) {
-      return courses;
+  transform(course: string, courses: any): any {
+    if (Object.keys(courses).indexOf(course) !== -1) {
+      return courses[course].id + ': ' + courses[course].name;
     } else {
-      return courses.filter(course => {
-        if (course.combined) {
-          return (
-            course.combined.toLowerCase().indexOf(args.toLowerCase()) !== -1
-          );
-        } else {
-          return false;
-        }
-      });
+      return course;
     }
   }
 }

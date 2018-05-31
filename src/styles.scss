@@ -1,30 +1,125 @@
 /* You can add global styles to this file, and also import other style files */
 
-$fa-font-path: "~font-awesome/fonts";
+@import './theme.scss';
+$fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
-// @import '~clarity-icons/clarity-icons.min.css';
-// @import '~clarity-ui/clarity-ui.min.css';
 @import '~prismjs/themes/prism.css';
-@import '~bootstrap/scss/bootstrap';
-.alerts-pager {
-  background: #004a70;
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid #42A948;
-  /* green */
-}
-
-.ng-invalid:not(form) {
-  border-left: 5px solid #a94442;
-  /* red */
+.spacer {
+  flex: 1 1 auto;
 }
 
 .clickable {
   cursor: pointer;
 }
 
-.card {
-  margin-bottom: 1em;
+.mat-elevation-z6 {
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
+
+oms-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@media (max-width: 720px) {
+  .main {
+    top: 92px;
+  }
+}
+
+.container {
+  flex: 1;
+  box-sizing: border-box;
+  margin: 25px;
+}
+
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
+
+.coursenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+}
+
+.courseinfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+
+td.mat-cell:last-child,
+td.mat-footer-cell:last-child,
+th.mat-header-cell:last-child {
+  padding: 0 !important;
+}
+
+td.mat-cell:first-child,
+td.mat-footer-cell:first-child,
+th.mat-header-cell:first-child {
+  padding: 16px !important;
+}
+
+.course-title {
+  padding-left: 16px;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.card {
+  margin: 10px;
+}
+
+@mixin temp-theme($theme) {
+  // Extract whichever individual palettes you need from the theme.
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  // Use mat-color to extract individual colors from a palette as necessary.
+  .primary {
+    color: mat-color($primary, 500);
+  }
+
+  .primary-bg {
+    background-color: mat-color($primary, 500);
+    color: white;
+  }
+
+  .accent-bg {
+    background-color: mat-color($accent, 500);
+    color: black;
+  }
+
+  .accent {
+    color: mat-color($accent, 500);
+  }
+}
+
+@include temp-theme($gt-app-theme);

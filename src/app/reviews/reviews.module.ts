@@ -9,8 +9,19 @@ import { ReviewComponent } from './review/review.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'angular2-markdown';
 import { AppRoutingModule } from '../app-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewReviewComponent } from './new-review/new-review.component';
+import {
+  MatCardModule,
+  MatTooltipModule,
+  MatButtonModule,
+  MatChipsModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatListModule,
+} from '@angular/material';
+import { ReviewService } from './review.service';
 
 @NgModule({
   imports: [
@@ -19,10 +30,19 @@ import { NewReviewComponent } from './new-review/new-review.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MarkdownModule,
-    NgbModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatListModule,
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ReviewComponent, NewReviewComponent],
   exports: [ReviewComponent],
+  providers: [ReviewService],
 })
 export class ReviewsModule {}

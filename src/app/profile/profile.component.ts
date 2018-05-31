@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../firebase/auth.service';
-import { FormControl, FormBuilder } from '@angular/forms';
-import { UserService } from '../core/user.service';
 import { Observable } from 'rxjs';
-import { ReviewService } from '../reviews/review.service';
-import { LocalStorageService } from '../core/local-storage.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState, getUserDetails } from '../state/auth/reducers';
+import { UserDetails } from '../models/user';
+import { Specialization } from '../models/specialization';
+import { Review } from '../models/review';
+import { LoadUserReviews } from '../state/reviews/actions/reviews';
+import { getUserReviews } from '../state/reviews/reducers';
+import { CourseService } from '../courses/course.service';
 
 @Component({
   selector: 'oms-profile',
@@ -13,73 +16,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  auth: any = {};
-  user: any;
-  user$: Observable<any>;
-  reviews$: Observable<any[]>;
-  specializations = [
-    'Computational Perception & Robotics',
-    'Computing Systems',
-    'Interactive Intelligence',
-    'Machine Learning',
-  ];
-  anonymous = false;
-  specialization = null;
-  profileForm: any = {};
+  user$: Observable<UserDetails>;
+  reviews$: Observable<Review[]>;
+  specializations: Specialization[];
+  courses: any;
+  basicCourses: any;
 
   constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private reviewService: ReviewService,
-    private localStorageService: LocalStorageService,
-    private fb: FormBuilder,
-    private router: Router
+    private courseService: CourseService,
+    private router: Router,
+    private store: Store<AuthState>
   ) {
-    this.auth = this.authService.user.subscribe(auth => {
-      this.auth = auth;
-      this.reviews$ = this.reviewService.getReviewsByAuthor(this.auth.uid);
+    this.user$ = this.store.select(getUserDetails);
+    this.reviews$ = this.store.select(getUserReviews);
+    this.user$.subscribe(user => {
+      if (user && Object.keys(user).indexOf('reviews') !== -1) {
+        this.store.dispatch(new LoadUserReviews({ reviews: user.reviews }));
+      }
     });
+    this.reviews$.subscribe(reviews => {
+      if (reviews) {
+        this.courses = reviews.map(review => {
+          return review.course;
+        });
+      } else {
+        this.courses = [];
+      }
+    });
+    this.specializations = this.courseService.getSpecializations();
   }
 
   ngOnInit() {
-    // this.profileForm = this.fb.group({
-    //   specialization: null
-    // });
-    // this.profileForm.valueChanges.subscribe(values => {
-    //   this.specialization = values.specialization;
-    //   if (values.specialization !== null && this.user.specialization !== values.specialization) {
-    //     this.user.specialization = values.specialization;
-    //     this.userService.updateInfo(this.user, this.auth);
-    //   }
-    // });
-    this.user$ = this.userService.getUser();
-    this.user$.subscribe(user => {
-      if (user && Object.keys(user).length !== 0) {
-        this.user = user;
-        // this.anonymous = user.anonymous;
-        // if (this.specialization !== user.specialization) {
-        //   this.profileForm.setValue({specialization: user.specialization || null});
-        // }
-      }
-    });
-  }
-
-  changeAnonymous() {
-    this.anonymous = !this.anonymous;
-    this.user.anonymous = this.anonymous;
-    this.userService.updateInfo(this.user, this.auth);
-  }
-
-  remove(evt) {
-    this.reviewService.remove(evt);
-  }
-
-  update(evt) {
-    this.reviewService.update(evt);
-  }
-
-  clear() {
-    this.localStorageService.clear();
-    this.router.navigate(['login']);
+    this.basicCourses = this.courseService.getBasicCourses();
   }
 }

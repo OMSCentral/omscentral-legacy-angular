@@ -1,49 +1,59 @@
-<div class="text-center">
-  <form class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="login_email" class="sr-only">Email address</label>
-    <input class="form-control" type="text" id="login_email" placeholder="Email" [formControl]="email" required>
-    <label for="login_password" class="sr-only">Password</label>
-    <input class="form-control" type="password" id="login_password" placeholder="Password" [formControl]="password" required>
-    <div *ngIf="error" class="error active">
-      {{error}}.
-      <button class="btn btn-link" type="button" style="cursor: pointer" *ngIf="email" (click)="resetPassword()">Reset Password?</button>
-    </div>
-    <div *ngIf="reset" class="alert alert-success">
-      <div class="alert-items">
-        <div class="alert-item static">
-          <div class="alert-icon-wrapper">
-          </div>
-          <span class="alert-text">A password reset email has been sent.</span>
-        </div>
-      </div>
-    </div>
-    <br/>
-    <button type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!email || !password">Login</button>
-    <br/>
-    <div class="text-center">
-        <div class="btn-group btn-link">
-          <button class="btn" (click)="social('github')">
+<mat-card class="card">
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <form [formGroup]="loginForm">
+      <p>
+        <mat-form-field>
+          <input matInput type="text" id="login_email" placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input matInput type="password" id="login_password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="error$ | async" class="loginError">
+        {{ error$ | async }}
+        <button mat-button type="button" style="cursor: pointer" *ngIf="loginForm.value.email" (click)="resetPassword()">Reset Password?</button>
+      </p>
+
+      <p *ngIf="reset" class="loginError">
+        A password reset email has been sent.
+      </p>
+
+      <p class="loginButtons">
+        <button type="submit" mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Login</button>
+      </p>
+
+      <hr/>
+
+      <p>
+        <span class="social-buttons">
+          <button mat-icon-button (click)="social('github')">
             <i class="fa fa-github fa-3x" aria-hidden="true"></i>
           </button>
-          <button class="btn" (click)="social('twitter')">
+          <button mat-icon-button (click)="social('twitter')">
             <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
           </button>
-          <button class="btn" (click)="social('facebook')">
+          <button mat-icon-button (click)="social('facebook')">
             <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
           </button>
-          <button class="btn" (click)="social('google')">
+          <button mat-icon-button (click)="social('google')">
             <i class="fa fa-google fa-3x" aria-hidden="true"></i>
           </button>
-        </div>
-      </div>
-      <br />
-      <br />
-      <div class="text-center">
-          <div class="signup">
-            <span>Don't have an account?</span>
-            <a class="btn btn-sm btn-link signup" [routerLink]="['/register']">Register</a>
-          </div>
-        </div>
-  </form>
-</div>
+        </span>
+      </p>
+
+      <hr/>
+
+      <p class="text-center">
+        <span>Don't have an account?</span>
+        <button mat-button [routerLink]="['/register']">Register</button>
+      </p>
+
+    </form>
+  </mat-card-content>
+</mat-card>

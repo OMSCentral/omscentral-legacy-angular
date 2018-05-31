@@ -1,0 +1,143 @@
+// The margin between two sections
+$margin-promotion-sections: 60px;
+$margin-promotion-sections-small: 15px;
+
+.header-background {
+  overflow: hidden;
+}
+
+.header-section {
+  text-align: center;
+  padding-top: $margin-promotion-sections;
+}
+
+.omscentral-logo {
+  height: 250px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+}
+
+.header-headline {
+  h1 {
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 56px;
+    margin: 15px 5px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 28px;
+    margin: 15px 0 25px 0;
+  }
+}
+
+.homepage-promo {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  h2 {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 0 0 24px 0;
+    padding: 0;
+  }
+}
+
+.homepage-row {
+  display: flex;
+  max-width: 920px;
+  margin: $margin-promotion-sections 0;
+}
+
+.homepage-row .svg-image {
+  max-width: 90%;
+}
+
+.homepage-reverse-row {
+  flex-direction: row-reverse;
+}
+
+.header-start,
+.homepage-bottom-start {
+  text-align: center;
+  margin: $margin-promotion-sections 0;
+}
+
+.homepage-promo-img,
+.homepage-promo-desc {
+  width: 50%;
+}
+
+.homepage-promo-img {
+  text-align: center;
+}
+
+.homepage-promo-desc {
+  line-height: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/**
+  * Rules for when the device is detected to be a small screen.
+  */
+@media (max-width: 720px) {
+  .header-section {
+    padding-top: $margin-promotion-sections-small;
+  }
+
+  .header-start,
+  .homepage-bottom-start {
+    margin: $margin-promotion-sections-small 0;
+  }
+
+  .homepage-row {
+    margin: $margin-promotion-sections-small 0;
+  }
+}
+
+.homepage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-column-gap: 1vh;
+  grid-row-gap: 1vh;
+  width: 100%;
+}
+
+@media (min-width: 620px) {
+  .homepage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-column-gap: 1vh;
+    grid-row-gap: 1vh;
+    width: 100%;
+  }
+}
+
+@media (min-width: 960px) {
+  .homepage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 1vh;
+    grid-row-gap: 1vh;
+    width: 100%;
+  }
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
