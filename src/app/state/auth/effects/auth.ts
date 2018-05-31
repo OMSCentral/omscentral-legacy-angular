@@ -116,11 +116,11 @@ export class AuthEffects {
       map(details => new DetailsSuccess({ details }))
     );
 
-  // @Effect({ dispatch: false })
-  // detailsSuccess$ = this.actions.pipe(
-  //   ofType(AuthActionTypes.DetailsSuccess),
-  //   tap(() => this.router.navigate(['/']))
-  // );
+  @Effect({ dispatch: false })
+  loginSuccess$ = this.actions.pipe(
+    ofType(AuthActionTypes.LoginSuccess),
+    tap(() => this.router.navigate(['/']))
+  );
 
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions.pipe(
