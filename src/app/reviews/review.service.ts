@@ -37,7 +37,8 @@ export class ReviewService {
       .ref('/reviews/' + reviewId)
       .once('value')
       .then(snapshot => {
-        const review: Review = new Review(snapshot.val());
+        const snap = snapshot.val();
+        const review: Review = new Review(snap);
         review.id = reviewId;
         return review;
       });
@@ -215,13 +216,22 @@ export class ReviewService {
         if (this.auth && b.author === this.auth.uid) {
           return rev ? -1 : 1;
         } else {
-          const aData = a.semester.split('-');
-          const aYear = parseInt(aData[0], 10);
-          const aSem = parseInt(aData[1], 10);
+          let aYear = 0;
+          let aSem = 0;
+          let bYear = 0;
+          let bSem = 0;
 
-          const bData = b.semester.split('-');
-          const bYear = parseInt(bData[0], 10);
-          const bSem = parseInt(bData[1], 10);
+          if (a.semester) {
+            const aData = a.semester.split('-');
+            aYear = parseInt(aData[0], 10);
+            aSem = parseInt(aData[1], 10);
+          }
+
+          if (b.semester) {
+            const bData = b.semester.split('-');
+            bYear = parseInt(bData[0], 10);
+            bSem = parseInt(bData[1], 10);
+          }
           if (aYear === bYear) {
             return bSem - aSem;
           } else {
@@ -240,10 +250,10 @@ export class ReviewService {
 
   sortByDate(reviews, rev = false) {
     let sorted = reviews.sort((a, b) => {
-      if (a.author === this.auth.uid) {
+      if (this.auth && a.author === this.auth.uid) {
         return rev ? 1 : -1;
       } else {
-        if (b.author === this.auth.uid) {
+        if (this.auth && b.author === this.auth.uid) {
           return rev ? -1 : 1;
         } else {
           let aDate, bDate;
