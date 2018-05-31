@@ -48,7 +48,7 @@ const specializations = [
   new Specialization('Interactive Intelligence', 'ii', [
     new Choice(1, ['CS-6300', 'CS-6505', 'CS-8803-GA']),
     new Choice(2, ['CS-6601', 'CS-7637', 'CS-7641']),
-    new Choice(2, ['CS-6440', 'CS-6460']),
+    new Choice(2, ['CS-6440', 'CS-6460', 'CS-6750']),
   ]),
   new Specialization('Machine Learning', 'ml', [
     new Choice(1, ['CS-6505', 'CS-8803-GA']),
