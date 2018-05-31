@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AuthService } from '../firebase/auth.service';
-import { User } from '../models/user';
+import { User, UserDetails, WriteableUser } from '../models/user';
 
 @Injectable()
 export class UserService {
@@ -16,50 +16,38 @@ export class UserService {
     return this.user$.asObservable();
   }
 
-  _format(entity) {
-    return Object.assign(
-      {},
-      {
-        created: entity.created || new Date(),
-        updated: entity.updated || new Date(),
-        authProvider: entity.authProvider || 'password',
-        email: entity.email,
-        name: entity.name,
-        profileImageUrl: (entity.profileImageUrl || '').replace(
-          /http:/i,
-          'https:'
-        ),
-        anonymous: entity.anonymous,
-        specialization: entity.specialization,
-        reviews: {},
-      }
-    );
+  retrieveUser(user: User): Promise<UserDetails> {
+    return new Promise((resolve, reject) => {
+      this.db.database
+        .ref('/users/' + user.uid)
+        .once('value')
+        .then(snapshot => {
+          const details = snapshot.val();
+          if (details !== null) {
+            resolve(new UserDetails(details));
+          } else {
+            resolve(this.set(user.uid, user));
+          }
+        });
+    });
   }
 
-  retrieveUser(userId) {
-    return this.db.database
-      .ref('/users/' + userId)
-      .once('value')
-      .then(snapshot => {
-        this.user = snapshot.val();
-        this.user$.next(snapshot.val());
-      });
-  }
-
-  set(id, data) {
-    const formatted = this._format(data);
-    return this.db.database
-      .ref('users')
-      .child(id)
-      .set(formatted)
-      .then(() => {
-        this.retrieveUser(id);
-      });
+  set(id, data): Promise<UserDetails> {
+    const formatted = new WriteableUser(data);
+    return new Promise((resolve, reject) => {
+      this.db.database
+        .ref('users')
+        .child(id)
+        .set(formatted)
+        .then(snapshot => {
+          resolve(this.retrieveUser(new User({ uid: id })));
+        });
+    });
   }
 
   updateInfo(entity, authInfo) {
     const id = authInfo.uid;
-    const formatted = this._format(entity);
+    const formatted = new UserDetails(entity);
     const updatedUser = Object.assign(this.user, formatted);
     this.retrieveUser(id).then(
       () => {
@@ -67,10 +55,7 @@ export class UserService {
           this.db.database
             .ref('users')
             .child(id)
-            .update(updatedUser)
-            .then(() => {
-              this.retrieveUser(id);
-            });
+            .update(updatedUser);
         } else {
           this.set(id, formatted);
         }

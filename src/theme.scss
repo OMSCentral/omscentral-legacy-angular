@@ -1,0 +1,115 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// $tech-gold: #b3a369;
+// $buzz-gold: #eaaa00;
+// $buzz-gold-60: #f5d580;
+// $gt-blue: #003057;
+// $gt-blue-80: #335161;
+// $link-blue: #004f9f;
+// $link-blue-hover: #1879db;
+// $dark-gray: #545454;
+// $medium-gray: #808080;
+// $light-gray: #e5e5e5;
+
+// https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=003057&secondary.color=eaaa00
+
+// $primary: #002f56;
+// $primary-light: #395883;
+// $primary-dark: #00042d;
+// $secondary: #eaaa00;
+// $secondary-light: #ffdb49;
+// $secondary-dark: #b37b00;
+// $primary-text: #ffffff;
+// $secondary-text: #000000;
+
+/* For use in src/lib/core/theming/_palette.scss */
+$mat-gtblue: (
+  50: #e0e6eb,
+  100: #b3c1cc,
+  200: #8097ab,
+  300: #4d6d89,
+  400: #264e6f,
+  500: #002f56,
+  600: #002a4f,
+  700: #002345,
+  800: #001d3c,
+  900: #00122b,
+  A100: #6590ff,
+  A200: #326bff,
+  A400: #0046fe,
+  A700: #003fe5,
+  contrast:
+    (
+      50: #000000,
+      100: #000000,
+      200: #000000,
+      300: #ffffff,
+      400: #ffffff,
+      500: #ffffff,
+      600: #ffffff,
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: #000000,
+      A200: #ffffff,
+      A400: #ffffff,
+      A700: #ffffff
+    )
+);
+
+$mat-gtgold: (
+  50: #fcf5e0,
+  100: #f9e6b3,
+  200: #f5d580,
+  300: #f0c44d,
+  400: #edb726,
+  500: #eaaa00,
+  600: #e7a300,
+  700: #e49900,
+  800: #e19000,
+  900: #db7f00,
+  A100: #ffffff,
+  A200: #ffe9cf,
+  A400: #ffd09c,
+  A700: #ffc483,
+  contrast:
+    (
+      50: #000000,
+      100: #000000,
+      200: #000000,
+      300: #000000,
+      400: #000000,
+      500: #000000,
+      600: #000000,
+      700: #000000,
+      800: #000000,
+      900: #000000,
+      A100: #000000,
+      A200: #000000,
+      A400: #000000,
+      A700: #000000
+    )
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$gt-app-primary: mat-palette($mat-gtblue, 500, 100, 900);
+$gt-app-accent: mat-palette($mat-gtgold, 500, 100, 900);
+
+// The warn palette is optional (defaults to red).
+$gt-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$gt-app-theme: mat-light-theme($gt-app-primary, $gt-app-accent, $gt-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($gt-app-theme);

@@ -8,6 +8,8 @@ import { ProgramPipe } from './program.pipe';
 import { ReviewsPipe } from './reviews.pipe';
 import { CoursePipe } from './course.pipe';
 import { CoursesPipe } from './courses.pipe';
+import { ReviewSortPipe } from './review-sort.pipe';
+import { SortProgressPipe } from './sort-progress.pipe';
 
 @NgModule({
   imports: [CommonModule],
@@ -20,6 +22,8 @@ import { CoursesPipe } from './courses.pipe';
     ReviewsPipe,
     CoursePipe,
     CoursesPipe,
+    ReviewSortPipe,
+    SortProgressPipe,
   ],
   exports: [
     DifficultyPipe,
@@ -30,6 +34,8 @@ import { CoursesPipe } from './courses.pipe';
     ReviewsPipe,
     CoursePipe,
     CoursesPipe,
+    ReviewSortPipe,
+    SortProgressPipe,
   ],
 })
 export class PipeModule {}
