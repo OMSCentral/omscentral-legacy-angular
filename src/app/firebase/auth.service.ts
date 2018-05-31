@@ -3,7 +3,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UserService } from '../core/user.service';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { User, Authenticate } from '../models/user';
 
 @Injectable()
 export class AuthService {
@@ -13,15 +14,7 @@ export class AuthService {
   constructor(
     private firebaseAuth: AngularFireAuth,
     private userService: UserService
-  ) {
-    this.user = firebaseAuth.authState;
-    this.user.subscribe(auth => {
-      if (auth && auth.uid !== null) {
-        this.authState = auth;
-        this.userService.retrieveUser(auth.uid);
-      }
-    });
-  }
+  ) {}
 
   get authenticated(): boolean {
     return this.authState !== null;
@@ -39,24 +32,22 @@ export class AuthService {
     return this.firebaseAuth.auth.confirmPasswordReset(oobCode, password);
   }
 
-  signup(values) {
+  register(values: Authenticate): Promise<User> {
     const email = values.email.toLowerCase();
-    return this.firebaseAuth.auth
-      .createUserWithEmailAndPassword(email, values.password)
-      .then(auth => {
-        this.authState = auth;
-        const entity = {
-          name: values.name,
-          email: email,
-        };
-        return this.userService.updateInfo(entity, auth);
-      })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
-      });
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth
+        .createUserWithEmailAndPassword(email, values.password)
+        .then(auth => {
+          resolve(new User(auth.user));
+        })
+        .catch(err => {
+          console.log('Something went wrong:', err.message);
+          reject(err);
+        });
+    });
   }
 
-  social(providerName) {
+  social(providerName): Promise<User> {
     let provider;
     switch (providerName) {
       case 'google':
@@ -84,32 +75,38 @@ export class AuthService {
         throw new Error('Invalid provider.');
     }
 
-    return this.firebaseAuth.auth.signInWithPopup(provider).then(auth => {
-      const entity = {
-        name: auth.user.providerData[0].displayName,
-        email: auth.user.providerData[0].email,
-        anonymous: true,
-        profileImageUrl: auth.user.providerData[0].photoURL,
-        authProvider: providerName,
-      };
-      return this.userService.updateInfo(entity, auth.user);
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth.signInWithPopup(provider).then(auth => {
+        const entity = {
+          name: auth.user.providerData[0].displayName,
+          email: auth.user.providerData[0].email,
+          anonymous: true,
+          profileImageUrl: auth.user.providerData[0].photoURL,
+          authProvider: providerName,
+        };
+        // this.userService.updateInfo(entity, auth.user);
+        resolve(new User(auth.user));
+      });
     });
   }
 
-  login(email: string, password: string) {
-    return this.firebaseAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(auth => {
-        this.authState = auth;
-        return;
-      })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
-        return err.message;
-      });
+  login(auth: Authenticate): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth
+        .signInWithEmailAndPassword(auth.email, auth.password)
+        .then(auth => {
+          resolve(new User(auth.user));
+          return;
+        })
+        .catch(err => {
+          console.log('Something went wrong:', err.message);
+          reject(err);
+          return err.message;
+        });
+    });
   }
 
   logout() {
-    this.firebaseAuth.auth.signOut();
+    return this.firebaseAuth.auth.signOut();
   }
 }

@@ -1,4 +1,79 @@
-<div class="text-center">
+<mat-card class="card">
+  <mat-card-title *ngIf="!oobCode">Register for OMSCentral</mat-card-title>
+  <mat-card-title *ngIf="oobCode">Reset your password for OMSCentral</mat-card-title>
+  <mat-card-subtitle *ngIf="!oobCode">Share your OMS experience with your classmates.</mat-card-subtitle>
+  <mat-card-subtitle *ngIf="oobCode">Please enter your new password below.</mat-card-subtitle>
+  <mat-card-content *ngIf="!oobCode">
+    <form [formGroup]="registerForm">
+      <p>
+        <mat-form-field>
+          <input matInput type="text" id="register_name" placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input matInput type="text" id="register_email" placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input matInput type="password" id="register_password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="error$ | async" class="registerError">
+        {{ error$ | async }}
+      </p>
+
+      <p class="registerButtons">
+        <button type="submit" mat-raised-button color="primary" (click)="register()" [disabled]="registerForm.invalid">Register</button>
+      </p>
+
+      <hr/>
+
+      <p>
+        <span class="social-buttons">
+          <button mat-icon-button (click)="social('github')">
+            <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+          </button>
+          <button mat-icon-button (click)="social('twitter')">
+            <i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+          </button>
+          <button mat-icon-button (click)="social('facebook')">
+            <i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+          </button>
+          <button mat-icon-button (click)="social('google')">
+            <i class="fa fa-google fa-3x" aria-hidden="true"></i>
+          </button>
+        </span>
+      </p>
+
+      <hr/>
+
+      <p class="text-center">
+        <span>Already have an account?</span>
+        <button mat-button (click)="login()">Login</button>
+      </p>
+    </form>
+  </mat-card-content>
+  <mat-card-content *ngIf="oobCode">
+    <form [formGroup]="resetForm">
+      <p>
+        <mat-form-field>
+          <input matInput type="password" id="reset_password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+      </p>
+
+      <p class="resetButtons">
+        <button type="submit" mat-raised-button color="primary" (click)="resetPassword()" [disabled]="resetForm.invalid">Reset Password</button>
+      </p>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- <div class="text-center">
   <div class="login">
     <label class="title">
       <h3 *ngIf="!oobCode" class="welcome">Register for</h3>
@@ -19,6 +94,9 @@
         </div>
       </div>
     </form>
+    <div *ngIf="error$ | async" class="error active">
+      {{error$ | async}}
+    </div>
     <form *ngIf="oobCode && !success" [formGroup]="resetForm" novalidate>
       <div class="login-group">
 
@@ -67,4 +145,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

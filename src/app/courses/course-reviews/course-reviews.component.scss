@@ -1,0 +1,17 @@
+.space-between {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 1vh;
+  grid-row-gap: 1vh;
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .space-between {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1vh;
+    grid-row-gap: 1vh;
+    width: 100%;
+  }
+}

@@ -1,0 +1,26 @@
+.course-text {
+  padding-top: 0.5px;
+  padding-bottom: 0.5px;
+}
+
+.courses-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.courses-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  overflow: auto;
+}
+
+.mat-row:hover {
+  background-color: rgba(158, 158, 158, 0.2);
+  cursor: pointer;
+}

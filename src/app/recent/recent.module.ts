@@ -5,7 +5,7 @@ import { PipeModule } from '../pipes/pipe.module';
 import { ReviewsModule } from '../reviews/reviews.module';
 import { MarkdownModule } from 'angular2-markdown/markdown/markdown.module';
 import { AppRoutingModule } from '../app-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReviewsModule,
     MarkdownModule,
     AppRoutingModule,
-    NgbModule,
+    MatCardModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RecentComponent],

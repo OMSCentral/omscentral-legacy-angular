@@ -1,3 +1,10 @@
+export class ReviewFilter {
+  programs: object;
+  semesters: object;
+  difficulties: object;
+  ratings: object;
+}
+
 export class Review {
   id: string = null;
   author: string;
@@ -27,6 +34,9 @@ export class Review {
 
   constructor(review: object) {
     Object.assign(this, review);
+    if (!this.program) {
+      this.program = '1';
+    }
   }
 
   get isNew() {
