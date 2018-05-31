@@ -6,12 +6,13 @@
     "ng": "ng",
     "start": "ng serve",
     "prod": "ng serve --prod",
-    "build": "ng build",
+    "build": "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js",
+    "build:prod": "ng build --prod && sw-precache --root=dist --config=precache-config.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build && firebase use staging && firebase deploy --only hosting",
-    "deploy:prod": "ng build --prod && firebase use production && firebase deploy --only hosting",
+    "deploy": "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js && firebase use staging && firebase deploy --only hosting",
+    "deploy:prod": "ng build --prod && sw-precache --root=dist --config=precache-config.js && firebase use production && firebase deploy --only hosting",
     "prettier": "prettier --write \"**/*.ts\""
   },
   "private": true,
@@ -44,6 +45,7 @@
     "raven-js": "3.25.2",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.2.0",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
