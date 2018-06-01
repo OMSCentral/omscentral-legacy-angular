@@ -9,6 +9,10 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
