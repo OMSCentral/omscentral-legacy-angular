@@ -106,7 +106,7 @@ function programFilter(review, filters) {
   if (programs.length === 0) {
     return true;
   } else {
-    return programs.indexOf(String(review.rating)) !== -1;
+    return programs.indexOf(String(review.program)) !== -1;
   }
 }
 
