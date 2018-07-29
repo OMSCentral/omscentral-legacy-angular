@@ -76,7 +76,7 @@ export class RavenErrorHandler implements ErrorHandler {
   providers: [
     AuthGuard,
     AuthService,
-    // { provide: ErrorHandler, useClass: RavenErrorHandler },
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
   ],
   bootstrap: [AppComponent],
 })
