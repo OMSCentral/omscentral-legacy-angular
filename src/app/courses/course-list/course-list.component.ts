@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GradeService } from '../../grades/grade.service';
+import { GradeService } from '../../core/grade.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Course } from '../../models/course';
 

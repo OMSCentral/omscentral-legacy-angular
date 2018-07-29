@@ -12,7 +12,7 @@ class MockAuth {
   user = new BehaviorSubject({});
 }
 
-import { CourseService } from '../../courses/course.service';
+import { CourseService } from '../../core/course.service';
 class MockCourse {
   getCourse() {
     return new BehaviorSubject({});
@@ -22,12 +22,8 @@ class MockCourse {
   }
 }
 
-import { ReviewService } from '../review.service';
-class MockReview {
-  getReview() {
-    return new BehaviorSubject(new Review({}));
-  }
-}
+import { AuthedReviewService } from '../authed-review.service';
+class MockAuthedReview {}
 
 import { NewReviewComponent } from './new-review.component';
 
@@ -46,7 +42,7 @@ describe('NewReviewComponent', () => {
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: CourseService, useClass: MockCourse },
-        { provide: ReviewService, useClass: MockReview },
+        { provide: AuthedReviewService, useClass: MockAuthedReview },
         { provide: AuthService, useClass: MockAuth },
       ],
       declarations: [NewReviewComponent],

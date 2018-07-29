@@ -53,6 +53,7 @@
     "@angular/cli": "^6.0.0",
     "@angular/compiler-cli": "^6.0.0",
     "@angular/language-service": "^6.0.0",
+    "@ngrx/schematics": "^6.0.1",
     "@types/jasmine": "~2.8.7",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~10.0.3",

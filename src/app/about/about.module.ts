@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about.component';
 import { CoreModule } from '../core/core.module';
@@ -9,10 +9,12 @@ import {
   MatListModule,
   MatButtonModule,
 } from '@angular/material';
+import { AboutRoutingModule } from './about-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    AboutRoutingModule,
     CoreModule,
     NgxMdModule,
     MatSidenavModule,
@@ -20,7 +22,6 @@ import {
     MatListModule,
     MatButtonModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AboutComponent],
 })
 export class AboutModule {}

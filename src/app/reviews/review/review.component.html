@@ -1,6 +1,6 @@
 <mat-card class="card" *ngIf="review && review.author">
   <mat-card-title *ngIf="title && courseName">
-    <button mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</button>
+    <a mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</a>
   </mat-card-title>
   <mat-card-subtitle>
     &nbsp;

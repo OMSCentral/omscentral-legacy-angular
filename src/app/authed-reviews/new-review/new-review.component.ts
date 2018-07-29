@@ -1,35 +1,20 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AuthService } from '../../firebase/auth.service';
-import { ReviewService } from '../review.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
-import { CourseService } from '../../courses/course.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { CourseService } from '../../core/course.service';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import {
   CoursesState,
   getSelectedCourse,
   getAllCourses,
 } from '../../state/courses/reducers';
-import {
-  ReviewsState,
-  getFilteredStats,
-  getSelectedReview,
-} from '../../state/reviews/reducers';
+import { ReviewsState, getSelectedReview } from '../../state/reviews/reducers';
 import { Course } from '../../models/course';
-import {
-  NewReview,
-  EditReview,
-  SelectReview,
-  RemoveReview,
-} from '../../state/reviews/actions/reviews';
+import { NewReview, EditReview, RemoveReview } from '../authed-review.actions';
+import { SelectReview } from '../../state/reviews/actions/reviews';
 import { User } from '../../models/user';
 import { getUser } from '../../state/auth/reducers';
 
@@ -54,11 +39,7 @@ export class NewReviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private courseStore: Store<CoursesState>,
     private reviewStore: Store<ReviewsState>,
-    private auth: AuthService,
-    private reviewService: ReviewService,
     private fb: FormBuilder,
     private courseService: CourseService,
     private store: Store<User>

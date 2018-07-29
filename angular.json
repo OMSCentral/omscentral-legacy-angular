@@ -119,7 +119,19 @@
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "oms"
+      "prefix": "oms",
+      "styleext": "scss"
+    },
+    "@ngrx/schematics:component": {
+      "prefix": "oms",
+      "styleext": "scss"
+    },
+    "@ngrx/schematics:directive": {
+      "prefix": "oms",
+      "styleext": "scss"
     }
+  },
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
   }
 }

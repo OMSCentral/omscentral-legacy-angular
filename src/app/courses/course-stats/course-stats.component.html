@@ -8,7 +8,7 @@
     </mat-list-item>
     <mat-list-item *ngIf="authId" role="listitem">
       <div mat-line style="text-align: right;">
-        <button mat-raised-button color="accent" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</button>
+        <a mat-raised-button color="accent" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</a>
       </div>
     </mat-list-item>
     <mat-list-item role="listitem" *ngIf="(course$ | async)?.numReviews">

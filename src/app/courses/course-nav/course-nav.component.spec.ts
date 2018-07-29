@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipeModule } from '../../pipes/pipe.module';
 
 import { BehaviorSubject } from 'rxjs';
-import { CourseService } from '../../courses/course.service';
+import { CourseService } from '../../core/course.service';
 class MockCourse {
   getCourses() {
     return new BehaviorSubject(null);
@@ -16,13 +16,13 @@ class MockCourse {
   }
 }
 
-import { GradeService } from '../../grades/grade.service';
+import { GradeService } from '../../core/grade.service';
 class MockGrade {
   getCourses() {}
   getGrades() {}
 }
 
-import { ReviewService } from '../../reviews/review.service';
+import { ReviewService } from '../../core/review.service';
 class MockReview {}
 
 import { AuthService } from '../../firebase/auth.service';
