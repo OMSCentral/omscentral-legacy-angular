@@ -1,7 +1,16 @@
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import {
+  NgModule,
+  ModuleWithProviders,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import { routerReducer, StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import {
+  routerReducer,
+  StoreRouterConnectingModule,
+  RouterStateSerializer,
+} from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
@@ -19,32 +28,30 @@ import { AuthEffects } from './auth/effects/auth';
   imports: [
     CommonModule,
     StoreModule.forRoot(appReducer, {
-      metaReducers: appMetaReducers
+      metaReducers: appMetaReducers,
     }),
     StoreModule.forFeature('courses', fromCourses.reducers),
     StoreModule.forFeature('reviews', fromReviews.reducers),
     StoreModule.forFeature('auth', fromAuth.reducers),
     StoreRouterConnectingModule.forRoot({
-      stateKey: 'router'
+      stateKey: 'router',
     }),
-    EffectsModule.forRoot([
-      AppEffects
-    ]),
-    EffectsModule.forFeature([
-      CoursesEffects,
-      ReviewsEffects,
-      AuthEffects
-    ]),
+    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forFeature([CoursesEffects, ReviewsEffects, AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  declarations: []
+  declarations: [],
 })
 export class StateModule {
-
-  constructor(@Optional() @SkipSelf() parentModule: StateModule) {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: StateModule
+  ) {
     if (parentModule) {
       throw new Error(
-        'StateModule is already loaded. Import it in the AppModule only');
+        'StateModule is already loaded. Import it in the AppModule only'
+      );
     }
   }
 
@@ -54,9 +61,9 @@ export class StateModule {
       providers: [
         {
           provide: RouterStateSerializer,
-          useClass: CustomSerializer
-        }
-      ]
+          useClass: CustomSerializer,
+        },
+      ],
     };
   }
 }

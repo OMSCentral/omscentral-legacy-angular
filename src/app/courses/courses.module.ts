@@ -19,6 +19,7 @@ import {
   MatSidenavModule,
   MatListModule,
   MatSelectModule,
+  MatTooltipModule,
 } from '@angular/material';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseStatsComponent } from './course-stats/course-stats.component';
@@ -46,6 +47,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatListModule,
     MatSelectModule,
     FlexLayoutModule,
+    MatTooltipModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
