@@ -5,10 +5,12 @@ import { environment } from '../../environments/environment';
 import { AppState } from './app.interfaces';
 
 export const appReducer: ActionReducerMap<AppState> = {
-  router: routerReducer
+  router: routerReducer,
 };
 
-export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
+export function logger(
+  reducer: ActionReducer<AppState>
+): ActionReducer<AppState> {
   return function(state: AppState, action: any): AppState {
     return reducer(state, action);
   };

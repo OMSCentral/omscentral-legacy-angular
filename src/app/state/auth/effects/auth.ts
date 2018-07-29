@@ -119,7 +119,11 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions.pipe(
     ofType(AuthActionTypes.LoginSuccess),
-    tap(() => this.router.navigate(['/']))
+    tap(() => {
+      if (this.router.url === '/login') {
+        this.router.navigate(['/']);
+      }
+    })
   );
 
   @Effect({ dispatch: false })

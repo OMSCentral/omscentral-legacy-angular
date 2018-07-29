@@ -1,5 +1,5 @@
 export enum Programs {
   '',
   'OMSCS',
-  'OMSA'
+  'OMSA',
 }
