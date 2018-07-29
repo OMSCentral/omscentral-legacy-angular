@@ -11,14 +11,17 @@ import {
   UPDATE_DIFFICULTY_FILTER,
   UPDATE_RATING_FILTER,
   LOAD_REVIEWS,
-  NEW_REVIEW_SUCCESS,
-  EDIT_REVIEW_SUCCESS,
-  REMOVE_REVIEW_SUCCESS,
-  LOAD_RECENT_REVIEWS,
   LOAD_RECENT_REVIEWS_SUCCESS,
   LOAD_USER_REVIEWS_SUCCESS,
   LOAD_USER_REVIEWS,
 } from '../actions/reviews';
+
+import {
+  NEW_REVIEW_SUCCESS,
+  EDIT_REVIEW_SUCCESS,
+  REMOVE_REVIEW_SUCCESS,
+  AuthedReviewsAction,
+} from '../../../authed-reviews/authed-review.actions';
 
 export interface State extends EntityState<Review> {
   selectedId: string | null;
@@ -44,7 +47,10 @@ const initialState: State = adapter.getInitialState({
   programs: {},
 });
 
-export function reducer(state: State = initialState, action: ReviewsAction) {
+export function reducer(
+  state: State = initialState,
+  action: ReviewsAction | AuthedReviewsAction
+) {
   switch (action.type) {
     case LOAD_REVIEWS:
       if (action.payload.reviews) {

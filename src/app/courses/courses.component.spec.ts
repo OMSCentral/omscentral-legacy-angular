@@ -6,14 +6,14 @@ import { CoursesComponent } from './courses.component';
 import { PipeModule } from '../pipes/pipe.module';
 
 import { BehaviorSubject } from 'rxjs';
-import { CourseService } from '../courses/course.service';
+import { CourseService } from '../core/course.service';
 class MockCourse {
   getCourses() {
     return new BehaviorSubject(null);
   }
 }
 
-import { GradeService } from '../grades/grade.service';
+import { GradeService } from '../core/grade.service';
 class MockGrade {
   getCourses() {}
   getGrades() {}

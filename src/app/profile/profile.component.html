@@ -24,7 +24,7 @@
             </mat-list-item>
             <mat-list-item *ngFor="let course of choice.courses">
               <div class="choice-line">
-                <button mat-button type="button" class="course-btn" [routerLink]="['/courses', course]">{{course | course:basicCourses}}</button>
+                <a mat-button type="button" class="course-btn" [routerLink]="['/courses', course]">{{course | course:basicCourses}}</a>
                 <i *ngIf="courses.indexOf(course) !== -1" class="fa fa-2x fa-check accent pull-right"></i>
               </div>
             </mat-list-item>

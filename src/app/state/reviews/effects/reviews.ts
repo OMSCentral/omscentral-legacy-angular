@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, switchMap, flatMap, tap } from 'rxjs/operators';
-import { ReviewService } from '../../../reviews/review.service';
+import { map, switchMap, flatMap } from 'rxjs/operators';
+import { ReviewService } from '../../../core/review.service';
 import {
   LOAD_REVIEW,
   LOAD_REVIEWS,
@@ -11,24 +11,11 @@ import {
   LoadReviews,
   LoadReviewsSuccess,
   LoadReviewSuccess,
-  ProcessStats,
   ProcessFilters,
   PROCESS_FILTERS,
   ProcessFiltersSuccess,
-  NewReview,
-  NEW_REVIEW,
-  NewReviewSuccess,
   SelectReview,
   SELECT_REVIEW,
-  EditReview,
-  EDIT_REVIEW,
-  EditReviewSuccess,
-  EDIT_REVIEW_SUCCESS,
-  NEW_REVIEW_SUCCESS,
-  RemoveReview,
-  REMOVE_REVIEW,
-  RemoveReviewSuccess,
-  REMOVE_REVIEW_SUCCESS,
   LOAD_RECENT_REVIEWS,
   LoadRecentReviews,
   LoadRecentReviewsSuccess,
@@ -36,8 +23,6 @@ import {
   LoadUserReviews,
   LoadUserReviewsSuccess,
 } from '../actions/reviews';
-import { Router } from '@angular/router';
-import { AlertService } from '../../../core/alert.service';
 
 @Injectable()
 export class ReviewsEffects {
@@ -99,72 +84,5 @@ export class ReviewsEffects {
       map(review => new LoadReviewSuccess(review))
     );
 
-  @Effect()
-  newReview: Observable<Action> = this.actions
-    .ofType<NewReview>(NEW_REVIEW)
-    .pipe(
-      map(action => action.payload),
-      switchMap(review => this.reviewService.push(review)),
-      map(review => new NewReviewSuccess(review))
-    );
-
-  @Effect()
-  editReview: Observable<Action> = this.actions
-    .ofType<EditReview>(EDIT_REVIEW)
-    .pipe(
-      map(action => action.payload),
-      switchMap(review => this.reviewService.update(review)),
-      map(review => new EditReviewSuccess(review))
-    );
-
-  @Effect()
-  removeReview: Observable<Action> = this.actions
-    .ofType<RemoveReview>(REMOVE_REVIEW)
-    .pipe(
-      map(action => action.payload),
-      switchMap(review => this.reviewService.remove(review)),
-      map(review => new RemoveReviewSuccess(review))
-    );
-
-  @Effect({ dispatch: false })
-  editReviewSuccess = this.actions
-    .ofType<EditReviewSuccess>(EDIT_REVIEW_SUCCESS)
-    .pipe(
-      map(action => action.payload),
-      tap(review => {
-        this.alertService.addAlert('Review Saved');
-        this.router.navigate(['/courses', review.course]);
-      })
-    );
-
-  @Effect({ dispatch: false })
-  newReviewSuccess = this.actions
-    .ofType<NewReviewSuccess>(NEW_REVIEW_SUCCESS)
-    .pipe(
-      map(action => action.payload),
-      tap(review => {
-        this.alertService.addAlert(
-          'Review Saved! It may take a moment to show up.'
-        );
-        this.router.navigate(['/courses', review.course]);
-      })
-    );
-
-  @Effect({ dispatch: false })
-  removeReviewSuccess = this.actions
-    .ofType<NewReviewSuccess>(REMOVE_REVIEW_SUCCESS)
-    .pipe(
-      map(action => action.payload),
-      tap(review => {
-        this.alertService.addAlert('Review Deleted');
-        this.router.navigate(['/courses', review.course]);
-      })
-    );
-
-  constructor(
-    private actions: Actions,
-    private reviewService: ReviewService,
-    private router: Router,
-    private alertService: AlertService
-  ) {}
+  constructor(private actions: Actions, private reviewService: ReviewService) {}
 }

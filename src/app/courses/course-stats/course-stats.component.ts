@@ -3,7 +3,7 @@ import { Course, CourseStats } from '../../models/course';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { CoursesState, getSelectedCourse } from '../../state/courses/reducers';
-import { GradeService } from '../../grades/grade.service';
+import { GradeService } from '../../core/grade.service';
 import { ReviewsState, getFilteredStats } from '../../state/reviews/reducers';
 import { AuthState } from '../../state/auth/reducers';
 import { getUser } from '../../state/auth/reducers';

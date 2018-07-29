@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { CourseService } from './course.service';
-import { LocalStorageService } from '../core/local-storage.service';
+import { LocalStorageService } from './local-storage.service';
 
 class MockLocal {
   getObject(asdf) {
@@ -12,10 +12,10 @@ class MockLocal {
   }
 }
 
-import { GradeService } from '../grades/grade.service';
+import { GradeService } from './grade.service';
 class MockGrades {}
 
-import { SettingsService } from '../core/settings.service';
+import { SettingsService } from './settings.service';
 class MockSettings {}
 
 import { AngularFireDatabase } from 'angularfire2/database';

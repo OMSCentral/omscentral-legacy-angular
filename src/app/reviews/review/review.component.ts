@@ -1,16 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../firebase/auth.service';
-import { ReviewService } from '../review.service';
+import { ReviewService } from '../../core/review.service';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
-import { CourseService } from '../../courses/course.service';
+import { CourseService } from '../../core/course.service';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/user';
 import { getUser } from '../../state/auth/reducers';

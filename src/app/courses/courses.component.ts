@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CourseService } from '../courses/course.service';
-import { GradeService } from '../grades/grade.service';
+import { CourseService } from '../core/course.service';
+import { GradeService } from '../core/grade.service';
 import { Course } from '../models/course';
 
 @Component({

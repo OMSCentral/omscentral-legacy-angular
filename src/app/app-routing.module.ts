@@ -1,75 +1,59 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './firebase/auth.guard';
-import { AboutComponent } from './about/about.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
-import { CoursesComponent } from './courses/courses.component';
-import { RecentComponent } from './recent/recent.component';
-import { CourseComponent } from './courses/course/course.component';
-import { NewReviewComponent } from './reviews/new-review/new-review.component';
-import { PrivacyComponent } from './privacy/privacy.component';
-import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
+import { environment } from '../environments/environment.prod';
 
 const routes: Routes = [
   {
     path: '',
-    component: AboutComponent,
+    loadChildren: 'app/about/about.module#AboutModule',
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: 'app/login/login.module#LoginModule',
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    loadChildren: 'app/register/register.module#RegisterModule',
   },
   {
     path: 'set-password',
-    component: RegisterComponent,
+    loadChildren: 'app/register/register.module#RegisterModule',
   },
   {
     path: 'courses',
-    component: CoursesComponent,
+    loadChildren: 'app/courses/courses.module#CoursesModule',
   },
   {
     path: 'privacy',
-    component: PrivacyComponent,
+    loadChildren: 'app/privacy/privacy.module#PrivacyModule',
   },
   {
     path: 'recent',
-    component: RecentComponent,
-    // canActivate: [AuthGuard],
-  },
-  {
-    path: 'courses/:courseId',
-    component: CourseComponent,
-    // canActivate: [AuthGuard],
-  },
-  {
-    path: 'reviews/:reviewId',
-    component: NewReviewComponent,
-    canActivate: [AuthGuard],
+    loadChildren: 'app/recent/recent.module#RecentModule',
   },
   {
     path: 'reviews',
-    component: NewReviewComponent,
+    loadChildren:
+      'app/authed-reviews/authed-reviews.module#AuthedReviewsModule',
     canActivate: [AuthGuard],
   },
   {
     path: 'profile',
-    component: ProfileComponent,
+    loadChildren: 'app/profile/profile.module#ProfileModule',
     canActivate: [AuthGuard],
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
+    loadChildren: 'app/page-not-found/page-not-found.module#PageNotFoundModule',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [
+    RouterModule.forRoot(routes, { enableTracing: !environment.production }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
