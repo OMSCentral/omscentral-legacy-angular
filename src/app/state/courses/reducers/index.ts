@@ -13,14 +13,14 @@ export interface State extends AppState {
 }
 
 export const reducers = {
-  courses: fromCourses.reducer
+  courses: fromCourses.reducer,
 };
 
 export const getCoursesState = createFeatureSelector<CoursesState>('courses');
 
 export const getCoursesEntityState = createSelector(
   getCoursesState,
-  (state) => state.courses
+  state => state.courses
 );
 
 export const getSpecialization = createSelector(
@@ -37,7 +37,7 @@ export const {
   selectAll: getAllCourses,
   selectEntities: getCourseEntities,
   selectIds: getCourseIds,
-  selectTotal: getCoursesTotal
+  selectTotal: getCoursesTotal,
 } = fromCourses.adapter.getSelectors(getCoursesEntityState);
 
 export const getSpecializationCourses = createSelector(

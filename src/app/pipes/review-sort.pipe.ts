@@ -3,10 +3,9 @@ import { Review } from '../models/review';
 import { ReviewService } from '../reviews/review.service';
 
 @Pipe({
-  name: 'reviewSort'
+  name: 'reviewSort',
 })
 export class ReviewSortPipe implements PipeTransform {
-
   constructor(private reviewService: ReviewService) {}
 
   transform(reviews: Review[], sortType: string, sortDir: boolean): any {
@@ -16,5 +15,4 @@ export class ReviewSortPipe implements PipeTransform {
       return this.reviewService.sortByDate(reviews, sortDir);
     }
   }
-
 }

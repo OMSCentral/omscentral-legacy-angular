@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material';
     ReviewsModule,
     MarkdownModule,
     AppRoutingModule,
-    MatCardModule
+    MatCardModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RecentComponent],

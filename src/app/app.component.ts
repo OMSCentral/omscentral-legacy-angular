@@ -17,7 +17,11 @@ export class AppComponent implements OnInit {
   downloaded = false;
   maintenance = false;
   loading$: Promise<boolean> | Observable<boolean>;
-  constructor(public router: Router, private settingsService: SettingsService, private store: Store<AuthState>) {
+  constructor(
+    public router: Router,
+    private settingsService: SettingsService,
+    private store: Store<AuthState>
+  ) {
     this.loading$ = this.store.select(getLoaded);
     this.settingsService.settings$.subscribe(settings => {
       if (settings !== null) {
@@ -30,5 +34,4 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new GetUser());
   }
-
 }
