@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { PipeModule } from '../pipes/pipe.module';
 import { ReviewComponent } from './review/review.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MarkdownModule } from 'angular2-markdown';
+import { NgxMdModule } from 'ngx-md';
 import { AppRoutingModule } from '../app-routing.module';
 import { NewReviewComponent } from './new-review/new-review.component';
 import {
@@ -29,7 +29,7 @@ import { ReviewService } from './review.service';
     PipeModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MarkdownModule,
+    NgxMdModule,
     MatCardModule,
     MatTooltipModule,
     MatButtonModule,

@@ -27,11 +27,11 @@ import { PipeModule } from './pipes/pipe.module';
 import { AuthGuard } from './firebase/auth.guard';
 import { AuthService } from './firebase/auth.service';
 
-import { GithubButtonModule } from 'angular-github-buttons';
+import { AngularGithubButtonsModule } from 'angular-github-buttons';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
 
-import { MarkdownModule } from 'angular2-markdown';
+import { NgxMdModule } from 'ngx-md';
 
 import { PrivacyComponent } from './privacy/privacy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,9 +65,9 @@ export class RavenErrorHandler implements ErrorHandler {
     GradesModule,
     ProfileModule,
     RegisterModule,
-    GithubButtonModule,
+    AngularGithubButtonsModule,
     CoursesModule,
-    MarkdownModule.forRoot(),
+    NgxMdModule.forRoot(),
     BrowserAnimationsModule,
     MatSidenavModule,
     StateModule.forRoot(),
@@ -76,7 +76,9 @@ export class RavenErrorHandler implements ErrorHandler {
   providers: [
     AuthGuard,
     AuthService,
-    { provide: ErrorHandler, useClass: RavenErrorHandler },
+    !environment.production
+      ? { provide: ErrorHandler, useClass: RavenErrorHandler }
+      : [],
   ],
   bootstrap: [AppComponent],
 })
