@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about.component';
 import { CoreModule } from '../core/core.module';
-import { MarkdownModule } from 'angular2-markdown/markdown/markdown.module';
+import { NgxMdModule } from 'ngx-md';
 import {
   MatSidenavModule,
   MatCardModule,
@@ -14,7 +14,7 @@ import {
   imports: [
     CommonModule,
     CoreModule,
-    MarkdownModule,
+    NgxMdModule,
     MatSidenavModule,
     MatCardModule,
     MatListModule,

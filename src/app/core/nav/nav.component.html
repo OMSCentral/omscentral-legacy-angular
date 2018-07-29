@@ -1,8 +1,6 @@
 <nav class="navbar-header primary-bg">
   <a mat-button class="nav-button" routerLink="/" aria-label="OMSCentral">
-    <img class="omscentral-logo"
-         src="../../../assets/omscentral-logo.svg"
-         alt="omscentral">
+    <img class="omscentral-logo" src="../../../assets/omscentral-logo.svg" alt="omscentral">
     <span>OMSCentral</span>
   </a>
   <a mat-button *ngIf="(user$ | async)" class="navbar-hide-small nav-button" routerLink="/profile" routerLinkActive="active">My Profile</a>
@@ -11,7 +9,7 @@
   <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-hide-small nav-button" routerLink="/reviews" routerLinkActive="active">Write a Review</a>
 
   <div class="flex-spacer"></div>
-  <ng-gh-btn class="navbar-hide-small nav-button" username="martzcodes" reponame="OMSCentral" type="star" count="true"></ng-gh-btn>
+  <ng-gh-star class="navbar-hide-small nav-button" username="martzcodes" reponame="OMSCentral" count="true"></ng-gh-star>
   <a mat-button *ngIf="!(user$ | async)" class="nav-button active nav-auth" routerLink="/login">Login</a>
   <a mat-button *ngIf="user$ | async" class="nav-button active nav-auth navbar-hide-small" (click)="logout()">Logout</a>
   <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-show-small nav-button" routerLink="/reviews" routerLinkActive="active">Write a Review</a>
