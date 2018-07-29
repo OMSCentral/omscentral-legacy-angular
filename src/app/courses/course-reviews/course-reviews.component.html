@@ -39,7 +39,7 @@
     </span>
   </div>
   <div class="card-body text-center">
-    <a class="btn btn-primary" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</a>
+    <a mat-raised-button color="accent" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</a>
   </div>
 </div>
 <div *ngFor="let review of (reviews$ | async) | reviewSort:sortType:sortDir">

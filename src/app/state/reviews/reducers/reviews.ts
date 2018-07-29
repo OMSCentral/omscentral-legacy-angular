@@ -59,7 +59,7 @@ export function reducer(
         });
         return { ...state, selectedIds: reviewIds };
       } else {
-        return { ...state };
+        return { ...state, selectedIds: [] };
       }
     case LOAD_USER_REVIEWS:
       if (action.payload.reviews) {
