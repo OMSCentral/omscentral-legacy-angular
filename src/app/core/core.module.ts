@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavComponent } from './nav/nav.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { GithubButtonModule } from 'angular-github-buttons';
+import { AngularGithubButtonsModule } from 'angular-github-buttons';
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -22,7 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     CommonModule,
     AppRoutingModule,
-    GithubButtonModule,
+    AngularGithubButtonsModule,
     MatToolbarModule,
     MatButtonModule,
     MatRippleModule,
