@@ -21,7 +21,7 @@ class MockUser {
 import { LocalStorageService } from '../core/local-storage.service';
 class MockLocalStorage {}
 
-import { ReviewService } from '../reviews/review.service';
+import { ReviewService } from '../core/review.service';
 class MockReview {
   getReviewsByAuthor() {}
 }

@@ -13,14 +13,14 @@ class MockAuth {
   user = new BehaviorSubject({});
 }
 
-import { CourseService } from '../courses/course.service';
+import { CourseService } from '../core/course.service';
 class MockCourse {
   getCourses() {
     return new BehaviorSubject(null);
   }
 }
 
-import { ReviewService } from '../reviews/review.service';
+import { ReviewService } from '../core/review.service';
 class MockReview {
   getRecentReviews() {}
   unsubRecent() {}

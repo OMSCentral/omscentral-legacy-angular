@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { LocalStorageService } from '../core/local-storage.service';
-import { SettingsService } from '../core/settings.service';
+import { LocalStorageService } from './local-storage.service';
+import { SettingsService } from './settings.service';
 
 import * as jsonData from '../../../courses.json';
-import { GradeService } from '../grades/grade.service';
+import { GradeService } from './grade.service';
 import { Course } from '../models/course';
 import { Store, select } from '@ngrx/store';
 import { CoursesState, getCourseEntities } from '../state/courses/reducers';
@@ -150,6 +150,10 @@ export class CourseService {
 
   getBasicCourses() {
     return jsonData;
+  }
+
+  courseExists(courseId) {
+    return Object.keys(jsonData).indexOf(courseId) !== -1;
   }
 
   checkCourse(courseId) {

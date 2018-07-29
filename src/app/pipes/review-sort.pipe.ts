@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Review } from '../models/review';
-import { ReviewService } from '../reviews/review.service';
+import { ReviewService } from '../core/review.service';
 
 @Pipe({
   name: 'reviewSort',

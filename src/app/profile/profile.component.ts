@@ -8,7 +8,7 @@ import { Specialization } from '../models/specialization';
 import { Review } from '../models/review';
 import { LoadUserReviews } from '../state/reviews/actions/reviews';
 import { getUserReviews } from '../state/reviews/reducers';
-import { CourseService } from '../courses/course.service';
+import { CourseService } from '../core/course.service';
 
 @Component({
   selector: 'oms-profile',

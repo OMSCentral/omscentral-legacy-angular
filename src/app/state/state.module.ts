@@ -38,7 +38,10 @@ import { AuthEffects } from './auth/effects/auth';
     }),
     EffectsModule.forRoot([AppEffects]),
     EffectsModule.forFeature([CoursesEffects, ReviewsEffects, AuthEffects]),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
   declarations: [],
 })
