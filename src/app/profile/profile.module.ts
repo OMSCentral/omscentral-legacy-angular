@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile.component';
 import { ReviewsModule } from '../reviews/reviews.module';
@@ -14,11 +14,12 @@ import {
 } from '@angular/material';
 import { CoursesModule } from '../courses/courses.module';
 import { PipeModule } from '../pipes/pipe.module';
-import { AppRoutingModule } from '../app-routing.module';
+import { ProfileRoutingModule } from './profile-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ProfileRoutingModule,
     ReviewsModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -27,10 +28,8 @@ import { AppRoutingModule } from '../app-routing.module';
     MatListModule,
     MatCheckboxModule,
     PipeModule,
-    AppRoutingModule,
     MatButtonModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfileComponent],
   providers: [UserService, LocalStorageService],
 })

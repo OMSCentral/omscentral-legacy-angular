@@ -1,8 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavComponent } from './nav/nav.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { AppRoutingModule } from '../app-routing.module';
 import { AngularGithubButtonsModule } from 'angular-github-buttons';
 import {
   MatToolbarModule,
@@ -16,12 +15,14 @@ import { AlertService } from './alert.service';
 import { LocalStorageService } from './local-storage.service';
 import { UserService } from './user.service';
 import { SettingsService } from './settings.service';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CourseService } from './course.service';
+import { ReviewService } from './review.service';
+import { GradeService } from './grade.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
-    AppRoutingModule,
     AngularGithubButtonsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -29,10 +30,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatSnackBarModule,
     MatCardModule,
     MatSidenavModule,
+    RouterModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [NavComponent, SidebarComponent],
-  declarations: [NavComponent, SidebarComponent, PageNotFoundComponent],
-  providers: [AlertService, LocalStorageService, UserService, SettingsService],
+  declarations: [NavComponent, SidebarComponent],
+  providers: [
+    AlertService,
+    LocalStorageService,
+    UserService,
+    SettingsService,
+    CourseService,
+    ReviewService,
+    GradeService,
+  ],
 })
 export class CoreModule {}

@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../firebase/auth.service';
@@ -10,17 +10,18 @@ import {
   MatButtonModule,
   MatFormFieldModule,
 } from '@angular/material';
+import { RegisterRoutingModule } from './register-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    RegisterRoutingModule,
     ReactiveFormsModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RegisterComponent],
   providers: [AuthService],
 })

@@ -3,7 +3,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
-import { CourseService } from '../../../courses/course.service';
+import { CourseService } from '../../../core/course.service';
 import {
   LOAD_COURSE,
   LOAD_COURSES,
