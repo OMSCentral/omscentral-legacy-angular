@@ -58,32 +58,32 @@
 
     <!-- a Column -->
     <ng-container matColumnDef="a">
-      <th mat-header-cell *matHeaderCellDef> A </th>
-      <td mat-cell *matCellDef="let element"> {{element.a | number}} </td>
+      <th mat-header-cell *matHeaderCellDef> % A </th>
+      <td mat-cell *matCellDef="let element" matTooltip="{{element.a | number}}"> {{100 * (element.a / element.total) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- b Column -->
     <ng-container matColumnDef="b">
-      <th mat-header-cell *matHeaderCellDef> B </th>
-      <td mat-cell *matCellDef="let element"> {{element.b | number}} </td>
+      <th mat-header-cell *matHeaderCellDef> % B </th>
+      <td mat-cell *matCellDef="let element" matTooltip="{{element.b | number}}"> {{100 * (element.b / element.total) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- c Column -->
     <ng-container matColumnDef="c">
-      <th mat-header-cell *matHeaderCellDef> C </th>
-      <td mat-cell *matCellDef="let element"> {{element.c | number}} </td>
+      <th mat-header-cell *matHeaderCellDef> % C </th>
+      <td mat-cell *matCellDef="let element" matTooltip="{{element.c | number}}"> {{100 * (element.c / element.total) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- d Column -->
     <ng-container matColumnDef="d">
-      <th mat-header-cell *matHeaderCellDef> D </th>
-      <td mat-cell *matCellDef="let element"> {{element.d | number}} </td>
+      <th mat-header-cell *matHeaderCellDef> % D </th>
+      <td mat-cell *matCellDef="let element" matTooltip="{{element.d | number}}"> {{100 * (element.d / element.total) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- f Column -->
     <ng-container matColumnDef="f">
-      <th mat-header-cell *matHeaderCellDef> F </th>
-      <td mat-cell *matCellDef="let element"> {{element.f | number}} </td>
+      <th mat-header-cell *matHeaderCellDef> % F </th>
+      <td mat-cell *matCellDef="let element" matTooltip="{{element.f | number}}"> {{100 * (element.f / element.total) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- w Column -->

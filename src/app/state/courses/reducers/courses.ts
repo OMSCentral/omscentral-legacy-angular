@@ -1,7 +1,11 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Course } from '../../../models/course';
 import {
-  LOAD_COURSE_SUCCESS, LOAD_COURSES_SUCCESS, CoursesAction, FILTER_COURSES, SELECT_COURSE
+  LOAD_COURSE_SUCCESS,
+  LOAD_COURSES_SUCCESS,
+  CoursesAction,
+  FILTER_COURSES,
+  SELECT_COURSE,
 } from '../actions/courses';
 
 export interface State extends EntityState<Course> {
@@ -13,7 +17,7 @@ export const adapter: EntityAdapter<Course> = createEntityAdapter();
 
 const initialState: State = adapter.getInitialState({
   specialization: null,
-  selectedId: null
+  selectedId: null,
 });
 
 export function reducer(state: State = initialState, action: CoursesAction) {
@@ -25,7 +29,7 @@ export function reducer(state: State = initialState, action: CoursesAction) {
     case SELECT_COURSE:
       return {
         ...state,
-        selectedId: action.payload
+        selectedId: action.payload,
       };
     case FILTER_COURSES:
       return {

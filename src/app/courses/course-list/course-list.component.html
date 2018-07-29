@@ -72,14 +72,15 @@
 
     <!-- ab Column -->
     <ng-container matColumnDef="ab">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>&ge; B</th>
-      <td mat-cell *matCellDef="let row"> {{row.ab | number}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>&ge; B %</th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.ab | number}}">
+        {{100 * (row.ab / row.enrolled) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- cdf Column -->
     <ng-container matColumnDef="cdf">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>&le; C</th>
-      <td mat-cell *matCellDef="let row"> {{row.cdf | number}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>&le; C % </th>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.cdf | number}}"> {{100 * (row.cdf / row.enrolled) | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- withdrew Column -->

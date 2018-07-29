@@ -1,15 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { ReviewsState, getFilteredReviews, getFilters } from '../../state/reviews/reducers';
+import {
+  ReviewsState,
+  getFilteredReviews,
+  getFilters,
+} from '../../state/reviews/reducers';
 import { Review, ReviewFilter } from '../../models/review';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { UpdateProgramFilter, UpdateDifficultyFilter, UpdateRatingFilter, UpdateSemesterFilter } from '../../state/reviews/actions/reviews';
+import {
+  UpdateProgramFilter,
+  UpdateDifficultyFilter,
+  UpdateRatingFilter,
+  UpdateSemesterFilter,
+} from '../../state/reviews/actions/reviews';
 
 @Component({
   selector: 'oms-course-reviews',
   templateUrl: './course-reviews.component.html',
-  styleUrls: ['./course-reviews.component.scss']
+  styleUrls: ['./course-reviews.component.scss'],
 })
 export class CourseReviewsComponent implements OnInit {
   @Input() courseId: string;
@@ -24,14 +33,18 @@ export class CourseReviewsComponent implements OnInit {
     semesters: {},
     difficulties: {},
     ratings: {},
-    programs: {}
+    programs: {},
   };
 
   constructor(private store: Store<ReviewsState>) {
-    this.reviews$ = store.pipe(select(getFilteredReviews)) as Observable<Review[]>;
-    (store.pipe(select(getFilters)) as Observable<ReviewFilter>).subscribe(filters => {
-      this.filters = filters;
-    });
+    this.reviews$ = store.pipe(select(getFilteredReviews)) as Observable<
+      Review[]
+    >;
+    (store.pipe(select(getFilters)) as Observable<ReviewFilter>).subscribe(
+      filters => {
+        this.filters = filters;
+      }
+    );
   }
 
   ngOnInit() {
@@ -80,5 +93,4 @@ export class CourseReviewsComponent implements OnInit {
     //   this.sortDir
     // );
   }
-
 }

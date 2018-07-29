@@ -20,34 +20,31 @@ export class LoadCoursesSuccess implements Action {
 }
 
 export class LoadCourse implements Action {
-    readonly type = LOAD_COURSE;
+  readonly type = LOAD_COURSE;
 
-    constructor(public payload: { id: string }) {
-    }
-  }
+  constructor(public payload: { id: string }) {}
+}
 
-  export class LoadCourseSuccess implements Action {
-    readonly type = LOAD_COURSE_SUCCESS;
+export class LoadCourseSuccess implements Action {
+  readonly type = LOAD_COURSE_SUCCESS;
 
-    constructor(public payload: Course) {
-    }
-  }
+  constructor(public payload: Course) {}
+}
 
-  export class FilterCourses implements Action {
-    readonly type = FILTER_COURSES;
+export class FilterCourses implements Action {
+  readonly type = FILTER_COURSES;
 
-    constructor(public payload: string) {}
-  }
+  constructor(public payload: string) {}
+}
 
-  export class SelectCourse implements Action {
-    readonly type = SELECT_COURSE;
+export class SelectCourse implements Action {
+  readonly type = SELECT_COURSE;
 
-    constructor(public payload: string) {}
-  }
-
+  constructor(public payload: string) {}
+}
 
 export type CoursesAction =
-  LoadCourses
+  | LoadCourses
   | LoadCoursesSuccess
   | LoadCourse
   | LoadCourseSuccess

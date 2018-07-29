@@ -29,8 +29,20 @@ export const getLoggedIn = createSelector(
   selectAuthStatusState,
   fromAuth.getLoggedIn
 );
-export const getLoaded = createSelector(selectAuthStatusState, fromAuth.getLoaded);
+export const getLoaded = createSelector(
+  selectAuthStatusState,
+  fromAuth.getLoaded
+);
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
-export const getUserDetails = createSelector(selectAuthStatusState, fromAuth.getDetails);
-export const getLoginError = createSelector(selectAuthStatusState, fromAuth.getLoginError);
-export const getRegisterError = createSelector(selectAuthStatusState, fromAuth.getRegisterError);
+export const getUserDetails = createSelector(
+  selectAuthStatusState,
+  fromAuth.getDetails
+);
+export const getLoginError = createSelector(
+  selectAuthStatusState,
+  fromAuth.getLoginError
+);
+export const getRegisterError = createSelector(
+  selectAuthStatusState,
+  fromAuth.getRegisterError
+);

@@ -20,16 +20,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
     'enrolled',
     'ab',
     'cdf',
-    'withdrew'
+    'withdrew',
   ];
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
-
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 }
