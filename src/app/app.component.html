@@ -6,7 +6,8 @@
       <p class="lead">{{maintenance}}</p>
     </div>
     <div [hidden]="maintenance">
-        <router-outlet [hidden]="!(downloaded && !maintenance)"></router-outlet>
+      <router-outlet [hidden]="!(downloaded && !maintenance)"></router-outlet>
     </div>
+    <oms-ads *ngIf="ads" [display]="'inline-block'" [width]="320" [height]="108"></oms-ads>
   </div>
 </div>
