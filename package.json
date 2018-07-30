@@ -1,18 +1,22 @@
 {
   "name": "omscentral",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "prod": "ng serve --prod",
-    "build": "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js",
-    "build:prod": "ng build --prod && sw-precache --root=dist --config=precache-config.js",
+    "build":
+      "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js",
+    "build:prod":
+      "ng build --prod && sw-precache --root=dist --config=precache-config.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js && firebase use staging && firebase deploy --only hosting",
-    "deploy:prod": "ng build --prod && sw-precache --root=dist --config=precache-config.js && firebase use production && firebase deploy --only hosting",
+    "deploy":
+      "ng build --prod -c=dev && sw-precache --root=dist --config=precache-config.js && firebase use staging && firebase deploy --only hosting",
+    "deploy:prod":
+      "ng build --prod && sw-precache --root=dist --config=precache-config.js && firebase use production && firebase deploy --only hosting",
     "prettier": "prettier --write \"**/*.ts\""
   },
   "private": true,

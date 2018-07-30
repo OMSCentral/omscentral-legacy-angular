@@ -19,6 +19,7 @@ import { CourseService } from './course.service';
 import { ReviewService } from './review.service';
 import { GradeService } from './grade.service';
 import { RouterModule } from '@angular/router';
+import { AdsComponent } from './ads.component';
 
 @NgModule({
   imports: [
@@ -32,8 +33,8 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     RouterModule,
   ],
-  exports: [NavComponent, SidebarComponent],
-  declarations: [NavComponent, SidebarComponent],
+  exports: [NavComponent, SidebarComponent, AdsComponent],
+  declarations: [NavComponent, SidebarComponent, AdsComponent],
   providers: [
     AlertService,
     LocalStorageService,
