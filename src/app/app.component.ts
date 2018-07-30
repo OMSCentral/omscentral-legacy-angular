@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   downloaded = false;
   maintenance = false;
   loading$: Promise<boolean> | Observable<boolean>;
+  ads = false;
   constructor(
     public router: Router,
     private settingsService: SettingsService,
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
       if (settings !== null) {
         this.downloaded = true;
         this.maintenance = settings.maintenance || false;
+        this.ads = settings.ads || false;
       }
     });
   }
