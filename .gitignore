@@ -53,3 +53,6 @@ dist
 data/temp-merged-prod.json
 data/merged-prod.json
 data/gt-course-surveys-dev-export.json
+data/anonymized-backup.json
+data/gt-course-surveys-dev-archive-export.json
+data/gt-course-surveys-prd-archive-export.json
