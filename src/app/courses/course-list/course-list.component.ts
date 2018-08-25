@@ -49,9 +49,23 @@ export class CourseListComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource([]);
     this.courses$.subscribe(courses => {
       if (courses) {
-        this.dataSource.data = Object.keys(courses).map(
-          courseId => courses[courseId]
-        );
+        this.dataSource.data = Object.keys(courses).map(courseId => {
+          let abpercent = 0;
+          let cdfpercent = 0;
+          if (courses[courseId].ab && courses[courseId].enrolled) {
+            abpercent =
+              100 * (courses[courseId].ab / courses[courseId].enrolled);
+          }
+          if (courses[courseId].cdf && courses[courseId].enrolled) {
+            cdfpercent =
+              100 * (courses[courseId].cdf / courses[courseId].enrolled);
+          }
+          return {
+            ...courses[courseId],
+            abpercent,
+            cdfpercent,
+          };
+        });
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
