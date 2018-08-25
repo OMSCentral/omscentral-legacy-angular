@@ -8,7 +8,8 @@
   <mat-card-content>
     <mat-button-toggle-group fxHide fxShow.gt-sm>
       <mat-button-toggle value="all" (click)="changeSpecialization('all')">{{ shortened ? 'ALL' : 'All' }}</mat-button-toggle>
-      <mat-button-toggle value="cpr" (click)="changeSpecialization('cpr')">{{ shortened ? 'CPR' : 'Computational Perception and Robotics'}}</mat-button-toggle>
+      <mat-button-toggle value="cpr" (click)="changeSpecialization('cpr')">{{ shortened ? 'CPR' : 'Computational Perception
+        and Robotics'}}</mat-button-toggle>
       <mat-button-toggle value="cs" (click)="changeSpecialization('cs')">{{ shortened ? 'CS' : 'Computing Systems'}}</mat-button-toggle>
       <mat-button-toggle value="ii" (click)="changeSpecialization('ii')">{{ shortened ? 'II' : 'Interactive Intelligence'}}</mat-button-toggle>
       <mat-button-toggle value="ml" (click)="changeSpecialization('ml')">{{ shortened ? 'ML' : 'Machine Learning'}}</mat-button-toggle>
@@ -71,16 +72,16 @@
     </ng-container>
 
     <!-- ab Column -->
-    <ng-container matColumnDef="ab">
+    <ng-container matColumnDef="abpercent">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>&ge; B %</th>
       <td mat-cell *matCellDef="let row" matTooltip="{{row.ab | number}}">
-        {{100 * (row.ab / row.enrolled) | number:'1.1-1'}} </td>
+        {{row.abpercent | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- cdf Column -->
-    <ng-container matColumnDef="cdf">
+    <ng-container matColumnDef="cdfpercent">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>&le; C % </th>
-      <td mat-cell *matCellDef="let row" matTooltip="{{row.cdf | number}}"> {{100 * (row.cdf / row.enrolled) | number:'1.1-1'}} </td>
+      <td mat-cell *matCellDef="let row" matTooltip="{{row.cdf | number}}"> {{row.cdfpercent | number:'1.1-1'}} </td>
     </ng-container>
 
     <!-- withdrew Column -->
