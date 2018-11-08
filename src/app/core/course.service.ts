@@ -28,12 +28,18 @@ const defaultGrades = {
 
 const specializations = [
   new Specialization('Computational Perception and Robotics', 'cpr', [
-    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6505', 'CS-8803-GA', 'CS-6515']),
     new Choice(1, ['CS-6601', 'CS-7641']),
-    new Choice(3, ['CS-6475', 'CS-6476', 'CS-8803-001', 'CS-8803-009']),
+    new Choice(3, [
+      'CS-6475',
+      'CS-6476',
+      'CS-8803-001',
+      'CS-8803-009',
+      'CS-7639',
+    ]),
   ]),
   new Specialization('Computing Systems', 'cs', [
-    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6505', 'CS-8803-GA', 'CS-6515']),
     new Choice(2, ['CS-6210', 'CS-6250', 'CS-6290', 'CS-6300', 'CS-6400']),
     new Choice(3, [
       'CS-6035',
@@ -46,12 +52,12 @@ const specializations = [
     ]),
   ]),
   new Specialization('Interactive Intelligence', 'ii', [
-    new Choice(1, ['CS-6300', 'CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6300', 'CS-6505', 'CS-8803-GA', 'CS-6515']),
     new Choice(2, ['CS-6601', 'CS-7637', 'CS-7641']),
     new Choice(2, ['CS-6440', 'CS-6460', 'CS-6750']),
   ]),
   new Specialization('Machine Learning', 'ml', [
-    new Choice(1, ['CS-6505', 'CS-8803-GA']),
+    new Choice(1, ['CS-6505', 'CS-8803-GA', 'CS-6515']),
     new Choice(1, ['CS-7641']),
     new Choice(3, ['CS-7642', 'CS-7646', 'CS-6476', 'CSE-6242', 'CSE-6250']),
   ]),
