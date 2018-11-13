@@ -359,19 +359,5 @@
     "department": "CS",
     "foundational": true,
     "number": "8803-GA"
-  },
-  "CS-6515": {
-    "id": "CS-6515",
-    "name": "Intro to Graduate Algorithms",
-    "department": "CS",
-    "foundational": true,
-    "number": "6515"
-  },
-  "CS-7639": {
-    "id": "CS-7639",
-    "name": "Cyber Physical Design and Analysis",
-    "department": "CS",
-    "foundational": true,
-    "number": "7639"
   }
 }

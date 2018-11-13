@@ -63,7 +63,7 @@ npm manifest:
       "@ngrx/store-devtools": "6.0.1",
       "@webcomponents/custom-elements": "1.1.0",
       "angular2-markdown": "^2.2.2",
-      "angularfire2": "^5.0.0-rc.10",
+      "@angular/fire": "^5.0.0-rc.10",
       "core-js": "^2.5.5",
       "firebase": "5.0.4",
       "font-awesome": "^4.7.0",
@@ -805,9 +805,9 @@ Lockfile:
       marked "^0.3.6"
       prismjs "^1.8.4"
   
-  angularfire2@^5.0.0-rc.10:
+  @angular/fire@^5.0.0-rc.10:
     version "5.0.0-rc.10"
-    resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-5.0.0-rc.10.tgz#8220cfa30414dc256482b7173aee664d9855039e"
+    resolved "https://registry.yarnpkg.com/@angular/fire/-/@angular/fire-5.0.0-rc.10.tgz#8220cfa30414dc256482b7173aee664d9855039e"
   
   ansi-align@^1.1.0:
     version "1.1.0"

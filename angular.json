@@ -132,6 +132,9 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "warnings": {
+      "versionMismatch": false
+    }
   }
 }
