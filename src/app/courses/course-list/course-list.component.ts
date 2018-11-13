@@ -92,6 +92,8 @@ export class CourseListComponent implements OnInit, OnDestroy {
   changeSpecialization(type) {
     this.specialization = type;
     this.store.dispatch(new FilterCourses(this.specialization));
-    this.dataSource.paginator.firstPage();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

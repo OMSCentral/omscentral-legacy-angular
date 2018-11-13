@@ -5,11 +5,14 @@ import { CourseGuard } from './course.guard';
 describe('CourseGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CourseGuard]
+      providers: [CourseGuard],
     });
   });
 
-  it('should ...', inject([CourseGuard], (guard: CourseGuard) => {
-    expect(guard).toBeTruthy();
-  }));
+  it(
+    'should ...',
+    inject([CourseGuard], (guard: CourseGuard) => {
+      expect(guard).toBeTruthy();
+    })
+  );
 });

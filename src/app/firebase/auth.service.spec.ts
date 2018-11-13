@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 
 import { BehaviorSubject } from 'rxjs';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 class MockAF {
   authState = new BehaviorSubject({});
 }
