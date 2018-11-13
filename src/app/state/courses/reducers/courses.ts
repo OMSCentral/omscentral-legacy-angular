@@ -6,11 +6,14 @@ import {
   CoursesAction,
   FILTER_COURSES,
   SELECT_COURSE,
+  CHANGE_COURSES_SORT,
 } from '../actions/courses';
+import { Sort } from '@angular/material';
 
 export interface State extends EntityState<Course> {
   specialization: string | null;
   selectedId: string | null;
+  coursesSort: Sort | null;
 }
 
 export const adapter: EntityAdapter<Course> = createEntityAdapter();
@@ -18,6 +21,7 @@ export const adapter: EntityAdapter<Course> = createEntityAdapter();
 const initialState: State = adapter.getInitialState({
   specialization: null,
   selectedId: null,
+  coursesSort: null,
 });
 
 export function reducer(state: State = initialState, action: CoursesAction) {
@@ -36,6 +40,11 @@ export function reducer(state: State = initialState, action: CoursesAction) {
         ...state,
         specialization: action.payload,
       };
+    case CHANGE_COURSES_SORT:
+      return {
+        ...state,
+        coursesSort: action.payload,
+      };
     default:
       return state;
   }
@@ -43,3 +52,4 @@ export function reducer(state: State = initialState, action: CoursesAction) {
 
 export const getSpecialization = (state: State) => state.specialization;
 export const getSelectedCourseId = (state: State) => state.selectedId;
+export const getCoursesSort = (state: State) => state.coursesSort;

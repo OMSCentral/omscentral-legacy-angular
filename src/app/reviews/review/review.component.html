@@ -1,26 +1,46 @@
 <mat-card class="card" *ngIf="review && review.author">
   <mat-card-title *ngIf="title && courseName">
-    <a mat-button [routerLink]="['/courses', review.course]">{{review.course}}: {{courseName}}</a>
+    <a mat-button [routerLink]="['/courses', review.course]"
+      >{{ review.course }}: {{ courseName }}</a
+    >
   </mat-card-title>
   <mat-card-subtitle>
+    <a
+      class="primary"
+      [routerLink]="['/courses', review.course]"
+      [fragment]="review.id"
+      aria-label="link"
+    >
+      <i class="fa fa-link"></i>
+    </a>
     &nbsp;
-    <span *ngIf="authId !== review.author" matTooltip="This author has not shared their identity">Author: {{review.author}}</span>
+    <span
+      *ngIf="authId !== review.author"
+      matTooltip="This author has not shared their identity"
+      >Author: {{ review.author }}</span
+    >
     <span class="pull-right">
-      <span *ngIf="review.updated">{{review.updated | date:'short'}}</span>
-      <span *ngIf="!review.updated">{{review.created | date:'short'}}</span>
+      <span *ngIf="review.updated">{{ review.updated | date: 'short' }}</span>
+      <span *ngIf="!review.updated">{{ review.created | date: 'short' }}</span>
     </span>
   </mat-card-subtitle>
-  <br/>
+  <br />
   <mat-card-content>
     <markdown [data]="review.text" class="review"></markdown>
   </mat-card-content>
   <mat-card-content>
     <mat-chip-list>
-      <mat-chip *ngIf="review.semester &&  review.semester !== '0000-0'">{{review.semester | semester}}</mat-chip>
-      <mat-chip *ngIf="review.difficulty">{{review.difficulty | difficulty}}</mat-chip>
-      <mat-chip *ngIf="review.rating">{{review.rating | rating}}</mat-chip>
-      <mat-chip *ngIf="review.workload">{{review.workload | workload}}</mat-chip>
-      <mat-chip *ngIf="review.program">{{review.program | program}}</mat-chip>
+      <mat-chip *ngIf="review.semester && review.semester !== '0000-0'">{{
+        review.semester | semester
+      }}</mat-chip>
+      <mat-chip *ngIf="review.difficulty">{{
+        review.difficulty | difficulty
+      }}</mat-chip>
+      <mat-chip *ngIf="review.rating">{{ review.rating | rating }}</mat-chip>
+      <mat-chip *ngIf="review.workload">{{
+        review.workload | workload
+      }}</mat-chip>
+      <mat-chip *ngIf="review.program">{{ review.program | program }}</mat-chip>
     </mat-chip-list>
   </mat-card-content>
   <mat-card-actions *ngIf="authId == review.author">

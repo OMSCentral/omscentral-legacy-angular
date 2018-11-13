@@ -14,6 +14,8 @@ import {
   UpdateRatingFilter,
   UpdateSemesterFilter,
 } from '../../state/reviews/actions/reviews';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'oms-course-reviews',
@@ -35,8 +37,13 @@ export class CourseReviewsComponent implements OnInit {
     ratings: {},
     programs: {},
   };
+  fragment: string = null;
 
-  constructor(private store: Store<ReviewsState>) {
+  constructor(
+    private store: Store<ReviewsState>,
+    private route: ActivatedRoute,
+    private scroller: ViewportScroller
+  ) {
     this.reviews$ = store.pipe(select(getFilteredReviews)) as Observable<
       Review[]
     >;
@@ -45,6 +52,10 @@ export class CourseReviewsComponent implements OnInit {
         this.filters = filters;
       }
     );
+    this.route.fragment.subscribe(fragment => {
+      this.fragment = fragment;
+      console.log(fragment);
+    });
   }
 
   ngOnInit() {
@@ -62,6 +73,15 @@ export class CourseReviewsComponent implements OnInit {
 
     this.programs.valueChanges.subscribe(pro => {
       this.store.dispatch(new UpdateProgramFilter(pro));
+    });
+    this.reviews$.subscribe(reviews => {
+      if (this.fragment && reviews) {
+        if (reviews.findIndex(review => this.fragment === review.id) !== -1) {
+          window.setTimeout(() => {
+            this.scroller.scrollToAnchor(this.fragment);
+          }, 1000);
+        }
+      }
     });
   }
 
