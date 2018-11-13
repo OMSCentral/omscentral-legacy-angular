@@ -6,16 +6,19 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Course } from '../../models/course';
 
 import * as _ from 'lodash';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import {
   CoursesState,
   getSpecializationCourses,
+  getCoursesSort,
 } from '../../state/courses/reducers';
 import {
   LoadCourses,
   FilterCourses,
   LoadCourse,
+  ChangeCoursesSort,
 } from '../../state/courses/actions/courses';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'oms-course-list',
@@ -72,6 +75,15 @@ export class CourseListComponent implements OnInit, OnDestroy {
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.sort.sortChange.subscribe(courseSort => {
+      this.store.dispatch(new ChangeCoursesSort(courseSort));
+    });
+    this.store.pipe(select(getCoursesSort), take(1)).subscribe(coursesSort => {
+      if (coursesSort) {
+        this.sort.active = coursesSort.active;
+        this.sort.direction = coursesSort.direction;
+      }
+    });
     this.applyFilter('');
   }
 
