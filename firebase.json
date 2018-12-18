@@ -14,7 +14,7 @@
     ],
     "headers": [
       {
-        "source": "service-worker.js",
+        "source": "omscentral-worker.js",
         "headers": [
           {
             "key": "Cache-Control",

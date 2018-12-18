@@ -1,31 +1,60 @@
 <div class="container">
   <mat-card class="card">
     <mat-card-title>My Profile</mat-card-title>
-    <!-- <mat-card-content>
-      <pre>{{user$ | async | json}}</pre>
-    </mat-card-content> -->
+    <!--
+      <mat-card-content>
+        <pre>{{user$ | async | json}}</pre>
+      </mat-card-content>
+    -->
   </mat-card>
   <mat-card class="card">
-    <mat-card-title>Overall Progress ({{courses.length}} / 10)</mat-card-title>
+    <mat-card-title
+      >Overall Progress ({{ courses.length }} / 10)</mat-card-title
+    >
     <mat-card-content>
-      <mat-progress-bar mode="determinate" color="primary" [value]="courses.length * 10"></mat-progress-bar>
+      <mat-progress-bar
+        mode="determinate"
+        color="primary"
+        [value]="courses.length * 10"
+      ></mat-progress-bar>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="card" *ngFor="let specialization of specializations | sortProgress:courses">
-    <mat-card-title>{{specialization.name}}</mat-card-title>
+  <mat-card
+    class="card"
+    *ngFor="let specialization of (specializations | sortProgress: courses)"
+  >
+    <mat-card-title>{{ specialization.name }}</mat-card-title>
     <mat-card-content>
-      <mat-progress-bar mode="determinate" color="primary" [value]="specialization.progress(courses) * 100"></mat-progress-bar>
+      <mat-progress-bar
+        mode="determinate"
+        color="primary"
+        [value]="specialization.progress(courses) * 100"
+      ></mat-progress-bar>
       <div class="choices">
         <div *ngFor="let choice of specialization.choices">
           <mat-list>
-            <mat-list-item>{{choice.amount * choice.progress(courses)}} / {{choice.amount}}&nbsp;
-              <i *ngIf="choice.progress(courses) >= 1" class="fa fa-2x fa-check primary"></i>
+            <mat-list-item
+              >{{ choice.amount * choice.progress(courses) }} /
+              {{ choice.amount }}&nbsp;
+              <i
+                *ngIf="choice.progress(courses) >= 1"
+                class="fa fa-2x fa-check primary"
+              ></i>
             </mat-list-item>
             <mat-list-item *ngFor="let course of choice.courses">
               <div class="choice-line">
-                <a mat-button type="button" class="course-btn" [routerLink]="['/courses', course]">{{course | course:basicCourses}}</a>
-                <i *ngIf="courses.indexOf(course) !== -1" class="fa fa-2x fa-check accent pull-right"></i>
+                <a
+                  mat-button
+                  type="button"
+                  class="course-btn"
+                  [routerLink]="['/courses', course]"
+                  >{{ course | course: basicCourses }}</a
+                >
+                <i
+                  *ngIf="courses.indexOf(course) !== -1"
+                  class="fa fa-2x fa-check accent pull-right"
+                ></i>
               </div>
             </mat-list-item>
           </mat-list>
@@ -33,5 +62,9 @@
       </div>
     </mat-card-content>
   </mat-card>
-  <oms-review *ngFor="let review of reviews$ | async" [review]="review" [title]="true"></oms-review>
+  <oms-review
+    *ngFor="let review of (reviews$ | async)"
+    [review]="review"
+    [title]="true"
+  ></oms-review>
 </div>
