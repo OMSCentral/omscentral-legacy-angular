@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about.component';
 import { CoreModule } from '../core/core.module';
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 import {
   MatSidenavModule,
   MatCardModule,
@@ -16,7 +16,7 @@ import { AboutRoutingModule } from './about-routing.module';
     CommonModule,
     AboutRoutingModule,
     CoreModule,
-    NgxMdModule,
+    MarkdownModule,
     MatSidenavModule,
     MatCardModule,
     MatListModule,

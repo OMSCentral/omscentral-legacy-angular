@@ -21,7 +21,7 @@ import { AngularGithubButtonsModule } from 'angular-github-buttons';
 
 import '@webcomponents/custom-elements/custom-elements.min.js';
 
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -48,7 +48,7 @@ export class RavenErrorHandler implements ErrorHandler {
     ReactiveFormsModule,
     CoreModule,
     AngularGithubButtonsModule,
-    NgxMdModule.forRoot(),
+    MarkdownModule.forRoot(),
     BrowserAnimationsModule,
     MatSidenavModule,
     StateModule.forRoot(),

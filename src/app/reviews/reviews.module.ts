@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PipeModule } from '../pipes/pipe.module';
 import { ReviewComponent } from './review/review.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 import {
   MatCardModule,
   MatTooltipModule,
@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     PipeModule,
     ReactiveFormsModule,
-    NgxMdModule,
+    MarkdownModule,
     MatCardModule,
     MatTooltipModule,
     MatButtonModule,
