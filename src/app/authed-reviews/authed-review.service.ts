@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { Review } from '../models/review';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../state/auth/reducers';
 import { getUser } from '../state/auth/reducers';

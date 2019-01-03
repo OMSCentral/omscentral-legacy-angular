@@ -36,8 +36,16 @@ export class ProfileComponent implements OnInit {
     });
     this.reviews$.subscribe(reviews => {
       if (reviews) {
-        this.courses = reviews.map(review => {
-          return review.course;
+        this.courses = [];
+
+        reviews.forEach(review => {
+          if (
+            review &&
+            review.course &&
+            this.courses.findIndex(course => review.course === course) === -1
+          ) {
+            this.courses.push(review.course);
+          }
         });
       } else {
         this.courses = [];

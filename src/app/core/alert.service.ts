@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { BehaviorSubject } from 'rxjs';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';

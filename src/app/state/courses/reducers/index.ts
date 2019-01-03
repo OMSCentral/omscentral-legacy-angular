@@ -28,6 +28,11 @@ export const getSpecialization = createSelector(
   fromCourses.getSpecialization
 );
 
+export const getCoursesSort = createSelector(
+  getCoursesEntityState,
+  fromCourses.getCoursesSort
+);
+
 export const getSelectedCourseId = createSelector(
   getCoursesEntityState,
   fromCourses.getSelectedCourseId

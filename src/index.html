@@ -1,59 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+    <title>OMSCentral</title>
+    <base href="/" />
 
-<head>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-  <meta charset="utf-8">
-  <title>OMSCentral</title>
-  <base href="/">
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-starturl" content="/" />
+    <meta name="theme-color" content="#f48c5b" />
 
-  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="msapplication-starturl" content="/">
-  <meta name="theme-color" content="#f48c5b">
+    <link rel="manifest" href="/manifest.json" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
 
-  <link rel="manifest" href="/manifest.json">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</head>
+  <body>
+    <oms-root></oms-root>
 
-<body>
-  <oms-root></oms-root>
+    <!-- GOOGLE ANALYTICS -->
+    <script>
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        (i[r] =
+          i[r] ||
+          function() {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        'script',
+        'https://www.google-analytics.com/analytics.js',
+        'ga'
+      );
+      ga('create', 'UA-61427217-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <!-- / GOOGLE ANALYTICS -->
 
-  <!-- GOOGLE ANALYTICS -->
-  <script>
-    (function (i, s, o, g, r, a, m) {
-      i["GoogleAnalyticsObject"] = r;
-      i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-      a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-    })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
-    ga("create", "UA-61427217-2", "auto");
-    ga("send", "pageview");
-
-  </script>
-  <!-- / GOOGLE ANALYTICS -->
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then((registration) => {
-          console.log('SW registered');
-        })
-        .catch((err) => {
-          console.log('SW error', err);
-        });
-    }
-
-  </script>
-
-</body>
-
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+            }
+            navigator.serviceWorker
+              .register('/omscentral-worker.js')
+              .then(registration => {
+                console.log('SW registered');
+              })
+              .catch(err => {
+                console.log('SW error', err);
+              });
+          });
+      }
+    </script>
+  </body>
 </html>

@@ -10,10 +10,7 @@ describe('AuthedReviewService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AuthedReviewEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [AuthedReviewEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.get(AuthedReviewEffects);

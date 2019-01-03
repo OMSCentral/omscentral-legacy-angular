@@ -18,8 +18,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
     'difficulty',
     'rating',
     'enrolled',
-    'ab',
-    'cdf',
+    'abpercent',
+    'cdfpercent',
     'withdrew',
   ];
 

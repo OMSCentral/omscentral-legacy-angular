@@ -18,7 +18,16 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=0"
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "omscentral-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
           }
         ]
       }
