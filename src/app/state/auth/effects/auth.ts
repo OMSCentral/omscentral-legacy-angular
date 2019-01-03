@@ -32,7 +32,7 @@ import { Authenticate, User } from '../../../models/user';
 import { AuthService } from '../../../firebase/auth.service';
 import { Action } from '@ngrx/store';
 import { UserService } from '../../../core/user.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class AuthEffects {

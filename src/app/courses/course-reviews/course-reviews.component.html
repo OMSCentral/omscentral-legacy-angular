@@ -1,47 +1,101 @@
 <mat-card class="card">
   <mat-card-content>
-    <button mat-raised-button [color]="sortType === 'semester' ? 'accent' : ''" (click)="sortBySemester()">Sort by Semester
-      <i *ngIf="sortType === 'semester' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-      <i *ngIf="sortType === 'semester' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+    <button
+      mat-raised-button
+      [color]="sortType === 'semester' ? 'accent' : ''"
+      (click)="sortBySemester()"
+    >
+      Sort by Semester
+      <i
+        *ngIf="sortType === 'semester' && sortDir === true"
+        class="fa fa-angle-up"
+        aria-hidden="true"
+      ></i>
+      <i
+        *ngIf="sortType === 'semester' && sortDir === false"
+        class="fa fa-angle-down"
+        aria-hidden="true"
+      ></i>
     </button>
-    <button mat-raised-button [color]="sortType === 'date' ? 'accent' : ''" (click)="sortByDate()">Sort by Date
-      <i *ngIf="sortType === 'date' && sortDir === true" class="fa fa-angle-up" aria-hidden="true"></i>
-      <i *ngIf="sortType === 'date' && sortDir === false" class="fa fa-angle-down" aria-hidden="true"></i>
+    <button
+      mat-raised-button
+      [color]="sortType === 'date' ? 'accent' : ''"
+      (click)="sortByDate()"
+    >
+      Sort by Date
+      <i
+        *ngIf="sortType === 'date' && sortDir === true"
+        class="fa fa-angle-up"
+        aria-hidden="true"
+      ></i>
+      <i
+        *ngIf="sortType === 'date' && sortDir === false"
+        class="fa fa-angle-down"
+        aria-hidden="true"
+      ></i>
     </button>
   </mat-card-content>
   <mat-card-actions class="space-between">
     <mat-form-field>
       <mat-select placeholder="Semesters" [formControl]="semesters" multiple>
-        <mat-option *ngFor="let semester of filterList('semesters')" [value]="semester.id" [disabled]="semester.disabled">{{semester.id | semester}}</mat-option>
+        <mat-option
+          *ngFor="let semester of filterList('semesters')"
+          [value]="semester.id"
+          [disabled]="semester.disabled"
+          >{{ semester.id | semester }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Difficulties" [formControl]="difficulties" multiple>
-        <mat-option *ngFor="let difficulty of filterList('difficulties')" [value]="difficulty.id" [disabled]="difficulty.disabled">{{difficulty.id | difficulty}}</mat-option>
+      <mat-select
+        placeholder="Difficulties"
+        [formControl]="difficulties"
+        multiple
+      >
+        <mat-option
+          *ngFor="let difficulty of filterList('difficulties')"
+          [value]="difficulty.id"
+          [disabled]="difficulty.disabled"
+          >{{ difficulty.id | difficulty }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Ratings" [formControl]="ratings" multiple>
-        <mat-option *ngFor="let rating of filterList('ratings')" [value]="rating.id" [disabled]="rating.disabled">{{rating.id | rating}}</mat-option>
+        <mat-option
+          *ngFor="let rating of filterList('ratings')"
+          [value]="rating.id"
+          [disabled]="rating.disabled"
+          >{{ rating.id | rating }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Programs" [formControl]="programs" multiple>
-        <mat-option *ngFor="let program of filterList('programs')" [value]="program.id" [disabled]="program.disabled">{{program.id | program}}</mat-option>
+        <mat-option
+          *ngFor="let program of filterList('programs')"
+          [value]="program.id"
+          [disabled]="program.disabled"
+          >{{ program.id | program }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
   </mat-card-actions>
 </mat-card>
 <div class="card" *ngIf="(reviews$ | async)?.length == 0">
   <div class="card-header">
-    <span class="card-title">
-      There are no reviews for {{courseId}}
-    </span>
+    <span class="card-title"> There are no reviews for {{ courseId }} </span>
   </div>
   <div class="card-body text-center">
-    <a mat-raised-button color="accent" [routerLink]="['/reviews']" [queryParams]="{courseId: courseId}">Write a Review</a>
+    <a
+      mat-raised-button
+      color="accent"
+      [routerLink]="['/reviews']"
+      [queryParams]="{ courseId: courseId }"
+      >Write a Review</a
+    >
   </div>
 </div>
-<div *ngFor="let review of (reviews$ | async) | reviewSort:sortType:sortDir">
-  <oms-review [review]="review"></oms-review>
+<div *ngFor="let review of (reviews$ | async | reviewSort: sortType:sortDir)">
+  <oms-review [review]="review" [id]="review.id"></oms-review>
 </div>

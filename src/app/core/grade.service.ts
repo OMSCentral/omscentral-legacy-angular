@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as jsonData from '../../../grades.json';
+import jsonData from '../../../grades.json';
 
 @Injectable()
 export class GradeService {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AuthService } from '../firebase/auth.service';
 import { User, UserDetails, WriteableUser } from '../models/user';

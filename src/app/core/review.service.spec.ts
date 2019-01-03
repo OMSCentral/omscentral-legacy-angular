@@ -21,7 +21,7 @@ class MockLocalStorage {
   }
 }
 
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 class MockAFDB {}
 
 import { CourseService } from './course.service';

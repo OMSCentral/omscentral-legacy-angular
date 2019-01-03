@@ -18,7 +18,7 @@ class MockGrades {}
 import { SettingsService } from './settings.service';
 class MockSettings {}
 
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 class MockAFDB {}
 
 describe('CourseService', () => {
