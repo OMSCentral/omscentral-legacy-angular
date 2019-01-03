@@ -14,7 +14,7 @@ import {
   MatCheckboxModule,
   MatButtonModule,
 } from '@angular/material';
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipeModule } from '../pipes/pipe.module';
 
@@ -28,7 +28,7 @@ import { PipeModule } from '../pipes/pipe.module';
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    NgxMdModule,
+    MarkdownModule,
     ReactiveFormsModule,
     PipeModule,
     MatButtonModule,

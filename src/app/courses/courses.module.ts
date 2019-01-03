@@ -27,7 +27,7 @@ import { CourseStatsComponent } from './course-stats/course-stats.component';
 import { CourseReviewsComponent } from './course-reviews/course-reviews.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '../core/core.module';
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 import { RouterModule } from '@angular/router';
 import { CoursesRoutingModule } from './courses-routing.module';
 
@@ -53,7 +53,7 @@ import { CoursesRoutingModule } from './courses-routing.module';
     MatSelectModule,
     FlexLayoutModule,
     MatTooltipModule,
-    NgxMdModule,
+    MarkdownModule,
     MatChipsModule,
     MatCheckboxModule,
     RouterModule,

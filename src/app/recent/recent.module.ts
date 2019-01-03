@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RecentComponent } from './recent.component';
 import { PipeModule } from '../pipes/pipe.module';
 import { ReviewsModule } from '../reviews/reviews.module';
-import { NgxMdModule } from 'ngx-md';
+import { MarkdownModule } from 'ngx-markdown';
 import { MatCardModule } from '@angular/material';
 import { RecentRoutingModule } from './recent-routing.module';
 
@@ -13,7 +13,7 @@ import { RecentRoutingModule } from './recent-routing.module';
     RecentRoutingModule,
     PipeModule,
     ReviewsModule,
-    NgxMdModule,
+    MarkdownModule,
     MatCardModule,
   ],
   declarations: [RecentComponent],
