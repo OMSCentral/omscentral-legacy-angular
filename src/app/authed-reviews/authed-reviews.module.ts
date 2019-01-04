@@ -13,6 +13,7 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatButtonModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 import { MarkdownModule } from 'ngx-markdown';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { PipeModule } from '../pipes/pipe.module';
     ReactiveFormsModule,
     PipeModule,
     MatButtonModule,
+    MatAutocompleteModule,
   ],
   providers: [AuthedReviewService],
   declarations: [NewReviewComponent],

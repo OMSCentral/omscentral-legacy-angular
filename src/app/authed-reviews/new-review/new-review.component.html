@@ -2,10 +2,12 @@
   <mat-card *ngIf="review">
     <mat-card-content class="review-fields">
       <mat-form-field [floatLabel]="'always'">
-        <mat-select required formControlName="course">
-          <mat-option *ngFor="let course of courses" [value]="course.id">{{course.combined}}</mat-option>
-        </mat-select>
-        <mat-label>Course</mat-label>
+      <input type="text" placeholder="Course" aria-label="Course" matInput formControlName="course" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let course of filteredCourses | async" [value]="course.id">
+          {{course.combined}}
+        </mat-option>
+      </mat-autocomplete>
       </mat-form-field>
       <mat-form-field [floatLabel]="'always'">
         <mat-select required formControlName="program">
