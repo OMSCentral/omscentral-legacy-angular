@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  AbstractControl,
+  ValidatorFn,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Review } from '../../models/review';
 import { Semester } from '../../enums/semester.enum';
@@ -17,6 +23,7 @@ import { NewReview, EditReview, RemoveReview } from '../authed-review.actions';
 import { SelectReview } from '../../state/reviews/actions/reviews';
 import { User } from '../../models/user';
 import { getUser } from '../../state/auth/reducers';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'oms-new-review',
@@ -27,12 +34,15 @@ export class NewReviewComponent implements OnInit {
   review: Review;
   review$: Observable<Review>;
   courses: Course[];
+  filteredCourses: Observable<Course[]>;
   reviewForm: FormGroup;
   courseName: string;
   authId: string;
-  semesters = Object.keys(Semester).filter(sem => {
-    return sem !== '0000-0';
-  });
+  semesters = Object.keys(Semester)
+    .filter(sem => {
+      return sem !== '0000-0';
+    })
+    .reverse();
   difficulties = Array.from(new Array(5), (x, i) => i + 1);
   programs = Array.from(new Array(2), (x, i) => i + 1);
   ratings = Array.from(new Array(5), (x, i) => i + 1);
@@ -83,7 +93,7 @@ export class NewReviewComponent implements OnInit {
 
   createForm() {
     this.reviewForm = this.fb.group({
-      course: ['', Validators.required],
+      course: ['', [Validators.required, this.courseValidator()]],
       text: ['', Validators.required],
       rating: ['', Validators.required],
       workload: ['', [Validators.required, Validators.max(84)]],
@@ -103,6 +113,13 @@ export class NewReviewComponent implements OnInit {
     this.reviewForm.valueChanges.subscribe(changes => {
       this.review.update(changes);
     });
+
+    this.filteredCourses = this.reviewForm
+      .get('course')
+      .valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterCourses(value))
+      );
   }
 
   edit() {
@@ -133,5 +150,21 @@ export class NewReviewComponent implements OnInit {
     if (this.review.isEdit) {
       this.review.cancel();
     }
+  }
+
+  private _filterCourses(value: string): Course[] {
+    const filterValue = value.toLowerCase();
+
+    return this.courses.filter(
+      option => option.combined.toLowerCase().indexOf(filterValue) !== -1
+    );
+  }
+
+  private courseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const forbidden =
+        this.courses.findIndex(course => control.value === course.id) === -1;
+      return forbidden ? { noCourse: { value: control.value } } : null;
+    };
   }
 }

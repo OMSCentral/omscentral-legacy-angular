@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase';
+import { User as firebaseUser } from 'firebase';
+import { auth as firebaseAuth } from 'firebase/app';
 import { UserService } from '../core/user.service';
 
 import { Observable, of } from 'rxjs';
@@ -8,7 +9,7 @@ import { User, Authenticate } from '../models/user';
 
 @Injectable()
 export class AuthService {
-  user: Observable<firebase.User>;
+  user: Observable<firebaseUser>;
   authState: any = null;
 
   constructor(
@@ -51,23 +52,23 @@ export class AuthService {
     let provider;
     switch (providerName) {
       case 'google':
-        provider = new firebase.auth.GoogleAuthProvider();
+        provider = new firebaseAuth.GoogleAuthProvider();
         provider.addScope('https://www.googleapis.com/auth/userinfo.email');
         provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         break;
 
       case 'facebook':
-        provider = new firebase.auth.FacebookAuthProvider();
+        provider = new firebaseAuth.FacebookAuthProvider();
         provider.addScope('email');
         provider.addScope('public_profile');
         break;
 
       case 'twitter':
-        provider = new firebase.auth.TwitterAuthProvider();
+        provider = new firebaseAuth.TwitterAuthProvider();
         break;
 
       case 'github':
-        provider = new firebase.auth.GithubAuthProvider();
+        provider = new firebaseAuth.GithubAuthProvider();
         provider.addScope('user:email');
         break;
 
