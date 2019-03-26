@@ -7,7 +7,7 @@ module.exports = {
   root: 'dist/',
   plugins: [
     new SWPrecacheWebpackPlugin({
-      cacheId: 'firestarter',
+      cacheId: '1.0.0',
       filename: 'omscentral-worker.js',
       staticFileGlobs: ['dist/index.html', 'dist/**.js', 'dist/**.css'],
       stripPrefix: 'dist/assets/',

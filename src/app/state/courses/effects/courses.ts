@@ -24,7 +24,7 @@ export class CoursesEffects {
     .pipe(
       switchMap(() => this.courseService.getCourses()),
       map(courses => {
-        return new LoadCoursesSuccess(courses);
+        return new LoadCoursesSuccess(courses.filter(course => course));
       })
     );
 
