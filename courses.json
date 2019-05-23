@@ -375,7 +375,7 @@
     "number": "6740"
   },
   "MGT-6726": {
-    "id": "MGt-6726",
+    "id": "MGT-6726",
     "name": "Privacy, Technology, Policy and Law",
     "department": "MGT",
     "foundational": false,
@@ -387,5 +387,159 @@
     "department": "CS",
     "foundational": true,
     "number": "6238"
+  },
+  "CS-6260": {
+    "id": "CS-6260",
+    "name": "Applied Cryptography",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6260"
+  },
+  "CS-6265": {
+    "id": "CS-6265",
+    "name": "Information Security Lab",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6265"
+  },
+  "CS-6266": {
+    "id": "CS-6266",
+    "name": "Information Security Practicum",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6266"
+  },
+  "CS-8803": {
+    "id": "CS-8803",
+    "name": "Security Operations and Incidence Response",
+    "department": "CS",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "CS-8813": {
+    "id": "CS-8813",
+    "name": "Malware Analysis and Defense",
+    "department": "CS",
+    "foundational": "false",
+    "number": "8813"
+  },
+  "ECE-6320": {
+    "id": "ECE-6320",
+    "name": "Power Systems Control and Operation",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "6320"
+  },
+  "ECE-6323": {
+    "id": "ECE-6323",
+    "name": "Power System Protection",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "6323"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Computational Aspects of Cyber-Physical Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Cyber Physical Design and Analysis",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Embedded Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Embedded Systems Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Introduction to Cyber-Physical Electric Energy Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Introduction to Cyber-Physical Systems Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Smart Grids",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "ECE-8803": {
+    "id": "ECE-8803",
+    "name": "Software Vulnerabilities and Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "INTA-6014": {
+    "id": "INTA-6014",
+    "name": "Scenario and Path Gaming",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "6014"
+  },
+  "INTA-8803": {
+    "id": "INTA-8803",
+    "name": "Data Analytics and Security",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "INTA-8803G": {
+    "id": "INTA-8803G",
+    "name": "Challenge of Terrorism in Democratic Societies",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "8803G"
+  },
+  "MGT-6725": {
+    "id": "MGT-6725",
+    "name": "Information Security Policies and Strategies",
+    "department": "MGT",
+    "foundational": "false",
+    "number": "6725"
+  },
+  "PUBP-6111": {
+    "id": "PUBP-6111",
+    "name": "Internet and Public Policy",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6111"
+  },
+  "PUBP-6501": {
+    "id": "PUBP-6501",
+    "name": "Information Policy and Management",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6501"
+  },
+  "PUBP-6502": {
+    "id": "PUBP-6502",
+    "name": "Information and Communications Policy",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6502"
   }
 }
