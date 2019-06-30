@@ -28,13 +28,7 @@ const specializations = [
   new Specialization('Computational Perception and Robotics', 'cpr', [
     new Choice(1, ['CS-6505', 'CS-8803-GA', 'CS-6515']),
     new Choice(1, ['CS-6601', 'CS-7641']),
-    new Choice(3, [
-      'CS-6475',
-      'CS-6476',
-      'CS-8803-001',
-      'CS-8803-009',
-      'CS-7639',
-    ]),
+    new Choice(3, ['CS-6475', 'CS-6476', 'CS-7638', 'CS-8803-009', 'CS-7639']),
   ]),
   new Specialization('Computing Systems', 'cs', [
     new Choice(1, ['CS-6505', 'CS-8803-GA', 'CS-6515']),

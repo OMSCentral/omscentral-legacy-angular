@@ -1,25 +1,97 @@
 <nav class="navbar-header primary-bg">
   <a mat-button class="nav-button" routerLink="/" aria-label="OMSCentral">
-    <img class="omscentral-logo" src="../../../assets/omscentral-logo.svg" alt="omscentral">
+    <img
+      class="omscentral-logo"
+      src="../../../assets/omscentral-logo.svg"
+      alt="omscentral"
+    />
     <span>OMSCentral</span>
   </a>
-  <a mat-button *ngIf="(user$ | async)" class="navbar-hide-small nav-button" routerLink="/profile" routerLinkActive="active">My
-    Profile</a>
-  <a mat-button class="navbar-hide-small nav-button" routerLink="/courses" routerLinkActive="active">Courses</a>
-  <a mat-button class="navbar-hide-small nav-button" routerLink="/recent" routerLinkActive="active">Recent</a>
-  <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-hide-small nav-button" routerLink="/reviews"
-    routerLinkActive="active">Write a Review</a>
-  <a mat-button class="navbar-hide-small nav-button" href="https://www.paypal.me/martz" target="_blank" aria-label="paypal">Donate</a>
+  <a
+    mat-button
+    *ngIf="user$ | async"
+    class="navbar-hide-small nav-button"
+    routerLink="/profile"
+    routerLinkActive="active"
+    >My Profile</a
+  >
+  <a
+    mat-button
+    class="navbar-hide-small nav-button"
+    routerLink="/courses"
+    routerLinkActive="active"
+    >Courses</a
+  >
+  <a
+    mat-button
+    class="navbar-hide-small nav-button"
+    routerLink="/recent"
+    routerLinkActive="active"
+    >Recent</a
+  >
+  <a
+    mat-raised-button
+    *ngIf="user$ | async"
+    color="accent"
+    class="navbar-hide-small nav-button"
+    routerLink="/reviews"
+    routerLinkActive="active"
+    >Write a Review</a
+  >
+  <!-- <a mat-button class="navbar-hide-small nav-button" href="https://www.paypal.me/martz" target="_blank" aria-label="paypal">Donate</a> -->
 
   <div class="flex-spacer"></div>
-  <ng-gh-star class="navbar-hide-small nav-button" username="martzcodes" reponame="OMSCentral" count="true"></ng-gh-star>
-  <a mat-button *ngIf="!(user$ | async)" class="nav-button active nav-auth" routerLink="/login">Login</a>
-  <a mat-button *ngIf="user$ | async" class="nav-button active nav-auth navbar-hide-small" (click)="logout()">Logout</a>
-  <a mat-raised-button *ngIf="(user$ | async)" color="accent" class="navbar-show-small nav-button" routerLink="/reviews"
-    routerLinkActive="active">Write a Review</a>
+  <ng-gh-star
+    class="navbar-hide-small nav-button"
+    username="martzcodes"
+    reponame="OMSCentral"
+    count="true"
+  ></ng-gh-star>
+  <a
+    mat-button
+    *ngIf="!(user$ | async)"
+    class="nav-button active nav-auth"
+    routerLink="/login"
+    >Login</a
+  >
+  <a
+    mat-button
+    *ngIf="user$ | async"
+    class="nav-button active nav-auth navbar-hide-small"
+    (click)="logout()"
+    >Logout</a
+  >
+  <a
+    mat-raised-button
+    *ngIf="user$ | async"
+    color="accent"
+    class="navbar-show-small nav-button"
+    routerLink="/reviews"
+    routerLinkActive="active"
+    >Write a Review</a
+  >
 </nav>
 <nav class="navbar navbar-show-small primary-bg">
-  <a mat-button *ngIf="(user$ | async)" class="navbar-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
-  <a mat-button class="navbar-link" routerLink="/courses" routerLinkActive="active">Courses</a>
-  <a mat-button class="navbar-link" routerLink="/recent" routerLinkActive="active">Recent</a>
+  <a
+    mat-button
+    *ngIf="user$ | async"
+    class="navbar-link"
+    routerLink="/profile"
+    routerLinkActive="active"
+    >My Profile</a
+  >
+  <a
+    mat-button
+    class="navbar-link"
+    routerLink="/courses"
+    routerLinkActive="active"
+    >Courses</a
+  >
+  <a
+    mat-button
+    class="navbar-link"
+    routerLink="/recent"
+    routerLinkActive="active"
+    >Recent</a
+  >
 </nav>

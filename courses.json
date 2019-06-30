@@ -279,12 +279,12 @@
     "foundational": true,
     "number": "7646"
   },
-  "CS-8803-001": {
-    "id": "CS-8803-001",
-    "name": "AI for Robotics",
+  "CS-7638": {
+    "id": "CS-7638",
+    "name": "Robotics: AI Techniques (formerly AI4R)",
     "department": "CS",
     "foundational": true,
-    "number": "8803-001"
+    "number": "7638"
   },
   "CS-6200": {
     "id": "CS-6200",
@@ -360,6 +360,13 @@
     "foundational": true,
     "number": "8803-GA"
   },
+  "CS-6515": {
+    "id": "CS-8803-GA",
+    "name": "Graduate Algorithms",
+    "department": "CS",
+    "foundational": true,
+    "number": "6515"
+  },
   "IYSE-8803": {
     "id": "IYSE-8803",
     "name": "Topics on High-Dimensional Data Analytics",
@@ -387,5 +394,159 @@
     "department": "CS",
     "foundational": true,
     "number": "6238"
+  },
+  "CS-6260": {
+    "id": "CS-6260",
+    "name": "Applied Cryptography",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6260"
+  },
+  "CS-6265": {
+    "id": "CS-6265",
+    "name": "Information Security Lab",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6265"
+  },
+  "CS-6266": {
+    "id": "CS-6266",
+    "name": "Information Security Practicum",
+    "department": "CS",
+    "foundational": "false",
+    "number": "6266"
+  },
+  "CS-8803": {
+    "id": "CS-8803",
+    "name": "Security Operations and Incidence Response",
+    "department": "CS",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "CS-8813": {
+    "id": "CS-8813",
+    "name": "Malware Analysis and Defense",
+    "department": "CS",
+    "foundational": "false",
+    "number": "8813"
+  },
+  "ECE-6320": {
+    "id": "ECE-6320",
+    "name": "Power Systems Control and Operation",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "6320"
+  },
+  "ECE-6323": {
+    "id": "ECE-6323",
+    "name": "Power System Protection",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "6323"
+  },
+  "ECE-8803a": {
+    "id": "ECE-8803a",
+    "name": "Computational Aspects of Cyber-Physical Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803a"
+  },
+  "ECE-8803b": {
+    "id": "ECE-8803b",
+    "name": "Cyber Physical Design and Analysis",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803b"
+  },
+  "ECE-8803c": {
+    "id": "ECE-8803c",
+    "name": "Embedded Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803c"
+  },
+  "ECE-8803d": {
+    "id": "ECE-8803d",
+    "name": "Embedded Systems Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803d"
+  },
+  "ECE-8803e": {
+    "id": "ECE-8803e",
+    "name": "Introduction to Cyber-Physical Electric Energy Systems",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803e"
+  },
+  "ECE-8803f": {
+    "id": "ECE-8803f",
+    "name": "Introduction to Cyber-Physical Systems Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803f"
+  },
+  "ECE-8803g": {
+    "id": "ECE-8803g",
+    "name": "Smart Grids",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803g"
+  },
+  "ECE-8803h": {
+    "id": "ECE-8803h",
+    "name": "Software Vulnerabilities and Security",
+    "department": "ECE",
+    "foundational": "false",
+    "number": "8803h"
+  },
+  "INTA-6014": {
+    "id": "INTA-6014",
+    "name": "Scenario and Path Gaming",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "6014"
+  },
+  "INTA-8803": {
+    "id": "INTA-8803",
+    "name": "Data Analytics and Security",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "8803"
+  },
+  "INTA-8803G": {
+    "id": "INTA-8803G",
+    "name": "Challenge of Terrorism in Democratic Societies",
+    "department": "INTA",
+    "foundational": "false",
+    "number": "8803G"
+  },
+  "MGT-6725": {
+    "id": "MGT-6725",
+    "name": "Information Security Policies and Strategies",
+    "department": "MGT",
+    "foundational": "false",
+    "number": "6725"
+  },
+  "PUBP-6111": {
+    "id": "PUBP-6111",
+    "name": "Internet and Public Policy",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6111"
+  },
+  "PUBP-6501": {
+    "id": "PUBP-6501",
+    "name": "Information Policy and Management",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6501"
+  },
+  "PUBP-6502": {
+    "id": "PUBP-6502",
+    "name": "Information and Communications Policy",
+    "department": "PUBP",
+    "foundational": "false",
+    "number": "6502"
   }
 }

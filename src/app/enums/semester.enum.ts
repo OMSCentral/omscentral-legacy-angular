@@ -67,4 +67,12 @@ export const Semester = {
     season: 1,
     year: 2019,
   },
+  '2019-2': {
+    season: 2,
+    year: 2019,
+  },
+  '2019-3': {
+    season: 3,
+    year: 2019,
+  },
 };

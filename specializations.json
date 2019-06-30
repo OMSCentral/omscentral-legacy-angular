@@ -1,104 +1,104 @@
 [
-    {
-        "core": {
-            "6140": true,
-            "6505": true,
-            "6520": true,
-            "6550": true,
-            "6601": true,
-            "7520": true,
-            "7530": true,
-            "7641": true
-        },
-        "elective": {
-            "6475": true,
-            "6476": true,
-            "7499": true,
-            "7630": true,
-            "7631": true,
-            "7633": true,
-            "7636": true,
-            "7649": true,
-            "7650": true,
-            "8803-001": true,
-            "8803-MGCV": true
-        }
+  {
+    "core": {
+      "6140": true,
+      "6505": true,
+      "6520": true,
+      "6550": true,
+      "6601": true,
+      "7520": true,
+      "7530": true,
+      "7641": true
     },
-    {
-        "core": {
-            "6210": true,
-            "6241": true,
-            "6250": true,
-            "6290": true,
-            "6300": true,
-            "6400": true,
-            "6505": true
-        },
-        "elective": {
-            "6035": true,
-            "6235": true,
-            "6238": true,
-            "6260": true,
-            "6262": true,
-            "6310": true,
-            "6340": true,
-            "6365": true,
-            "6422": true,
-            "6550": true,
-            "6675": true,
-            "7210": true,
-            "7260": true,
-            "7270": true,
-            "7290": true,
-            "7292": true,
-            "7560": true,
-            "8803-FPL": true
-        }
-    },
-    {
-        "core": {
-            "6300": true,
-            "6505": true,
-            "6601": true,
-            "7620": true,
-            "7637": true,
-            "7641": true
-        },
-        "elective": {
-            "6440": true,
-            "6460": true,
-            "6465": true,
-            "6795": true,
-            "7610": true,
-            "7632": true,
-            "7634": true,
-            "7650": true,
-            "8803-AGAI": true,
-            "8803-CC": true,
-            "8803-CSS": true
-        }
-    },
-    {
-        "core": {
-            "6140": true,
-            "6505": true,
-            "6520": true,
-            "6550": true,
-            "6740": true,
-            "7510": true,
-            "7520": true,
-            "7530": true,
-            "7641": true
-        },
-        "elective": {
-            "6240": true,
-            "6242": true,
-            "7540": true,
-            "7545": true,
-            "7616": true,
-            "7646": true,
-            "7650": true,
-            "8803": true
-        }
+    "elective": {
+      "6475": true,
+      "6476": true,
+      "7499": true,
+      "7630": true,
+      "7631": true,
+      "7633": true,
+      "7636": true,
+      "7649": true,
+      "7650": true,
+      "7638": true,
+      "8803-MGCV": true
     }
+  },
+  {
+    "core": {
+      "6210": true,
+      "6241": true,
+      "6250": true,
+      "6290": true,
+      "6300": true,
+      "6400": true,
+      "6505": true
+    },
+    "elective": {
+      "6035": true,
+      "6235": true,
+      "6238": true,
+      "6260": true,
+      "6262": true,
+      "6310": true,
+      "6340": true,
+      "6365": true,
+      "6422": true,
+      "6550": true,
+      "6675": true,
+      "7210": true,
+      "7260": true,
+      "7270": true,
+      "7290": true,
+      "7292": true,
+      "7560": true,
+      "8803-FPL": true
+    }
+  },
+  {
+    "core": {
+      "6300": true,
+      "6505": true,
+      "6601": true,
+      "7620": true,
+      "7637": true,
+      "7641": true
+    },
+    "elective": {
+      "6440": true,
+      "6460": true,
+      "6465": true,
+      "6795": true,
+      "7610": true,
+      "7632": true,
+      "7634": true,
+      "7650": true,
+      "8803-AGAI": true,
+      "8803-CC": true,
+      "8803-CSS": true
+    }
+  },
+  {
+    "core": {
+      "6140": true,
+      "6505": true,
+      "6520": true,
+      "6550": true,
+      "6740": true,
+      "7510": true,
+      "7520": true,
+      "7530": true,
+      "7641": true
+    },
+    "elective": {
+      "6240": true,
+      "6242": true,
+      "7540": true,
+      "7545": true,
+      "7616": true,
+      "7646": true,
+      "7650": true,
+      "8803": true
+    }
+  }
 ]
