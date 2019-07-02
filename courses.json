@@ -345,6 +345,13 @@
     "foundational": false,
     "number": "8803-009"
   },
+  "CS-7639": {
+    "id": "CS-7639",
+    "name": "Cyber-Physical Design & Analytics",
+    "department": "CS",
+    "foundational": false,
+    "number": "7639"
+  },
   "CSE-6250": {
     "id": "CSE-6250",
     "name": "Big Data for Health Informatics",
@@ -361,7 +368,7 @@
     "number": "8803-GA"
   },
   "CS-6515": {
-    "id": "CS-8803-GA",
+    "id": "CS-6515",
     "name": "Graduate Algorithms",
     "department": "CS",
     "foundational": true,
@@ -450,13 +457,6 @@
     "department": "ECE",
     "foundational": "false",
     "number": "8803a"
-  },
-  "ECE-8803b": {
-    "id": "ECE-8803b",
-    "name": "Cyber Physical Design and Analysis",
-    "department": "ECE",
-    "foundational": "false",
-    "number": "8803b"
   },
   "ECE-8803c": {
     "id": "ECE-8803c",
