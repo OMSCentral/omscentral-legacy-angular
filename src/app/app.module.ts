@@ -6,7 +6,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSidenavModule } from '@angular/material';
+import { MatSidenavModule, MatToolbarModule } from '@angular/material';
 
 import { StateModule } from './state/state.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -53,6 +53,7 @@ export class RavenErrorHandler implements ErrorHandler {
     MatSidenavModule,
     StateModule.forRoot(),
     FlexLayoutModule,
+    MatToolbarModule,
   ],
   providers: [
     AuthGuard,

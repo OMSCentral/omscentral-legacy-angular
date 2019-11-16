@@ -120,6 +120,13 @@ th.mat-header-cell:first-child {
     color: black;
   }
 
+  .announcement {
+    border-bottom: 5px solid mat-color($primary, 500);
+    background-color: mat-color($accent, 500);
+    color: black;
+    padding-left: 20px;
+  }
+
   .accent {
     color: mat-color($accent, 500);
   }

@@ -1,5 +1,6 @@
 <div class="main" [hidden]="(loading$ | async)">
   <oms-nav *ngIf="!(router.url == '/login' || router.url == '/register' || router.url.indexOf('set-password') !== -1)" class="mat-elevation-z6"></oms-nav>
+  <div class="announcement"><p>On December 31st this site will stop being maintained by @martzcodes.  I will hand off the data and domain to whoever has the most complete implementation at that point.  You're welcome to use my code (github.com/martzcodes/OMSCentral) or the react version (github.com/OMSCentral/OMSCentral-react) and set up your own hosting for it.  There is an anonymized dataset on my github under data that you can play with in case you want to migrate to some other format... otherwise I can give you the firebase database backup and you can import from there.  If no one sets one up I'll heavily paywall the site or just shut it down.  Ping me on slack if you have questions. Thanks!</p></div>
   <div class="container-fluid">
     <div class="jumbotron" *ngIf="maintenance">
       <h1 class="display-4">We're undergoing brief maintenance... please stand by...</h1>
@@ -8,6 +9,5 @@
     <div [hidden]="maintenance">
       <router-outlet [hidden]="!(downloaded && !maintenance)"></router-outlet>
     </div>
-    <oms-ads *ngIf="ads" [display]="'inline-block'" [width]="320" [height]="108"></oms-ads>
   </div>
 </div>
