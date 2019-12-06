@@ -374,22 +374,22 @@
     "foundational": true,
     "number": "6515"
   },
-  "IYSE-8803": {
-    "id": "IYSE-8803",
+  "ISYE-8803": {
+    "id": "ISYE-8803",
     "name": "Topics on High-Dimensional Data Analytics",
-    "department": "IYSE",
+    "department": "ISYE",
     "foundational": false,
     "number": "8803-HDDA"
   },
-  "IYSE-6740": {
-    "id": "IYSE-6740",
+  "ISYE-6740": {
+    "id": "ISYE-6740",
     "name": "Computational Data Analysis",
-    "department": "IYSE",
+    "department": "ISYE",
     "foundational": false,
     "number": "6740"
   },
   "MGT-6726": {
-    "id": "MGt-6726",
+    "id": "MGT-6726",
     "name": "Privacy, Technology, Policy and Law",
     "department": "MGT",
     "foundational": false,
